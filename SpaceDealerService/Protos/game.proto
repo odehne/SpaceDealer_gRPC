@@ -8,6 +8,7 @@ service Game {
   // Sends a greeting
   rpc GetPlayers (EmptyRequest) returns (PlayersReply);
   rpc GetShips (ShipsRequest) returns (ShipsReply);
+  rpc StartCruise (CruiseRequest) returns (CruiseReply);
   rpc GetPlanets (PlanetsRequest) returns (PlanetsReply);
 }
 
@@ -34,6 +35,16 @@ message Journey {
     double currentDistance = 3;
     Coordinates departure = 4;
     Coordinates destination = 5;
+}
+
+message CruiseRequest {
+    string playerName = 1;
+    string shipName = 2;
+    string destinationPlanetName = 3;
+}
+
+message CruiseReply {
+    bool onItsWay = 1;
 }
 
 message Planet {

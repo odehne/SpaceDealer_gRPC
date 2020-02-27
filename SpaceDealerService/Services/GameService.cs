@@ -9,6 +9,27 @@ namespace SpaceDealerService
 {
 	public class GameSvc : Game.GameBase
 	{
+		public override Task<CruiseReply> StartCruise(CruiseRequest request, ServerCallContext context)
+		{
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			if (player == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+			var ship = player.Fleet.GetShipByName(request.ShipName);
+			if (ship == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+			var planet = Program.TheGame.Galaxy.GetPlanetByName(request.DestinationPlanetName);
+			if (planet == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+			ship.StartCruise(ship.Cruise.Depature, planet);
+			return Task.FromResult(new CruiseReply { OnItsWay = true });
+		}
+
 		public override Task<ShipsReply> GetShips(ShipsRequest request, ServerCallContext context)
 		{
 			var ships = new ShipsReply();

@@ -18,7 +18,7 @@ namespace SpaceDealerService
 
 		public static void Main(string[] args)
 		{
-			TheLogger = new Logger(TraceEventType.Information);
+			TheLogger = new Logger(TraceEventType.Verbose);
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();
 

@@ -21,12 +21,15 @@ namespace SpaceDealerUI
 
             Console.WriteLine();
 
-
             var reply2 = await client.GetPlanetsAsync(new PlanetsRequest());
             foreach (var planet in reply2.Planets)
             {
                 Console.WriteLine($"Planet: {planet.PlanetName} [{planet.Sector.X},{planet.Sector.Y},{planet.Sector.Z}]");
             }
+
+            var cruiseStarted = await client.StartCruiseAsync(new CruiseRequest { DestinationPlanetName = "tatooine", PlayerName = "oliver", ShipName = "Dark Star" });
+
+            Console.WriteLine("Dark star started: " + cruiseStarted.OnItsWay);
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();

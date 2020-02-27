@@ -7,7 +7,7 @@ namespace SpaceDealer.Units
 	{
 		public Planet GetPlanetByName(string planetName)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(planetName));
+			return this.FirstOrDefault(x => x.Name.Equals(planetName, System.StringComparison.InvariantCultureIgnoreCase));
 		}
 		public Planet GetPlanetInSector(Coordinates coordinates)
 		{
@@ -17,7 +17,7 @@ namespace SpaceDealer.Units
 		public Planets GetAllPlanets(Planet excludeThisPlanet)
 		{
 			var planets = new Planets();
-			planets.AddRange(this.Where(x => !x.Name.Equals(excludeThisPlanet.Name)));
+			planets.AddRange(this.Where(x => !x.Name.Equals(excludeThisPlanet.Name, System.StringComparison.InvariantCultureIgnoreCase)));
 			return planets;
 		}
 
