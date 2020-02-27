@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+option csharp_namespace = "SpaceDealerService";
+
+package game;
+
+service Game {
+  // Sends a greeting
+  rpc GetPlayers (EmptyRequest) returns (PlayersReply);
+  rpc GetShips (ShipsRequest) returns (ShipsReply);
+  rpc GetPlanets (PlanetsRequest) returns (PlanetsReply);
+}
+
+message Coordinates {
+   double X = 1;
+   double Y = 2;
+   double Z = 3;
+}
+
+message Player {
+    string Name = 1;
+    repeated Ship ships = 2;
+}
+
+message Industry {
+    string Name = 1;
+}
+
+message PlayersReply {
+    repeated Player players = 1;
+}
+
+message Journey {
+    double currentDistance = 3;
+    Coordinates departure = 4;
+    Coordinates destination = 5;
+}
+
+message Planet {
+   string PlanetName = 1;
+   Coordinates Sector = 2;
+   repeated Industry Industries = 3;
+}
+
+message Load {
+   string CargoName = 1;
+   double Size = 2;
+}
+
+message Ship {
+   string ShipName = 1;
+   Journey Cruise = 2;
+   double CargoSize = 3;
+   Load CargoLoad = 4;
+}
+
+message EmptyRequest {
+    
+}
+
+message PlanetsRequest {
+    
+}
+
+message PlanetsReply {
+   repeated Planet Planets = 1; 
+}
+
+message ShipsRequest {
+   string PlayerName = 1;
+}
+message ShipsReply {
+    repeated Ship Ships = 1;
+}

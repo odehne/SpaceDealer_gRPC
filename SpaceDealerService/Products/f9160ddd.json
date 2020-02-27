@@ -1,0 +1,7 @@
+{
+	"id": "f9160ddd",
+	"name": "Kupfer",
+	"weight": 0.5,
+	"totalAtStart": 0.1,
+	"amountGeneratedPerRound" :  0.1
+}
