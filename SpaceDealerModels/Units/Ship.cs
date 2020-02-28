@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 	public class Ship : BaseUnit
 	{
@@ -11,7 +11,7 @@ namespace SpaceDealer.Units
 
 		public Journey Cruise { get; set; }
 		public ShipState CurrentState { get; set; }
-		public double MaxWeight { get; set; } // in tons
+		public double CargoSize { get; set; } // in tons
 		public ProductsInStock CurrentLoad { get; set; }
 		public ShipFeatures Features {get; set;}
 		public Ships Parent { get; set; }
@@ -45,12 +45,12 @@ namespace SpaceDealer.Units
 			{
 				return new Result(ResultState.Failed, "Das Schiff kann momentan nicht beladen werden.");
 			}
-			if(productsToLoad.GetTotalWeight() > MaxWeight - CurrentLoad.GetTotalWeight())
+			if(productsToLoad.GetTotalWeight() > CargoSize - CurrentLoad.GetTotalWeight())
 			{
-				return new Result(ResultState.Failed, $"Das Schiff kann nur maximal {MaxWeight} tons aufnehmen.");
+				return new Result(ResultState.Failed, $"Das Schiff kann nur maximal {CargoSize} tons aufnehmen.");
 			}
 			CurrentLoad.AddRange(productsToLoad);
-			return new Result(ResultState.OK, $"Das Schiff wurde beladen. Verfügbarer Speicher {MaxWeight - CurrentLoad.GetTotalWeight()} tons.");
+			return new Result(ResultState.OK, $"Das Schiff wurde beladen. Verfügbarer Speicher {CargoSize - CurrentLoad.GetTotalWeight()} tons.");
 		}
 
 		public override string ToString()

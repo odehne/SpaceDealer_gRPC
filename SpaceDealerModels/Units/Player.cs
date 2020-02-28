@@ -1,7 +1,7 @@
 ﻿using SpaceDealer.Enums;
 using System.Collections.Generic;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 
 	public class Player : BaseUnit

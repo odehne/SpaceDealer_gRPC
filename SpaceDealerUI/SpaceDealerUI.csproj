@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SpaceDealerModels\SpaceDealerModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="..\SpaceDealerService\Protos\game.proto">
       <Link>Protos\game.proto</Link>
     </Protobuf>

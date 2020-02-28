@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 	public class Coordinates 
 	{

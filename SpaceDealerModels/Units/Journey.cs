@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 	public class Journey
 	{
 		public event ArrivedAtDestination Arrived;
 		public delegate void ArrivedAtDestination(string message, Coordinates newPosition);
-
 		public Planet Depature { get; set; }
 		public Planet Destination { get; set; }
 		public Coordinates CurrentSector { get; set; }
@@ -25,9 +24,7 @@ namespace SpaceDealer.Units
 				return Coordinates.GetDistanceLength(CurrentSector, Destination.Sector);
 			}
 		} // in parsec 3.26 Light years
-		public double CurrentDistanceFromDeparture { get; set; } // in parsec 3.26 Light years
-		public double TotalDistance { get; set; }
-
+		
 		public void Update()
 		{
 			if (!CurrentSector.Equals(Destination.Sector))

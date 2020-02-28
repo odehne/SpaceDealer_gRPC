@@ -44,4 +44,8 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceDealerModels\SpaceDealerModels.csproj" />
+  </ItemGroup>
+
 </Project>

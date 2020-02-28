@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 	public class Players : List<Player>
 	{

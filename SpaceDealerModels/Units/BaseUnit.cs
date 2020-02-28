@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
-	public class BaseUnit : IUnit
+	public abstract class BaseUnit : IUnit
 	{
 
 		public string Name { get; set; }

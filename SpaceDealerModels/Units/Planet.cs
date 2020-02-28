@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 
 	public class Planet : BaseUnit
 	{
 		public Coordinates Sector { get; set; }
-
 		public Market Market { get; set; }
 		public Industries Industries { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿using SpaceDealer.Enums;
 
-namespace SpaceDealer.Units
+namespace SpaceDealerModels.Units
 {
 	public class Result
 	{

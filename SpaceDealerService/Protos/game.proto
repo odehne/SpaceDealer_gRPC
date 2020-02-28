@@ -6,10 +6,14 @@ package game;
 
 service Game {
   // Sends a greeting
+  rpc AddPlayer (PlayerRequest) returns (PlayerReply);
+  rpc GetPlayer (PlayerRequest) returns (PlayerReply);
   rpc GetPlayers (EmptyRequest) returns (PlayersReply);
   rpc GetShips (ShipsRequest) returns (ShipsReply);
+  rpc AddShip (ShipRequest) returns (ShipReply);
+  rpc GetShip (ShipRequest) returns (ShipReply);
   rpc StartCruise (CruiseRequest) returns (CruiseReply);
-  rpc GetPlanets (PlanetsRequest) returns (PlanetsReply);
+  rpc GetPlanets (EmptyRequest) returns (PlanetsReply);
 }
 
 message Coordinates {
@@ -23,18 +27,32 @@ message Player {
     repeated Ship ships = 2;
 }
 
-message Industry {
-    string Name = 1;
-}
-
 message PlayersReply {
     repeated Player players = 1;
 }
 
+message PlayerRequest {
+    string playerName = 1;
+}
+
+message PlayerReply {
+    Player player = 1;
+}
+
 message Journey {
-    double currentDistance = 3;
-    Coordinates departure = 4;
-    Coordinates destination = 5;
+    double currentDistance = 1;
+    Coordinates currentSector = 2;
+    Planet departure = 3;
+    Planet destination = 4;
+}
+
+message ShipRequest {
+   string playerName = 1;
+   string shipName = 2;
+}
+
+message ShipReply {
+   Ship ship = 1;
 }
 
 message CruiseRequest {
@@ -54,8 +72,32 @@ message Planet {
 }
 
 message Load {
-   string CargoName = 1;
-   double Size = 2;
+   repeated ProductInStock LoadedProducts = 1;
+}
+
+message Market {
+   string MarketName = 1;
+   repeated ProductInStock ProductsInStock = 2;
+}
+
+message Industry {
+   string IndustryName = 1;
+   repeated ProductInStock GeneratedProducts = 2;
+   repeated ProductInStock ProductsNeeded = 3;
+}
+
+message Industries {
+   repeated Industry Industries = 1;
+}
+
+message ProductInStock {
+    string ProductName = 1;    
+    double Amount = 2;
+    double Weight = 3;
+    double AmountGeneratedPerRound = 4;
+    double PricePerTon = 5;
+    double TotalWeight = 6;
+    double TotalPrice = 7;
 }
 
 message Ship {
@@ -66,10 +108,6 @@ message Ship {
 }
 
 message EmptyRequest {
-    
-}
-
-message PlanetsRequest {
     
 }
 

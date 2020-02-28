@@ -1,4 +1,4 @@
-﻿using SpaceDealer.Units;
+﻿using SpaceDealerModels.Units;
 
 namespace SpaceDealer
 {
