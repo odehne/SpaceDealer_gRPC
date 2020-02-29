@@ -33,9 +33,15 @@ namespace SpaceDealerModels.Units
 			Add(p);
 		}
 
-		public ProductInStock AddProduct(string name, List<KeyValuePair<string, string>> properties, double perRound, double totalAtStart, double weight)
+		public ProductInStock AddProduct(ProductInStock p)
 		{
-			var pis = new ProductInStock(name, properties, perRound, totalAtStart, weight);
+			Add(p);
+			return p;
+		}
+
+		public ProductInStock AddProduct(string name, List<KeyValuePair<string, string>> properties, double perRound, double totalAtStart, double weight, double suggestedRetailPrice)
+		{
+			var pis = new ProductInStock(name, properties, perRound, totalAtStart, weight, suggestedRetailPrice);
 			Add(pis);
 			return pis;
 		}

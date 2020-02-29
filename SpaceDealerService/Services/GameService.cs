@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
+using SpaceDealerModels.Repositories;
 
 namespace SpaceDealerService
 {
@@ -64,7 +65,7 @@ namespace SpaceDealerService
 		{
 			var g = Program.TheGame;
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var s = new SpaceDealerModels.Units.Ship(request.ShipName, null, p.HomePlanet, g.TheLibrary.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
+			var s = new SpaceDealerModels.Units.Ship(request.ShipName, null, p.HomePlanet, Repository.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
 			p.Fleet.Add(s);
 			return Task.FromResult(new ShipReply { Ship = ProtoBuConverter.ConvertToShip(s) });
 		}

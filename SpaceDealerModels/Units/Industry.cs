@@ -15,6 +15,16 @@ namespace SpaceDealerModels.Units
 			ProductsNeeded = new ProductsInStock();
 		}
 
+		public void AddGeneratedProduct(ProductInStock product)
+		{
+			GeneratedProducts.Add(product);
+		}
+
+		public void AddNeededProduct(ProductInStock product)
+		{
+			ProductsNeeded.Add(product);
+		}
+
 		public override string ToString()
 		{
 			return base.ToString();

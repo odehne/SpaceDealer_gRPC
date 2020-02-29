@@ -62,12 +62,12 @@ namespace SpaceDealerModels.Units
 			{
 				case 6:
 					State = JourneyState.InBattle;
-					EnemyBattleShip = new SimplePirateShip(ShipFeatureRepository.GetRandomShipName(), CurrentSector, null);
+					EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector, null);
 					return new Interruption(InterruptionType.AttackByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
 				case 9:
 					State = JourneyState.NewPlanetInRange;
-					EnemyBattleShip = new SimplePirateShip(ShipFeatureRepository.GetRandomShipName(), CurrentSector, null);
-					return new Interruption(InterruptionType.AttackByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
+					//NewlyDiscoveredPlanet = new Planet()
+					return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
 			}
 
 

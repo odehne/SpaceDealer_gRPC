@@ -90,8 +90,9 @@ namespace SpaceDealerModels.Units
 			{
 				var shipDefenceRoll = SimpleDiceRoller.Roll(DiceType.d20, 1);
 				var pirateAttackRoll = SimpleDiceRoller.Roll(DiceType.d6) + SimpleDiceRoller.Roll(DiceType.d6);
-				TheLogger.Log($"Runde {i}: Angriff: {pirateAttackRoll} vs. Verteidigung: {shipDefenceRoll}", TraceEventType.Information);
+				//TheLogger.Log($"Runde {i}: Angriff: {pirateAttackRoll} vs. Verteidigung: {shipDefenceRoll}", TraceEventType.Information);
 			}
+			return -1;
 		}
 	}
 }

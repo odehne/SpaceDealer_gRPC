@@ -9,6 +9,7 @@ namespace SpaceDealerModels.Units
 		public double AmountGeneratedPerRound { get; set; } // Für gold sehr wenig, für Reis sehr viel
 		public double PricePerTon { get; set; }
 
+
 		public ProductInStock(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
 		{
 			
@@ -24,11 +25,12 @@ namespace SpaceDealerModels.Units
 			return Amount * Weight * PricePerTon;
 		}
 
-		public ProductInStock(string name, List<KeyValuePair<string, string>> properties, double perRound, double totalAtStart, double weight) : base(name, properties)
+		public ProductInStock(string name, List<KeyValuePair<string, string>> properties, double perRound, double totalAtStart, double weight, double suggestedRetailPrice) : base(name, properties)
 		{
 			Weight = weight;
 			Amount = totalAtStart;
 			AmountGeneratedPerRound = perRound;
+			PricePerTon = suggestedRetailPrice;
 		}
 	}
 }
