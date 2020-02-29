@@ -10,7 +10,7 @@
 	{
 		Travelling = 0,
 		Arrived = 1,
-		Interrupted = 2,
+		InBattle = 2,
 		NewPlanetInRange = 3,
 		OtherShipInRange = 4
 	}
@@ -26,7 +26,8 @@
 	{
 		AttackByPirates = 0,
 		OtherShipWantsToTrade = 1,
-		DistressSignal = 2
+		DistressSignal = 2,
+		DiscoveredNewPlanet = 3
 	}
 
 	public enum CargoBaySize

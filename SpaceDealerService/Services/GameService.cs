@@ -30,8 +30,6 @@ namespace SpaceDealerService
 			return Task.FromResult(new CruiseReply { OnItsWay = true });
 		}
 
-	
-
 		public override Task<ShipsReply> GetShips(ShipsRequest request, ServerCallContext context)
 		{
 			var ships = new ShipsReply();
@@ -66,7 +64,7 @@ namespace SpaceDealerService
 		{
 			var g = Program.TheGame;
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var s = new SpaceDealerModels.Units.Ship(request.ShipName, null, p.HomePlanet) { CargoSize = 30, Parent = p.Fleet };
+			var s = new SpaceDealerModels.Units.Ship(request.ShipName, null, p.HomePlanet, g.TheLibrary.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
 			p.Fleet.Add(s);
 			return Task.FromResult(new ShipReply { Ship = ProtoBuConverter.ConvertToShip(s) });
 		}

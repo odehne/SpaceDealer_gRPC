@@ -41,5 +41,7 @@ namespace SpaceDealer
 				Logger.Log(commander.ToString(), TraceEventType.Verbose);
 			}
 		}
+
+		
 	}
 }

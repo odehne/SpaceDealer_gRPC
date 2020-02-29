@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-
 	public class ShipFeatures : List<ShipFeature>
 	{
 		public ShipFeature GetFeatureByName(string name)

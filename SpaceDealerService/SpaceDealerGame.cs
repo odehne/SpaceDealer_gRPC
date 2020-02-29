@@ -1,4 +1,5 @@
-﻿using SpaceDealerModels.Units;
+﻿using SpaceDealerModels.Repositories;
+using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,7 @@ namespace SpaceDealer
 			Logger = logger;
 			Galaxy = new Planets();
 			FleetCommanders = new Players();
+			ShipFeatureRepository.Init();
 		}
 
 		public void Init()

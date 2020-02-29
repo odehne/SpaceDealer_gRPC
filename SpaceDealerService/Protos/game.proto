@@ -41,7 +41,7 @@ enum ShipState {
 enum JourneyState {
     Travelling = 0;
     Arrived = 1;
-    Interrupted = 2;
+    InBattle = 2;
     NewPlanetInRange = 3;
     OtherShipInRange = 4;
 }

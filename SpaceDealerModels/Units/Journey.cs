@@ -1,4 +1,5 @@
 ﻿using SpaceDealer.Enums;
+using SpaceDealerModels.Repositories;
 using System;
 
 namespace SpaceDealerModels.Units
@@ -15,6 +16,8 @@ namespace SpaceDealerModels.Units
 		public Planet Destination { get; set; }
 		public Coordinates CurrentSector { get; set; }
 		public JourneyState State { get; set; }
+		public PirateShip EnemyBattleShip { get; set; }
+		public Planet NewlyDiscoveredPlanet { get; set; }
 		
 		public Journey(Planet departure, Planet destination, Coordinates position, Ship parent)
 		{
@@ -54,6 +57,20 @@ namespace SpaceDealerModels.Units
 
 		private Interruption CheckInterruptions()
 		{
+			var roll = SimpleDiceRoller.Roll();
+			switch(roll)
+			{
+				case 6:
+					State = JourneyState.InBattle;
+					EnemyBattleShip = new SimplePirateShip(ShipFeatureRepository.GetRandomShipName(), CurrentSector, null);
+					return new Interruption(InterruptionType.AttackByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
+				case 9:
+					State = JourneyState.NewPlanetInRange;
+					EnemyBattleShip = new SimplePirateShip(ShipFeatureRepository.GetRandomShipName(), CurrentSector, null);
+					return new Interruption(InterruptionType.AttackByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
+			}
+
+
 			var randomShipName = "USS Gauntlet";
 			return new Interruption(InterruptionType.DistressSignal, $"Wir haben einen Notruf von der {randomShipName} erhalten.");
 		}

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using SpaceDealer;
 using System.Threading;
+using SpaceDealerModels.Repositories;
 
 namespace SpaceDealerService
 {
@@ -15,11 +16,9 @@ namespace SpaceDealerService
 	{
 		public static SpaceDealerGame TheGame { get; set; }
 		public static Logger TheLogger {get; set;}
-
+	
 		public static void Main(string[] args)
 		{
-			var i = SimpleDiceRoller.Roll();
-
 			TheLogger = new Logger(TraceEventType.Verbose);
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();
@@ -29,6 +28,10 @@ namespace SpaceDealerService
 			engineThread.Start();
 
 			CreateHostBuilder(args).Build().Run();
+
+
+	
+
 		}
 
 		// Additional configuration is required to successfully run gRPC on macOS.

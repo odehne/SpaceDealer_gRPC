@@ -19,12 +19,9 @@ namespace SpaceDealerModels.Units
 		public Ships Parent { get; set; }
 		public ShipState State { get; set; }
 
-		public Ship(string name, List<KeyValuePair<string, string>> properties, Planet homeplanet) : base(name, properties)
+		public Ship(string name, List<KeyValuePair<string, string>> properties, Planet homeplanet, ShipFeatures featureSet) : base(name, properties)
 		{
-			Features = new ShipFeatures
-			{
-				new SignalRangeFeature("Signal Reichweite", new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Reichweite [Sektoren]", "+1") })
-			};
+			Features = featureSet;
 			CurrentLoad = new ProductsInStock();
 			Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
 		}
@@ -85,6 +82,16 @@ namespace SpaceDealerModels.Units
 			}
 			//Evaluate current position
 			Cruise.Update();
+		}
+
+		public int Battle()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				var shipDefenceRoll = SimpleDiceRoller.Roll(DiceType.d20, 1);
+				var pirateAttackRoll = SimpleDiceRoller.Roll(DiceType.d6) + SimpleDiceRoller.Roll(DiceType.d6);
+				TheLogger.Log($"Runde {i}: Angriff: {pirateAttackRoll} vs. Verteidigung: {shipDefenceRoll}", TraceEventType.Information);
+			}
 		}
 	}
 }
