@@ -18,6 +18,8 @@ namespace SpaceDealerService
 
 		public static void Main(string[] args)
 		{
+			var i = SimpleDiceRoller.Roll();
+
 			TheLogger = new Logger(TraceEventType.Verbose);
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();

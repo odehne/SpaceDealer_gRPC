@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.Collections;
 using Grpc.Net.Client;
 using SpaceDealerService;
 
@@ -35,6 +36,14 @@ namespace SpaceDealerUI
 			return null;
 		}
 
+		public static async Task<Player> GetPlayer(string playerName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var reply = await client.GetPlayerAsync(new PlayerRequest { PlayerName = playerName });
+			return reply.Player;
+		}
+
 		public static async Task<Ship> AddShip(string playerName, string shipName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
@@ -47,15 +56,21 @@ namespace SpaceDealerUI
 			return null;
 		}
 
-
-		public static async Task<bool> ShipNameTaken(string playerName, string shipName)
+		public static async Task<RepeatedField<Ship>> GetAllShips(string playerName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
 			var reply = await client.GetShipsAsync(new ShipsRequest { PlayerName = playerName });
-			if (reply.Ships != null)
+			return reply.Ships;
+		}
+
+
+		public static async Task<bool> ShipNameTaken(string playerName, string shipName)
+		{
+			var ships = await GetAllShips(playerName);
+			if (ships != null)
 			{
-				foreach (var ship in reply.Ships)
+				foreach (var ship in ships)
 				{
 					if (ship.ShipName.Equals(shipName, StringComparison.InvariantCultureIgnoreCase))
 						return true;
@@ -72,26 +87,12 @@ namespace SpaceDealerUI
 			return cruiseStarted.OnItsWay;
 		}
 
-		public static async Task<bool> GetAllShips(string playerName)
-		{
-			using var channel = GrpcChannel.ForAddress(ServiceURL);
-			var client = new Game.GameClient(channel);
-			var reply = await client.GetShipsAsync(new ShipsRequest { PlayerName = playerName });
-			foreach (var ship in reply.Ships)
-			{
-				Console.WriteLine($"Ship: {ship.ShipName} [{ship.Cruise.Departure.PlanetName} -> {ship.Cruise.Destination.PlanetName}] Cargo Size: {ship.CargoSize}"); //Load: {ship.CargoLoad.CargoName}
-			}
-			return false;
-		}
-
-		public static async Task<List<Planet>> GetAllPlanets()
+		public static async Task<RepeatedField<Planet>> GetAllPlanets()
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
 			var reply2 = await client.GetPlanetsAsync(new EmptyRequest());
-			var lst = new List<Planet>();
-			lst.AddRange(reply2.Planets);
-			return lst;
+			return reply2.Planets;
 		}
 	}
 }

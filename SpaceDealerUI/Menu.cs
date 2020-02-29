@@ -1,4 +1,5 @@
-﻿using SpaceDealerModels.Units;
+﻿using Google.Protobuf.Collections;
+using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,29 +7,34 @@ using System.Text;
 namespace SpaceDealerUI
 {
 	public class Menu
-	{ 
+	{
+		public event AnswerRecieved Answered;
+		public delegate void AnswerRecieved(string answer);
+
+		public SpaceDealerModels.Units.Player UiPlayer { get; set; }
+
 		public void ShowStartupScreen()
 		{
 			Console.Clear();
-			Console.WriteLine(@"               .__   __                                .__                       .___     .__   ");
-			Console.WriteLine(@"__  _  __ ____ |  |_/  |_____________   __ __  _____   |  |__ _____    ____    __| _/____ |  |  ");
-			Console.WriteLine(@"\ \/ \/ // __ \|  |\   __\_  __ \__  \ |  |  \/     \  |  |  \\__  \  /    \  / __ |/ __ \|  |  ");
-			Console.WriteLine(@" \     /\  ___/|  |_|  |  |  | \// __ \|  |  /  Y Y  \ |   Y  \/ __ \|   |  \/ /_/ \  ___/|  |__");
-			Console.WriteLine(@"  \/\_/  \___  >____/__|  |__|  (____  /____/|__|_|  / |___|  (____  /___|  /\____ |\___  >____/");
-			Console.WriteLine(@"             \/                      \/            \/       \/     \/     \/      \/    \/      ");
-			
+			Console.WriteLine(@"                        .__   __                                .__                       .___     .__   ");
+			Console.WriteLine(@"         __  _  __ ____ |  |_/  |_____________   __ __  _____   |  |__ _____    ____    __| _/____ |  |  ");
+			Console.WriteLine(@"         \ \/ \/ // __ \|  |\   __\_  __ \__  \ |  |  \/     \  |  |  \\__  \  /    \  / __ |/ __ \|  |  ");
+			Console.WriteLine(@"          \     /\  ___/|  |_|  |  |  | \// __ \|  |  /  Y Y  \ |   Y  \/ __ \|   |  \/ /_/ \  ___/|  |__");
+			Console.WriteLine(@"           \/\_/  \___  >____/__|  |__|  (____  /____/|__|_|  / |___|  (____  /___|  /\____ |\___  >____/");
+			Console.WriteLine(@"                      \/                      \/            \/       \/     \/     \/      \/    \/      ");
+			Console.WriteLine();
+			Console.WriteLine();
 		}
 
-		public void ShowHeader(Player player)
+		public void ShowPlayerStats(SpaceDealerModels.Units.Player player)
 		{
-			Console.SetCursorPosition(0, 0);
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
 			Console.WriteLine($"Spieler: {player.Name}\tHeimat Planet:{player.HomePlanet}\tCredits:${player.Credits}");
 			foreach (var ship in player.Fleet)
 			{
 				Console.WriteLine($"Schiff: {ship.Name}\t{ship.Cruise.Depature} --> {ship.Cruise.Destination}\tDistanz: {ship.Cruise.CurrentDistanceToDestination.ToDecimalString()} parsec\tSektor: {ship.Cruise.CurrentSector.ToString()}");
 			}
-			Console.SetCursorPosition(0, 28);
-			Console.WriteLine(CenterLine("F2: Hauptmenü | F3: Flotten-Übersicht | F4: Märkte | F5: Raumdock | CTRL+C: Beenden"));
 		}
 
 		private void ClearConsoleBody()
@@ -38,6 +44,8 @@ namespace SpaceDealerUI
 				Console.SetCursorPosition(0, i);
 				Console.Write("                                                                                                                      ");
 			}
+			Console.SetCursorPosition(0, 28);
+			Console.WriteLine(CenterLine("H: Hauptmenü | F: Flotten-Übersicht | M: Märkte | R: Raumdock | CTRL+C: Beenden"));
 		}
 
 		private string CenterLine(string v)
@@ -92,10 +100,10 @@ namespace SpaceDealerUI
 			
 		}
 
-		public int ShowShipSelection()
+		public int ShowMainSelection()
 		{
 			ClearConsoleBody();
-			Console.SetCursorPosition(0, 5);
+			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- Hauptmenü ----"));
 			Console.WriteLine(CenterLine("1. Neues Ziel"));
 			Console.WriteLine(CenterLine("2. Marktplatz"));
@@ -104,20 +112,26 @@ namespace SpaceDealerUI
 			return GetAnswerInt(1, 4);
 		}
 
-		public int ShowMainSelection()
+	
+		public int ShowShipSelection(RepeatedField<SpaceDealerService.Ship> ships)
 		{
 			ClearConsoleBody();
-			Console.SetCursorPosition(0, 5);
-			Console.WriteLine(CenterLine("---- Hauptmenü ----"));
-			Console.WriteLine(CenterLine("1. Shiff auswählen"));
-			Console.WriteLine(CenterLine("2. Beenden"));
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine("---- Shiff auswählen ----"));
+			var i = 1;
+			foreach (var ship in ships)
+			{
+				Console.WriteLine(CenterLine($"{i}. {ship.ShipName}"));
+				i++;
+			}
+
 			return GetAnswerInt(1, 2);
 		}
 
-		public string SelectPlanet(List<SpaceDealerService.Planet> planets)
+		public string ShowPlanetSelection(RepeatedField<SpaceDealerService.Planet> planets)
 		{
 			ClearConsoleBody();
-			Console.SetCursorPosition(0, 5);
+			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- Ziel planet wählen ----"));
 			var i = 0;
 			foreach (var p in planets)
@@ -150,6 +164,8 @@ namespace SpaceDealerUI
 			{
 				Console.Write(CenterLine($"Bitte wählen [{min}-{max}]: "));
 				var row = Console.ReadLine();
+				if (IsMainMenu(row))
+					return 0;
 				if (int.TryParse(row, out int mnuItem))
 				{
 					if (mnuItem >= 0 && mnuItem <= max)
@@ -161,6 +177,28 @@ namespace SpaceDealerUI
 			} while (true);
 		}
 
+		private bool IsMainMenu(string row)
+		{
+			if (row.Equals("h", StringComparison.InvariantCultureIgnoreCase))
+			{
+				ShowMainSelection();
+				return true;
+			}
+			if (row.Equals("f", StringComparison.InvariantCultureIgnoreCase))
+			{
+				ShowShipSelection(Program.ThePlayer.Ships);
+				return true;
+			}
+			if (row.Equals("m", StringComparison.InvariantCultureIgnoreCase))
+			{
+				ShowPlanetSelection(Program.AllPlanets);
+				return true;
+			}
+			return false;
+		}
+
+		
+
 		public int SelectSellOrBuy()
 		{
 			ClearConsoleBody();
@@ -171,7 +209,7 @@ namespace SpaceDealerUI
 			return GetAnswerInt(1, 2);
 		}
 
-		public ProductInStock SelectProductToSell(Ship ship, Planet planet)
+		public SpaceDealerModels.Units.ProductInStock SelectProductToSell(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 5);
@@ -191,7 +229,7 @@ namespace SpaceDealerUI
 			return planet.Market.ProductsNeeded[selected - 1];
 		}
 
-		public ProductInStock Buy(Ship ship, Planet planet)
+		public SpaceDealerModels.Units.ProductInStock Buy(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 5);
@@ -211,17 +249,17 @@ namespace SpaceDealerUI
 			return planet.Market.ProductsNeeded[selected - 1];
 		}
 
-		public double BuyProduct(Ship ship, Planet planet, ProductInStock selectedProduct)
+		public double BuyProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
 		{
 			throw new NotImplementedException();
 		}
 
-		public double SellProduct(Ship ship, Planet planet, ProductInStock selectedProduct)
+		public double SellProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
 		{
 			throw new NotImplementedException();
 		}
 
-		internal Ship SelectShip(Ships fleet)
+		internal SpaceDealerModels.Units.Ship SelectShip(Ships fleet)
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 5);

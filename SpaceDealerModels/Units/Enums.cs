@@ -6,12 +6,27 @@
 		Real = 1
 	}
 
+	public enum JourneyState
+	{
+		Travelling = 0,
+		Arrived = 1,
+		Interrupted = 2,
+		NewPlanetInRange = 3,
+		OtherShipInRange = 4
+	}
+
 	public enum ShipState
 	{
-		InSpaceDock = 0,
-		Moving = 1,
-		UnderAttack = 4,
-		InSpacePit = 8
+		Idle = 0,
+		InJourney = 1,
+		UnderConstruction = 2
+	}
+
+	public enum InterruptionType
+	{
+		AttackByPirates = 0,
+		OtherShipWantsToTrade = 1,
+		DistressSignal = 2
 	}
 
 	public enum CargoBaySize

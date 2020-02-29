@@ -77,8 +77,7 @@ namespace SpaceDealerService
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
 			if(p==null)
 				return Task.FromResult(new PlayerReply { Player = null });
-			//var replyPlayer = new Player { Name = p.Name, Ships = p.Fleet }
-			return Task.FromResult(new PlayerReply { Player = null });
+			return Task.FromResult(new PlayerReply { Player = ProtoBuConverter.ConvertToPlayer(p) });
 		}
 
 		public override Task<ShipReply> GetShip(ShipRequest request, ServerCallContext context)

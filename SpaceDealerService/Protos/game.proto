@@ -31,6 +31,21 @@ message PlayersReply {
     repeated Player players = 1;
 }
 
+enum ShipState {
+    Idle = 0;
+    ShipIsTravelling = 1;
+    UnderConstruction = 2;
+}
+
+
+enum JourneyState {
+    Travelling = 0;
+    Arrived = 1;
+    Interrupted = 2;
+    NewPlanetInRange = 3;
+    OtherShipInRange = 4;
+}
+
 message PlayerRequest {
     string playerName = 1;
 }
@@ -44,6 +59,7 @@ message Journey {
     Coordinates currentSector = 2;
     Planet departure = 3;
     Planet destination = 4;
+    JourneyState State = 5;
 }
 
 message ShipRequest {
@@ -105,6 +121,7 @@ message Ship {
    Journey Cruise = 2;
    double CargoSize = 3;
    Load CargoLoad = 4;
+   ShipState State = 5;
 }
 
 message EmptyRequest {

@@ -8,6 +8,8 @@ namespace SpaceDealerModels.Units
 	{
 		public event ArrivedAtDestination Arrived;
 		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, Ship ship);
+		public event JourneyInterrupted Interrupted;
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Coordinates newPosition);
 
 		public Journey Cruise { get; set; }
 		public ShipState CurrentState { get; set; }
@@ -15,18 +17,28 @@ namespace SpaceDealerModels.Units
 		public ProductsInStock CurrentLoad { get; set; }
 		public ShipFeatures Features {get; set;}
 		public Ships Parent { get; set; }
+		public ShipState State { get; set; }
 
 		public Ship(string name, List<KeyValuePair<string, string>> properties, Planet homeplanet) : base(name, properties)
 		{
-			Features = new ShipFeatures();
+			Features = new ShipFeatures
+			{
+				new SignalRangeFeature("Signal Reichweite", new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Reichweite [Sektoren]", "+1") })
+			};
 			CurrentLoad = new ProductsInStock();
-			Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector);
+			Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
 		}
 
 		public void StartCruise(Planet source, Planet destination)
 		{
-			Cruise = new Journey(source, destination, source.Sector);
+			Cruise = new Journey(source, destination, source.Sector, this);
 			Cruise.Arrived += Cruise_Arrived;
+			Cruise.Interrupted += Cruise_Interrupted;
+		}
+
+		private void Cruise_Interrupted(InterruptionType interruptionType, string message, Coordinates newPosition)
+		{
+			Interrupted?.Invoke(interruptionType, message, newPosition);
 		}
 
 		private void Cruise_Arrived(string message, Coordinates newPosition)
@@ -41,7 +53,7 @@ namespace SpaceDealerModels.Units
 
 		public Result Load(ProductsInStock productsToLoad)
 		{
-			if (CurrentState != ShipState.InSpaceDock)
+			if (CurrentState != ShipState.Idle)
 			{
 				return new Result(ResultState.Failed, "Das Schiff kann momentan nicht beladen werden.");
 			}
@@ -72,7 +84,7 @@ namespace SpaceDealerModels.Units
 				load.Update();
 			}
 			//Evaluate current position
-				Cruise.Update();
+			Cruise.Update();
 		}
 	}
 }

@@ -12,6 +12,46 @@ namespace SpaceDealerModels.Units
 		}
 	}
 
+	public class AdvancedWarpFeature : ShipFeature
+	{
+		public double WarpFactor { get; set; }
+
+		public AdvancedWarpFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		{
+			WarpFactor = 1.2;
+		}
+	}
+
+	public class ReplicatorFeature : ShipFeature
+	{
+		public bool Replicator { get; set; }
+
+		public ReplicatorFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		{
+			Replicator = true;
+		}
+	}
+
+	public class AdvancedShieldsFeature : ShipFeature
+	{
+		public double ShieldFactor { get; set; }
+
+		public AdvancedShieldsFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		{
+			ShieldFactor = 1.5;
+		}
+	}
+
+	public class SignalRangeFeature : ShipFeature
+	{
+		public int SectorRange { get; set; }
+
+		public SignalRangeFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		{
+			SectorRange = 1;
+		}
+	}
+
 	public class ShipFeature : BaseUnit
 	{
 

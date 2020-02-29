@@ -1,28 +1,43 @@
-﻿using Grpc.Net.Client;
+﻿using Google.Protobuf.Collections;
+using Grpc.Net.Client;
 using SpaceDealerService;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SpaceDealerUI
 {
 	class Program
 	{
+		public static Player ThePlayer { get; set; }
+		public static RepeatedField<Planet> AllPlanets { get; set; }
+		public static Menu TheMenu { get; set; }
+
         static async Task Main(string[] args)
         {
-			var planets = GameProxy.GetAllPlanets().Result;
-			var menu = new Menu();
-			menu.ShowStartupScreen();
-			var newPlayer = GameProxy.AddPlayer(menu.ShowNewPlayer()).Result;
-			var shipName = menu.ShowNewShip(newPlayer);
-			var newShip = GameProxy.AddShip(newPlayer.Name, shipName).Result;
-			var selectedPlanet = menu.SelectPlanet(planets);
-			var result = GameProxy.StartCruise(newPlayer.Name, newShip.ShipName, selectedPlanet).Result;
+			AllPlanets = GameProxy.GetAllPlanets().Result;
+			TheMenu = new Menu();
+			TheMenu.Answered += Menu_Answered;
+			TheMenu.ShowStartupScreen();
+			ThePlayer = GameProxy.AddPlayer(TheMenu.ShowNewPlayer()).Result;
+			var shipName = TheMenu.ShowNewShip(ThePlayer);
+			var newShip = GameProxy.AddShip(ThePlayer.Name, shipName).Result;
+			var selectedPlanet = TheMenu.ShowPlanetSelection(AllPlanets);
+
+			ThePlayer = GameProxy.GetPlayer(ThePlayer.Name).Result;
+
+			var result = GameProxy.StartCruise(ThePlayer.Name, newShip.ShipName, selectedPlanet).Result;
 
 			if(result==true)
 				Console.WriteLine($"{newShip.ShipName} auf dem Weg nach {selectedPlanet}.");
 			Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
+
+		private static void Menu_Answered(string answer)
+		{
+			
+		}
 
 		//public void ShowMainMenu(Player player)
 		//{
