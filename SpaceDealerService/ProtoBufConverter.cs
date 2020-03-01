@@ -6,7 +6,7 @@ using SpaceDealerModels;
 
 namespace SpaceDealerService
 {
-	public static class ProtoBuConverter
+	public static class ProtoBufConverter
 	{
 		public static ProductInStock ConvertToProductInStock(SpaceDealerModels.Units.ProductInStock uPis)
 		{
@@ -63,22 +63,66 @@ namespace SpaceDealerService
 
 		public static Journey ConvertToJourney(SpaceDealerModels.Units.Journey uJourny)
 		{
-			return new Journey
+			var ret = new Journey
 			{
 				CurrentDistance = uJourny.CurrentDistanceToDestination,
 				CurrentSector = ConvertToCoordinates(uJourny.CurrentSector),
-				Departure = ConvertToPlanet(uJourny.Depature),
+				Departure = ConvertToPlanet(uJourny.Departure),
 				Destination = ConvertToPlanet(uJourny.Destination)
 			};
+
+			if (uJourny.NewlyDiscoveredPlanet != null)
+			{
+				ret.NewPlanetDiscovered = ConvertToPlanet(uJourny.NewlyDiscoveredPlanet);
+			}
+
+			if (uJourny.EnemyBattleShip != null)
+			{
+				ret.EnemyBattleShip = ConvertToPirateShip(uJourny.EnemyBattleShip);
+			}
+
+			return ret;
 		}
+
+		public static UpdateInfo ConvertToUpdateInfo(SpaceDealerModels.Units.UpdateInfo uInfo)
+		{
+			var ret = new UpdateInfo();
+			ret.Ship = ConvertToShip(uInfo.TheShip);
+			ret.UpdateState = (UpdateStates)uInfo.UpdateState;
+			return ret;
+		}
+
+		public static PirateShip ConvertToPirateShip(SpaceDealerModels.Units.PirateShip pShip)
+		{
+			var ret = new PirateShip
+			{
+				ShipName = pShip.Name,
+				Shields = pShip.Shields,
+				Hull = pShip.Hull
+			};
+			return ret;
+		}
+
 		public static Ship ConvertToShip(SpaceDealerModels.Units.Ship uShip)
 		{
 			var ret = new Ship
 			{
 				ShipName = uShip.Name,
-				Cruise = ConvertToJourney(uShip.Cruise),
-				CargoSize = uShip.CargoSize
+				CargoSize = uShip.CargoSize,
+				Shields = uShip.Shields,
+				Hull = uShip.Hull,
 			};
+
+			if (uShip.CurrentPlanet != null)
+			{
+				ret.CurrentPlanet = ConvertToPlanet(uShip.CurrentPlanet);
+			}
+
+			if(uShip.Cruise!=null)
+			{
+				ret.Cruise = ConvertToJourney(uShip.Cruise);
+			}
+
 			var pload = new Load();
 			if (uShip.CurrentLoad.Any())
 			{
@@ -95,6 +139,8 @@ namespace SpaceDealerService
 		{
 			var ret = new Player();
 			ret.Name = uP.Name;
+			ret.Credits = uP.Credits;
+			ret.HomePlanet = uP.HomePlanet.Name;
 			foreach (var sh in uP.Fleet)
 			{
 				ret.Ships.Add(ConvertToShip(sh));

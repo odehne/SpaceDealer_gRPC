@@ -36,6 +36,15 @@ namespace SpaceDealerUI
 			return null;
 		}
 
+		public static async Task<RepeatedField<UpdateInfo>> GetUpdates(string playerName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var reply = await client.GetUpdatesAsync(new PlayerRequest { PlayerName = playerName });
+			return reply.UpdateInfos;
+		}
+
+
 		public static async Task<Player> GetPlayer(string playerName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);

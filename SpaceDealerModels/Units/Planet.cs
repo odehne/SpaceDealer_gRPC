@@ -8,17 +8,17 @@ namespace SpaceDealerModels.Units
 		public Coordinates Sector { get; set; }
 		public Market Market { get; set; }
 		public Industries Industries { get; set; }
-
-		public Planet(string name, List<KeyValuePair<string, string>> properties, Coordinates position, Market market, Industries industries) : base(name, properties)
+		
+		public Planet(string name, Coordinates position, Market market, Industries industries) : base(name)
 		{
 			Sector = position;
 			Market = market;
 			Industries = industries;
 		}
 
-		public Planet(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		public Planet(string name) : base(name)
 		{
-			Market = new Market($"{Name}.Market", new List<KeyValuePair<string, string>>(), this);
+			Market = new Market($"{Name}.Market", this);
 			Industries = new Industries(this);
 		}
 

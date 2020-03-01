@@ -5,12 +5,12 @@ namespace SpaceDealerModels.Units
 	public class Market : BaseUnit
 	{
 		public Planet Parent { get; set; }
-		//public ProductsInStock ProductsToSell { get; set; }
 		public ProductsInStock ProductsNeeded { get; set; }
 
-		public Market(string name, List<KeyValuePair<string, string>> properties, Planet parent) : base(name, properties)
+		public Market(string name, Planet parent) : base(name)
 		{
 			Parent = parent;
+			ProductsNeeded = new ProductsInStock();
 		}
 
 		public ProductsInStock GetProductsInStock()

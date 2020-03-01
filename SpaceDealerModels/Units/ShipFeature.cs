@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SpaceDealer.Enums;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
@@ -11,51 +12,23 @@ namespace SpaceDealerModels.Units
 		}
 	}
 
-	public class AdvancedWarpFeature : ShipFeature
+	public class ShipFeature 
 	{
-		public double WarpFactor { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public int AttackBonus { get; set; }
+		public int DefenceBonus{ get; set; }
+		public int RangeBonus { get; set; }
+		public int SpeedBonus { get; set; }
 
-		public AdvancedWarpFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		public ShipFeature(string name, string description, int attackBonus, int defenceBonus, int rangeBonus, int speedBonus)
 		{
-			WarpFactor = 1.2;
-		}
-	}
-
-	public class ReplicatorFeature : ShipFeature
-	{
-		public bool Replicator { get; set; }
-
-		public ReplicatorFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
-		{
-			Replicator = true;
-		}
-	}
-
-	public class AdvancedShieldsFeature : ShipFeature
-	{
-		public double ShieldFactor { get; set; }
-
-		public AdvancedShieldsFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
-		{
-			ShieldFactor = 1.5;
-		}
-	}
-
-	public class SignalRangeFeature : ShipFeature
-	{
-		public int SectorRange { get; set; }
-
-		public SignalRangeFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
-		{
-			SectorRange = 1;
-		}
-	}
-
-	public class ShipFeature : BaseUnit
-	{
-
-		public ShipFeature(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
-		{
+			Name = name;
+			Description = description;
+			AttackBonus= attackBonus;
+			RangeBonus = rangeBonus;
+			DefenceBonus = defenceBonus;
+			SpeedBonus = speedBonus;
 		}
 
 		public override string ToString()
@@ -63,9 +36,5 @@ namespace SpaceDealerModels.Units
 			return base.ToString();
 		}
 
-		public override void Update()
-		{
-			base.Update();
-		}
 	}
 }

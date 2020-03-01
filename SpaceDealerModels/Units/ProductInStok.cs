@@ -10,7 +10,7 @@ namespace SpaceDealerModels.Units
 		public double PricePerTon { get; set; }
 
 
-		public ProductInStock(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		public ProductInStock(string name) : base(name)
 		{
 			
 		}
@@ -25,7 +25,7 @@ namespace SpaceDealerModels.Units
 			return Amount * Weight * PricePerTon;
 		}
 
-		public ProductInStock(string name, List<KeyValuePair<string, string>> properties, double perRound, double totalAtStart, double weight, double suggestedRetailPrice) : base(name, properties)
+		public ProductInStock(string name, double perRound, double totalAtStart, double weight, double suggestedRetailPrice) : base(name)
 		{
 			Weight = weight;
 			Amount = totalAtStart;

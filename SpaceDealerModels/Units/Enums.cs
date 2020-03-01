@@ -22,9 +22,18 @@
 		UnderConstruction = 2
 	}
 
+	public enum UpdateStates
+	{
+		ArrivedOnTarget = 0,
+		UnderAttack = 1,
+		OnRescueMission = 2,
+		ShipIsGettingRepaired = 3,
+		NewPlanetDiscovered = 4
+	}
+
 	public enum InterruptionType
 	{
-		AttackByPirates = 0,
+		AttackedByPirates = 0,
 		OtherShipWantsToTrade = 1,
 		DistressSignal = 2,
 		DiscoveredNewPlanet = 3

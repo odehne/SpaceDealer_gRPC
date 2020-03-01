@@ -11,8 +11,6 @@ namespace SpaceDealerUI
 		public event AnswerRecieved Answered;
 		public delegate void AnswerRecieved(string answer);
 
-		public SpaceDealerModels.Units.Player UiPlayer { get; set; }
-
 		public void ShowStartupScreen()
 		{
 			Console.Clear();
@@ -26,16 +24,19 @@ namespace SpaceDealerUI
 			Console.WriteLine();
 		}
 
-		public void ShowPlayerStats(SpaceDealerModels.Units.Player player)
+		public void ShowPlayerStats(string playerName)
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
+			var player = GameProxy.GetPlayer(playerName).Result;
+
 			Console.WriteLine($"Spieler: {player.Name}\tHeimat Planet:{player.HomePlanet}\tCredits:${player.Credits}");
-			foreach (var ship in player.Fleet)
+			foreach (var ship in player.Ships)
 			{
-				Console.WriteLine($"Schiff: {ship.Name}\t{ship.Cruise.Depature} --> {ship.Cruise.Destination}\tDistanz: {ship.Cruise.CurrentDistanceToDestination.ToDecimalString()} parsec\tSektor: {ship.Cruise.CurrentSector.ToString()}");
+				Console.WriteLine($"Schiff: {ship.ShipName}\t{ship.Cruise.Departure} --> {ship.Cruise.Destination}\tDistanz: {ship.Cruise.CurrentDistance.ToDecimalString()} parsec\tSektor: {ship.Cruise.CurrentSector.ToString()}");
 			}
 		}
+
 
 		private void ClearConsoleBody()
 		{
@@ -60,6 +61,82 @@ namespace SpaceDealerUI
 				}
 			}
 			return tabs + v;
+		}
+
+		internal void ShowPlanet(SpaceDealerService.Ship ship)
+		{
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"---- Willkommen auf {ship.CurrentPlanet.PlanetName} ----"));
+			Console.WriteLine();
+			foreach (var indi in ship.CurrentPlanet.Industries)
+			{
+				Console.WriteLine(CenterLine($"Der Planet besitzt die folgenden Industrie {indi.IndustryName}."));
+				Console.WriteLine(CenterLine($"Die folgenden Produkte werden produziert."));
+				foreach (var item in indi.GeneratedProducts)
+				{
+					Console.WriteLine(CenterLine($"Produkt: {item.ProductName}"));
+				}
+				Console.WriteLine(CenterLine("Die folgenden Produkte werden benötigt."));
+				foreach (var item in indi.ProductsNeeded)
+				{
+					Console.WriteLine(CenterLine($"Industrie: {item.ProductName}"));
+				}
+			}
+			Console.WriteLine();
+			Console.WriteLine(CenterLine("1. Aktuelle Informationen"));
+			Console.WriteLine(CenterLine("2. Neues Ziel"));
+			Console.WriteLine(CenterLine("3. Marktplatz"));
+			Console.WriteLine(CenterLine("4. Anderes Schiff wählen"));
+			var answer = GetAnswerInt(1, 4);
+
+			switch (answer)
+			{
+				case 1:
+					ShowInfo();
+					break;
+				case 2:
+					ShowPlanetSelection(Program.AllPlanets);
+					break;
+				case 3:
+					ShowMarket(ship.CurrentPlanet);
+					break;
+				case 4:
+					ShowShipSelection(Program.ThePlayer.Ships);
+					break;
+			}
+		}
+
+		private void ShowMarket(SpaceDealerService.Planet currentPlanet)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void ShowInfo()
+		{
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"Spieler: {Program.ThePlayer} Kontostand: {Program.ThePlayer.Credits}"));
+			Console.WriteLine(CenterLine("Schiffe im Besitz."));
+			foreach (var ship in Program.ThePlayer.Ships)
+			{
+				Console.WriteLine(CenterLine($"Shiff: {ship.ShipName} Schilde: {ship.Shields} Hülle: {ship.Hull} Aktuelle Position: {ship.CurrentPlanet.PlanetName}"));
+			}
+			Console.WriteLine();
+			Console.WriteLine(CenterLine("1. Zurück"));
+			var i = GetAnswerInt(1, 1);
+			if (i == 1)
+				ShowMainSelection();
+		}
+
+		internal void ShowNewPlanet(SpaceDealerService.Ship ship)
+		{
+			throw new NotImplementedException();
+		}
+
+		internal void ShowAttackMenu(SpaceDealerService.Ship ship)
+		{
+			throw new NotImplementedException();
 		}
 
 		public string ShowNewShip(SpaceDealerService.Player player)
@@ -105,14 +182,13 @@ namespace SpaceDealerUI
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- Hauptmenü ----"));
-			Console.WriteLine(CenterLine("1. Neues Ziel"));
-			Console.WriteLine(CenterLine("2. Marktplatz"));
+			Console.WriteLine(CenterLine("1. Aktuelle Informationen"));
+			Console.WriteLine(CenterLine("2. Neues Ziel"));
 			Console.WriteLine(CenterLine("3. Raumdock"));
 			Console.WriteLine(CenterLine("4. Anderes Schiff wählen"));
 			return GetAnswerInt(1, 4);
 		}
 
-	
 		public int ShowShipSelection(RepeatedField<SpaceDealerService.Ship> ships)
 		{
 			ClearConsoleBody();
@@ -125,7 +201,7 @@ namespace SpaceDealerUI
 				i++;
 			}
 
-			return GetAnswerInt(1, 2);
+			return GetAnswerInt(1, i);
 		}
 
 		public string ShowPlanetSelection(RepeatedField<SpaceDealerService.Planet> planets)

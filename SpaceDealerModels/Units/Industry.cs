@@ -9,7 +9,7 @@ namespace SpaceDealerModels.Units
 		public ProductsInStock GeneratedProducts { get; set; }
 		public ProductsInStock ProductsNeeded { get; set; }
 
-		public Industry(string name, List<KeyValuePair<string, string>> properties) : base(name, properties)
+		public Industry(string name) : base(name)
 		{
 			GeneratedProducts = new ProductsInStock();
 			ProductsNeeded = new ProductsInStock();

@@ -27,8 +27,26 @@ namespace SpaceDealerService
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
 			}
-			ship.StartCruise(ship.Cruise.Depature, planet);
+
+			ship.StartCruise(ship.CurrentPlanet, planet);
 			return Task.FromResult(new CruiseReply { OnItsWay = true });
+		}
+
+		public override Task<UpdateReply> GetUpdates(PlayerRequest request, ServerCallContext context)
+		{
+			var reply = new UpdateReply();
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+
+			if (player.UpdateQueue != null)
+			{
+				while (player.UpdateQueue.Count > 0)
+				{
+					var info = (SpaceDealerModels.Units.UpdateInfo)player.UpdateQueue.Dequeue();
+					reply.UpdateInfos.Add(ProtoBufConverter.ConvertToUpdateInfo(info));
+				}
+			}
+
+			return Task.FromResult(new UpdateReply(reply));
 		}
 
 		public override Task<ShipsReply> GetShips(ShipsRequest request, ServerCallContext context)
@@ -38,7 +56,7 @@ namespace SpaceDealerService
 
 			foreach (var ship in player.Fleet)
 			{
-				ships.Ships.Add(ProtoBuConverter.ConvertToShip(ship));
+				ships.Ships.Add(ProtoBufConverter.ConvertToShip(ship));
 			}
 			return Task.FromResult(new ShipsReply(ships));
 		}
@@ -48,7 +66,7 @@ namespace SpaceDealerService
 			var ps = new PlanetsReply();
 			foreach (var planet in Program.TheGame.Galaxy)
 			{
-				ps.Planets.Add(ProtoBuConverter.ConvertToPlanet(planet));
+				ps.Planets.Add(ProtoBufConverter.ConvertToPlanet(planet));
 			}
 			return Task.FromResult(new PlanetsReply(ps));
 		}
@@ -56,18 +74,18 @@ namespace SpaceDealerService
 		public override Task<PlayerReply> AddPlayer(PlayerRequest request, ServerCallContext context)
 		{
 			var g = Program.TheGame;
-			var player = new SpaceDealerModels.Units.Player(request.PlayerName, null, g.Galaxy.GetPlanetByName("erde"));
-			g.FleetCommanders.Add(player);
-			return Task.FromResult(new PlayerReply { Player = ProtoBuConverter.ConvertToPlayer(player) });
+			var player = new SpaceDealerModels.Units.Player(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy);
+			g.FleetCommanders.AddPlayer(player);
+			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(player) });
 		}
 
 		public override Task<ShipReply> AddShip(ShipRequest request, ServerCallContext context)
 		{
 			var g = Program.TheGame;
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var s = new SpaceDealerModels.Units.Ship(request.ShipName, null, p.HomePlanet, Repository.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
-			p.Fleet.Add(s);
-			return Task.FromResult(new ShipReply { Ship = ProtoBuConverter.ConvertToShip(s) });
+			var s = new SpaceDealerModels.Units.Ship(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
+			p.Fleet.AddShip(s);
+			return Task.FromResult(new ShipReply { Ship = ProtoBufConverter.ConvertToShip(s) });
 		}
 
 		public override Task<PlayerReply> GetPlayer(PlayerRequest request, ServerCallContext context)
@@ -76,7 +94,7 @@ namespace SpaceDealerService
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
 			if(p==null)
 				return Task.FromResult(new PlayerReply { Player = null });
-			return Task.FromResult(new PlayerReply { Player = ProtoBuConverter.ConvertToPlayer(p) });
+			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(p) });
 		}
 
 		public override Task<ShipReply> GetShip(ShipRequest request, ServerCallContext context)
@@ -88,7 +106,7 @@ namespace SpaceDealerService
 
 			var ship = p.Fleet.GetShipByName(request.ShipName);
 
-			return Task.FromResult(new ShipReply { Ship = ProtoBuConverter.ConvertToShip(ship) }); 
+			return Task.FromResult(new ShipReply { Ship = ProtoBufConverter.ConvertToShip(ship) }); 
 		}
 
 		public override Task<PlayersReply> GetPlayers(EmptyRequest request, ServerCallContext context)

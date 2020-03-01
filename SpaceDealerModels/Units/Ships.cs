@@ -1,10 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using SpaceDealer.Enums;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
 	public class Ships : List<Ship>
 	{
+		public event ArrivedAtDestination Arrived;
+		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, Ship ship);
+		public event JourneyInterrupted Interrupted;
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition);
+
+
 		public Player Parent { get; set; }
 
 		public Ships(Player parent)
@@ -30,8 +37,20 @@ namespace SpaceDealerModels.Units
 			{
 				newShip.Parent = this;
 				Add(newShip);
+				newShip.Interrupted += NewShip_Interrupted;
+				newShip.Arrived += NewShip_Arrived;
 			}
 			return false;
+		}
+
+		private void NewShip_Arrived(string message, Coordinates newPosition, Ship ship)
+		{
+			Arrived?.Invoke(message, newPosition, ship);
+		}
+
+		private void NewShip_Interrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition)
+		{
+			Interrupted?.Invoke(interruptionType, message, ship, newPosition);
 		}
 
 		public override string ToString()

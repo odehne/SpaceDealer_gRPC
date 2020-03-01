@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
 	public class Planets : List<Planet>
 	{
+		
 		public Planet GetPlanetByName(string planetName)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(planetName, System.StringComparison.InvariantCultureIgnoreCase));

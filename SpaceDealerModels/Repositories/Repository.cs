@@ -1,4 +1,5 @@
-﻿using SpaceDealerModels.Units;
+﻿using SpaceDealer.Enums;
+using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,11 @@ namespace SpaceDealerModels.Repositories
 		public static List<string> ShipNames { get; set; }
 		public static List<string> PlanetNames { get; set; }
 
-		public static ShipFeatures Library { get; set; } 
+		public static ShipFeatures Library { get; set; }
+		public static Industries IndustryLibrary { get; set; }
 
 		public static ProductsInStock ProductLibrary { get; set; }
+		//public static Planets PlanetLibrary { get; set; }
 
 		public static void Init()
 		{
@@ -21,6 +24,8 @@ namespace SpaceDealerModels.Repositories
 			NewSpaceShipNames();
 			NewPlanetNames();
 			NewProductLibary();
+			NewIndustryLibrary();
+			//NewPlanetLibrary();
 		}
 
 		private static void NewPlanetNames()
@@ -117,8 +122,63 @@ namespace SpaceDealerModels.Repositories
 		public static string GetRandomPlanetName()
 		{
 			Random random = new Random();
-			var i = random.Next(0, ShipNames.Count - 1);
+			var i = random.Next(0, PlanetNames.Count - 1);
 			return ShipNames[i];
+		}
+
+		public static Planet GetRandomPlanet(Coordinates sector)
+		{
+			var planetName = GetRandomPlanetName();
+			var p = new Planet(planetName);
+			p.Market = new Market("Marktplatz von " + planetName, p);
+			p.Industries = new Industries(p);
+			p.Sector = sector;
+			p.Industries.Add(GetRandomIndustry());
+			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
+			return p;
+		}
+
+		public static void NewIndustryLibrary()
+		{
+			IndustryLibrary = new Industries();
+			var weltraumSchrott = IndustryLibrary.AddIndustry("Weltraumschrott Sammler");
+				weltraumSchrott.GeneratedProducts.AddProduct(Repository.GetProductByName("Tie-Fighter Flügel"));
+				weltraumSchrott.GeneratedProducts.AddProduct(Repository.GetProductByName("Wasser Evaporatoren"));
+				weltraumSchrott.GeneratedProducts.AddProduct(Repository.GetProductByName("Sternen-Zerstörer Triebwerke"));
+				weltraumSchrott.GeneratedProducts.AddProduct(Repository.GetProductByName("Cyberkristalle"));
+			var moonFactory = IndustryLibrary.AddIndustry("Raumschiff Fabrik");
+				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
+				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
+				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
+				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Sensor-Einheit"));
+				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Board-Kanone"));
+			var farming = IndustryLibrary.AddIndustry("Landwirtschaft");
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Kuh-Milch"));
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Mais"));
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Rindfleisch"));
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Reis"));
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Soya"));
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Orangensaft"));
+				farming.GeneratedProducts.AddProduct(Repository.GetProductByName("Bacon"));
+			var fishing = IndustryLibrary.AddIndustry("Fishfang");
+				fishing.GeneratedProducts.AddProduct(Repository.GetProductByName("Schalentiere"));
+				fishing.GeneratedProducts.AddProduct(Repository.GetProductByName("Calmare"));
+				fishing.GeneratedProducts.AddProduct(Repository.GetProductByName("Fische"));
+				fishing.GeneratedProducts.AddProduct(Repository.GetProductByName("Algen/Seeigel"));
+			var musik = IndustryLibrary.AddIndustry("Musikinstrumente");
+				musik.GeneratedProducts.AddProduct(Repository.GetProductByName("Gitarren"));
+				musik.GeneratedProducts.AddProduct(Repository.GetProductByName("Holzblasinstrumente"));
+				musik.GeneratedProducts.AddProduct(Repository.GetProductByName("Blechblasinstrumente"));
+				musik.GeneratedProducts.AddProduct(Repository.GetProductByName("Streichinstrumente"));
+				musik.GeneratedProducts.AddProduct(Repository.GetProductByName("Schlagzeug"));
+			var werkzeuge = IndustryLibrary.AddIndustry("Werkzeuge");
+				werkzeuge.GeneratedProducts.AddProduct(Repository.GetProductByName("Wasser Evaporatoren"));
+				werkzeuge.GeneratedProducts.AddProduct(Repository.GetProductByName("Bohrmaschinen"));
+				werkzeuge.GeneratedProducts.AddProduct(Repository.GetProductByName("Abraumwerkzeuge"));
+				werkzeuge.GeneratedProducts.AddProduct(Repository.GetProductByName("Anti-Schwerkraft Generator"));
 		}
 
 		public static ProductInStock GetRandomProduct()
@@ -126,6 +186,13 @@ namespace SpaceDealerModels.Repositories
 			Random random = new Random();
 			var i = random.Next(0, ShipNames.Count - 1);
 			return ProductLibrary[i];
+		}
+
+		public static Industry GetRandomIndustry()
+		{
+			Random random = new Random();
+			var i = random.Next(0, IndustryLibrary.Count - 1);
+			return IndustryLibrary[i];
 		}
 
 		public static ProductInStock GetProductByName(string name)
@@ -136,46 +203,61 @@ namespace SpaceDealerModels.Repositories
 		private static void NewProductLibary()
 		{
 			ProductLibrary = new ProductsInStock();
-			ProductLibrary.AddProduct("Kuh-Milch", null, 0.2, 1.0, 1.0, 180);
-			ProductLibrary.AddProduct("Mais", null, 0.2, 1.0, 1.0, 165.0);
-			ProductLibrary.AddProduct("Weizen", null, 0.2, 1.0, 1.0, 171.58);
-			ProductLibrary.AddProduct("Rindfleisch", null, 0.1, 0.5, 1.0, 3750.0);
-			ProductLibrary.AddProduct("Schweinefleisch", null, 0.1, 0.5, 1.0, 1700.0);
-			ProductLibrary.AddProduct("Reis", null, 0.1, 0.5, 1.0, 240.00);
-			ProductLibrary.AddProduct("Soya", null, 0.1, 0.5, 1.0, 379.54);
-			ProductLibrary.AddProduct("Öl", null, 1, 15, 1, 332.74);
-			ProductLibrary.AddProduct("Braunkohle", null, 1, 7, 1, 40.0);
-			ProductLibrary.AddProduct("Solarpanele", null, 0.5, 10, 1, 8780.0);
-			ProductLibrary.AddProduct("Orangensaft", null, 0.1, 0.5, 1, 1900.0);
-			ProductLibrary.AddProduct("Bacon", null, 0.1, 0.5, 1, 2800.0);
-			ProductLibrary.AddProduct("Kleines Raumschiff Kapazität (30t)", null, .1, 0, 50.0, 13000000000.0);
-			ProductLibrary.AddProduct("Mittleres Raumschiff Kapazität (60t)", null, .05, 0, 100.0, 17000000000.0);
-			ProductLibrary.AddProduct("Kreuzer (100t) +Bewaffnung", null, .02, 0, 150.0, 23000000000.0);
-			ProductLibrary.AddProduct("Sensor-Einheit", null, .2, 0, 1, 7996.0);
-			ProductLibrary.AddProduct("Board-Kanone", null, .2, 0, 1, 79960.0);
-			ProductLibrary.AddProduct("Tie-Fighter Flügel", null, .1, .1, 1, 2000.0);
-			ProductLibrary.AddProduct("Wasser Evaporatoren", null, .3, 0, 1, 17456.0);
-			ProductLibrary.AddProduct("Sternen-Zerstörer Triebwerke", null, .3, 0, 700, 450000000000.0);
-			ProductLibrary.AddProduct("Cyberkristalle", null, .001, .1, .1, 450000000);
-			ProductLibrary.AddProduct("Medizinische Produkte", null, .001, 2, .01, 29000.0);
-			ProductLibrary.AddProduct("Anti-Schwerkraft Generator", null, .3, 0, 0.5, 350000.0);
-			ProductLibrary.AddProduct("Musikinstrumente", null, 0.2, 2, 0.05, 87400.0);
-			ProductLibrary.AddProduct("Bohrmaschinen", null, 0.1, 1, 0.05, 87500.0);
-			ProductLibrary.AddProduct("Fische", null, 1, 10, 1, 5750.0);
-			ProductLibrary.AddProduct("Schalentiere", null, 1, 10, 1, 6750.0);
-			ProductLibrary.AddProduct("Schnecken", null, 1, 1, 1, 3750.0);
-			ProductLibrary.AddProduct("Wein", null, 1, 1, 1, 3200.0);
-			ProductLibrary.AddProduct("Bier", null, 1, 1, 1, 2900.0);
-			ProductLibrary.AddProduct("Wasserbüffel", null, 1, 1, 1, 2100.0);
-			ProductLibrary.AddProduct("Pistolen", null, 1, 1, 1, 47000.0);
+			ProductLibrary.AddProduct("Kuh-Milch", 0.2, 1.0, 1.0, 0.18);
+			ProductLibrary.AddProduct("Mais", 0.2, 1.0, 1.0, 0.16);
+			ProductLibrary.AddProduct("Weizen", 0.2, 1.0, 1.0, 0.17);
+			ProductLibrary.AddProduct("Rindfleisch", 0.1, 0.5, 1.0, 3.75);
+			ProductLibrary.AddProduct("Schweinefleisch", 0.1, 0.5, 1.0, 1.7);
+			ProductLibrary.AddProduct("Reis", 0.1, 0.5, 1.0, 0.24);
+			ProductLibrary.AddProduct("Soya", 0.1, 0.5, 1.0, 0.37);
+			ProductLibrary.AddProduct("Öl", 1, 15, 1, 0.33);
+			ProductLibrary.AddProduct("Braunkohle", 1, 7, 1, 0.04);
+			ProductLibrary.AddProduct("Solarpanele", 0.5, 10, 1, 8.78);
+			ProductLibrary.AddProduct("Orangensaft", 0.1, 0.5, 1, 1.9);
+			ProductLibrary.AddProduct("Bacon", 0.1, 0.5, 1, 2.8);
+			ProductLibrary.AddProduct("Kleines Raumschiff Kapazität (30t)", .1, 0, 50.0, 13000000.0);
+			ProductLibrary.AddProduct("Mittleres Raumschiff Kapazität (60t)", .05, 0, 100.0, 17000000.0);
+			ProductLibrary.AddProduct("Kreuzer (100t) +Bewaffnung", .02, 0, 150.0, 23000000.0);
+			ProductLibrary.AddProduct("Sensor-Einheit", .2, 0, 1, 7.99);
+			ProductLibrary.AddProduct("Board-Kanone", .2, 0, 1, 79.96);
+			ProductLibrary.AddProduct("Tie-Fighter Flügel", .1, .1, 1, 2.00);
+			ProductLibrary.AddProduct("Wasser Evaporatoren", .3, 0, 1, 17.45);
+			ProductLibrary.AddProduct("Sternen-Zerstörer Triebwerke", .3, 0, 700, 450000000.0);
+			ProductLibrary.AddProduct("Cyberkristalle", .001, .1, .1, 450000.0);
+			ProductLibrary.AddProduct("Medizinische Produkte", .001, 2, .01, 29.0);
+			ProductLibrary.AddProduct("Anti-Schwerkraft Generator", .3, 0, 0.5, 350.0);
+			
+			ProductLibrary.AddProduct("Gitarren", 0.2, 2, 0.05, 87.4);
+			ProductLibrary.AddProduct("Holzblasinstrumente", 0.2, 2, 0.05, 82.7);
+			ProductLibrary.AddProduct("Blechblasinstrumente", 0.2, 2, 0.05, 93.4);
+			ProductLibrary.AddProduct("Streichinstrumente", 0.2, 2, 0.05, 67.9);
+			ProductLibrary.AddProduct("Schlagzeug", 0.2, 2, 0.05, 52.7);
+
+			ProductLibrary.AddProduct("Bohrmaschinen", 0.1, 1, 0.05, 87.5);
+			ProductLibrary.AddProduct("Abraumwerkzeuge", 0.1, 1, 10.0, 1932.5);
+			
+			ProductLibrary.AddProduct("Fische", 1, 10, 1, 5.75);
+			ProductLibrary.AddProduct("Schalentiere", 1, 10, 1, 6.75);
+			ProductLibrary.AddProduct("Calmare", 1, 10, 1, 6.35);
+			ProductLibrary.AddProduct("Algen/Seeigel", 1, 10, 1, 1.75);
+			ProductLibrary.AddProduct("Schnecken", 1, 1, 1, 3.75);
+			ProductLibrary.AddProduct("Wein", 1, 1, 1, 3.20);
+			ProductLibrary.AddProduct("Bier", 1, 1, 1, 2.90);
+			ProductLibrary.AddProduct("Wasserbüffel", 1, 1, 1, 2.10);
+			ProductLibrary.AddProduct("Pistolen", 1, 1, 1, 47.0);
+			ProductLibrary.AddProduct("Phaser", 1, 1, 1, 147.00);
+			ProductLibrary.AddProduct("Torpedos", 1, 1, 1, 928.0);
+
 		}
 
 		private static void NewFeatureLibary()
 		{
 			Library = new ShipFeatures();
-			Library.Add(new ShipFeature("Schilde", new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Starke Verteidung", "Verteidigt mit d20") }));
-			Library.Add(new ShipFeature("Erweitertes Waffenmodul", new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Erweitertes Waffenmodul", "Angriff mit d20+3") }));
-			Library.Add(new SignalRangeFeature("Signal Reichweite", new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Reichweite [Sektoren]", "+1") }));
+			Library.Add(new ShipFeature("ShieldBonus+1", "Verbesserte Schile (+1)", 0, 1, 0,0));
+			Library.Add(new ShipFeature("Phasers+1", "Phaser-Bänke", 1, 0, 0,0));
+			Library.Add(new ShipFeature("Torpedos+2", "Torpedos", 2, 1, 0,0));
+			Library.Add(new ShipFeature("AdvancedWarp+1", "Verbesserte Geschwindigkeit", 0, 0, 0, 1));
+			Library.Add(new ShipFeature("SignalRange+1", "Verbesserter Signalempfang", 0, 0, 1,0));
 		}
 
 		public static ProductsInStock GetRandomProducts(int howMany, bool needed)

@@ -12,6 +12,7 @@ service Game {
   rpc GetShips (ShipsRequest) returns (ShipsReply);
   rpc AddShip (ShipRequest) returns (ShipReply);
   rpc GetShip (ShipRequest) returns (ShipReply);
+  rpc GetUpdates (PlayerRequest) returns (UpdateReply);
   rpc StartCruise (CruiseRequest) returns (CruiseReply);
   rpc GetPlanets (EmptyRequest) returns (PlanetsReply);
 }
@@ -25,10 +26,29 @@ message Coordinates {
 message Player {
     string Name = 1;
     repeated Ship ships = 2;
+    double Credits = 3;
+    string HomePlanet = 4;
 }
 
 message PlayersReply {
     repeated Player players = 1;
+}
+
+message UpdateReply {
+    repeated UpdateInfo updateInfos = 1;
+}
+
+message UpdateInfo {
+    UpdateStates updateState = 2;
+    Ship ship = 3;
+}
+
+enum UpdateStates {
+    ArrivedOnTarget = 0;
+    UnderAttack = 1;
+    OnRescueMission = 2;
+    ShipIsGettingRepaired = 3;
+    NewPlanetDiscovered = 4;
 }
 
 enum ShipState {
@@ -36,7 +56,6 @@ enum ShipState {
     ShipIsTravelling = 1;
     UnderConstruction = 2;
 }
-
 
 enum JourneyState {
     Travelling = 0;
@@ -60,6 +79,8 @@ message Journey {
     Planet departure = 3;
     Planet destination = 4;
     JourneyState State = 5;
+    Planet NewPlanetDiscovered = 6;
+    PirateShip EnemyBattleShip = 7;
 }
 
 message ShipRequest {
@@ -122,6 +143,15 @@ message Ship {
    double CargoSize = 3;
    Load CargoLoad = 4;
    ShipState State = 5;
+   int32 Shields = 6;
+   int32 Hull = 7;
+   Planet CurrentPlanet = 8;
+}
+
+message PirateShip {
+   string ShipName = 1;
+   int32 Shields = 2;
+   int32 Hull = 3;
 }
 
 message EmptyRequest {

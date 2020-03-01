@@ -7,19 +7,24 @@ namespace SpaceDealerModels.Units
 	{
 		public Planet Parent { get; set; }
 
+		public Industries()
+		{
+
+		}
+
 		public Industries(Planet parent)
 		{
 			Parent = parent;
 		}
 
-		public Industry AddIndustry(string name, List<KeyValuePair<string, string>> properties)
+		public Industry AddIndustry(string name)
 		{
-			var industry = new Industry(name, properties);
+			var industry = new Industry(name);
 			Add(industry);
 			return industry;
 		}
 
-		public Industry GetIndustrByName(string name)
+		public Industry GetIndustryByName(string name)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}

@@ -3,6 +3,7 @@ using Grpc.Net.Client;
 using SpaceDealerService;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SpaceDealerUI
@@ -12,8 +13,9 @@ namespace SpaceDealerUI
 		public static Player ThePlayer { get; set; }
 		public static RepeatedField<Planet> AllPlanets { get; set; }
 		public static Menu TheMenu { get; set; }
-
-        static async Task Main(string[] args)
+		public static Ship SelectedShip { get; set; }
+	
+		static async Task Main(string[] args)
         {
 			AllPlanets = GameProxy.GetAllPlanets().Result;
 			TheMenu = new Menu();
@@ -21,18 +23,79 @@ namespace SpaceDealerUI
 			TheMenu.ShowStartupScreen();
 			ThePlayer = GameProxy.AddPlayer(TheMenu.ShowNewPlayer()).Result;
 			var shipName = TheMenu.ShowNewShip(ThePlayer);
-			var newShip = GameProxy.AddShip(ThePlayer.Name, shipName).Result;
-			var selectedPlanet = TheMenu.ShowPlanetSelection(AllPlanets);
-
+			SelectedShip = GameProxy.AddShip(ThePlayer.Name, shipName).Result;
+			var planetName = TheMenu.ShowPlanetSelection(AllPlanets);
 			ThePlayer = GameProxy.GetPlayer(ThePlayer.Name).Result;
 
-			var result = GameProxy.StartCruise(ThePlayer.Name, newShip.ShipName, selectedPlanet).Result;
+			var result = GameProxy.StartCruise(ThePlayer.Name, SelectedShip.ShipName, planetName).Result;
 
 			if(result==true)
-				Console.WriteLine($"{newShip.ShipName} auf dem Weg nach {selectedPlanet}.");
+				Console.WriteLine($"{SelectedShip.ShipName} auf dem Weg nach {planetName}.");
+
+			var updateThread = new Thread(GetGameUpdates) { IsBackground = true };
+			updateThread.Start();
+
+			ShowGameMenu();
+			
 			Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
+
+		private static void ShowGameMenu()
+		{
+			do
+			{
+				var i = TheMenu.ShowMainSelection();
+				switch (i)
+				{
+					case 1:
+						TheMenu.ShowPlayerStats(ThePlayer.Name);
+						break;
+					case 2:
+						var selectedPlanet = TheMenu.ShowPlanetSelection(AllPlanets);
+						var result = GameProxy.StartCruise(ThePlayer.Name, SelectedShip.ShipName, selectedPlanet).Result;
+						break;
+					case 3:
+						break;
+					case 4:
+						var shipIndex = TheMenu.ShowShipSelection(ThePlayer.Ships);
+						SelectedShip = ThePlayer.Ships[shipIndex-1];
+						break;
+				}
+
+
+			} while (true);
+		}
+
+		private static void GetGameUpdates()
+		{
+			do
+			{
+				var updates = GameProxy.GetUpdates(ThePlayer.Name).Result;
+				if (updates != null)
+				{
+					foreach (var u in updates)
+					{
+						switch (u.UpdateState)
+						{
+							case UpdateStates.ArrivedOnTarget:
+								TheMenu.ShowPlanet(u.Ship);
+								break;
+							case UpdateStates.NewPlanetDiscovered:
+								TheMenu.ShowNewPlanet(u.Ship);
+								Console.WriteLine($"{u.Ship.ShipName} hat einen neuen Planeten {u.Ship.Cruise.NewPlanetDiscovered.PlanetName} angekommen!");
+								break;
+							case UpdateStates.UnderAttack:
+								TheMenu.ShowAttackMenu(u.Ship);
+								Console.WriteLine($"Roter Alarm! {u.Ship.ShipName} wird von {u.Ship.Cruise.EnemyBattleShip.ShipName} angegriffen!");
+								break;
+						}
+					}
+				}
+				Thread.Sleep(1000);
+			} while (true);
+			
+		}
 
 		private static void Menu_Answered(string answer)
 		{
