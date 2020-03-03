@@ -49,6 +49,24 @@ namespace SpaceDealerService
 			return Task.FromResult(new UpdateReply(reply));
 		}
 
+		public override Task<BattleReply> BattleAttack(ShipRequest request, ServerCallContext context)
+		{
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var ship = player.Fleet.GetShipByName(request.ShipName);
+			var result = ship.Attack();
+			var reply = ProtoBufConverter.ConvertToBattleReply(result);
+			return Task.FromResult(reply);
+		}
+
+		public override Task<BattleReply> BattleDefend(ShipRequest request, ServerCallContext context)
+		{
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var ship = player.Fleet.GetShipByName(request.ShipName);
+			var result = ship.Defend();
+			var reply = ProtoBufConverter.ConvertToBattleReply(result);
+			return Task.FromResult(reply);
+		}
+
 		public override Task<ShipsReply> GetShips(ShipsRequest request, ServerCallContext context)
 		{
 			var ships = new ShipsReply();

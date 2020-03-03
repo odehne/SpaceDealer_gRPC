@@ -53,6 +53,19 @@ namespace SpaceDealerUI
 			return reply.Player;
 		}
 
+		public static async Task<BattleReply> BattleAttack(string playerName, string shipName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			return await client.BattleAttackAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+		}
+		public static async Task<BattleReply> BattleDefend(string playerName, string shipName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			return await client.BattleDefendAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+		}
+
 		public static async Task<Ship> AddShip(string playerName, string shipName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
@@ -73,6 +86,13 @@ namespace SpaceDealerUI
 			return reply.Ships;
 		}
 
+		public static async Task<Ship> GetShip(string playerName, string shipName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var reply = await client.GetShipAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+			return reply.Ship;
+		}
 
 		public static async Task<bool> ShipNameTaken(string playerName, string shipName)
 		{

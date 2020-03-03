@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SpaceDealerModels;
+using SpaceDealerModels.Units;
 
 namespace SpaceDealerService
 {
@@ -45,6 +46,7 @@ namespace SpaceDealerService
 			return new Coordinates { X = uCoords.X, Y = uCoords.Y, Z = uCoords.Z };
 		}
 
+	
 		public static Planet ConvertToPlanet(SpaceDealerModels.Units.Planet uP)
 		{
 			var ret = new Planet
@@ -82,6 +84,18 @@ namespace SpaceDealerService
 			}
 
 			return ret;
+		}
+
+		public static BattleReply ConvertToBattleReply(BattleResult result)
+		{
+			return new BattleReply
+			{
+				CriticalHit = result.CriticalHit,
+				DefenderWasHit = result.DefenderWasHit,
+				Message = result.Message,
+				Value = result.Value
+			};
+
 		}
 
 		public static UpdateInfo ConvertToUpdateInfo(SpaceDealerModels.Units.UpdateInfo uInfo)

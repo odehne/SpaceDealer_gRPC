@@ -157,9 +157,9 @@ namespace SpaceDealerModels.Units
 				defenceRoll = enemy.DefenceRoll();
 				//Criticals
 				if (attackRoll == 1)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = "Angriff schlug fehl und verusachte einen eigenen Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = "Oops! Angriff schlug fehl und verusachte einen eigenen Schaden!" };
 				if (attackRoll == 20)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = "Exzellenter Angriff, der Gegner erhält doppelten Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = "Volltreffer! Exzellenter Angriff, der Gegner erhält doppelten Schaden!" };
 			}
 			else
 			{
@@ -167,9 +167,9 @@ namespace SpaceDealerModels.Units
 				defenceRoll = SimpleDiceRoller.Roll(DiceType.d20, AttackBonus);
 				//Criticals
 				if (attackRoll == 2)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = "Angriff schlug fehl und verusachte einen eigenen Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = "Oops! Der Angriff schlug fehl und verursachte einen eigenen Schaden!" };
 				if (attackRoll == 12)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = "Exzellenter Angriff, der Gegner erhält kritischen Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = "Volltreffer! Exzellenter Angriff, der Gegner erhält kritischen Schaden!" };
 			}
 
 			if (attackRoll <= defenceRoll)
@@ -177,15 +177,6 @@ namespace SpaceDealerModels.Units
 
 			return new BattleResult { CriticalHit = false, DefenderWasHit = true, Value = 1, Message = "Das verteidigende Schiff wurde getroffen!" };
 		}
-
-	}
-
-	public class BattleResult
-	{
-		public string Message { get; set; }
-		public int Value { get; set; }
-		public bool DefenderWasHit { get; set; }
-		public bool CriticalHit { get; set; }
 
 	}
 }

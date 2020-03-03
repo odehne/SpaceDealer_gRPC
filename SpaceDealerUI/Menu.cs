@@ -1,15 +1,112 @@
 ﻿using Google.Protobuf.Collections;
-using SpaceDealerModels.Units;
+using SpaceDealerService;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SpaceDealerUI
 {
 	public class Menu
 	{
-		public event AnswerRecieved Answered;
-		public delegate void AnswerRecieved(string answer);
+		private enum MenuType
+		{
+			MainSelection = 0,
+			PlayerInfo = 10,
+			PlanetSelection = 20,
+			PlanetInfo = 21,
+			Market = 30,
+			ShipSelection = 40,
+			SpaceDock = 50,
+			AddNewFeatures = 60,
+			BattleAttack = 70,
+			BattleDefend = 80
+		}
+
+
+		private MenuType CurrentMenu { get; set; }
+		public Ship CurrentShip { get; set; }
+		public Player CurrentPlayer { get; set; }
+		public RepeatedField<Planet> AllPlanets { get; set; }
+		public BlockingCollection<ConsoleKeyInfo> Queue { get; set; }
+
+		public Menu()
+		{
+			Queue = new BlockingCollection<ConsoleKeyInfo>();
+			new Thread(() =>
+			{
+				while (true)
+				{
+					if (Queue.Any())
+					{
+						var k = Queue.Take();
+						if (k != null)
+						{
+							switch (k.KeyChar)
+							{
+								case 'h':
+									CurrentMenu = MenuType.MainSelection;
+									ShowMainSelection();
+									break;
+								case 'a':
+									CurrentMenu = MenuType.PlayerInfo;
+									ShowPlayerInfo();
+									break;
+								case 'z':
+									CurrentMenu = MenuType.PlanetSelection;
+									ShowPlanetSelection();
+									break;
+								case 'm':
+									CurrentMenu = MenuType.Market;
+									ShowMarket(CurrentShip.CurrentPlanet);
+									break;
+								case 's':
+									CurrentMenu = MenuType.ShipSelection;
+									ShowShipSelection(CurrentPlayer.Ships);
+									break;
+								case 'r':
+									CurrentMenu = MenuType.SpaceDock;
+									ShowSpaceDock(CurrentPlayer, CurrentShip);
+									break;
+								case 'p':
+									CurrentMenu = MenuType.PlanetInfo;
+									ShowPlanetInfo(CurrentShip);
+									break;
+								case 'e':
+									CurrentMenu = MenuType.AddNewFeatures;
+									ShowAddNewFeatures(CurrentShip);
+									break;
+								case 'g':
+									CurrentMenu = MenuType.BattleAttack;
+									SchowBattleAttack(CurrentShip);
+									break;
+								case 'w':
+									CurrentMenu = MenuType.BattleDefend;
+									ShowBattleDefend(CurrentShip);
+									break;
+							}
+						}
+					}
+					
+				}
+			})
+			{ IsBackground = true }.Start();
+		}
+
+		private void ShowAddNewFeatures(Ship currentShip)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void ShowSpaceDock(Player currentPlayer, Ship currentShip)
+		{
+			Console.WriteLine(CenterLine("---- Raumdock ----"));
+			Console.WriteLine(CenterLine("Shiff (e)rweitern"));
+			Console.WriteLine(CenterLine("Anderes (S)chiff wählen"));
+			Console.WriteLine(CenterLine("(R)aumdock"));
+		}
 
 		public void ShowStartupScreen()
 		{
@@ -24,26 +121,15 @@ namespace SpaceDealerUI
 			Console.WriteLine();
 		}
 
-		public void ShowPlayerStats(string playerName)
-		{
-			ClearConsoleBody();
-			Console.SetCursorPosition(0, 7);
-			var player = GameProxy.GetPlayer(playerName).Result;
-
-			Console.WriteLine($"Spieler: {player.Name}\tHeimat Planet:{player.HomePlanet}\tCredits:${player.Credits}");
-			foreach (var ship in player.Ships)
-			{
-				Console.WriteLine($"Schiff: {ship.ShipName}\t{ship.Cruise.Departure} --> {ship.Cruise.Destination}\tDistanz: {ship.Cruise.CurrentDistance.ToDecimalString()} parsec\tSektor: {ship.Cruise.CurrentSector.ToString()}");
-			}
-		}
-
-
 		private void ClearConsoleBody()
 		{
+			while (Console.In.Peek() != -1)
+					Console.In.Read();
+			
 			for (int i = 5; i < 28; i++)
 			{
 				Console.SetCursorPosition(0, i);
-				Console.Write("                                                                                                                      ");
+				Console.WriteLine("                                                                                                                                                 ");
 			}
 			Console.SetCursorPosition(0, 28);
 			Console.WriteLine(CenterLine("H: Hauptmenü | F: Flotten-Übersicht | M: Märkte | R: Raumdock | CTRL+C: Beenden"));
@@ -63,7 +149,7 @@ namespace SpaceDealerUI
 			return tabs + v;
 		}
 
-		internal void ShowPlanet(SpaceDealerService.Ship ship)
+		internal void ShowPlanetInfo(Ship ship)
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
@@ -71,75 +157,99 @@ namespace SpaceDealerUI
 			Console.WriteLine();
 			foreach (var indi in ship.CurrentPlanet.Industries)
 			{
-				Console.WriteLine(CenterLine($"Der Planet besitzt die folgenden Industrie {indi.IndustryName}."));
-				Console.WriteLine(CenterLine($"Die folgenden Produkte werden produziert."));
+				Console.WriteLine(CenterLine($"Der Planet besitzt diese Industrie: {indi.IndustryName}."));
+				Console.WriteLine(CenterLine($"Diese Produkte werden produziert:"));
 				foreach (var item in indi.GeneratedProducts)
 				{
-					Console.WriteLine(CenterLine($"Produkt: {item.ProductName}"));
+					Console.WriteLine(CenterLine($"{item.ProductName}"));
 				}
-				Console.WriteLine(CenterLine("Die folgenden Produkte werden benötigt."));
+				Console.WriteLine(CenterLine("Diese Produkte werden benötigt:"));
 				foreach (var item in indi.ProductsNeeded)
 				{
-					Console.WriteLine(CenterLine($"Industrie: {item.ProductName}"));
+					Console.WriteLine(CenterLine($"{item.ProductName}"));
 				}
 			}
 			Console.WriteLine();
-			Console.WriteLine(CenterLine("1. Aktuelle Informationen"));
-			Console.WriteLine(CenterLine("2. Neues Ziel"));
-			Console.WriteLine(CenterLine("3. Marktplatz"));
-			Console.WriteLine(CenterLine("4. Anderes Schiff wählen"));
-			var answer = GetAnswerInt(1, 4);
-
-			switch (answer)
-			{
-				case 1:
-					ShowInfo();
-					break;
-				case 2:
-					ShowPlanetSelection(Program.AllPlanets);
-					break;
-				case 3:
-					ShowMarket(ship.CurrentPlanet);
-					break;
-				case 4:
-					ShowShipSelection(Program.ThePlayer.Ships);
-					break;
-			}
+			Console.WriteLine(CenterLine("(M)arktplatz"));
+			Console.WriteLine(CenterLine("(I)nformationen"));
+			Console.WriteLine(CenterLine("Neues (Z)iel"));
+			Console.WriteLine(CenterLine("Anderes (S)chiff wählen"));
 		}
 
-		private void ShowMarket(SpaceDealerService.Planet currentPlanet)
+		private void ShowMarket(Planet currentPlanet)
 		{
 			throw new NotImplementedException();
 		}
 
-		private void ShowInfo()
+		private void ShowPlayerInfo()
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
-			Console.WriteLine(CenterLine($"Spieler: {Program.ThePlayer} Kontostand: {Program.ThePlayer.Credits}"));
-			Console.WriteLine(CenterLine("Schiffe im Besitz."));
-			foreach (var ship in Program.ThePlayer.Ships)
+			CurrentPlayer = GameProxy.GetPlayer(CurrentPlayer.Name).Result;
+			Console.WriteLine(CenterLine($"Spieler: {CurrentPlayer.Name} Heimat Planet:{CurrentPlayer.HomePlanet} Credits:${CurrentPlayer.Credits}"));
+			foreach (var ship in CurrentPlayer.Ships)
 			{
-				Console.WriteLine(CenterLine($"Shiff: {ship.ShipName} Schilde: {ship.Shields} Hülle: {ship.Hull} Aktuelle Position: {ship.CurrentPlanet.PlanetName}"));
+				Console.WriteLine(CenterLine($"Shiff: {ship.ShipName} Schilde: {ship.Shields} Hülle: {ship.Hull} Aktuelle Position: {PlanetToString(ship.CurrentPlanet)}"));
 			}
-			Console.WriteLine();
-			Console.WriteLine(CenterLine("1. Zurück"));
-			var i = GetAnswerInt(1, 1);
-			if (i == 1)
-				ShowMainSelection();
 		}
 
-		internal void ShowNewPlanet(SpaceDealerService.Ship ship)
+		internal void ShowNewPlanet(Ship ship)
 		{
-			throw new NotImplementedException();
+			CurrentShip = ship;
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"{ship.ShipName} hat einen neuen Planeten gefunden! Planet: {PlanetToString(ship.Cruise.NewPlanetDiscovered)}"));
+			Console.WriteLine(CenterLine(""));
+			Console.WriteLine(CenterLine("---- Aktionen ----"));
+			Console.WriteLine(CenterLine("Informationen zum (P)laneten"));
+			Console.WriteLine(CenterLine("Neues (Z)iel festlegen"));
 		}
 
-		internal void ShowAttackMenu(SpaceDealerService.Ship ship)
+		internal void ShowAttackMenu(Ship ship)
 		{
-			throw new NotImplementedException();
+			CurrentShip = ship;
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"{ship.ShipName} wird angegriffen! Gegnerisches Schiff: {ship.Cruise.EnemyBattleShip.ShipName} Schile: {ship.Cruise.EnemyBattleShip.Shields} Hülle: {ship.Cruise.EnemyBattleShip.Hull}"));
+			Console.WriteLine(CenterLine(""));
+			Console.WriteLine(CenterLine("---- Aktionen ----"));
+			Console.WriteLine(CenterLine("An(g)reifen"));
+			Console.WriteLine(CenterLine("Aus(w)eichen"));
 		}
 
-		public string ShowNewShip(SpaceDealerService.Player player)
+		private void ShowBattleDefend(Ship ship)
+		{
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine("---- AUSWEICHEN ----"));
+			var defenceResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
+			var attackResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
+			Console.WriteLine(CenterLine(""));
+			Console.WriteLine(CenterLine($"Angriff: {attackResult.Message}"));
+			Console.WriteLine(CenterLine($"Verteidigung: {defenceResult.Message}"));
+			Console.WriteLine(CenterLine(""));
+			Console.WriteLine(CenterLine("---- Aktionen ----"));
+			Console.WriteLine(CenterLine("An(g)reifen"));
+			Console.WriteLine(CenterLine("Aus(w)eichen"));
+		}
+
+		private void SchowBattleAttack(Ship ship)
+		{
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine("---- ANGRIFF ----"));
+			var attackResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
+			var defenceResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
+			Console.WriteLine(CenterLine(""));
+			Console.WriteLine(CenterLine($"Angriff: {attackResult.Message}"));
+			Console.WriteLine(CenterLine($"Verteidigung: {defenceResult.Message}"));
+			Console.WriteLine(CenterLine(""));
+			Console.WriteLine(CenterLine("---- Aktionen ----"));
+			Console.WriteLine(CenterLine("An(g)reifen"));
+			Console.WriteLine(CenterLine("Aus(w)eichen"));
+		}
+
+		public string ShowNewShip(Player player)
 		{
 			do
 			{
@@ -177,19 +287,20 @@ namespace SpaceDealerUI
 			
 		}
 
-		public int ShowMainSelection()
+		public void ShowMainSelection()
 		{
+			AllPlanets = GameProxy.GetAllPlanets().Result;
+			CurrentPlayer = GameProxy.GetPlayer(CurrentPlayer.Name).Result;
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- Hauptmenü ----"));
-			Console.WriteLine(CenterLine("1. Aktuelle Informationen"));
-			Console.WriteLine(CenterLine("2. Neues Ziel"));
-			Console.WriteLine(CenterLine("3. Raumdock"));
-			Console.WriteLine(CenterLine("4. Anderes Schiff wählen"));
-			return GetAnswerInt(1, 4);
+			Console.WriteLine(CenterLine("(A)ktuelle Informationen"));
+			Console.WriteLine(CenterLine("Neues (Z)iel"));
+			Console.WriteLine(CenterLine("(R)aumdock"));
+			Console.WriteLine(CenterLine("Anderes (S)chiff wählen"));
 		}
 
-		public int ShowShipSelection(RepeatedField<SpaceDealerService.Ship> ships)
+		public void ShowShipSelection(RepeatedField<Ship> ships)
 		{
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
@@ -200,24 +311,27 @@ namespace SpaceDealerUI
 				Console.WriteLine(CenterLine($"{i}. {ship.ShipName}"));
 				i++;
 			}
-
-			return GetAnswerInt(1, i);
+			var index = GetAnswerInt(1, i);
+			CurrentShip = ships[index - 1];
+			ShowMainSelection();
 		}
 
-		public string ShowPlanetSelection(RepeatedField<SpaceDealerService.Planet> planets)
+		public bool ShowPlanetSelection()
 		{
+			AllPlanets = GameProxy.GetAllPlanets().Result;
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- Ziel planet wählen ----"));
 			var i = 0;
-			foreach (var p in planets)
+			foreach (var p in AllPlanets)
 			{
 				i += 1;
 				Console.WriteLine(CenterLine($"{i}. {p.PlanetName.Tabyfy()}"));
 			}
 
 			var selected = GetAnswerInt(1, i);
-			return planets[selected - 1].PlanetName;
+			var planetName = AllPlanets[selected - 1].PlanetName;
+			return GameProxy.StartCruise(CurrentPlayer.Name, CurrentShip.ShipName, planetName).Result;
 		}
 
 		private string GetAnswerString(string question)
@@ -262,18 +376,16 @@ namespace SpaceDealerUI
 			}
 			if (row.Equals("f", StringComparison.InvariantCultureIgnoreCase))
 			{
-				ShowShipSelection(Program.ThePlayer.Ships);
+				ShowShipSelection(CurrentPlayer.Ships);
 				return true;
 			}
 			if (row.Equals("m", StringComparison.InvariantCultureIgnoreCase))
 			{
-				ShowPlanetSelection(Program.AllPlanets);
+				ShowPlanetSelection();
 				return true;
 			}
 			return false;
 		}
-
-		
 
 		public int SelectSellOrBuy()
 		{
@@ -335,20 +447,15 @@ namespace SpaceDealerUI
 			throw new NotImplementedException();
 		}
 
-		internal SpaceDealerModels.Units.Ship SelectShip(Ships fleet)
+		public string CoordinatesToString(Coordinates coordinates)
 		{
-			ClearConsoleBody();
-			Console.SetCursorPosition(0, 5);
-			Console.WriteLine(CenterLine("---- Shiff wählen ----"));
-			var i = 0;
-			foreach (var s in fleet)
-			{
-				i += 1;
-				Console.WriteLine(CenterLine($"{i}. {s.Name.Tabyfy()}"));
-			}
-
-			var selected = GetAnswerInt(1, i);
-			return fleet[selected - 1];
+			return $"[{coordinates.X},{coordinates.Y},{coordinates.Z}]";
 		}
+
+		public string PlanetToString(Planet planet)
+		{
+			return $"{planet.PlanetName} {CoordinatesToString(planet.Sector)}";
+		}
+
 	}
 }

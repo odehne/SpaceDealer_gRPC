@@ -123,7 +123,7 @@ namespace SpaceDealerModels.Repositories
 		{
 			Random random = new Random();
 			var i = random.Next(0, PlanetNames.Count - 1);
-			return ShipNames[i];
+			return PlanetNames[i];
 		}
 
 		public static Planet GetRandomPlanet(Coordinates sector)
@@ -134,10 +134,10 @@ namespace SpaceDealerModels.Repositories
 			p.Industries = new Industries(p);
 			p.Sector = sector;
 			p.Industries.Add(GetRandomIndustry());
-			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
-			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
-			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
-			p.Market.ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
+			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
 			return p;
 		}
 
