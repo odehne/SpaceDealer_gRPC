@@ -94,7 +94,8 @@ namespace SpaceDealerService
 				DefenderWasHit = result.DefenderWasHit,
 				Message = result.Message,
 				Value = result.Value,
-				Treasure = result.Treasure
+				Treasure = result.Treasure,
+				Defeaded = result.Defeaded
 			};
 
 		}

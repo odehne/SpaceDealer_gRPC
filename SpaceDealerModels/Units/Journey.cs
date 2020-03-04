@@ -27,6 +27,11 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("newlyDisoveredPlanet")]
 		public Planet NewlyDiscoveredPlanet { get; set; }
 		
+		public Journey()
+		{
+
+		}
+
 		public Journey(Planet departure, Planet destination, Coordinates position, Ship parent)
 		{
 			Parent = parent;
@@ -69,6 +74,19 @@ namespace SpaceDealerModels.Units
 					}
 				}
 			}
+		}
+
+		public bool ContinueTravel()
+		{
+			if(State!=JourneyState.Travelling)
+			{
+				if(CurrentSector!=Destination.Sector)
+				{
+					State = JourneyState.Travelling;
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private Interruption CheckInterruptions()

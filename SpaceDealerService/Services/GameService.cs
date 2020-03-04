@@ -33,6 +33,28 @@ namespace SpaceDealerService
 			return Task.FromResult(new CruiseReply { OnItsWay = true });
 		}
 
+		public override Task<CruiseReply> ContinueCruise(CruiseRequest request, ServerCallContext context)
+		{
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			if (player == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+			var ship = player.Fleet.GetShipByName(request.ShipName);
+			if (ship == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+			var planet = Program.TheGame.Galaxy.GetPlanetByName(request.DestinationPlanetName);
+			if (planet == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+
+			var result = ship.Cruise.ContinueTravel();
+			return Task.FromResult(new CruiseReply { OnItsWay = result });
+		}
+
 		public override Task<SaveGameReply> SaveGame(PlayerRequest request, ServerCallContext context)
 		{
 			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
@@ -102,10 +124,41 @@ namespace SpaceDealerService
 
 		public override Task<PlayerReply> AddPlayer(PlayerRequest request, ServerCallContext context)
 		{
+			SpaceDealerModels.Units.Player player;
 			var g = Program.TheGame;
-			var player = new SpaceDealerModels.Units.Player(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy);
+			var json = GamePersistor.LoadFile(request.PlayerName + ".json");
+			if(!string.IsNullOrEmpty(json))
+			{
+				player = JsonConvert.DeserializeObject<SpaceDealerModels.Units.Player>(json, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
+				player = AddSavedPlayer(player);
+			}
+			else
+			{
+				player = new SpaceDealerModels.Units.Player(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy);
+			}
+
 			g.FleetCommanders.AddPlayer(player);
+		
 			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(player) });
+		}
+
+		private SpaceDealerModels.Units.Player AddSavedPlayer(SpaceDealerModels.Units.Player player)
+		{
+			var galaxy = Program.TheGame.Galaxy;
+			foreach (var p in player.Galaxy)
+			{
+				galaxy.AddPlanet(p);
+			}
+			
+			var newPlayer = new SpaceDealerModels.Units.Player(player.Name, galaxy.GetPlanetByName(player.HomePlanet.Name), galaxy);
+			newPlayer.Credits = player.Credits;
+			newPlayer.CurrentPlanet = player.CurrentPlanet;
+			
+			foreach (var s in player.Fleet)
+			{
+				newPlayer.Fleet.AddShip(s);
+			}
+			return newPlayer;
 		}
 
 		public override Task<ShipReply> AddShip(ShipRequest request, ServerCallContext context)

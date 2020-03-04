@@ -16,6 +16,10 @@ namespace SpaceDealerModels.Units
 		[JsonIgnore]
 		public Player Parent { get; set; }
 
+		public Ships()
+		{
+		}
+
 		public Ships(Player parent)
 		{
 			Parent = parent;

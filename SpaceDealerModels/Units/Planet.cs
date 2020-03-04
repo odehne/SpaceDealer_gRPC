@@ -12,7 +12,11 @@ namespace SpaceDealerModels.Units
 		public Market Market { get; set; }
 		[JsonProperty("industries")]
 		public Industries Industries { get; set; }
-		
+
+		public Planet()
+		{
+		}
+
 		public Planet(string name, Coordinates position, Market market, Industries industries) : base(name)
 		{
 			Sector = position;

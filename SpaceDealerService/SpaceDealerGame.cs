@@ -36,11 +36,12 @@ namespace SpaceDealer
 				moon.Sector = new Coordinates(1, 0, 0);
 
 			var moonFactory = moon.Industries.AddIndustry("Raumschiff Fabrik");
-				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
-				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
-				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
-				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Sensor-Einheit"));
-				moonFactory.GeneratedProducts.AddProduct(Repository.GetProductByName("Board-Kanone"));
+				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
+				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
+				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
+				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Sensor-Einheit"));
+				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Board-Kanone"));
+				moonFactory.AddNeededProduct(Repository.GetProductByName("Board-Kanone"));
 
 			var tatooine = new Planet("Tatooine");
 				tatooine.Market = new Market("Moseisley", earth);

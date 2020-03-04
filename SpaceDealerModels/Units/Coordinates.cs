@@ -12,6 +12,10 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("z")]
 		public double Z { get; set; }
 
+		public Coordinates()
+		{
+		}
+
 		public Coordinates(double x, double y, double z)
 		{
 			X = x;

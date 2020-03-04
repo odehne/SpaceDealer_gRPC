@@ -7,5 +7,6 @@
 		public bool DefenderWasHit { get; set; }
 		public bool CriticalHit { get; set; }
 		public double Treasure { get; set; }
+		public bool Defeaded { get; set; }
 	}
 }

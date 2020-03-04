@@ -29,9 +29,6 @@ namespace SpaceDealerService
 
 			CreateHostBuilder(args).Build().Run();
 
-
-	
-
 		}
 
 		// Additional configuration is required to successfully run gRPC on macOS.

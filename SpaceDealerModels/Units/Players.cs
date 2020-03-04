@@ -14,6 +14,10 @@ namespace SpaceDealerModels.Units
 
 		public Player AddPlayer(Player player)
 		{
+			var p = GetPlayerByName(player.Name);
+			if (p != null)
+				return p;
+
 			Add(player);
 			player.Arrived += Player_Arrived;
 			player.Interrupted += Player_Interrupted;
@@ -44,5 +48,6 @@ namespace SpaceDealerModels.Units
 			}
 			return ret.TrimEnd('\n');
 		}
+
 	}
 }

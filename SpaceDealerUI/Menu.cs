@@ -176,15 +176,9 @@ namespace SpaceDealerUI
 			{
 				Console.WriteLine(CenterLine($"Der Planet besitzt diese Industrie: {indi.IndustryName}."));
 				Console.WriteLine(CenterLine($"Diese Produkte werden produziert:"));
-				foreach (var item in indi.GeneratedProducts)
-				{
-					Console.WriteLine(CenterLine($"{item.ProductName}"));
-				}
+				Console.WriteLine(CenterLine(GetSingleLine(indi.GeneratedProducts.Select(x => x.ProductName))));
 				Console.WriteLine(CenterLine("Diese Produkte werden benötigt:"));
-				foreach (var item in indi.ProductsNeeded)
-				{
-					Console.WriteLine(CenterLine($"{item.ProductName}"));
-				}
+				Console.WriteLine(CenterLine(GetSingleLine(indi.ProductsNeeded.Select(x => x.ProductName))));
 			}
 			Console.WriteLine();
 			Console.WriteLine(CenterLine("(M)arktplatz"));
@@ -450,25 +444,10 @@ namespace SpaceDealerUI
 			return planet.Industries[0].ProductsNeeded[selected - 1];
 		}
 
-		//public SpaceDealerModels.Units.ProductInStock Buy(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
-		//{
-		//	ClearConsoleBody();
-		//	Console.SetCursorPosition(0, 5);
-		//	Console.WriteLine(CenterLine("---- Kaufen ----"));
-		//	Console.WriteLine(CenterLine($"Planet: {planet.Name}"));
-		//	Console.WriteLine(CenterLine($"Markplatz: {planet.Market.Name}"));
-		//	Console.WriteLine(CenterLine($"Raumschiff: {ship.Name}"));
-		//	Console.WriteLine(CenterLine($"Kapazität: {ship.CargoSize}t"));
-		//	Console.WriteLine(CenterLine("---- Verkauft gern ----"));
-		//	var i = 0;
-		//	foreach (var p in planet.Industries[0].ProductsNeeded)
-		//	{
-		//		i += 1;
-		//		Console.WriteLine($"{i}. {p.Name.Tabyfy()}{p.GetTotalWeight().ToDecimalString()}t\t{p.PricePerTon.ToDecimalString()} credits/t.");
-		//	}
-		//	var selected = GetAnswerInt(1, i);
-		//	return planet.Industries[0].ProductsNeeded[selected - 1];
-		//}
+		private string GetSingleLine(IEnumerable<string> names)
+		{
+			return string.Join(',', names);
+		}
 
 		public double BuyProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
 		{

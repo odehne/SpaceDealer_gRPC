@@ -22,5 +22,20 @@ namespace SpaceDealerService
             }
             return true;
         }
+
+        public static string LoadFile(string filename)
+        {
+            if (!File.Exists(filename))
+                return string.Empty;
+            try
+            {
+                using var txt = new StreamReader(filename);
+                return txt.ReadToEnd();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
     }
 }

@@ -7,6 +7,11 @@ namespace SpaceDealerModels.Units
 	{
 		[JsonIgnore]
 		public Planet Parent { get; set; }
+
+		public Market()
+		{
+
+		}
 	
 		public Market(string name, Planet parent) : base(name)
 		{

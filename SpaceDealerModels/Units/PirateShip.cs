@@ -32,6 +32,7 @@ namespace SpaceDealerModels.Units
 				{
 					result.Message = $"Hurra! Das Piratenschiff {Name} wurde beim Angriff zerstört. Credits verdient: {Credits}.";
 					result.Treasure = Credits;
+					result.Defeaded = true;
 				}
 			}
 			return result;

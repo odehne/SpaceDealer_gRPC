@@ -28,6 +28,10 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("speedBonus")]
 		public int SpeedBonus { get; set; }
 
+		public ShipFeature()
+		{
+		}
+
 		public ShipFeature(string name, string description, int attackBonus, int defenceBonus, int rangeBonus, int speedBonus)
 		{
 			Name = name;

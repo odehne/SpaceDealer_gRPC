@@ -30,12 +30,16 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("galaxy")]
 		public Planets Galaxy { get; set; }
 
+		public Player()
+		{
+		}
 
 		public Player(string name, Planet homeplanet, Planets planets) : base(name)
 		{
 			UpdateQueue = new Queue();
 			Galaxy = planets;
 			HomePlanet = homeplanet;
+			Credits = 10000;
 			Fleet = new Ships(this);
 			Fleet.Interrupted += Fleet_Interrupted;
 			Fleet.Arrived += Fleet_Arrived;

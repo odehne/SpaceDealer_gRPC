@@ -14,6 +14,9 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("pricePerTon ")]
 		public double PricePerTon { get; set; }
 
+		public ProductInStock()
+		{
+		}
 
 		public ProductInStock(string name) : base(name)
 		{

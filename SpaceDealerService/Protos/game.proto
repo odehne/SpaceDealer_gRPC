@@ -17,6 +17,7 @@ service Game {
   rpc GetShip (ShipRequest) returns (ShipReply);
   rpc GetUpdates (PlayerRequest) returns (UpdateReply);
   rpc StartCruise (CruiseRequest) returns (CruiseReply);
+  rpc ContinueCruise (CruiseRequest) returns (CruiseReply);
   rpc GetPlanets (EmptyRequest) returns (PlanetsReply);
 }
 
@@ -30,6 +31,7 @@ message BattleReply {
     bool DefenderWasHit = 3;
     bool CriticalHit = 4;
     double Treasure = 5;
+    bool Defeaded = 6;
 }
 
 message Coordinates {

@@ -30,11 +30,19 @@ namespace SpaceDealerUI
 			TheMenu.AllPlanets = GameProxy.GetAllPlanets().Result;
 			TheMenu.ShowStartupScreen();
 			TheMenu.CurrentPlayer = GameProxy.AddPlayer(TheMenu.ShowNewPlayer()).Result;
-			var shipName = TheMenu.ShowNewShip(TheMenu.CurrentPlayer);
-			TheMenu.CurrentPlayer = GameProxy.GetPlayer(TheMenu.CurrentPlayer.Name).Result;
-			TheMenu.CurrentShip = GameProxy.AddShip(TheMenu.CurrentPlayer.Name, shipName).Result;
-			var started = TheMenu.ShowPlanetSelection();
-		
+
+			if(TheMenu.CurrentPlayer.Ships.Count==0)
+			{
+				var shipName = TheMenu.ShowNewShip(TheMenu.CurrentPlayer);
+				TheMenu.CurrentPlayer = GameProxy.GetPlayer(TheMenu.CurrentPlayer.Name).Result;
+				TheMenu.CurrentShip = GameProxy.AddShip(TheMenu.CurrentPlayer.Name, shipName).Result;
+				var started = TheMenu.ShowPlanetSelection();
+			}
+			else
+			{
+				TheMenu.CurrentShip = TheMenu.CurrentPlayer.Ships[0];
+			}
+
 			var updateThread = new Thread(GetGameUpdates) { IsBackground = true };
 			updateThread.Start();
 
@@ -52,7 +60,6 @@ namespace SpaceDealerUI
 
 		private static void GetGameUpdates()
 		{
-			IntPtr stdin;
 			do
 			{
 				var updates = GameProxy.GetUpdates(TheMenu.CurrentPlayer.Name).Result;

@@ -10,6 +10,11 @@ namespace SpaceDealerModels.Units
 		public string Name { get; set; }
 		public List<KeyValuePair<string, string>> Properties { get; set; }
 
+		public BaseUnit()
+		{
+
+		}
+
 		public BaseUnit(string name)
 		{
 			Name = name;

@@ -38,6 +38,10 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("currentPlanet")]
 		public Planet CurrentPlanet { get; set; }
 
+		public Ship()
+		{
+		}
+
 		public Ship(string name, Planet homeplanet, ShipFeatures featureSet) : base(name)
 		{
 			State = ShipState.Idle;
@@ -170,9 +174,9 @@ namespace SpaceDealerModels.Units
 				defenceRoll = enemy.DefenceRoll();
 				//Criticals
 				if (attackRoll == 1)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = "Oops! Angriff schlug fehl und verusachte einen eigenen Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = $"Oops! {Name}s Angriff schlug fehl und verusachte einen eigenen Schaden!" };
 				if (attackRoll == 20)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = "Volltreffer! Exzellenter Angriff, der Gegner erhält doppelten Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = $"Volltreffer! Exzellenter Angriff von {Name}, {enemy.Name} erhält doppelten Schaden!" };
 			}
 			else
 			{
@@ -180,13 +184,13 @@ namespace SpaceDealerModels.Units
 				defenceRoll = SimpleDiceRoller.Roll(DiceType.d20, AttackBonus);
 				//Criticals
 				if (attackRoll == 2)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = "Oops! Der Angriff schlug fehl und verursachte einen eigenen Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = false, Value = 1, Message = $"Oops! Da hat sich {enemy.Name} aber selbst ins Bein geschossen erhält einen Schaden!" };
 				if (attackRoll == 12)
-					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = "Volltreffer! Exzellenter Angriff, der Gegner erhält kritischen Schaden!" };
+					return new BattleResult { CriticalHit = true, DefenderWasHit = true, Value = 2, Message = $"Hinterhältiger Angriff von {enemy.Name}. Die {Name} muss einen kritischen Schaden einstecken!" };
 			}
 
 			if (attackRoll <= defenceRoll)
-				return new BattleResult { CriticalHit = false, DefenderWasHit = true, Value = 0, Message = "Das verteidigende Schiff konnte dem Angriff ausweichen!" };
+				return new BattleResult { CriticalHit = false, DefenderWasHit = true, Value = 0, Message = $" konnte dem Angriff ausweichen!" };
 
 			return new BattleResult { CriticalHit = false, DefenderWasHit = true, Value = 1, Message = "Das verteidigende Schiff wurde getroffen!" };
 		}

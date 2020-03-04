@@ -122,6 +122,14 @@ namespace SpaceDealerUI
 			return cruiseStarted.OnItsWay;
 		}
 
+		public static async Task<bool> ContinueTravel(string playerName, string shipName, string planetName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var cruiseStarted = await client.ContinueCruiseAsync(new CruiseRequest { DestinationPlanetName = planetName, PlayerName = playerName, ShipName = shipName });
+			return cruiseStarted.OnItsWay;
+		}
+
 		public static async Task<RepeatedField<Planet>> GetAllPlanets()
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
