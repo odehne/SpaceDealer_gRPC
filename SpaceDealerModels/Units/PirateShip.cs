@@ -14,6 +14,7 @@ namespace SpaceDealerModels.Units
 		public abstract int DefenceRoll();
 		public abstract int Shields { get; set; }
 		public abstract int Hull { get; set; }
+		public double Credits { get; set; }
 
 		public BattleResult ApplyDamage(BattleResult result)
 		{
@@ -29,7 +30,8 @@ namespace SpaceDealerModels.Units
 				}
 				else
 				{
-					result.Message = "Das Piratenschiff wurde beim Angriff zerstört.";
+					result.Message = $"Hurra! Das Piratenschiff {Name} wurde beim Angriff zerstört. Credits verdient: {Credits}.";
+					result.Treasure = Credits;
 				}
 			}
 			return result;
@@ -52,6 +54,7 @@ namespace SpaceDealerModels.Units
 			Hull = 3;
 			Name = name;
 			Sector = sector;
+			Credits = SimpleDiceRoller.GetRandomCredits(1000, 5000);
 		}
 
 		public override int Shields { get; set; }
@@ -87,6 +90,7 @@ namespace SpaceDealerModels.Units
 			Hull = 5;
 			Name = name;
 			Sector = sector;
+			Credits = SimpleDiceRoller.GetRandomCredits(5000, 15000);
 		}
 
 		public override int AttackRoll()
@@ -121,6 +125,7 @@ namespace SpaceDealerModels.Units
 			Hull = 5;
 			Name = name;
 			Sector = sector;
+			Credits = SimpleDiceRoller.GetRandomCredits(50000, 150000);
 		}
 
 		public override int AttackRoll()

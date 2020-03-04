@@ -6,6 +6,7 @@ package game;
 
 service Game {
   // Sends a greeting
+  rpc SaveGame (PlayerRequest) returns (SaveGameReply);
   rpc BattleDefend (ShipRequest) returns (BattleReply);
   rpc BattleAttack (ShipRequest) returns (BattleReply);
   rpc AddPlayer (PlayerRequest) returns (PlayerReply);
@@ -19,11 +20,16 @@ service Game {
   rpc GetPlanets (EmptyRequest) returns (PlanetsReply);
 }
 
+message SaveGameReply {
+    bool GameSaved = 1;
+}
+
 message BattleReply {
     string Message = 1;
     int32 Value = 2;
     bool DefenderWasHit = 3;
     bool CriticalHit = 4;
+    double Treasure = 5;
 }
 
 message Coordinates {

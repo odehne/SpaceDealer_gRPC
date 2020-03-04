@@ -9,6 +9,13 @@ namespace SpaceDealerModels
 	{
 		private static int reRolls = 1; //This is number of dice you are rolling
 		
+		public static double GetRandomCredits(int min, int max)
+		{
+			Random random = new Random();
+			var total = random.Next(min, max);
+			return total;
+		}
+
 		public static int Roll(DiceType diceType = DiceType.d20, int modifier = 0, bool runModifierForEachDiceRoll = false)
 		{
 			var dice = (int)diceType;

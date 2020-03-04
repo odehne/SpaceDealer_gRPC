@@ -1,4 +1,5 @@
-﻿using SpaceDealer.Enums;
+﻿using Newtonsoft.Json;
+using SpaceDealer.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,17 +13,29 @@ namespace SpaceDealerModels.Units
 		public event JourneyInterrupted Interrupted;
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition);
 
+		[JsonProperty("cruise")]
 		public Journey Cruise { get; set; }
+		[JsonProperty("cargoSize")]
 		public double CargoSize { get; set; } // in tons
+		[JsonProperty("currentLoad")]
 		public ProductsInStock CurrentLoad { get; set; }
+		[JsonProperty("features")]
 		public ShipFeatures Features {get; set;}
+		[JsonIgnore]
 		public Ships Parent { get; set; }
+		[JsonProperty("state")]
 		public ShipState State { get; set; }
+		[JsonProperty("shields")]
 		public int Shields { get; set; }
+		[JsonProperty("hull")]
 		public int Hull { get; set; }
+		[JsonProperty("rangeBonus")]
 		public int RangeBonus { get; set; }
+		[JsonProperty("attackBonus")]
 		public int AttackBonus { get; set; }
+		[JsonProperty("defenceBonus")]
 		public int DefenceBonus { get; set; }
+		[JsonProperty("currentPlanet")]
 		public Planet CurrentPlanet { get; set; }
 
 		public Ship(string name, Planet homeplanet, ShipFeatures featureSet) : base(name)

@@ -1,6 +1,7 @@
 ﻿using SpaceDealer.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace SpaceDealerModels.Units
 {
@@ -12,6 +13,7 @@ namespace SpaceDealerModels.Units
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition);
 
 
+		[JsonIgnore]
 		public Player Parent { get; set; }
 
 		public Ships(Player parent)

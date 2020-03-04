@@ -67,11 +67,9 @@ namespace SpaceDealerUI
 								break;
 							case UpdateStates.NewPlanetDiscovered:
 								TheMenu.ShowNewPlanet(u.Ship);
-								//Console.WriteLine($"{u.Ship.ShipName} hat einen neuen Planeten {u.Ship.Cruise.NewPlanetDiscovered.PlanetName} angekommen!");
 								break;
 							case UpdateStates.UnderAttack:
 								TheMenu.ShowAttackMenu(u.Ship);
-								//Console.WriteLine($"Roter Alarm! {u.Ship.ShipName} wird von {u.Ship.Cruise.EnemyBattleShip.ShipName} angegriffen!");
 								break;
 						}
 					}

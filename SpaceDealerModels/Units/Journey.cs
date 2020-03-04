@@ -1,4 +1,5 @@
-﻿using SpaceDealer.Enums;
+﻿using Newtonsoft.Json;
+using SpaceDealer.Enums;
 using SpaceDealerModels.Repositories;
 using System;
 
@@ -6,17 +7,24 @@ namespace SpaceDealerModels.Units
 {
 	public class Journey
 	{
-		public Ship Parent { get; set; }
 		public event ArrivedAtDestination Arrived;
 		public delegate void ArrivedAtDestination(string message, Coordinates newPosition);
 		public event JourneyInterrupted Interrupted;
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Coordinates newPosition);
 
+		[JsonIgnore]
+		public Ship Parent { get; set; }
+		[JsonProperty("departure")]
 		public Planet Departure { get; set; }
+		[JsonProperty("detination")]
 		public Planet Destination { get; set; }
+		[JsonProperty("currentSector")]
 		public Coordinates CurrentSector { get; set; }
-		public JourneyState State { get; set; }
+		[JsonProperty("stte")]
+		JourneyState State { get; set; }
+		[JsonProperty("enemyBattleShip")]
 		public PirateShip EnemyBattleShip { get; set; }
+		[JsonProperty("newlyDisoveredPlanet")]
 		public Planet NewlyDiscoveredPlanet { get; set; }
 		
 		public Journey(Planet departure, Planet destination, Coordinates position, Ship parent)

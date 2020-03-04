@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
 {
 	public class ProductInStock : BaseUnit
 	{
+		[JsonProperty("amount")]
 		public double Amount { get; set; }
+		[JsonProperty("weight")]
 		public double Weight { get; set; } // in tons
+		[JsonProperty("amountGeneratedPerRound ")]
 		public double AmountGeneratedPerRound { get; set; } // Für gold sehr wenig, für Reis sehr viel
+		[JsonProperty("pricePerTon ")]
 		public double PricePerTon { get; set; }
 
 

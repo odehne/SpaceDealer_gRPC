@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
 {
 
 	public class Planet : BaseUnit
 	{
+		[JsonProperty("sector")]
 		public Coordinates Sector { get; set; }
+		[JsonProperty("market")]
 		public Market Market { get; set; }
+		[JsonProperty("industries")]
 		public Industries Industries { get; set; }
 		
 		public Planet(string name, Coordinates position, Market market, Industries industries) : base(name)

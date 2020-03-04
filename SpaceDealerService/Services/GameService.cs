@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SpaceDealerModels.Repositories;
 
 namespace SpaceDealerService
@@ -31,6 +32,16 @@ namespace SpaceDealerService
 			ship.StartCruise(ship.CurrentPlanet, planet);
 			return Task.FromResult(new CruiseReply { OnItsWay = true });
 		}
+
+		public override Task<SaveGameReply> SaveGame(PlayerRequest request, ServerCallContext context)
+		{
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var jset = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
+			var ret = GamePersistor.SaveFile(JsonConvert.SerializeObject(player, Formatting.Indented, jset), player.Name + ".json");
+			return Task.FromResult(new SaveGameReply { GameSaved = ret });
+		}
+
+
 
 		public override Task<UpdateReply> GetUpdates(PlayerRequest request, ServerCallContext context)
 		{

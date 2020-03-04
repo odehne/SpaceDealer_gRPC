@@ -22,7 +22,8 @@ namespace SpaceDealerUI
 			SpaceDock = 50,
 			AddNewFeatures = 60,
 			BattleAttack = 70,
-			BattleDefend = 80
+			BattleDefend = 80,
+			SaveGame = 100
 		}
 
 
@@ -44,6 +45,18 @@ namespace SpaceDealerUI
 						var k = Queue.Take();
 						if (k != null)
 						{
+							if (k.Key == ConsoleKey.UpArrow)
+							{
+								//Menu up
+							}
+							if (k.Key == ConsoleKey.DownArrow)
+							{
+								//Menu down
+							}
+							if (k.Key == ConsoleKey.Enter)
+							{
+								//Select
+							}
 							switch (k.KeyChar)
 							{
 								case 'h':
@@ -69,6 +82,10 @@ namespace SpaceDealerUI
 								case 'r':
 									CurrentMenu = MenuType.SpaceDock;
 									ShowSpaceDock(CurrentPlayer, CurrentShip);
+									break;
+								case 'v':
+									CurrentMenu = MenuType.SaveGame;
+									ShowSaveGameResult();
 									break;
 								case 'p':
 									CurrentMenu = MenuType.PlanetInfo;
@@ -181,6 +198,21 @@ namespace SpaceDealerUI
 			throw new NotImplementedException();
 		}
 
+		private void ShowSaveGameResult()
+		{
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			var result = GameProxy.SaveGame(CurrentPlayer.Name).Result;
+			if (result.GameSaved == true)
+			{
+				Console.WriteLine(CenterLine($"Der Spielstand von {CurrentPlayer.Name} wurde erfogreich gespeichert."));
+			}
+			else
+			{
+				Console.WriteLine(CenterLine($"Beim Speichern ging etwas schief.Der Spielstand von {CurrentPlayer.Name} konnte nicht gespeichert werden."));
+			}
+		}
+
 		private void ShowPlayerInfo()
 		{
 			ClearConsoleBody();
@@ -222,7 +254,7 @@ namespace SpaceDealerUI
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- AUSWEICHEN ----"));
-			var defenceResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
+			var defenceResult = GameProxy.BattleDefend(CurrentPlayer.Name, CurrentShip.ShipName).Result;
 			var attackResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
 			Console.WriteLine(CenterLine(""));
 			Console.WriteLine(CenterLine($"Angriff: {attackResult.Message}"));
@@ -239,7 +271,7 @@ namespace SpaceDealerUI
 			Console.SetCursorPosition(0, 7);
 			Console.WriteLine(CenterLine("---- ANGRIFF ----"));
 			var attackResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
-			var defenceResult = GameProxy.BattleAttack(CurrentPlayer.Name, CurrentShip.ShipName).Result;
+			var defenceResult = GameProxy.BattleDefend(CurrentPlayer.Name, CurrentShip.ShipName).Result;
 			Console.WriteLine(CenterLine(""));
 			Console.WriteLine(CenterLine($"Angriff: {attackResult.Message}"));
 			Console.WriteLine(CenterLine($"Verteidigung: {defenceResult.Message}"));
@@ -297,6 +329,7 @@ namespace SpaceDealerUI
 			Console.WriteLine(CenterLine("(A)ktuelle Informationen"));
 			Console.WriteLine(CenterLine("Neues (Z)iel"));
 			Console.WriteLine(CenterLine("(R)aumdock"));
+			Console.WriteLine(CenterLine("(v) Spiel speichern"));
 			Console.WriteLine(CenterLine("Anderes (S)chiff wählen"));
 		}
 
@@ -408,34 +441,34 @@ namespace SpaceDealerUI
 			Console.WriteLine(CenterLine($"Kapazität: {ship.CargoSize}t"));
 			Console.WriteLine(CenterLine("---- Interessiert an ----"));
 			var i = 0;
-			foreach (var p in planet.Market.ProductsNeeded)
+			foreach (var p in planet.Industries[0].ProductsNeeded)
 			{
 				i += 1;
 				Console.WriteLine($"{i}. {p.Name.Tabyfy()}");
 			}
 			var selected = GetAnswerInt(1, i);
-			return planet.Market.ProductsNeeded[selected - 1];
+			return planet.Industries[0].ProductsNeeded[selected - 1];
 		}
 
-		public SpaceDealerModels.Units.ProductInStock Buy(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
-		{
-			ClearConsoleBody();
-			Console.SetCursorPosition(0, 5);
-			Console.WriteLine(CenterLine("---- Kaufen ----"));
-			Console.WriteLine(CenterLine($"Planet: {planet.Name}"));
-			Console.WriteLine(CenterLine($"Markplatz: {planet.Market.Name}"));
-			Console.WriteLine(CenterLine($"Raumschiff: {ship.Name}"));
-			Console.WriteLine(CenterLine($"Kapazität: {ship.CargoSize}t"));
-			Console.WriteLine(CenterLine("---- Verkauft gern ----"));
-			var i = 0;
-			foreach (var p in planet.Market.GetProductsInStock())
-			{
-				i += 1;
-				Console.WriteLine($"{i}. {p.Name.Tabyfy()}{p.GetTotalWeight().ToDecimalString()}t\t{p.PricePerTon.ToDecimalString()} credits/t.");
-			}
-			var selected = GetAnswerInt(1, i);
-			return planet.Market.ProductsNeeded[selected - 1];
-		}
+		//public SpaceDealerModels.Units.ProductInStock Buy(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
+		//{
+		//	ClearConsoleBody();
+		//	Console.SetCursorPosition(0, 5);
+		//	Console.WriteLine(CenterLine("---- Kaufen ----"));
+		//	Console.WriteLine(CenterLine($"Planet: {planet.Name}"));
+		//	Console.WriteLine(CenterLine($"Markplatz: {planet.Market.Name}"));
+		//	Console.WriteLine(CenterLine($"Raumschiff: {ship.Name}"));
+		//	Console.WriteLine(CenterLine($"Kapazität: {ship.CargoSize}t"));
+		//	Console.WriteLine(CenterLine("---- Verkauft gern ----"));
+		//	var i = 0;
+		//	foreach (var p in planet.Industries[0].ProductsNeeded)
+		//	{
+		//		i += 1;
+		//		Console.WriteLine($"{i}. {p.Name.Tabyfy()}{p.GetTotalWeight().ToDecimalString()}t\t{p.PricePerTon.ToDecimalString()} credits/t.");
+		//	}
+		//	var selected = GetAnswerInt(1, i);
+		//	return planet.Industries[0].ProductsNeeded[selected - 1];
+		//}
 
 		public double BuyProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
 		{

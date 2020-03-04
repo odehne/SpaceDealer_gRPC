@@ -1,12 +1,15 @@
-﻿using SpaceDealer.Enums;
+﻿using Newtonsoft.Json;
+using SpaceDealer.Enums;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SpaceDealerModels.Units
 {
 
 	public class Player : BaseUnit
 	{
+		[Newtonsoft.Json.JsonIgnore]
 		public Queue UpdateQueue { get; set; }
 
 		public event ArrivedAtDestination Arrived;
@@ -14,11 +17,17 @@ namespace SpaceDealerModels.Units
 		public event JourneyInterrupted Interrupted;
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Player player, Coordinates newPosition);
 
+		[JsonProperty("playerType")]
 		public PlayerTypes PlayerType { get; set; }
+		[JsonProperty("currentPlanet")]
 		public Planet CurrentPlanet { get; set; }
+		[JsonProperty("fleet")]
 		public Ships Fleet { get; set; }
+		[JsonProperty("credits")]
 		public double Credits { get; set; }
+		[JsonProperty("homePlanet")]
 		public Planet HomePlanet { get; set; }
+		[JsonProperty("galaxy")]
 		public Planets Galaxy { get; set; }
 
 

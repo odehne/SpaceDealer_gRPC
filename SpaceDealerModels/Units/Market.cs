@@ -1,29 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
 {
 	public class Market : BaseUnit
 	{
+		[JsonIgnore]
 		public Planet Parent { get; set; }
-		public ProductsInStock ProductsNeeded { get; set; }
-
+	
 		public Market(string name, Planet parent) : base(name)
 		{
 			Parent = parent;
-			ProductsNeeded = new ProductsInStock();
 		}
-
-		public ProductsInStock GetProductsInStock()
+		public ProductsInStock GetProductsToSell()
 		{
 			var productsToSell = new ProductsInStock();
 			foreach (var industry in Parent.Industries)
 			{
-				foreach(var p in industry.GeneratedProducts)
+				foreach (var p in industry.ProductsNeeded)
 				{
 					productsToSell.Add(p);
 				}
 			}
 			return productsToSell;
+		}
+
+		public ProductsInStock GetProductsToBuy()
+		{
+			var productsToBuy = new ProductsInStock();
+			foreach (var industry in Parent.Industries)
+			{
+				foreach(var p in industry.GeneratedProducts)
+				{
+					productsToBuy.Add(p);
+				}
+			}
+			return productsToBuy;
 		}
 
 		public override int GetHashCode()

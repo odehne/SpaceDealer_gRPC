@@ -93,7 +93,8 @@ namespace SpaceDealerService
 				CriticalHit = result.CriticalHit,
 				DefenderWasHit = result.DefenderWasHit,
 				Message = result.Message,
-				Value = result.Value
+				Value = result.Value,
+				Treasure = result.Treasure
 			};
 
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
@@ -6,7 +7,10 @@ namespace SpaceDealerModels.Units
 
 	public class Industry : BaseUnit
 	{
+
+		[JsonProperty("generatedProducts")]
 		public ProductsInStock GeneratedProducts { get; set; }
+		[JsonProperty("productsNeeded")]
 		public ProductsInStock ProductsNeeded { get; set; }
 
 		public Industry(string name) : base(name)

@@ -6,6 +6,6 @@
 		public int Value { get; set; }
 		public bool DefenderWasHit { get; set; }
 		public bool CriticalHit { get; set; }
-
+		public double Treasure { get; set; }
 	}
 }

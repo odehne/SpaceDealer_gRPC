@@ -43,7 +43,13 @@ namespace SpaceDealerUI
 			var reply = await client.GetUpdatesAsync(new PlayerRequest { PlayerName = playerName });
 			return reply.UpdateInfos;
 		}
-
+		public static async Task<SaveGameReply> SaveGame(string playerName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var reply = await client.SaveGameAsync(new PlayerRequest { PlayerName = playerName });
+			return reply;
+		}
 
 		public static async Task<Player> GetPlayer(string playerName)
 		{
