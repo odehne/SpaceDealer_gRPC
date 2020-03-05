@@ -6,98 +6,19 @@
       "cruise": {
         "departure": {
           "sector": {
-            "x": 10.0,
-            "y": 7.0,
+            "x": 7.0,
+            "y": 6.0,
             "z": 1.0
           },
           "market": {
-            "Name": "Moseisley",
+            "Name": "Marktplatz von Roclite",
             "Properties": []
           },
           "industries": [
             {
               "generatedProducts": [
                 {
-                  "amount": 17.69999999999998,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 0.1,
-                  "pricePerTon ": 2.0,
-                  "Name": "Tie-Fighter Flügel",
-                  "Properties": []
-                },
-                {
-                  "amount": 52.799999999999855,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 0.3,
-                  "pricePerTon ": 17.45,
-                  "Name": "Wasser Evaporatoren",
-                  "Properties": []
-                },
-                {
-                  "amount": 52.799999999999855,
-                  "weight": 700.0,
-                  "amountGeneratedPerRound ": 0.3,
-                  "pricePerTon ": 450000000.0,
-                  "Name": "Sternen-Zerstörer Triebwerke",
-                  "Properties": []
-                },
-                {
-                  "amount": 0.27600000000000013,
-                  "weight": 0.1,
-                  "amountGeneratedPerRound ": 0.001,
-                  "pricePerTon ": 450000.0,
-                  "Name": "Cyberkristalle",
-                  "Properties": []
-                }
-              ],
-              "productsNeeded": [
-                {
-                  "amount": 36.199999999999974,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 0.2,
-                  "pricePerTon ": 0.18,
-                  "Name": "Kuh-Milch",
-                  "Properties": []
-                },
-                {
-                  "amount": 18.099999999999987,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 0.1,
-                  "pricePerTon ": 0.24,
-                  "Name": "Reis",
-                  "Properties": []
-                },
-                {
-                  "amount": 1.0,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 0.2,
-                  "pricePerTon ": 0.54,
-                  "Name": "Wasser",
-                  "Properties": []
-                }
-              ],
-              "Name": "Weltraumschrott Sammler",
-              "Properties": []
-            }
-          ],
-          "Name": "Tatooine",
-          "Properties": []
-        },
-        "detination": {
-          "sector": {
-            "x": 1.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "market": {
-            "Name": "Mondbasis Aplha 1",
-            "Properties": []
-          },
-          "industries": [
-            {
-              "generatedProducts": [
-                {
-                  "amount": 4.899999999999999,
+                  "amount": 39.30000000000029,
                   "weight": 50.0,
                   "amountGeneratedPerRound ": 0.1,
                   "pricePerTon ": 13000000.0,
@@ -105,7 +26,7 @@
                   "Properties": []
                 },
                 {
-                  "amount": 2.4499999999999993,
+                  "amount": 19.650000000000144,
                   "weight": 100.0,
                   "amountGeneratedPerRound ": 0.05,
                   "pricePerTon ": 17000000.0,
@@ -113,7 +34,7 @@
                   "Properties": []
                 },
                 {
-                  "amount": 0.9800000000000005,
+                  "amount": 7.85999999999992,
                   "weight": 150.0,
                   "amountGeneratedPerRound ": 0.02,
                   "pricePerTon ": 23000000.0,
@@ -121,7 +42,7 @@
                   "Properties": []
                 },
                 {
-                  "amount": 9.799999999999997,
+                  "amount": 78.60000000000058,
                   "weight": 1.0,
                   "amountGeneratedPerRound ": 0.2,
                   "pricePerTon ": 7.99,
@@ -129,7 +50,7 @@
                   "Properties": []
                 },
                 {
-                  "amount": 9.799999999999997,
+                  "amount": 78.60000000000058,
                   "weight": 1.0,
                   "amountGeneratedPerRound ": 0.2,
                   "pricePerTon ": 79.96,
@@ -139,11 +60,35 @@
               ],
               "productsNeeded": [
                 {
-                  "amount": 9.799999999999997,
+                  "amount": 18.099999999999987,
                   "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 1.9,
+                  "Name": "Orangensaft",
+                  "Properties": []
+                },
+                {
+                  "amount": 1.0,
+                  "weight": 10.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 1932.5,
+                  "Name": "Abraumwerkzeuge",
+                  "Properties": []
+                },
+                {
+                  "amount": 2.0,
+                  "weight": 0.05,
                   "amountGeneratedPerRound ": 0.2,
-                  "pricePerTon ": 79.96,
-                  "Name": "Board-Kanone",
+                  "pricePerTon ": 82.7,
+                  "Name": "Holzblasinstrumente",
+                  "Properties": []
+                },
+                {
+                  "amount": 22.900000000000055,
+                  "weight": 50.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 13000000.0,
+                  "Name": "Kleines Raumschiff Kapazität (30t)",
                   "Properties": []
                 }
               ],
@@ -151,72 +96,76 @@
               "Properties": []
             }
           ],
-          "Name": "Erden-Mond",
-          "Properties": [
-            {
-              "Key": "Beschreibung",
-              "Value": "Kreist um den Planeten Erde. Besitzt keine eigene Athmossphäre."
-            }
-          ]
+          "Name": "Roclite",
+          "Properties": []
         },
-        "currentSector": {
-          "x": 9.0,
-          "y": 6.0,
-          "z": 0.0
-        },
-        "stte": 3,
-        "enemyBattleShip": null,
-        "newlyDisoveredPlanet": {
+        "detination": {
           "sector": {
-            "x": 9.0,
-            "y": 6.0,
+            "x": 0.0,
+            "y": 0.0,
             "z": 0.0
           },
           "market": {
-            "Name": "Marktplatz von Yenvarvis",
+            "Name": "Berlin",
             "Properties": []
           },
           "industries": [
             {
               "generatedProducts": [
                 {
-                  "amount": 29.0,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 1.0,
-                  "pricePerTon ": 6.75,
-                  "Name": "Schalentiere",
-                  "Properties": []
-                },
-                {
-                  "amount": 29.0,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 1.0,
-                  "pricePerTon ": 6.35,
-                  "Name": "Calmare",
-                  "Properties": []
-                },
-                {
-                  "amount": 29.0,
-                  "weight": 1.0,
-                  "amountGeneratedPerRound ": 1.0,
-                  "pricePerTon ": 5.75,
-                  "Name": "Fische",
-                  "Properties": []
-                },
-                {
-                  "amount": 4.800000000000002,
+                  "amount": 37.39999999999999,
                   "weight": 1.0,
                   "amountGeneratedPerRound ": 0.2,
-                  "pricePerTon ": 0.54,
-                  "Name": "Wasser",
+                  "pricePerTon ": 0.18,
+                  "Name": "Kuh-Milch",
                   "Properties": []
                 },
                 {
-                  "amount": 29.0,
+                  "amount": 37.39999999999999,
                   "weight": 1.0,
-                  "amountGeneratedPerRound ": 1.0,
-                  "pricePerTon ": 1.75,
-                  "Name": "Algen/Seeigel",
+                  "amountGeneratedPerRound ": 0.2,
+                  "pricePerTon ": 0.16,
+                  "Name": "Mais",
+                  "Properties": []
+                },
+                {
+                  "amount": 18.699999999999996,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 3.75,
+                  "Name": "Rindfleisch",
+                  "Properties": []
+                },
+                {
+                  "amount": 18.699999999999996,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 0.24,
+                  "Name": "Reis",
+                  "Properties": []
+                },
+                {
+                  "amount": 18.699999999999996,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 0.37,
+                  "Name": "Soya",
+                  "Properties": []
+                },
+                {
+                  "amount": 18.699999999999996,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 1.9,
+                  "Name": "Orangensaft",
+                  "Properties": []
+                },
+                {
+                  "amount": 18.699999999999996,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 2.8,
+                  "Name": "Bacon",
                   "Properties": []
                 }
               ],
@@ -225,43 +174,87 @@
                   "amount": 2.0,
                   "weight": 0.05,
                   "amountGeneratedPerRound ": 0.2,
-                  "pricePerTon ": 93.4,
-                  "Name": "Blechblasinstrumente",
+                  "pricePerTon ": 87.4,
+                  "Name": "Gitarren",
                   "Properties": []
                 },
                 {
-                  "amount": 2.4499999999999993,
-                  "weight": 100.0,
-                  "amountGeneratedPerRound ": 0.05,
-                  "pricePerTon ": 17000000.0,
-                  "Name": "Mittleres Raumschiff Kapazität (60t)",
-                  "Properties": []
-                },
-                {
-                  "amount": 7.0,
+                  "amount": 39.0,
                   "weight": 1.0,
                   "amountGeneratedPerRound ": 1.0,
-                  "pricePerTon ": 0.04,
-                  "Name": "Braunkohle",
+                  "pricePerTon ": 5.75,
+                  "Name": "Fische",
                   "Properties": []
                 },
                 {
-                  "amount": 2.0,
+                  "amount": 1.0,
                   "weight": 0.05,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 87.5,
+                  "Name": "Bohrmaschinen",
+                  "Properties": []
+                },
+                {
+                  "amount": 1.0,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 1.0,
+                  "pricePerTon ": 3.75,
+                  "Name": "Schnecken",
+                  "Properties": []
+                },
+                {
+                  "amount": 18.699999999999996,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 1.9,
+                  "Name": "Orangensaft",
+                  "Properties": []
+                },
+                {
+                  "amount": 19.500000000000007,
+                  "weight": 1.0,
+                  "amountGeneratedPerRound ": 0.1,
+                  "pricePerTon ": 2.0,
+                  "Name": "Tie-Fighter Flügel",
+                  "Properties": []
+                },
+                {
+                  "amount": 37.39999999999999,
+                  "weight": 1.0,
                   "amountGeneratedPerRound ": 0.2,
-                  "pricePerTon ": 93.4,
-                  "Name": "Blechblasinstrumente",
+                  "pricePerTon ": 0.18,
+                  "Name": "Kuh-Milch",
                   "Properties": []
                 }
               ],
-              "Name": "Fishfang",
+              "Name": "Landwirtschaft",
               "Properties": []
             }
           ],
-          "Name": "Yenvarvis",
+          "Name": "Erde",
           "Properties": []
         },
-        "CurrentDistanceToDestination": 10.0
+        "currentSector": {
+          "x": 2.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "stte": 2,
+        "enemyBattleShip": {
+          "$type": "SpaceDealerModels.Units.SimplePirateShip, SpaceDealerModels",
+          "Shields": 0,
+          "Hull": 0,
+          "Features": [],
+          "Name": "Lanradus",
+          "Sector": {
+            "x": 2.0,
+            "y": 1.0,
+            "z": 0.0
+          },
+          "Credits": 2479.0
+        },
+        "newlyDisoveredPlanet": null,
+        "CurrentDistanceToDestination": 2.23606797749979
       },
       "cargoSize": 30.0,
       "currentLoad": [],
@@ -270,94 +263,110 @@
       ],
       "state": 0,
       "shields": 0,
-      "hull": 1,
+      "hull": 0,
       "rangeBonus": 0,
       "attackBonus": 0,
       "defenceBonus": 0,
       "currentPlanet": {
         "sector": {
-          "x": 10.0,
-          "y": 7.0,
+          "x": 7.0,
+          "y": 6.0,
           "z": 1.0
         },
         "market": {
-          "Name": "Moseisley",
+          "Name": "Marktplatz von Roclite",
           "Properties": []
         },
         "industries": [
           {
             "generatedProducts": [
               {
-                "amount": 17.69999999999998,
-                "weight": 1.0,
+                "amount": 39.30000000000029,
+                "weight": 50.0,
                 "amountGeneratedPerRound ": 0.1,
-                "pricePerTon ": 2.0,
-                "Name": "Tie-Fighter Flügel",
+                "pricePerTon ": 13000000.0,
+                "Name": "Kleines Raumschiff Kapazität (30t)",
                 "Properties": []
               },
               {
-                "amount": 52.799999999999855,
+                "amount": 19.650000000000144,
+                "weight": 100.0,
+                "amountGeneratedPerRound ": 0.05,
+                "pricePerTon ": 17000000.0,
+                "Name": "Mittleres Raumschiff Kapazität (60t)",
+                "Properties": []
+              },
+              {
+                "amount": 7.85999999999992,
+                "weight": 150.0,
+                "amountGeneratedPerRound ": 0.02,
+                "pricePerTon ": 23000000.0,
+                "Name": "Kreuzer (100t) +Bewaffnung",
+                "Properties": []
+              },
+              {
+                "amount": 78.60000000000058,
                 "weight": 1.0,
-                "amountGeneratedPerRound ": 0.3,
-                "pricePerTon ": 17.45,
-                "Name": "Wasser Evaporatoren",
+                "amountGeneratedPerRound ": 0.2,
+                "pricePerTon ": 7.99,
+                "Name": "Sensor-Einheit",
                 "Properties": []
               },
               {
-                "amount": 52.799999999999855,
-                "weight": 700.0,
-                "amountGeneratedPerRound ": 0.3,
-                "pricePerTon ": 450000000.0,
-                "Name": "Sternen-Zerstörer Triebwerke",
-                "Properties": []
-              },
-              {
-                "amount": 0.27600000000000013,
-                "weight": 0.1,
-                "amountGeneratedPerRound ": 0.001,
-                "pricePerTon ": 450000.0,
-                "Name": "Cyberkristalle",
+                "amount": 78.60000000000058,
+                "weight": 1.0,
+                "amountGeneratedPerRound ": 0.2,
+                "pricePerTon ": 79.96,
+                "Name": "Board-Kanone",
                 "Properties": []
               }
             ],
             "productsNeeded": [
               {
-                "amount": 36.199999999999974,
-                "weight": 1.0,
-                "amountGeneratedPerRound ": 0.2,
-                "pricePerTon ": 0.18,
-                "Name": "Kuh-Milch",
-                "Properties": []
-              },
-              {
                 "amount": 18.099999999999987,
                 "weight": 1.0,
                 "amountGeneratedPerRound ": 0.1,
-                "pricePerTon ": 0.24,
-                "Name": "Reis",
+                "pricePerTon ": 1.9,
+                "Name": "Orangensaft",
                 "Properties": []
               },
               {
                 "amount": 1.0,
-                "weight": 1.0,
+                "weight": 10.0,
+                "amountGeneratedPerRound ": 0.1,
+                "pricePerTon ": 1932.5,
+                "Name": "Abraumwerkzeuge",
+                "Properties": []
+              },
+              {
+                "amount": 2.0,
+                "weight": 0.05,
                 "amountGeneratedPerRound ": 0.2,
-                "pricePerTon ": 0.54,
-                "Name": "Wasser",
+                "pricePerTon ": 82.7,
+                "Name": "Holzblasinstrumente",
+                "Properties": []
+              },
+              {
+                "amount": 22.900000000000055,
+                "weight": 50.0,
+                "amountGeneratedPerRound ": 0.1,
+                "pricePerTon ": 13000000.0,
+                "Name": "Kleines Raumschiff Kapazität (30t)",
                 "Properties": []
               }
             ],
-            "Name": "Weltraumschrott Sammler",
+            "Name": "Raumschiff Fabrik",
             "Properties": []
           }
         ],
-        "Name": "Tatooine",
+        "Name": "Roclite",
         "Properties": []
       },
       "Name": "biene 1",
       "Properties": []
     }
   ],
-  "credits": 10000.0,
+  "credits": 12479.0,
   "homePlanet": {
     "sector": {
       "x": 0.0,
@@ -372,7 +381,7 @@
       {
         "generatedProducts": [
           {
-            "amount": 10.799999999999994,
+            "amount": 37.39999999999999,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.2,
             "pricePerTon ": 0.18,
@@ -380,7 +389,7 @@
             "Properties": []
           },
           {
-            "amount": 10.799999999999994,
+            "amount": 37.39999999999999,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.2,
             "pricePerTon ": 0.16,
@@ -388,7 +397,7 @@
             "Properties": []
           },
           {
-            "amount": 5.399999999999997,
+            "amount": 18.699999999999996,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.1,
             "pricePerTon ": 3.75,
@@ -396,7 +405,7 @@
             "Properties": []
           },
           {
-            "amount": 5.399999999999997,
+            "amount": 18.699999999999996,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.1,
             "pricePerTon ": 0.24,
@@ -404,7 +413,7 @@
             "Properties": []
           },
           {
-            "amount": 5.399999999999997,
+            "amount": 18.699999999999996,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.1,
             "pricePerTon ": 0.37,
@@ -412,7 +421,7 @@
             "Properties": []
           },
           {
-            "amount": 5.399999999999997,
+            "amount": 18.699999999999996,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.1,
             "pricePerTon ": 1.9,
@@ -420,7 +429,7 @@
             "Properties": []
           },
           {
-            "amount": 5.399999999999997,
+            "amount": 18.699999999999996,
             "weight": 1.0,
             "amountGeneratedPerRound ": 0.1,
             "pricePerTon ": 2.8,
@@ -438,7 +447,7 @@
             "Properties": []
           },
           {
-            "amount": 29.0,
+            "amount": 39.0,
             "weight": 1.0,
             "amountGeneratedPerRound ": 1.0,
             "pricePerTon ": 5.75,
@@ -451,6 +460,38 @@
             "amountGeneratedPerRound ": 0.1,
             "pricePerTon ": 87.5,
             "Name": "Bohrmaschinen",
+            "Properties": []
+          },
+          {
+            "amount": 1.0,
+            "weight": 1.0,
+            "amountGeneratedPerRound ": 1.0,
+            "pricePerTon ": 3.75,
+            "Name": "Schnecken",
+            "Properties": []
+          },
+          {
+            "amount": 18.699999999999996,
+            "weight": 1.0,
+            "amountGeneratedPerRound ": 0.1,
+            "pricePerTon ": 1.9,
+            "Name": "Orangensaft",
+            "Properties": []
+          },
+          {
+            "amount": 19.500000000000007,
+            "weight": 1.0,
+            "amountGeneratedPerRound ": 0.1,
+            "pricePerTon ": 2.0,
+            "Name": "Tie-Fighter Flügel",
+            "Properties": []
+          },
+          {
+            "amount": 37.39999999999999,
+            "weight": 1.0,
+            "amountGeneratedPerRound ": 0.2,
+            "pricePerTon ": 0.18,
+            "Name": "Kuh-Milch",
             "Properties": []
           }
         ],
@@ -476,7 +517,7 @@
         {
           "generatedProducts": [
             {
-              "amount": 10.799999999999994,
+              "amount": 37.39999999999999,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 0.18,
@@ -484,7 +525,7 @@
               "Properties": []
             },
             {
-              "amount": 10.799999999999994,
+              "amount": 37.39999999999999,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 0.16,
@@ -492,7 +533,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999997,
+              "amount": 18.699999999999996,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 3.75,
@@ -500,7 +541,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999997,
+              "amount": 18.699999999999996,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 0.24,
@@ -508,7 +549,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999997,
+              "amount": 18.699999999999996,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 0.37,
@@ -516,7 +557,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999997,
+              "amount": 18.699999999999996,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 1.9,
@@ -524,7 +565,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999997,
+              "amount": 18.699999999999996,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 2.8,
@@ -542,7 +583,7 @@
               "Properties": []
             },
             {
-              "amount": 29.0,
+              "amount": 39.0,
               "weight": 1.0,
               "amountGeneratedPerRound ": 1.0,
               "pricePerTon ": 5.75,
@@ -555,6 +596,38 @@
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 87.5,
               "Name": "Bohrmaschinen",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 3.75,
+              "Name": "Schnecken",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 1.9,
+              "Name": "Orangensaft",
+              "Properties": []
+            },
+            {
+              "amount": 19.500000000000007,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 2.0,
+              "Name": "Tie-Fighter Flügel",
+              "Properties": []
+            },
+            {
+              "amount": 37.39999999999999,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.18,
+              "Name": "Kuh-Milch",
               "Properties": []
             }
           ],
@@ -579,7 +652,7 @@
         {
           "generatedProducts": [
             {
-              "amount": 4.899999999999999,
+              "amount": 15.79999999999996,
               "weight": 50.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 13000000.0,
@@ -587,7 +660,7 @@
               "Properties": []
             },
             {
-              "amount": 2.4499999999999993,
+              "amount": 7.89999999999998,
               "weight": 100.0,
               "amountGeneratedPerRound ": 0.05,
               "pricePerTon ": 17000000.0,
@@ -595,7 +668,7 @@
               "Properties": []
             },
             {
-              "amount": 0.9800000000000005,
+              "amount": 3.1600000000000024,
               "weight": 150.0,
               "amountGeneratedPerRound ": 0.02,
               "pricePerTon ": 23000000.0,
@@ -603,7 +676,7 @@
               "Properties": []
             },
             {
-              "amount": 9.799999999999997,
+              "amount": 31.59999999999992,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 7.99,
@@ -611,7 +684,7 @@
               "Properties": []
             },
             {
-              "amount": 9.799999999999997,
+              "amount": 31.59999999999992,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 79.96,
@@ -621,7 +694,7 @@
           ],
           "productsNeeded": [
             {
-              "amount": 9.799999999999997,
+              "amount": 31.59999999999992,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 79.96,
@@ -655,7 +728,7 @@
         {
           "generatedProducts": [
             {
-              "amount": 4.999999999999998,
+              "amount": 19.500000000000007,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 2.0,
@@ -663,7 +736,7 @@
               "Properties": []
             },
             {
-              "amount": 14.700000000000014,
+              "amount": 58.199999999999804,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.3,
               "pricePerTon ": 17.45,
@@ -671,7 +744,7 @@
               "Properties": []
             },
             {
-              "amount": 14.700000000000014,
+              "amount": 58.199999999999804,
               "weight": 700.0,
               "amountGeneratedPerRound ": 0.3,
               "pricePerTon ": 450000000.0,
@@ -679,7 +752,7 @@
               "Properties": []
             },
             {
-              "amount": 0.14900000000000005,
+              "amount": 0.29400000000000015,
               "weight": 0.1,
               "amountGeneratedPerRound ": 0.001,
               "pricePerTon ": 450000.0,
@@ -689,7 +762,7 @@
           ],
           "productsNeeded": [
             {
-              "amount": 10.799999999999994,
+              "amount": 37.39999999999999,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 0.18,
@@ -697,7 +770,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999997,
+              "amount": 18.699999999999996,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 0.24,
@@ -705,11 +778,43 @@
               "Properties": []
             },
             {
-              "amount": 4.800000000000002,
+              "amount": 6.800000000000003,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 0.54,
               "Name": "Wasser",
+              "Properties": []
+            },
+            {
+              "amount": 7.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 0.04,
+              "Name": "Braunkohle",
+              "Properties": []
+            },
+            {
+              "amount": 0.0,
+              "weight": 0.5,
+              "amountGeneratedPerRound ": 0.3,
+              "pricePerTon ": 350.0,
+              "Name": "Anti-Schwerkraft Generator",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.17,
+              "Name": "Weizen",
+              "Properties": []
+            },
+            {
+              "amount": 10.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.5,
+              "pricePerTon ": 8.78,
+              "Name": "Solarpanele",
               "Properties": []
             }
           ],
@@ -734,7 +839,7 @@
         {
           "generatedProducts": [
             {
-              "amount": 27.000000000000114,
+              "amount": 39.30000000000029,
               "weight": 50.0,
               "amountGeneratedPerRound ": 0.1,
               "pricePerTon ": 13000000.0,
@@ -742,7 +847,7 @@
               "Properties": []
             },
             {
-              "amount": 13.500000000000057,
+              "amount": 19.650000000000144,
               "weight": 100.0,
               "amountGeneratedPerRound ": 0.05,
               "pricePerTon ": 17000000.0,
@@ -750,7 +855,7 @@
               "Properties": []
             },
             {
-              "amount": 5.399999999999973,
+              "amount": 7.85999999999992,
               "weight": 150.0,
               "amountGeneratedPerRound ": 0.02,
               "pricePerTon ": 23000000.0,
@@ -758,7 +863,7 @@
               "Properties": []
             },
             {
-              "amount": 54.00000000000023,
+              "amount": 78.60000000000058,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 7.99,
@@ -766,7 +871,7 @@
               "Properties": []
             },
             {
-              "amount": 54.00000000000023,
+              "amount": 78.60000000000058,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 79.96,
@@ -829,7 +934,7 @@
         {
           "generatedProducts": [
             {
-              "amount": 29.0,
+              "amount": 152.0,
               "weight": 1.0,
               "amountGeneratedPerRound ": 1.0,
               "pricePerTon ": 6.75,
@@ -837,7 +942,7 @@
               "Properties": []
             },
             {
-              "amount": 29.0,
+              "amount": 152.0,
               "weight": 1.0,
               "amountGeneratedPerRound ": 1.0,
               "pricePerTon ": 6.35,
@@ -845,7 +950,7 @@
               "Properties": []
             },
             {
-              "amount": 29.0,
+              "amount": 152.0,
               "weight": 1.0,
               "amountGeneratedPerRound ": 1.0,
               "pricePerTon ": 5.75,
@@ -853,7 +958,7 @@
               "Properties": []
             },
             {
-              "amount": 4.800000000000002,
+              "amount": 29.399999999999928,
               "weight": 1.0,
               "amountGeneratedPerRound ": 0.2,
               "pricePerTon ": 0.54,
@@ -861,7 +966,7 @@
               "Properties": []
             },
             {
-              "amount": 29.0,
+              "amount": 152.0,
               "weight": 1.0,
               "amountGeneratedPerRound ": 1.0,
               "pricePerTon ": 1.75,
@@ -908,6 +1013,442 @@
         }
       ],
       "Name": "Yenvarvis",
+      "Properties": []
+    },
+    {
+      "sector": {
+        "x": 2.0,
+        "y": 2.0,
+        "z": 0.0
+      },
+      "market": {
+        "Name": "Marktplatz von Noyabos",
+        "Properties": []
+      },
+      "industries": [
+        {
+          "generatedProducts": [
+            {
+              "amount": 19.500000000000007,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 2.0,
+              "Name": "Tie-Fighter Flügel",
+              "Properties": []
+            },
+            {
+              "amount": 58.199999999999804,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.3,
+              "pricePerTon ": 17.45,
+              "Name": "Wasser Evaporatoren",
+              "Properties": []
+            },
+            {
+              "amount": 58.199999999999804,
+              "weight": 700.0,
+              "amountGeneratedPerRound ": 0.3,
+              "pricePerTon ": 450000000.0,
+              "Name": "Sternen-Zerstörer Triebwerke",
+              "Properties": []
+            },
+            {
+              "amount": 0.29400000000000015,
+              "weight": 0.1,
+              "amountGeneratedPerRound ": 0.001,
+              "pricePerTon ": 450000.0,
+              "Name": "Cyberkristalle",
+              "Properties": []
+            }
+          ],
+          "productsNeeded": [
+            {
+              "amount": 37.39999999999999,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.18,
+              "Name": "Kuh-Milch",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 0.24,
+              "Name": "Reis",
+              "Properties": []
+            },
+            {
+              "amount": 6.800000000000003,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.54,
+              "Name": "Wasser",
+              "Properties": []
+            },
+            {
+              "amount": 7.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 0.04,
+              "Name": "Braunkohle",
+              "Properties": []
+            },
+            {
+              "amount": 0.0,
+              "weight": 0.5,
+              "amountGeneratedPerRound ": 0.3,
+              "pricePerTon ": 350.0,
+              "Name": "Anti-Schwerkraft Generator",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.17,
+              "Name": "Weizen",
+              "Properties": []
+            },
+            {
+              "amount": 10.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.5,
+              "pricePerTon ": 8.78,
+              "Name": "Solarpanele",
+              "Properties": []
+            }
+          ],
+          "Name": "Weltraumschrott Sammler",
+          "Properties": []
+        }
+      ],
+      "Name": "Noyabos",
+      "Properties": []
+    },
+    {
+      "sector": {
+        "x": 4.0,
+        "y": 4.0,
+        "z": 0.0
+      },
+      "market": {
+        "Name": "Marktplatz von Genduanov",
+        "Properties": []
+      },
+      "industries": [
+        {
+          "generatedProducts": [
+            {
+              "amount": 37.39999999999999,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.18,
+              "Name": "Kuh-Milch",
+              "Properties": []
+            },
+            {
+              "amount": 37.39999999999999,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.16,
+              "Name": "Mais",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 3.75,
+              "Name": "Rindfleisch",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 0.24,
+              "Name": "Reis",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 0.37,
+              "Name": "Soya",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 1.9,
+              "Name": "Orangensaft",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 2.8,
+              "Name": "Bacon",
+              "Properties": []
+            }
+          ],
+          "productsNeeded": [
+            {
+              "amount": 2.0,
+              "weight": 0.05,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 87.4,
+              "Name": "Gitarren",
+              "Properties": []
+            },
+            {
+              "amount": 39.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 5.75,
+              "Name": "Fische",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 0.05,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 87.5,
+              "Name": "Bohrmaschinen",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 3.75,
+              "Name": "Schnecken",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 1.9,
+              "Name": "Orangensaft",
+              "Properties": []
+            },
+            {
+              "amount": 19.500000000000007,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 2.0,
+              "Name": "Tie-Fighter Flügel",
+              "Properties": []
+            },
+            {
+              "amount": 37.39999999999999,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.18,
+              "Name": "Kuh-Milch",
+              "Properties": []
+            }
+          ],
+          "Name": "Landwirtschaft",
+          "Properties": []
+        }
+      ],
+      "Name": "Genduanov",
+      "Properties": []
+    },
+    {
+      "sector": {
+        "x": 8.0,
+        "y": 7.0,
+        "z": 1.0
+      },
+      "market": {
+        "Name": "Marktplatz von Yenvarvis",
+        "Properties": []
+      },
+      "industries": [
+        {
+          "generatedProducts": [
+            {
+              "amount": 15.79999999999996,
+              "weight": 50.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 13000000.0,
+              "Name": "Kleines Raumschiff Kapazität (30t)",
+              "Properties": []
+            },
+            {
+              "amount": 7.89999999999998,
+              "weight": 100.0,
+              "amountGeneratedPerRound ": 0.05,
+              "pricePerTon ": 17000000.0,
+              "Name": "Mittleres Raumschiff Kapazität (60t)",
+              "Properties": []
+            },
+            {
+              "amount": 3.1600000000000024,
+              "weight": 150.0,
+              "amountGeneratedPerRound ": 0.02,
+              "pricePerTon ": 23000000.0,
+              "Name": "Kreuzer (100t) +Bewaffnung",
+              "Properties": []
+            },
+            {
+              "amount": 31.59999999999992,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 7.99,
+              "Name": "Sensor-Einheit",
+              "Properties": []
+            },
+            {
+              "amount": 31.59999999999992,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 79.96,
+              "Name": "Board-Kanone",
+              "Properties": []
+            }
+          ],
+          "productsNeeded": [
+            {
+              "amount": 15.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 0.33,
+              "Name": "Öl",
+              "Properties": []
+            },
+            {
+              "amount": 18.699999999999996,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.1,
+              "pricePerTon ": 1.9,
+              "Name": "Orangensaft",
+              "Properties": []
+            },
+            {
+              "amount": 7.89999999999998,
+              "weight": 100.0,
+              "amountGeneratedPerRound ": 0.05,
+              "pricePerTon ": 17000000.0,
+              "Name": "Mittleres Raumschiff Kapazität (60t)",
+              "Properties": []
+            },
+            {
+              "amount": 39.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 6.75,
+              "Name": "Schalentiere",
+              "Properties": []
+            }
+          ],
+          "Name": "Raumschiff Fabrik",
+          "Properties": []
+        }
+      ],
+      "Name": "Yenvarvis",
+      "Properties": []
+    },
+    {
+      "sector": {
+        "x": 5.0,
+        "y": 4.0,
+        "z": 0.0
+      },
+      "market": {
+        "Name": "Marktplatz von Zacimia",
+        "Properties": []
+      },
+      "industries": [
+        {
+          "generatedProducts": [
+            {
+              "amount": 39.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 6.75,
+              "Name": "Schalentiere",
+              "Properties": []
+            },
+            {
+              "amount": 39.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 6.35,
+              "Name": "Calmare",
+              "Properties": []
+            },
+            {
+              "amount": 39.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 5.75,
+              "Name": "Fische",
+              "Properties": []
+            },
+            {
+              "amount": 6.800000000000003,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 0.54,
+              "Name": "Wasser",
+              "Properties": []
+            },
+            {
+              "amount": 39.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 1.75,
+              "Name": "Algen/Seeigel",
+              "Properties": []
+            }
+          ],
+          "productsNeeded": [
+            {
+              "amount": 0.29400000000000015,
+              "weight": 0.1,
+              "amountGeneratedPerRound ": 0.001,
+              "pricePerTon ": 450000.0,
+              "Name": "Cyberkristalle",
+              "Properties": []
+            },
+            {
+              "amount": 2.0,
+              "weight": 0.05,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 52.7,
+              "Name": "Schlagzeug",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound ": 1.0,
+              "pricePerTon ": 147.0,
+              "Name": "Phaser",
+              "Properties": []
+            },
+            {
+              "amount": 2.0,
+              "weight": 0.05,
+              "amountGeneratedPerRound ": 0.2,
+              "pricePerTon ": 52.7,
+              "Name": "Schlagzeug",
+              "Properties": []
+            }
+          ],
+          "Name": "Fishfang",
+          "Properties": []
+        }
+      ],
+      "Name": "Zacimia",
       "Properties": []
     }
   ],

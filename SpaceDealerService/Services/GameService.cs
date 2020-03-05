@@ -87,6 +87,8 @@ namespace SpaceDealerService
 			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
 			var ship = player.Fleet.GetShipByName(request.ShipName);
 			var result = ship.Attack();
+			if (result.Defeaded == true)
+				player.Credits += result.Treasure;
 			var reply = ProtoBufConverter.ConvertToBattleReply(result);
 			return Task.FromResult(reply);
 		}

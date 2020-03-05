@@ -44,12 +44,12 @@ namespace SpaceDealer
 			foreach (var planet in Galaxy)
 			{
 				planet.Update();
-				Logger.Log(planet.ToString(), TraceEventType.Verbose);
+			//	Logger.Log(planet.ToString(), TraceEventType.Verbose);
 			}
 			foreach (var commander in FleetCommanders)
 			{
 				commander.Update();
-				Logger.Log(commander.ToString(), TraceEventType.Verbose);
+			//	Logger.Log(commander.ToString(), TraceEventType.Verbose);
 			}
 		}
 
