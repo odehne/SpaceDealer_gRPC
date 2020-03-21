@@ -23,7 +23,9 @@ namespace SpaceDealerUI
 			AddNewFeatures = 60,
 			BattleAttack = 70,
 			BattleDefend = 80,
-			SaveGame = 100
+			SaveGame = 100,
+			Buy = 101,
+			Sell = 102
 		}
 
 
@@ -103,6 +105,14 @@ namespace SpaceDealerUI
 									CurrentMenu = MenuType.BattleDefend;
 									ShowBattleDefend(CurrentShip);
 									break;
+								case 'k':
+									CurrentMenu = MenuType.Buy;
+									ShowBuy(CurrentPlayer, CurrentShip);
+									break;
+								case 'f':
+									CurrentMenu = MenuType.Sell;
+									ShowSell(CurrentPlayer, CurrentShip);
+									break;
 							}
 						}
 					}
@@ -119,10 +129,23 @@ namespace SpaceDealerUI
 
 		private void ShowSpaceDock(Player currentPlayer, Ship currentShip)
 		{
-			Console.WriteLine(CenterLine("---- Raumdock ----"));
-			Console.WriteLine(CenterLine("Shiff (e)rweitern"));
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine($"\t\t\t  ------------------ Willkommen im Raumdock -----------------------");
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t    Name            : {currentShip.ShipName} - Position: {PlanetToString(currentShip.CurrentPlanet)}");
+			Console.WriteLine($"\t\t\t\t    Schilde/Hülle   : {currentShip.Shields} / {currentShip.Hull}");
+			Console.WriteLine($"\t\t\t\t    Frachtraumgröße : {currentShip.CargoSize}t");
+			Console.WriteLine($"\t\t\t\t    Ladung          : {GetCargoLoad(currentShip)}");
+			Console.WriteLine($"");
+
+			Console.WriteLine(CenterLine("Schild (r)eparieren (+1) - $1500"));
+			Console.WriteLine(CenterLine("(B)oardkanone hinzufügen - $8000"));
+			Console.WriteLine(CenterLine("Sens(o)ren verbessern (1 Feld) - $6000"));
+			Console.WriteLine(CenterLine("(L)aderaum erweitern (10t) - $3500"));
 			Console.WriteLine(CenterLine("Anderes (S)chiff wählen"));
-			Console.WriteLine(CenterLine("(R)aumdock"));
+			Console.WriteLine($"");
+			Console.WriteLine($"\t\t\t  -----------------------------------------------------------------");
 		}
 
 		public void ShowStartupScreen()
@@ -189,8 +212,66 @@ namespace SpaceDealerUI
 
 		private void ShowMarket(Planet currentPlanet)
 		{
-			throw new NotImplementedException();
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"---- Willkommen auf dem Marktplatz von {currentPlanet.PlanetName} ----"));
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t    Name            : {PlanetToString(currentPlanet)}");
+			Console.WriteLine($"\t\t\t\t    Schiffe         : {CurrentShip.ShipName} ({CurrentShip.CargoSize}t)");
+			Console.WriteLine($"\t\t\t\t    Credits         : ${CurrentPlayer.Credits}");
+			Console.WriteLine();
+			Console.WriteLine(CenterLine("---- Aktionen ----"));
+			Console.WriteLine(CenterLine("(K)aufen"));
+			Console.WriteLine(CenterLine("Verkau(f)en"));
 		}
+
+
+		private void ShowSell(Player currentPlayer, Ship currentShip)
+		{
+			var currentPlanet = CurrentShip.CurrentPlanet;
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"---- Willkommen auf dem Marktplatz von {currentPlanet.PlanetName} ----"));
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t    Name            : {PlanetToString(currentPlanet)}");
+			Console.WriteLine($"\t\t\t\t    Schiffe         : {CurrentShip.ShipName} ({CurrentShip.CargoSize}t)");
+			Console.WriteLine($"\t\t\t\t    Credits         : ${CurrentPlayer.Credits}");
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t    Produkte, die benötigt werden:");
+			foreach (var neededProduct in currentShip.CurrentPlanet.Industries[0].ProductsNeeded)
+			{
+				Console.WriteLine($"\t\t\t\t    {neededProduct.ProductName.Tabyfy()}${neededProduct.PricePerTon.ToDecimalString()}/t - Auf Lager: [{neededProduct.TotalWeight.ToDecimalString()}t]");
+			}
+
+			Console.WriteLine($"\t\t\t\t    Aktuelle Ladung:");
+			if (currentShip.CargoLoad != null)
+			{
+				foreach (var cargo in currentShip.CargoLoad.LoadedProducts)
+				{
+					Console.WriteLine($"\t\t\t\t    {cargo.ProductName.Tabyfy()}${cargo.PricePerTon.ToDecimalString()}/t - Auf Lager: [{cargo.TotalWeight.ToDecimalString()}t]");
+				}
+			}
+
+		}
+
+		private void ShowBuy(Player currentPlayer, Ship currentShip)
+		{
+			var currentPlanet = CurrentShip.CurrentPlanet;
+			ClearConsoleBody();
+			Console.SetCursorPosition(0, 7);
+			Console.WriteLine(CenterLine($"---- Willkommen auf dem Marktplatz von {currentPlanet.PlanetName} ----"));
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t    Name            : {PlanetToString(currentPlanet)}");
+			Console.WriteLine($"\t\t\t\t    Schiffe         : {CurrentShip.ShipName} ({CurrentShip.CargoSize}t)");
+			Console.WriteLine($"\t\t\t\t    Credits         : ${CurrentPlayer.Credits}");
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t    Produkte, die angeboten werden:");
+			foreach (var generatedProduct in currentShip.CurrentPlanet.Industries[0].GeneratedProducts)
+			{
+				Console.WriteLine($"\t\t\t\t    {generatedProduct.ProductName.Tabyfy()}${generatedProduct.PricePerTon.ToDecimalString()}/t - Auf Lager: [{generatedProduct.TotalWeight.ToDecimalString()}t]");
+			}
+		}
+
 
 		private void ShowSaveGameResult()
 		{
@@ -212,11 +293,49 @@ namespace SpaceDealerUI
 			ClearConsoleBody();
 			Console.SetCursorPosition(0, 7);
 			CurrentPlayer = GameProxy.GetPlayer(CurrentPlayer.Name).Result;
-			Console.WriteLine(CenterLine($"Spieler: {CurrentPlayer.Name} Heimat Planet:{CurrentPlayer.HomePlanet} Credits:${CurrentPlayer.Credits}"));
+			Console.WriteLine($"\t\t\t  ------------------ Spieler Informationen -----------------------");
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t  Spieler      : {CurrentPlayer.Name} - Heimat: {CurrentPlayer.HomePlanet}");
+			Console.WriteLine($"\t\t\t\t  Kontostand   : ${CurrentPlayer.Credits}");
+			Console.WriteLine();
+			Console.WriteLine($"\t\t\t\t  Schiffe: ");
 			foreach (var ship in CurrentPlayer.Ships)
 			{
-				Console.WriteLine(CenterLine($"Shiff: {ship.ShipName} Schilde: {ship.Shields} Hülle: {ship.Hull} Aktuelle Position: {PlanetToString(ship.CurrentPlanet)}"));
+				Console.WriteLine($"\t\t\t\t    Name            : {ship.ShipName} - Position: {PlanetToString(ship.CurrentPlanet)}");
+				Console.WriteLine($"\t\t\t\t    Schilde/Hülle   : {ship.Shields} / {ship.Hull}");
+				Console.WriteLine($"\t\t\t\t    Frachtraumgröße : {ship.CargoSize}t");
+				Console.WriteLine($"\t\t\t\t    Ladung          : {GetCargoLoad(ship)}");
+				Console.WriteLine($"");
 			}
+			Console.WriteLine($"\t\t\t\t  Entdeckte Planeten: ");
+			foreach (var p in AllPlanets)
+			{
+				Console.WriteLine($"\t\t\t\t    Name            : {PlanetToString(p)}");
+				Console.WriteLine($"\t\t\t\t    Produkte, die benötigt werden:");
+				foreach (var neededProduct in p.Industries[0].ProductsNeeded)
+				{
+					Console.WriteLine($"\t\t\t\t    {neededProduct.ProductName.Tabyfy()}${neededProduct.PricePerTon.ToDecimalString()}/t - Auf Lager: [{neededProduct.TotalWeight.ToDecimalString()}t]");
+				}
+				Console.WriteLine($"\t\t\t\t    Produkte, die verkauft werden:");
+				foreach (var generatedProduct in p.Industries[0].GeneratedProducts)
+				{
+					Console.WriteLine($"\t\t\t\t    {generatedProduct.ProductName.Tabyfy()}${generatedProduct.PricePerTon.ToDecimalString()}/t - Auf Lager: [{generatedProduct.TotalWeight.ToDecimalString()}t]");
+				}
+				Console.WriteLine($"");
+			}
+			Console.WriteLine($"\t\t\t  ------------------ Spieler Informationen -----------------------");
+		}
+
+		private string GetCargoLoad(Ship ship)
+		{
+			var lst = "";
+			if (ship.CargoLoad == null || ship.CargoLoad.LoadedProducts.Count==0)
+				return "Keine Fracht";
+			foreach (var p in ship.CargoLoad.LoadedProducts)
+			{
+				lst += $"{p.ProductName} ({p.TotalWeight}t";
+			}
+			return lst;
 		}
 
 		internal void ShowNewPlanet(Ship ship)
