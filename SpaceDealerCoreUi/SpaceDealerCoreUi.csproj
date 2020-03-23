@@ -1,0 +1,480 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="People\Abyssin.png" />
+    <None Remove="People\Advozse.png" />
+    <None Remove="People\Akranian.png" />
+    <None Remove="People\Anomid.png" />
+    <None Remove="People\Anx.png" />
+    <None Remove="People\Aqualish.png" />
+    <None Remove="People\Arcona.png" />
+    <None Remove="People\Besalisk.png" />
+    <None Remove="People\Bith.png" />
+    <None Remove="People\Bothan.png" />
+    <None Remove="People\Cathar.png" />
+    <None Remove="People\Celestrial.png" />
+    <None Remove="People\Cerean.png" />
+    <None Remove="People\Chadra-Fan.png" />
+    <None Remove="People\Chagrian.png" />
+    <None Remove="People\Chewin.png" />
+    <None Remove="People\Chiss.png" />
+    <None Remove="People\Clawdite.png" />
+    <None Remove="People\Colicoid.png" />
+    <None Remove="People\Dashade.png" />
+    <None Remove="People\Dathomirian.png" />
+    <None Remove="People\Defel.png" />
+    <None Remove="People\Dessellian.png" />
+    <None Remove="People\Devaronian.png" />
+    <None Remove="People\Diathim.png" />
+    <None Remove="People\Drall.png" />
+    <None Remove="People\Droid.png" />
+    <None Remove="People\Dug.png" />
+    <None Remove="People\Duros.png" />
+    <None Remove="People\Echani.png" />
+    <None Remove="People\Eowk.png" />
+    <None Remove="People\Esh-Kha.png" />
+    <None Remove="People\Falleen.png" />
+    <None Remove="People\Feeorin.png" />
+    <None Remove="People\Flesh Raider.png" />
+    <None Remove="People\Gamorrean.png" />
+    <None Remove="People\Kel Dor.png" />
+    <None Remove="People\Kerkoiden.png" />
+    <None Remove="People\Khil.png" />
+    <None Remove="People\Klatoonian.png" />
+    <None Remove="People\Kubaz.png" />
+    <None Remove="People\Lasat.png" />
+    <None Remove="People\Lurmen.png" />
+    <None Remove="People\Massasi.png" />
+    <None Remove="Planets\AllPlanets.png" />
+    <None Remove="Planets\image_part_001.jpg" />
+    <None Remove="Planets\image_part_002.jpg" />
+    <None Remove="Planets\image_part_003.jpg" />
+    <None Remove="Planets\image_part_004.jpg" />
+    <None Remove="Planets\image_part_005.jpg" />
+    <None Remove="Planets\image_part_006.jpg" />
+    <None Remove="Planets\image_part_007.jpg" />
+    <None Remove="Planets\image_part_008.jpg" />
+    <None Remove="Planets\image_part_009.jpg" />
+    <None Remove="Planets\image_part_010.jpg" />
+    <None Remove="Planets\image_part_011.jpg" />
+    <None Remove="Planets\image_part_012.jpg" />
+    <None Remove="Planets\image_part_013.jpg" />
+    <None Remove="Planets\image_part_014.jpg" />
+    <None Remove="Planets\image_part_015.jpg" />
+    <None Remove="Planets\image_part_016.jpg" />
+    <None Remove="Planets\image_part_017.jpg" />
+    <None Remove="Planets\image_part_018.jpg" />
+    <None Remove="Planets\image_part_019.jpg" />
+    <None Remove="Planets\image_part_020.jpg" />
+    <None Remove="Planets\image_part_021.jpg" />
+    <None Remove="Planets\image_part_022.jpg" />
+    <None Remove="Planets\image_part_023.jpg" />
+    <None Remove="Planets\image_part_024.jpg" />
+    <None Remove="Planets\image_part_025.jpg" />
+    <None Remove="Planets\image_part_026.jpg" />
+    <None Remove="Planets\image_part_027.jpg" />
+    <None Remove="Planets\image_part_028.jpg" />
+    <None Remove="Planets\image_part_029.jpg" />
+    <None Remove="Planets\image_part_030.jpg" />
+    <None Remove="Planets\image_part_031.jpg" />
+    <None Remove="Planets\image_part_032.jpg" />
+    <None Remove="Planets\image_part_033.jpg" />
+    <None Remove="Planets\image_part_034.jpg" />
+    <None Remove="Planets\image_part_035.jpg" />
+    <None Remove="Planets\image_part_036.jpg" />
+    <None Remove="Spaceships\spaceships.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="People\Abyssin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Advozse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Akranian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Anomid.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Anx.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Aqualish.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Arcona.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Besalisk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Bith.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Bothan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Cathar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Celestrial.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Cerean.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Chadra-Fan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Chagrian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Chewin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Chiss.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Clawdite.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Colicoid.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Dashade.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Dathomirian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Defel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Dessellian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Devaronian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Diathim.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Drall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Droid.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Dug.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Duros.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Echani.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Eowk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Esh-Kha.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Falleen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Feeorin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Flesh Raider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Gamorrean.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Kel Dor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Kerkoiden.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Khil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Klatoonian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Kubaz.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Lasat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Lurmen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="People\Massasi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\AllPlanets.png" />
+    <Content Include="Planets\image_part_001.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_002.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_003.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_004.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_005.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_006.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_007.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_008.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_009.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_010.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_011.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_012.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_013.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_014.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_015.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_016.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_017.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_018.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_019.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_020.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_021.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_022.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_023.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_024.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_025.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_026.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_027.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_028.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_029.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_030.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_031.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_032.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_033.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_034.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_035.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Planets\image_part_036.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.27.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.27.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\CargoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\CargoControl.Designer.cs">
+      <DependentUpon>CargoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\CurrentShipControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\CurrentShipControl.Designer.cs">
+      <DependentUpon>CurrentShipControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\DistressCallControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\DistressCallControl.Designer.cs">
+      <DependentUpon>DistressCallControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\FoundNewPlanetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\FoundNewPlanetControl.Designer.cs">
+      <DependentUpon>FoundNewPlanetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\InformantControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\InformantControl.Designer.cs">
+      <DependentUpon>InformantControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\ShipSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\ShipFeatureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\ShipFeatureControl.Designer.cs">
+      <DependentUpon>ShipFeatureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\TravellingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\TravellingControl.Designer.cs">
+      <DependentUpon>TravellingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\CargoControl.resx">
+      <DependentUpon>CargoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CurrentShipControl.resx">
+      <DependentUpon>CurrentShipControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\DistressCallControl.resx">
+      <DependentUpon>DistressCallControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\FoundNewPlanetControl.resx">
+      <DependentUpon>FoundNewPlanetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\InformantControl.resx">
+      <DependentUpon>InformantControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\ShipFeatureControl.resx">
+      <DependentUpon>ShipFeatureControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TravellingControl.resx">
+      <DependentUpon>TravellingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\SpaceDealerService\Protos\game.proto">
+      <Link>Protos\game.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Spaceships\Brakiri.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\CaretakersArray.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\Collector.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\Contauri.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\Dominion.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\Liberty.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\MediumFrighter.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\Moon Calaman.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\mothership.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\PlanetaryAssultShip.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\Praditor.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\ShikBattleShip.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Spaceships\TLoth.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

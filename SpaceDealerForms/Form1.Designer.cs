@@ -37,9 +37,11 @@
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.fp2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.fp1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.SuspendLayout();
@@ -50,7 +52,7 @@
             this.spielToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1071, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -109,27 +111,43 @@
 			this.splitContainer1.Location = new System.Drawing.Point(0, 24);
 			this.splitContainer1.Name = "splitContainer1";
 			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.fp2);
+			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-			this.splitContainer1.Size = new System.Drawing.Size(1071, 628);
-			this.splitContainer1.SplitterDistance = 382;
+			this.splitContainer1.Panel2.Controls.Add(this.fp1);
+			this.splitContainer1.Size = new System.Drawing.Size(1284, 628);
+			this.splitContainer1.SplitterDistance = 667;
 			this.splitContainer1.TabIndex = 1;
 			// 
-			// flowLayoutPanel1
+			// fp2
 			// 
-			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(685, 628);
-			this.flowLayoutPanel1.TabIndex = 0;
+			this.fp2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fp2.Location = new System.Drawing.Point(0, 0);
+			this.fp2.Name = "fp2";
+			this.fp2.Padding = new System.Windows.Forms.Padding(5);
+			this.fp2.Size = new System.Drawing.Size(667, 628);
+			this.fp2.TabIndex = 0;
+			// 
+			// fp1
+			// 
+			this.fp1.AutoScroll = true;
+			this.fp1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fp1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.fp1.Location = new System.Drawing.Point(0, 0);
+			this.fp1.Name = "fp1";
+			this.fp1.Padding = new System.Windows.Forms.Padding(5);
+			this.fp1.Size = new System.Drawing.Size(613, 628);
+			this.fp1.TabIndex = 0;
+			this.fp1.WrapContents = false;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1071, 652);
+			this.ClientSize = new System.Drawing.Size(1284, 652);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
@@ -137,6 +155,7 @@
 			this.Text = "Form1";
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
@@ -156,7 +175,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
 		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.FlowLayoutPanel fp1;
+		private System.Windows.Forms.FlowLayoutPanel fp2;
 	}
 }
 

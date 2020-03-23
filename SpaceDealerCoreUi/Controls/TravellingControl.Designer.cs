@@ -1,6 +1,6 @@
-﻿namespace SpaceDealerForms
+﻿namespace SpaceDealerCoreUi.Controls
 {
-	partial class MessageControl
+	partial class TravellingControl
 	{
 		/// <summary> 
 		/// Required designer variable.

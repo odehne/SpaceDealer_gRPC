@@ -543,40 +543,40 @@ namespace SpaceDealerUI
 			return GetAnswerInt(1, 2);
 		}
 
-		public SpaceDealerModels.Units.ProductInStock SelectProductToSell(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
-		{
-			ClearConsoleBody();
-			Console.SetCursorPosition(0, 5);
-			Console.WriteLine(CenterLine("---- Verkaufen ----"));
-			Console.WriteLine(CenterLine($"Planet: {planet.Name}"));
-			Console.WriteLine(CenterLine($"Markplatz: {planet.Market.Name}"));
-			Console.WriteLine(CenterLine($"Raumschiff: {ship.Name}"));
-			Console.WriteLine(CenterLine($"Kapazität: {ship.CargoSize}t"));
-			Console.WriteLine(CenterLine("---- Interessiert an ----"));
-			var i = 0;
-			foreach (var p in planet.Industries[0].ProductsNeeded)
-			{
-				i += 1;
-				Console.WriteLine($"{i}. {p.Name.Tabyfy()}");
-			}
-			var selected = GetAnswerInt(1, i);
-			return planet.Industries[0].ProductsNeeded[selected - 1];
-		}
+		//public SpaceDealerModels.Units.ProductInStock SelectProductToSell(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet)
+		//{
+		//	ClearConsoleBody();
+		//	Console.SetCursorPosition(0, 5);
+		//	Console.WriteLine(CenterLine("---- Verkaufen ----"));
+		//	Console.WriteLine(CenterLine($"Planet: {planet.Name}"));
+		//	Console.WriteLine(CenterLine($"Markplatz: {planet.Market.Name}"));
+		//	Console.WriteLine(CenterLine($"Raumschiff: {ship.Name}"));
+		//	Console.WriteLine(CenterLine($"Kapazität: {ship.CargoSize}t"));
+		//	Console.WriteLine(CenterLine("---- Interessiert an ----"));
+		//	var i = 0;
+		//	foreach (var p in planet.Industries[0].ProductsNeeded)
+		//	{
+		//		i += 1;
+		//		Console.WriteLine($"{i}. {p.Name.Tabyfy()}");
+		//	}
+		//	var selected = GetAnswerInt(1, i);
+		//	return planet.Industries[0].ProductsNeeded[selected - 1];
+		//}
 
 		private string GetSingleLine(IEnumerable<string> names)
 		{
 			return string.Join(',', names);
 		}
 
-		public double BuyProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
-		{
-			throw new NotImplementedException();
-		}
+		//public double BuyProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
-		public double SellProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
-		{
-			throw new NotImplementedException();
-		}
+		//public double SellProduct(SpaceDealerModels.Units.Ship ship, SpaceDealerModels.Units.Planet planet, SpaceDealerModels.Units.ProductInStock selectedProduct)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public string CoordinatesToString(Coordinates coordinates)
 		{

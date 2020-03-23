@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SpaceDealerForms
+namespace SpaceDealerCoreUi.Controls
 {
-	public partial class MessageControl : UserControl
+	public partial class InformantControl : UserControl
 	{
 		public void SetMessage(string imagePath, string headline, string subHeadline)
 		{
@@ -19,7 +19,7 @@ namespace SpaceDealerForms
 			lblSubHeadline.Text = subHeadline;
 		}
 
-		public MessageControl()
+		public InformantControl()
 		{
 			InitializeComponent();
 		}
