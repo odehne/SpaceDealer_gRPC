@@ -9,6 +9,7 @@ using System.Diagnostics;
 using SpaceDealer;
 using System.Threading;
 using SpaceDealerModels.Repositories;
+using SpaceDealerService.Repos;
 
 namespace SpaceDealerService
 {
@@ -16,6 +17,9 @@ namespace SpaceDealerService
 	{
 		public static SpaceDealerGame TheGame { get; set; }
 		public static Logger TheLogger {get; set;}
+
+		public static SqlPersistor Persistor { get; set; } 
+	
 	
 		public static void Main(string[] args)
 		{
@@ -23,12 +27,21 @@ namespace SpaceDealerService
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();
 
+			var dbPath = $"{GetAppLocation()}db\\spacedealer.db";
+			Persistor = new SqlPersistor(TheLogger, dbPath);
+			Persistor.SaveGalaxy(TheGame.Galaxy);
+
 			var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
 			var engineThread = new Thread(engine.Play) { IsBackground = false };
 			engineThread.Start();
 
 			CreateHostBuilder(args).Build().Run();
 
+		}
+
+		public static string GetAppLocation()
+		{
+			return AppDomain.CurrentDomain.BaseDirectory;
 		}
 
 		// Additional configuration is required to successfully run gRPC on macOS.

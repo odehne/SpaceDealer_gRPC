@@ -8,6 +8,34 @@ namespace SpaceDealerCoreUi
 {
 	public partial class Form1 : Form
 	{
+
+		private delegate void GameUpdateDelegate(Ship ship, UpdateStates updateState);
+
+		private void UpdateShip(Ship ship, UpdateStates updateState)
+		{
+			if (InvokeRequired)
+			{
+				BeginInvoke(new GameUpdateDelegate(UpdateShip), ship, updateState);
+			}
+			else
+			{
+				switch (updateState)
+				{
+					case UpdateStates.ArrivedOnTarget:
+						ArrivedAtTarget(ship);
+						//	TheMenu.ShowPlanetInfo(u.Ship);
+						break;
+					case UpdateStates.NewPlanetDiscovered:
+						FoundNewPlanet(ship);
+						break;
+					case UpdateStates.UnderAttack:
+						//	TheMenu.ShowAttackMenu(u.Ship);
+						UnderAttack(ship);
+						break;
+				}
+			}
+		}
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -19,7 +47,6 @@ namespace SpaceDealerCoreUi
 		private async void Init()
 		{
 			Program.AllPlanets = await GameProxy.GetAllPlanets();
-			Program.CurrentPlayer = await GameProxy.AddPlayer("Olli");
 			fp2.Controls.Clear();
 			fp2.Controls.Add(new MenuControl());
 		}
@@ -31,6 +58,15 @@ namespace SpaceDealerCoreUi
 				Program.CurrentShip = Program.CurrentPlayer.Ships[0];
 			}
 			return Program.CurrentShip;
+		}
+
+		public void ClearMessagePanel()
+		{
+			for (int i = fp1.Controls.Count - 1; i > 0; i--)
+			{
+				if (fp2.Controls[i].GetType() == typeof(TravellingControl))
+					fp1.Controls.Remove(fp2.Controls[i]);
+			}
 		}
 
 		public void ClearMenuPanel()
@@ -49,6 +85,23 @@ namespace SpaceDealerCoreUi
 			fp2.Controls.Add(ctl);
 		}
 
+		public void NewGame()
+		{
+			ClearMenuPanel();
+			var ctl = new NewGameControl();
+			ctl.Init();
+			fp2.Controls.Add(ctl);
+		}
+
+
+		public void ShowPlayerStats()
+		{
+			ClearMenuPanel();
+			var ctl = new PlayerDetailsControl();
+			ctl.Init(Program.CurrentPlayer);
+			fp2.Controls.Add(ctl);
+		}
+
 		public async void ShowShipSelection()
 		{
 			ClearMenuPanel();
@@ -61,13 +114,21 @@ namespace SpaceDealerCoreUi
 			}
 		}
 
+		public async void ShowPlanetDetails(Planet destination)
+		{
+			ClearMenuPanel();
+			var ctl = new PlanetDetailsControl();
+			ctl.Init(destination);
+			fp2.Controls.Add(ctl);
+		}
+
 		public async void StartCruise(Planet destination)
 		{
 			var result = await GameProxy.StartCruise(Program.CurrentPlayer.Name, Program.CurrentShip.ShipName, destination.PlanetName);
 			if (result == true)
 			{
 				var msg = new TravellingControl();
-				msg.SetMessage(Program.SpaceShipAssets.GetRandomAsset().Path, "Neuer Kurs", $"Neuer Kurs nach {destination.ToPositiontring()} liegt an, sir!");
+				msg.SetMessage(Program.AnimationAssets[0].Path, "Neuer Kurs", $"Neuer Kurs nach {destination.ToPlanetPosition()} liegt an, sir!");
 				fp1.Controls.Add(msg);
 			}
 		}
@@ -94,8 +155,6 @@ namespace SpaceDealerCoreUi
 
 		private void neuesSpielToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
-		
 			//var mc = new InformantControl();
 			//mc.SetMessage("People\\Chagrian.png", "Nützliche Informationen", "Der Chagrian hat nützliche Informationen über das Planetensystem in dem sich den Frachter King Creole befindet.");
 			//fp1.Controls.Add(mc);
@@ -125,20 +184,7 @@ namespace SpaceDealerCoreUi
 					{
 						foreach (var u in updates)
 						{
-							switch (u.UpdateState)
-							{
-								case UpdateStates.ArrivedOnTarget:
-									ArrivedAtTarget(u.Ship);
-								//	TheMenu.ShowPlanetInfo(u.Ship);
-									break;
-								case UpdateStates.NewPlanetDiscovered:
-									FoundNewPlanet(u.Ship);
-									break;
-								case UpdateStates.UnderAttack:
-									//	TheMenu.ShowAttackMenu(u.Ship);
-									UnderAttack(u.Ship);
-									break;
-							}
+							UpdateShip(u.Ship, u.UpdateState);
 						}
 					}
 				}
@@ -148,8 +194,8 @@ namespace SpaceDealerCoreUi
 		}
 		private void UnderAttack(Ship ship)
 		{
-			var planetName = ship.CurrentPlanet.PlanetName;
-			var position = ship.CurrentPlanet.ToPositiontring();
+			ClearMessagePanel();
+			var position = ship.CurrentPlanet.ToPlanetPosition();
 			var mc1 = new DistressCallControl();
 			mc1.SetMessage(Program.PeopleAssets.GetRandomAsset().Path, $"Roter Alarm!", $"Wir machen deinen Mini-Frachter fertig! Du hast keine Chance gegen uns. Gib lieber gleich auf oder wir zermalmen dich!\nPosition: {position}.");
 			fp1.Controls.Add(mc1);
@@ -157,8 +203,9 @@ namespace SpaceDealerCoreUi
 
 		private void ArrivedAtTarget(Ship ship)
 		{
+			ClearMessagePanel();
 			var planetName = ship.CurrentPlanet.PlanetName;
-			var position = ship.CurrentPlanet.ToPositiontring();
+			var position = ship.CurrentPlanet.ToPlanetPosition();
 			var mc1 = new FoundNewPlanetControl();
 			mc1.SetMessage(Program.PlanetAssets.GetRandomAsset().Path, $"Willkommen in {planetName}", $"Dein Frachter {ship.ShipName} befindet sich im Orbit des Zielplanetens.\nPosition: {position}."); ;
 			fp1.Controls.Add(mc1);
@@ -166,8 +213,9 @@ namespace SpaceDealerCoreUi
 
 		private void FoundNewPlanet(Ship ship)
 		{
+			ClearMessagePanel();
 			var planetName = ship.CurrentPlanet.PlanetName;
-			var position = ship.CurrentPlanet.ToPositiontring();
+			var position = ship.CurrentPlanet.ToPlanetPosition();
 			var mc1 = new FoundNewPlanetControl();
 			mc1.SetMessage(Program.PlanetAssets.GetRandomAsset().Path, $"Willkommen in {planetName}", $"Dein Frachter {ship.ShipName} hat einen neuen Planeten entdeckt.\nPosition: {position}.");
 			fp1.Controls.Add(mc1);

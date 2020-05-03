@@ -7,7 +7,7 @@ namespace SpaceDealerModels.Units
 {
 	public abstract class PirateShip
 	{
-		public ShipFeatures Features { get; set; }
+		public DbShipFeatures Features { get; set; }
 		public string Name { get; set; }
 		public Coordinates Sector { get; set; }
 		public abstract int AttackRoll();
@@ -15,7 +15,7 @@ namespace SpaceDealerModels.Units
 		public abstract int Shields { get; set; }
 		public abstract int Hull { get; set; }
 		public double Credits { get; set; }
-
+		public string PicturePath { get; set; }
 		public BattleResult ApplyDamage(BattleResult result)
 		{
 			if (Shields > 0)
@@ -41,11 +41,11 @@ namespace SpaceDealerModels.Units
 
 	public class SimplePirateShip : PirateShip
 	{
-		public SimplePirateShip(string name, Coordinates sector, ShipFeatures featureSet)
+		public SimplePirateShip(string name, Coordinates sector, DbShipFeatures featureSet)
 		{
 			if (featureSet == null)
 			{
-				Features = new ShipFeatures();
+				Features = new DbShipFeatures();
 			}
 			else
 			{
@@ -77,11 +77,11 @@ namespace SpaceDealerModels.Units
 		public override int Shields { get; set; }
 		public override int Hull { get; set; }
 
-		public CruiserPirateShip(string name, Coordinates sector, ShipFeatures featureSet)
+		public CruiserPirateShip(string name, Coordinates sector, DbShipFeatures featureSet)
 		{
 			if (featureSet == null)
 			{
-				Features = new ShipFeatures();
+				Features = new DbShipFeatures();
 			}
 			else
 			{
@@ -110,11 +110,11 @@ namespace SpaceDealerModels.Units
 		public override int Shields { get; set; }
 		public override int Hull { get; set; }
 
-		public HeavyCruiserPirateShip(string name, Coordinates sector, ShipFeatures featureSet)
+		public HeavyCruiserPirateShip(string name, Coordinates sector, DbShipFeatures featureSet)
 		{
 			if (featureSet == null)
 			{
-				Features = new ShipFeatures();
+				Features = new DbShipFeatures();
 				Features.Add(Repository.GetFeature("ShieldBonus+1"));
 				Features.Add(Repository.GetFeature("Phasers+1"));
 			}

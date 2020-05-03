@@ -7,34 +7,34 @@ using System.Text.Json.Serialization;
 namespace SpaceDealerModels.Units
 {
 
-	public class Player : BaseUnit
+	public class DbPlayer : BaseUnit
 	{
 		[Newtonsoft.Json.JsonIgnore]
 		public Queue UpdateQueue { get; set; }
 
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, Ship ship, Player player);
+		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship, DbPlayer player);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Player player, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Coordinates newPosition);
 
 		[JsonProperty("playerType")]
 		public PlayerTypes PlayerType { get; set; }
 		[JsonProperty("currentPlanet")]
-		public Planet CurrentPlanet { get; set; }
+		public DbPlanet CurrentPlanet { get; set; }
 		[JsonProperty("fleet")]
 		public Ships Fleet { get; set; }
 		[JsonProperty("credits")]
 		public double Credits { get; set; }
 		[JsonProperty("homePlanet")]
-		public Planet HomePlanet { get; set; }
+		public DbPlanet HomePlanet { get; set; }
 		[JsonProperty("galaxy")]
 		public Planets Galaxy { get; set; }
-
-		public Player()
+		
+		public DbPlayer()
 		{
 		}
 
-		public Player(string name, Planet homeplanet, Planets planets) : base(name)
+		public DbPlayer(string name, DbPlanet homeplanet, Planets planets) : base(name)
 		{
 			UpdateQueue = new Queue();
 			Galaxy = planets;
@@ -45,13 +45,13 @@ namespace SpaceDealerModels.Units
 			Fleet.Arrived += Fleet_Arrived;
 		}
 
-		private void Fleet_Arrived(string message, Coordinates newPosition, Ship ship)
+		private void Fleet_Arrived(string message, Coordinates newPosition, DbShip ship)
 		{
 			UpdateQueue.Enqueue(new UpdateInfo(ship, UpdateStates.ArrivedOnTarget));
 			Arrived?.Invoke(message, newPosition, ship, this);
 		}
 
-		private void Fleet_Interrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition)
+		private void Fleet_Interrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition)
 		{
 			switch (interruptionType)
 			{

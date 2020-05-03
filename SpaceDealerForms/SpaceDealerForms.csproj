@@ -75,6 +75,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\NewGameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\NewGameControl.Designer.cs">
+      <DependentUpon>NewGameControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlayerDetailsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlayerDetailsControl.Designer.cs">
+      <DependentUpon>PlayerDetailsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CurrentShipControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,11 +105,23 @@
     <Compile Include="Controls\MenuControl.Designer.cs">
       <DependentUpon>MenuControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlanetSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetSelectionControl.Designer.cs">
+      <DependentUpon>PlanetSelectionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ShipFeatureControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ShipFeatureControl.Designer.cs">
       <DependentUpon>ShipFeatureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ShipListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ShipListControl.Designer.cs">
+      <DependentUpon>ShipListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TravellingControl.cs">
       <SubType>UserControl</SubType>
@@ -132,6 +156,12 @@
     <Compile Include="GameProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\NewGameControl.resx">
+      <DependentUpon>NewGameControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlayerDetailsControl.resx">
+      <DependentUpon>PlayerDetailsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CurrentShipControl.resx">
       <DependentUpon>CurrentShipControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -141,8 +171,14 @@
     <EmbeddedResource Include="Controls\MenuControl.resx">
       <DependentUpon>MenuControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetSelectionControl.resx">
+      <DependentUpon>PlanetSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ShipFeatureControl.resx">
       <DependentUpon>ShipFeatureControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ShipListControl.resx">
+      <DependentUpon>ShipListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TravellingControl.resx">
       <DependentUpon>TravellingControl.cs</DependentUpon>
@@ -189,6 +225,8 @@
     </Protobuf>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Other\ok.png" />
+    <Content Include="Other\passed.png" />
     <Content Include="People\Abyssin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

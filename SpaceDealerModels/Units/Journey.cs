@@ -13,11 +13,11 @@ namespace SpaceDealerModels.Units
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Coordinates newPosition);
 
 		[JsonIgnore]
-		public Ship Parent { get; set; }
+		public DbShip Parent { get; set; }
 		[JsonProperty("departure")]
-		public Planet Departure { get; set; }
+		public DbPlanet Departure { get; set; }
 		[JsonProperty("detination")]
-		public Planet Destination { get; set; }
+		public DbPlanet Destination { get; set; }
 		[JsonProperty("currentSector")]
 		public Coordinates CurrentSector { get; set; }
 		[JsonProperty("stte")]
@@ -25,14 +25,14 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("enemyBattleShip")]
 		public PirateShip EnemyBattleShip { get; set; }
 		[JsonProperty("newlyDisoveredPlanet")]
-		public Planet NewlyDiscoveredPlanet { get; set; }
+		public DbPlanet NewlyDiscoveredPlanet { get; set; }
 		
 		public Journey()
 		{
 
 		}
 
-		public Journey(Planet departure, Planet destination, Coordinates position, Ship parent)
+		public Journey(DbPlanet departure, DbPlanet destination, Coordinates position, DbShip parent)
 		{
 			Parent = parent;
 			Departure = departure;

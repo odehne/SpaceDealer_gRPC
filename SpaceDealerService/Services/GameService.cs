@@ -59,11 +59,9 @@ namespace SpaceDealerService
 		{
 			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
 			var jset = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
-			var ret = GamePersistor.SaveFile(JsonConvert.SerializeObject(player, Formatting.Indented, jset), player.Name + ".json");
+			var ret = Program.Persistor.SavePlayers(Program.TheGame.FleetCommanders);
 			return Task.FromResult(new SaveGameReply { GameSaved = ret });
 		}
-
-
 
 		public override Task<UpdateReply> GetUpdates(PlayerRequest request, ServerCallContext context)
 		{
@@ -106,6 +104,8 @@ namespace SpaceDealerService
 		{
 			var ships = new ShipsReply();
 			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			if (player == null)
+				return Task.FromResult(new ShipsReply(ships));
 
 			foreach (var ship in player.Fleet)
 			{
@@ -124,50 +124,31 @@ namespace SpaceDealerService
 			return Task.FromResult(new PlanetsReply(ps));
 		}
 
-		public override Task<PlayerReply> AddPlayer(PlayerRequest request, ServerCallContext context)
+		public override Task<PlayerReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
 		{
-			SpaceDealerModels.Units.Player player;
 			var g = Program.TheGame;
-			var json = GamePersistor.LoadFile(request.PlayerName + ".json");
-			if(!string.IsNullOrEmpty(json))
+			var player = Program.Persistor.PlayersRepo.GetPlayer(request.PlayerName);
+
+			if (player == null)
 			{
-				player = JsonConvert.DeserializeObject<SpaceDealerModels.Units.Player>(json, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
-				player = AddSavedPlayer(player);
-			}
-			else
-			{
-				player = new SpaceDealerModels.Units.Player(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy);
+				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy);
+				player.PicturePath = request.PicturePath;
 			}
 
 			g.FleetCommanders.AddPlayer(player);
-		
-			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(player) });
-		}
 
-		private SpaceDealerModels.Units.Player AddSavedPlayer(SpaceDealerModels.Units.Player player)
-		{
-			var galaxy = Program.TheGame.Galaxy;
-			foreach (var p in player.Galaxy)
-			{
-				galaxy.AddPlanet(p);
-			}
-			
-			var newPlayer = new SpaceDealerModels.Units.Player(player.Name, galaxy.GetPlanetByName(player.HomePlanet.Name), galaxy);
-			newPlayer.Credits = player.Credits;
-			newPlayer.CurrentPlanet = player.CurrentPlanet;
-			
-			foreach (var s in player.Fleet)
-			{
-				newPlayer.Fleet.AddShip(s);
-			}
-			return newPlayer;
+			Program.Persistor.SavePlayers(g.FleetCommanders);
+			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(player) });
+
 		}
 
 		public override Task<ShipReply> AddShip(ShipRequest request, ServerCallContext context)
 		{
 			var g = Program.TheGame;
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var s = new SpaceDealerModels.Units.Ship(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
+			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
+			s.PlayerId = p.Id;
+			s.PicturePath = ".\\Spaceships\\MediumFrighter.jpg";
 			p.Fleet.AddShip(s);
 			return Task.FromResult(new ShipReply { Ship = ProtoBufConverter.ConvertToShip(s) });
 		}

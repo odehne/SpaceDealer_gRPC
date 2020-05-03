@@ -9,7 +9,7 @@ service Game {
   rpc SaveGame (PlayerRequest) returns (SaveGameReply);
   rpc BattleDefend (ShipRequest) returns (BattleReply);
   rpc BattleAttack (ShipRequest) returns (BattleReply);
-  rpc AddPlayer (PlayerRequest) returns (PlayerReply);
+  rpc AddPlayer (AddPlayerRequest) returns (PlayerReply);
   rpc GetPlayer (PlayerRequest) returns (PlayerReply);
   rpc GetPlayers (EmptyRequest) returns (PlayersReply);
   rpc GetShips (ShipsRequest) returns (ShipsReply);
@@ -45,6 +45,7 @@ message Player {
     repeated Ship ships = 2;
     double Credits = 3;
     string HomePlanet = 4;
+    string PicturePath = 5;
 }
 
 message PlayersReply {
@@ -80,6 +81,11 @@ enum JourneyState {
     InBattle = 2;
     NewPlanetInRange = 3;
     OtherShipInRange = 4;
+}
+
+message AddPlayerRequest {
+    string playerName = 1;
+    string PicturePath = 2;
 }
 
 message PlayerRequest {
@@ -123,6 +129,7 @@ message Planet {
    string PlanetName = 1;
    Coordinates Sector = 2;
    repeated Industry Industries = 3;
+   string PicturePath = 4;
 }
 
 message Load {
@@ -152,6 +159,7 @@ message ProductInStock {
     double PricePerTon = 5;
     double TotalWeight = 6;
     double TotalPrice = 7;
+    string PicturePath = 8;
 }
 
 message Ship {
@@ -163,12 +171,14 @@ message Ship {
    int32 Shields = 6;
    int32 Hull = 7;
    Planet CurrentPlanet = 8;
+   string PicturePath = 9;
 }
 
 message PirateShip {
    string ShipName = 1;
    int32 Shields = 2;
    int32 Hull = 3;
+   string PicturePath = 4;
 }
 
 message EmptyRequest {

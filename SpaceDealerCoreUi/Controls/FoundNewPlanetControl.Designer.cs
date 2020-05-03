@@ -30,7 +30,7 @@
 		{
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.lblHeadline = new System.Windows.Forms.Label();
-			this.lblSubHeadline = new System.Windows.Forms.TextBox();
+			this.lblSubHeadline = new System.Windows.Forms.Label();
 			this.ColorCodeBox = new System.Windows.Forms.PictureBox();
 			this.btnHelp = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -42,7 +42,7 @@
 			this.pictureBox1.Location = new System.Drawing.Point(23, 22);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(112, 112);
-			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pictureBox1.TabIndex = 6;
 			this.pictureBox1.TabStop = false;
 			// 
@@ -58,13 +58,13 @@
 			// 
 			// lblSubHeadline
 			// 
-			this.lblSubHeadline.Location = new System.Drawing.Point(149, 45);
-			this.lblSubHeadline.Multiline = true;
+			this.lblSubHeadline.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+			this.lblSubHeadline.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.lblSubHeadline.Location = new System.Drawing.Point(147, 45);
 			this.lblSubHeadline.Name = "lblSubHeadline";
-			this.lblSubHeadline.ReadOnly = true;
-			this.lblSubHeadline.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.lblSubHeadline.Size = new System.Drawing.Size(389, 82);
-			this.lblSubHeadline.TabIndex = 8;
+			this.lblSubHeadline.Size = new System.Drawing.Size(389, 75);
+			this.lblSubHeadline.TabIndex = 11;
+			this.lblSubHeadline.Text = "Name: USS ";
 			// 
 			// ColorCodeBox
 			// 
@@ -110,7 +110,7 @@
 
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label lblHeadline;
-		private System.Windows.Forms.TextBox lblSubHeadline;
+		private System.Windows.Forms.Label lblSubHeadline;
 		private System.Windows.Forms.PictureBox ColorCodeBox;
 		private System.Windows.Forms.Button btnHelp;
 	}

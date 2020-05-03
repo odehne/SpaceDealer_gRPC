@@ -10,12 +10,16 @@ using System.Windows.Forms;
 
 namespace SpaceDealerForms.Controls
 {
-	public partial class MenuControl : UserControl
+	public partial class btnCurrentPlanet : UserControl
 	{
-		public MenuControl()
+		public btnCurrentPlanet()
 		{
 			InitializeComponent();
 		}
 
+		private void btnLoadGame_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

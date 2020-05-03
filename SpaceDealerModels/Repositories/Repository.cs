@@ -12,8 +12,8 @@ namespace SpaceDealerModels.Repositories
 		public static List<string> ShipNames { get; set; }
 		public static List<string> PlanetNames { get; set; }
 
-		public static ShipFeatures Library { get; set; }
-		public static Industries IndustryLibrary { get; set; }
+		public static DbShipFeatures Library { get; set; }
+		public static List<DbIndustry> IndustryLibrary { get; set; }
 
 		public static ProductsInStock ProductLibrary { get; set; }
 		//public static Planets PlanetLibrary { get; set; }
@@ -126,25 +126,25 @@ namespace SpaceDealerModels.Repositories
 			return PlanetNames[i];
 		}
 
-		public static Planet GetRandomPlanet(Coordinates sector)
+		public static DbPlanet GetRandomPlanet(Coordinates sector)
 		{
 			var planetName = GetRandomPlanetName();
-			var p = new Planet(planetName);
+			var p = new DbPlanet(planetName);
 			p.Market = new Market("Marktplatz von " + planetName, p);
-			p.Industries = new Industries(p);
+			p.Industry = GetRandomIndustry();
 			p.Sector = sector;
-			p.Industries.Add(GetRandomIndustry());
-			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
-			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
-			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
-			p.Industries[0].ProductsNeeded.AddProduct(GetRandomProduct());
 			return p;
+		}
+
+		public static DbIndustry GetIndustryByName(string industryName)
+		{
+			return IndustryLibrary.FirstOrDefault(x => x.Name.Equals(industryName, StringComparison.CurrentCultureIgnoreCase));
 		}
 
 		public static void NewIndustryLibrary()
 		{
-			IndustryLibrary = new Industries();
-			var weltraumSchrott = IndustryLibrary.AddIndustry("Weltraumschrott Sammler");
+			IndustryLibrary = new List<DbIndustry>();
+			var weltraumSchrott = new DbIndustry("Weltraumschrott Sammler");
 				weltraumSchrott.AddGeneratedProduct(Repository.GetProductByName("Tie-Fighter Flügel"));
 				weltraumSchrott.AddGeneratedProduct(Repository.GetProductByName("Wasser Evaporatoren"));
 				weltraumSchrott.AddGeneratedProduct(Repository.GetProductByName("Sternen-Zerstörer Triebwerke"));
@@ -152,13 +152,15 @@ namespace SpaceDealerModels.Repositories
 				weltraumSchrott.AddNeededProduct(Repository.GetProductByName("Kuh-Milch"));
 				weltraumSchrott.AddNeededProduct(Repository.GetProductByName("Reis"));
 				weltraumSchrott.AddNeededProduct(Repository.GetProductByName("Wasser"));
-			var moonFactory = IndustryLibrary.AddIndustry("Raumschiff Fabrik");
+			IndustryLibrary.Add(weltraumSchrott);
+			var moonFactory = new DbIndustry("Raumschiff Fabrik");
 				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
 				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
 				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
 				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Sensor-Einheit"));
 				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Board-Kanone"));
-			var farming = IndustryLibrary.AddIndustry("Landwirtschaft");
+			IndustryLibrary.Add(moonFactory);
+			var farming = new DbIndustry("Landwirtschaft");
 				farming.AddGeneratedProduct(Repository.GetProductByName("Kuh-Milch"));
 				farming.AddGeneratedProduct(Repository.GetProductByName("Mais"));
 				farming.AddGeneratedProduct(Repository.GetProductByName("Rindfleisch"));
@@ -169,40 +171,44 @@ namespace SpaceDealerModels.Repositories
 				farming.AddNeededProduct(Repository.GetProductByName("Gitarren"));
 				farming.AddNeededProduct(Repository.GetProductByName("Fische"));
 				farming.AddNeededProduct(Repository.GetProductByName("Bohrmaschinen"));
-			var fishing = IndustryLibrary.AddIndustry("Fishfang");
+			IndustryLibrary.Add(farming);
+			var fishing = new DbIndustry("Fishfang");
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Schalentiere"));
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Calmare"));
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Fische"));
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Wasser"));
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Algen/Seeigel"));
-			var musik = IndustryLibrary.AddIndustry("Musikinstrumente");
+			IndustryLibrary.Add(fishing);
+			var musik = new DbIndustry("Musikinstrumente");
 				musik.AddGeneratedProduct(Repository.GetProductByName("Gitarren"));
 				musik.AddGeneratedProduct(Repository.GetProductByName("Holzblasinstrumente"));
 				musik.AddGeneratedProduct(Repository.GetProductByName("Blechblasinstrumente"));
 				musik.AddGeneratedProduct(Repository.GetProductByName("Streichinstrumente"));
 				musik.AddGeneratedProduct(Repository.GetProductByName("Schlagzeug"));
-			var werkzeuge = IndustryLibrary.AddIndustry("Werkzeuge");
+			IndustryLibrary.Add(musik);
+			var werkzeuge = new DbIndustry("Werkzeuge");
 				werkzeuge.AddGeneratedProduct(Repository.GetProductByName("Wasser Evaporatoren"));
 				werkzeuge.AddGeneratedProduct(Repository.GetProductByName("Bohrmaschinen"));
 				werkzeuge.AddGeneratedProduct(Repository.GetProductByName("Abraumwerkzeuge"));
 				werkzeuge.AddGeneratedProduct(Repository.GetProductByName("Anti-Schwerkraft Generator"));
+			IndustryLibrary.Add(werkzeuge);
 		}
 
-		public static ProductInStock GetRandomProduct()
+		public static DbProductInStock GetRandomProduct()
 		{
 			Random random = new Random();
 			var i = random.Next(0, ProductLibrary.Count - 1);
 			return ProductLibrary[i];
 		}
 
-		public static Industry GetRandomIndustry()
+		public static DbIndustry GetRandomIndustry()
 		{
 			Random random = new Random();
 			var i = random.Next(0, IndustryLibrary.Count - 1);
 			return IndustryLibrary[i];
 		}
 
-		public static ProductInStock GetProductByName(string name)
+		public static DbProductInStock GetProductByName(string name)
 		{
 			return ProductLibrary.SingleOrDefault(x=>x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 		}
@@ -260,12 +266,12 @@ namespace SpaceDealerModels.Repositories
 
 		private static void NewFeatureLibary()
 		{
-			Library = new ShipFeatures();
-			Library.Add(new ShipFeature("ShieldBonus+1", "Verbesserte Schile (+1)", 0, 1, 0,0));
-			Library.Add(new ShipFeature("Phasers+1", "Phaser-Bänke", 1, 0, 0,0));
-			Library.Add(new ShipFeature("Torpedos+2", "Torpedos", 2, 1, 0,0));
-			Library.Add(new ShipFeature("AdvancedWarp+1", "Verbesserte Geschwindigkeit", 0, 0, 0, 1));
-			Library.Add(new ShipFeature("SignalRange+1", "Verbesserter Signalempfang", 0, 0, 1,0));
+			Library = new DbShipFeatures();
+			Library.Add(new DbFeature("ShieldBonus+1", "Verbesserte Schile (+1)", 0, 1, 0,0));
+			Library.Add(new DbFeature("Phasers+1", "Phaser-Bänke", 1, 0, 0,0));
+			Library.Add(new DbFeature("Torpedos+2", "Torpedos", 2, 1, 0,0));
+			Library.Add(new DbFeature("AdvancedWarp+1", "Verbesserte Geschwindigkeit", 0, 0, 0, 1));
+			Library.Add(new DbFeature("SignalRange+1", "Verbesserter Signalempfang", 0, 0, 1,0));
 		}
 
 		public static ProductsInStock GetRandomProducts(int howMany, bool needed)
@@ -282,9 +288,9 @@ namespace SpaceDealerModels.Repositories
 			return ret;
 		}
 
-		public static ShipFeatures GetFeatureSet(string[] featureNames )
+		public static DbShipFeatures GetFeatureSet(string[] featureNames )
 		{
-			var featureSet = new ShipFeatures();
+			var featureSet = new DbShipFeatures();
 			foreach (var featureName in featureNames)
 			{
 				featureSet.Add(GetFeature(featureName));
@@ -292,7 +298,7 @@ namespace SpaceDealerModels.Repositories
 			return featureSet;
 		}
 
-		public static ShipFeature GetFeature(string featureName)
+		public static DbFeature GetFeature(string featureName)
 		{
 			return Library.FirstOrDefault(x => x.Name.Equals(featureName, StringComparison.InvariantCultureIgnoreCase));
 		}

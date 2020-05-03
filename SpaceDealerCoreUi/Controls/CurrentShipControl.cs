@@ -21,10 +21,10 @@ namespace SpaceDealerCoreUi.Controls
 		public void Init(Ship ship)
 		{
 			lblShipName.Text = $"Name: {ship.ShipName}";
-			lblCurrentPosition.Text = $"Position: {ship.CurrentPlanet.ToPositiontring()}";
+			lblCurrentPosition.Text = $"Position: {ship.CurrentPlanet.ToPlanetPosition()}";
 			lblCargoSize.Text = $"Ladekapazität: {ship.CargoSize}t";
 
-			pictureBox1.Load(".\\Spaceships\\mediumFrighter.jpg");
+			pictureBox1.Load(ship.PicturePath);
 
 			foreach (var product in ship.CargoLoad.LoadedProducts)
 			{

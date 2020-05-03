@@ -4,10 +4,10 @@ namespace SpaceDealerModels.Units
 {
 	public class UpdateInfo
 	{
-		public Ship TheShip;
+		public DbShip TheShip;
 		public UpdateStates UpdateState {get; set;} 
 
-		public UpdateInfo(Ship ship, UpdateStates state)
+		public UpdateInfo(DbShip ship, UpdateStates state)
 		{
 			UpdateState = state;
 			TheShip = ship;

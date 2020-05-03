@@ -22,7 +22,6 @@ namespace SpaceDealerCoreUi.Controls
 		{
 			lblProductName.Text = product.ProductName;
 			lblWeight.Text = product.TotalWeight.ToDecimalString();
-
 		}
 
 		private void CargoControl_Load(object sender, EventArgs e)

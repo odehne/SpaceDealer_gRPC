@@ -9,7 +9,7 @@ namespace SpaceDealerService
 {
 	public static class ProtoBufConverter
 	{
-		public static ProductInStock ConvertToProductInStock(SpaceDealerModels.Units.ProductInStock uPis)
+		public static ProductInStock ConvertToProductInStock(SpaceDealerModels.Units.DbProductInStock uPis)
 		{
 			return new ProductInStock
 			{
@@ -18,11 +18,12 @@ namespace SpaceDealerService
 				AmountGeneratedPerRound = uPis.AmountGeneratedPerRound,
 				PricePerTon = uPis.PricePerTon,
 				TotalPrice = uPis.GetTotalPrice(),
-				TotalWeight = uPis.GetTotalWeight()
+				TotalWeight = uPis.GetTotalWeight(),
+				PicturePath = uPis.PicturePath
 			};
 		}
 
-		public static Industry ConverToIndustry(SpaceDealerModels.Units.Industry ui)
+		public static Industry ConverToIndustry(SpaceDealerModels.Units.DbIndustry ui)
 		{
 			var ret = new Industry
 			{
@@ -47,18 +48,16 @@ namespace SpaceDealerService
 		}
 
 	
-		public static Planet ConvertToPlanet(SpaceDealerModels.Units.Planet uP)
+		public static Planet ConvertToPlanet(SpaceDealerModels.Units.DbPlanet uP)
 		{
 			var ret = new Planet
 			{
 				PlanetName = uP.Name,
-				Sector = ConvertToCoordinates(uP.Sector)
+				Sector = ConvertToCoordinates(uP.Sector),
+				PicturePath = uP.PicturePath
 			};
 
-			foreach (var industry in uP.Industries)
-			{
-				ret.Industries.Add(ConverToIndustry(industry));
-			}
+			ret.Industries.Add(ConverToIndustry(uP.Industry));
 			return ret;
 			
 		}
@@ -114,12 +113,13 @@ namespace SpaceDealerService
 			{
 				ShipName = pShip.Name,
 				Shields = pShip.Shields,
-				Hull = pShip.Hull
+				Hull = pShip.Hull,
+				PicturePath = pShip.PicturePath
 			};
 			return ret;
 		}
 
-		public static Ship ConvertToShip(SpaceDealerModels.Units.Ship uShip)
+		public static Ship ConvertToShip(SpaceDealerModels.Units.DbShip uShip)
 		{
 			var ret = new Ship
 			{
@@ -127,6 +127,7 @@ namespace SpaceDealerService
 				CargoSize = uShip.CargoSize,
 				Shields = uShip.Shields,
 				Hull = uShip.Hull,
+				PicturePath = uShip.PicturePath
 			};
 
 			if (uShip.CurrentPlanet != null)
@@ -151,17 +152,20 @@ namespace SpaceDealerService
 			return ret;
 		}
 
-		internal static Player ConvertToPlayer(SpaceDealerModels.Units.Player uP)
+		internal static Player ConvertToPlayer(SpaceDealerModels.Units.DbPlayer uP)
 		{
-			var ret = new Player();
-			ret.Name = uP.Name;
-			ret.Credits = uP.Credits;
-			ret.HomePlanet = uP.HomePlanet.Name;
+			var player = new Player
+			{
+				Name = uP.Name,
+				Credits = uP.Credits,
+				HomePlanet = uP.HomePlanet.Name,
+				PicturePath = uP.PicturePath
+			};
 			foreach (var sh in uP.Fleet)
 			{
-				ret.Ships.Add(ConvertToShip(sh));
+				player.Ships.Add(ConvertToShip(sh));
 			}
-			return ret;
+			return player;
 		}
 	}
 }

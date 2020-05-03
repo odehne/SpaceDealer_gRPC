@@ -1,0 +1,1 @@
+﻿CREATE TABLE "ShipFeatures" ("Id" TEXT NOT NULL, "ShipId" TEXT NOT NULL, "FeatureId" TEXT NOT NULL, PRIMARY KEY("Id"));

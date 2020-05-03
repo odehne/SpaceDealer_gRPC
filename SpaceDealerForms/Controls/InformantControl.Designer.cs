@@ -30,9 +30,9 @@
 		{
 			this.btnHelp = new System.Windows.Forms.Button();
 			this.ColorCodeBox = new System.Windows.Forms.PictureBox();
-			this.lblSubHeadline = new System.Windows.Forms.TextBox();
 			this.lblHeadline = new System.Windows.Forms.Label();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.lblSubHeadline = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.ColorCodeBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
@@ -56,16 +56,6 @@
 			this.ColorCodeBox.TabIndex = 14;
 			this.ColorCodeBox.TabStop = false;
 			// 
-			// lblSubHeadline
-			// 
-			this.lblSubHeadline.Location = new System.Drawing.Point(149, 45);
-			this.lblSubHeadline.Multiline = true;
-			this.lblSubHeadline.Name = "lblSubHeadline";
-			this.lblSubHeadline.ReadOnly = true;
-			this.lblSubHeadline.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.lblSubHeadline.Size = new System.Drawing.Size(389, 82);
-			this.lblSubHeadline.TabIndex = 13;
-			// 
 			// lblHeadline
 			// 
 			this.lblHeadline.AutoSize = true;
@@ -85,15 +75,25 @@
 			this.pictureBox1.TabIndex = 11;
 			this.pictureBox1.TabStop = false;
 			// 
+			// lblSubHeadline
+			// 
+			this.lblSubHeadline.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+			this.lblSubHeadline.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.lblSubHeadline.Location = new System.Drawing.Point(147, 45);
+			this.lblSubHeadline.Name = "lblSubHeadline";
+			this.lblSubHeadline.Size = new System.Drawing.Size(389, 75);
+			this.lblSubHeadline.TabIndex = 11;
+			this.lblSubHeadline.Text = "Name: USS ";
+			// 
 			// InformantControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Lavender;
 			this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Controls.Add(this.lblSubHeadline);
 			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.ColorCodeBox);
-			this.Controls.Add(this.lblSubHeadline);
 			this.Controls.Add(this.lblHeadline);
 			this.Controls.Add(this.pictureBox1);
 			this.ForeColor = System.Drawing.SystemColors.WindowFrame;
@@ -110,8 +110,8 @@
 
 		private System.Windows.Forms.Button btnHelp;
 		private System.Windows.Forms.PictureBox ColorCodeBox;
-		private System.Windows.Forms.TextBox lblSubHeadline;
 		private System.Windows.Forms.Label lblHeadline;
 		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.Label lblSubHeadline;
 	}
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SpaceDealerModels.Units
 {
 
-	public class Industry : BaseUnit
+	public class DbIndustry : BaseUnit
 	{
 
 		[JsonProperty("generatedProducts")]
@@ -13,18 +13,18 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("productsNeeded")]
 		public ProductsInStock ProductsNeeded { get; set; }
 
-		public Industry(string name) : base(name)
+		public DbIndustry(string name) : base(name)
 		{
 			GeneratedProducts = new ProductsInStock();
 			ProductsNeeded = new ProductsInStock();
 		}
 
-		public void AddGeneratedProduct(ProductInStock product)
+		public void AddGeneratedProduct(DbProductInStock product)
 		{
 			GeneratedProducts.Add(product);
 		}
 
-		public void AddNeededProduct(ProductInStock product)
+		public void AddNeededProduct(DbProductInStock product)
 		{
 			ProductsNeeded.Add(product);
 		}

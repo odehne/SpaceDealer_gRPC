@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class ProductsInStock : List<ProductInStock>
+	public class ProductsInStock : List<DbProductInStock>
 	{
-		public ProductInStock GetProductByName(string name)
+		public DbProductInStock GetProductByName(string name)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}
@@ -28,20 +28,21 @@ namespace SpaceDealerModels.Units
 			return ret;
 		}
 
-		public ProductsInStock(ProductInStock p)
+		public ProductsInStock(DbProductInStock p)
 		{
 			Add(p);
 		}
 
-		public ProductInStock AddProduct(ProductInStock p)
+		public DbProductInStock AddProduct(DbProductInStock p)
 		{
 			Add(p);
 			return p;
 		}
 
-		public ProductInStock AddProduct(string name, double perRound, double totalAtStart, double weight, double suggestedRetailPrice)
+		public DbProductInStock AddProduct(string name, double perRound, double totalAtStart, double weight, double suggestedRetailPrice)
 		{
-			var pis = new ProductInStock(name, perRound, totalAtStart, weight, suggestedRetailPrice);
+			var pis = new DbProductInStock(name, perRound, totalAtStart, weight, suggestedRetailPrice);
+			pis.PicturePath = "";
 			Add(pis);
 			return pis;
 		}

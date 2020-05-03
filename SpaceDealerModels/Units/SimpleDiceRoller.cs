@@ -38,7 +38,9 @@ namespace SpaceDealerModels
 
 			return ( total / reRolls);
 		}
-		
+
+
+
 	}
 
 	public enum DiceType

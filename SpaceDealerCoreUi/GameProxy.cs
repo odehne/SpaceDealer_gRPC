@@ -24,11 +24,11 @@ namespace SpaceDealerCoreUi
 			return false;
 		}
 
-		public static async Task<Player> AddPlayer(string playerName)
+		public static async Task<Player> AddPlayer(string playerName, string picPath)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.AddPlayerAsync(new PlayerRequest { PlayerName = playerName });
+			var reply = await client.AddPlayerAsync(new AddPlayerRequest { PlayerName = playerName, PicturePath =picPath  });
 			if (reply.Player != null)
 			{
 				return reply.Player;

@@ -6,12 +6,12 @@ using System.Globalization;
 
 namespace SpaceDealerModels.Units
 {
-	public class Ship : BaseUnit
+	public class DbShip : BaseUnit
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, Ship ship);
+		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition);
 
 		[JsonProperty("cruise")]
 		public Journey Cruise { get; set; }
@@ -20,7 +20,7 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("currentLoad")]
 		public ProductsInStock CurrentLoad { get; set; }
 		[JsonProperty("features")]
-		public ShipFeatures Features {get; set;}
+		public DbShipFeatures Features {get; set;}
 		[JsonIgnore]
 		public Ships Parent { get; set; }
 		[JsonProperty("state")]
@@ -36,13 +36,13 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("defenceBonus")]
 		public int DefenceBonus { get; set; }
 		[JsonProperty("currentPlanet")]
-		public Planet CurrentPlanet { get; set; }
+		public DbPlanet CurrentPlanet { get; set; }
 
-		public Ship()
+		public DbShip()
 		{
 		}
 
-		public Ship(string name, Planet homeplanet, ShipFeatures featureSet) : base(name)
+		public DbShip(string name, DbPlanet homeplanet, DbShipFeatures featureSet) : base(name)
 		{
 			State = ShipState.Idle;
 			Shields = 2;
@@ -53,7 +53,7 @@ namespace SpaceDealerModels.Units
 			//Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
 		}
 
-		public void StartCruise(Planet source, Planet destination)
+		public void StartCruise(DbPlanet source, DbPlanet destination)
 		{
 			Cruise = new Journey(source, destination, source.Sector, this);
 			Cruise.Arrived += Cruise_Arrived;

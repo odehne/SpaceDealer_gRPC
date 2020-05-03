@@ -5,38 +5,38 @@ using System.Text.Json.Serialization;
 
 namespace SpaceDealerModels.Units
 {
-	public class Ships : List<Ship>
+	public class Ships : List<DbShip>
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, Ship ship);
+		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition);
 
 
 		[JsonIgnore]
-		public Player Parent { get; set; }
+		public DbPlayer Parent { get; set; }
 
 		public Ships()
 		{
 		}
 
-		public Ships(Player parent)
+		public Ships(DbPlayer parent)
 		{
 			Parent = parent;
 		}
 
-		public Ship GetShipByName(string name)
+		public DbShip GetShipByName(string name)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}
-		public Ship GetShipInSector(Coordinates coordinates)
+		public DbShip GetShipInSector(Coordinates coordinates)
 		{
 			return this.FirstOrDefault(x => x.Cruise.CurrentSector.X == coordinates.X & 
 											x.Cruise.CurrentSector.Y == coordinates.Y & 
 											x.Cruise.CurrentSector.Z == coordinates.Z);
 		}
 
-		public bool AddShip(Ship newShip)
+		public bool AddShip(DbShip newShip)
 		{
 			var p = GetShipByName(newShip.Name);
 			if (p == null)
@@ -49,12 +49,12 @@ namespace SpaceDealerModels.Units
 			return false;
 		}
 
-		private void NewShip_Arrived(string message, Coordinates newPosition, Ship ship)
+		private void NewShip_Arrived(string message, Coordinates newPosition, DbShip ship)
 		{
 			Arrived?.Invoke(message, newPosition, ship);
 		}
 
-		private void NewShip_Interrupted(InterruptionType interruptionType, string message, Ship ship, Coordinates newPosition)
+		private void NewShip_Interrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition)
 		{
 			Interrupted?.Invoke(interruptionType, message, ship, newPosition);
 		}

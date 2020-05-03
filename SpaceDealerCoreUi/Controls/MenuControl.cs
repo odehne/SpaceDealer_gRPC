@@ -18,7 +18,7 @@ namespace SpaceDealerCoreUi.Controls
 
 		private void btnShowCurrentShip_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			Program.MainForm.ShowShip();
 		}
 
 		private void btnShowAllPlanets_Click(object sender, EventArgs e)
@@ -33,12 +33,12 @@ namespace SpaceDealerCoreUi.Controls
 
 		private void btnShowPlayer_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			Program.MainForm.ShowPlayerStats();
 		}
 
 		private void btnNewGame_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			Program.MainForm.NewGame();
 		}
 
 		private void btnLoadGame_Click(object sender, EventArgs e)

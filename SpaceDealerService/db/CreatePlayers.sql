@@ -1,0 +1,1 @@
+﻿CREATE TABLE "Players" ("Id" TEXT NOT NULL, "Name" TEXT NOT NULL, "Credits" REAL NOT NULL, "PlayerType" INTEGER NOT NULL DEFAULT 1,"PicturePath" TEXT NOT NULL, PRIMARY KEY("Id"));

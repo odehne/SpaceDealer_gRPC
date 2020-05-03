@@ -29,5 +29,10 @@ namespace SpaceDealerForms.Controls
 		{
 
 		}
+
+		private void btnInfos_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

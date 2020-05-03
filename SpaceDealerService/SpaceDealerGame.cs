@@ -23,42 +23,38 @@ namespace SpaceDealer
 
 		public void Init()
 		{
-			var earth = new Planet("Erde");
+			var earth = new DbPlanet("Erde");
 			earth.Market = new Market("Berlin", earth);
-			earth.Industries = new Industries(earth);
 			earth.Sector = new Coordinates(0, 0, 0);
-			earth.Industries.Add(Repository.IndustryLibrary.GetIndustryByName("Landwirtschaft"));
+			earth.Industry = Repository.GetIndustryByName("Landwirtschaft");
+			earth.PicturePath = ".\\Planets\\earth.jpg";
 
-			var moon = new Planet("Erden-Mond");
+			var moon = new DbPlanet("Erden-Mond");
 				moon.Properties = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Beschreibung", "Kreist um den Planeten Erde. Besitzt keine eigene Athmossphäre.") };
 				moon.Market = new Market("Mondbasis Aplha 1", moon);
-				moon.Industries = new Industries(moon);
 				moon.Sector = new Coordinates(1, 0, 0);
+				moon.PicturePath = ".\\Planets\\moon.jpg";
+				moon.Industry = Repository.GetIndustryByName("Raumschiff Fabrik");
+				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
+				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
+				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
+				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Sensor-Einheit"));
+				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Board-Kanone"));
+				moon.Industry.AddNeededProduct(Repository.GetProductByName("Board-Kanone"));
 
-			var moonFactory = moon.Industries.AddIndustry("Raumschiff Fabrik");
-				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
-				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
-				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
-				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Sensor-Einheit"));
-				moonFactory.AddGeneratedProduct(Repository.GetProductByName("Board-Kanone"));
-				moonFactory.AddNeededProduct(Repository.GetProductByName("Board-Kanone"));
-
-			var tatooine = new Planet("Tatooine");
+			var tatooine = new DbPlanet("Tatooine");
+				tatooine.PicturePath = ".\\Planets\\tatooine.jpg";
 				tatooine.Market = new Market("Moseisley", earth);
 				tatooine.Sector = new Coordinates(10, 7, 1);
-				tatooine.Industries = new Industries(tatooine);
-				tatooine.Industries.Add(Repository.IndustryLibrary.GetIndustryByName("Weltraumschrott Sammler"));
-				
-
+				tatooine.Industry = Repository.GetIndustryByName("Weltraumschrott Sammler");
+			
 			Galaxy.AddPlanet(earth);
 			Galaxy.AddPlanet(moon);
 			Galaxy.AddPlanet(tatooine);
-	
-		//	ShowMainMenu(UiPlayer);
 		}
 
 		
-		private void Ship_Arrived(string message, Coordinates newPosition, Ship ship)
+		private void Ship_Arrived(string message, Coordinates newPosition, DbShip ship)
 		{
 			//Logger.Log($"Das Schiff ist angekommen: {ship.Cruise.Destination.ToString()}", TraceEventType.Information);
 			ship.Cruise.Departure = ship.Cruise.Destination;
@@ -68,7 +64,7 @@ namespace SpaceDealer
 		
 
 
-		public Planets ScanPlanetsInNearbySectors(Ship ship, double range = 1)
+		public Planets ScanPlanetsInNearbySectors(DbShip ship, double range = 1)
 		{
 			throw new NotImplementedException();
 			// xxx
@@ -76,7 +72,7 @@ namespace SpaceDealer
 			// xxx
 		}
 
-		public Ships ScanShipsInNearbySectors(Ship ship, double range = 1)
+		public Ships ScanShipsInNearbySectors(DbShip ship, double range = 1)
 		{
 			throw new NotImplementedException();
 		}

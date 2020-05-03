@@ -33,6 +33,7 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.lblPosition = new System.Windows.Forms.Label();
 			this.btnHelp = new System.Windows.Forms.Button();
+			this.btnInfos = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.ColorCodeBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
@@ -89,12 +90,25 @@
 			this.btnHelp.UseVisualStyleBackColor = true;
 			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
 			// 
+			// btnInfos
+			// 
+			this.btnInfos.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+			this.btnInfos.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.btnInfos.Location = new System.Drawing.Point(168, 96);
+			this.btnInfos.Name = "btnInfos";
+			this.btnInfos.Size = new System.Drawing.Size(192, 33);
+			this.btnInfos.TabIndex = 12;
+			this.btnInfos.Text = "Informationen";
+			this.btnInfos.UseVisualStyleBackColor = true;
+			this.btnInfos.Click += new System.EventHandler(this.btnInfos_Click);
+			// 
 			// PlanetSelectionControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Lavender;
 			this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Controls.Add(this.btnInfos);
 			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.lblPosition);
 			this.Controls.Add(this.pictureBox1);
@@ -116,5 +130,6 @@
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label lblPosition;
 		private System.Windows.Forms.Button btnHelp;
+		private System.Windows.Forms.Button btnInfos;
 	}
 }

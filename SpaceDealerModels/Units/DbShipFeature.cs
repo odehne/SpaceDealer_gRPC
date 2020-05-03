@@ -5,16 +5,18 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class ShipFeatures : List<ShipFeature>
+	public class DbShipFeatures : List<DbFeature>
 	{
-		public ShipFeature GetFeatureByName(string name)
+		public DbFeature GetFeatureByName(string name)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}
 	}
 
-	public class ShipFeature 
+	public class DbFeature 
 	{
+		[JsonProperty("id")]
+		public string Id { get; set; }
 		[JsonProperty("name")]
 		public string Name { get; set; }
 		[JsonProperty("description")]
@@ -28,11 +30,11 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("speedBonus")]
 		public int SpeedBonus { get; set; }
 
-		public ShipFeature()
+		public DbFeature()
 		{
 		}
 
-		public ShipFeature(string name, string description, int attackBonus, int defenceBonus, int rangeBonus, int speedBonus)
+		public DbFeature(string name, string description, int attackBonus, int defenceBonus, int rangeBonus, int speedBonus)
 		{
 			Name = name;
 			Description = description;

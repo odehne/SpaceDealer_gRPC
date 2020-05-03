@@ -21,13 +21,18 @@ namespace SpaceDealerCoreUi.Controls
 		{
 			_SelectedPlanet = planet;
 			lbPlanetName.Text = $"Name: {planet.PlanetName}";
-			lblPosition.Text = $"Position: {planet.ToPositiontring()}";
+			lblPosition.Text = $"Position: {planet.ToPlanetPosition()}";
 			pictureBox1.Load(Program.PlanetAssets.GetRandomAsset().Path);
 		}
 
-		private void btnHelp_Click(object sender, EventArgs e)
+		private void btnStartCruise_Click(object sender, EventArgs e)
 		{
 			Program.MainForm.StartCruise(_SelectedPlanet);
+		}
+
+		private void btnInfos_Click(object sender, EventArgs e)
+		{
+			Program.MainForm.ShowPlanetDetails(_SelectedPlanet);
 		}
 	}
 }

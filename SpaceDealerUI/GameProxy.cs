@@ -28,7 +28,7 @@ namespace SpaceDealerUI
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.AddPlayerAsync(new PlayerRequest { PlayerName = playerName });
+			var reply = await client.AddPlayerAsync(new AddPlayerRequest { PlayerName = playerName });
 			if (reply.Player != null)
 			{
 				return reply.Player;

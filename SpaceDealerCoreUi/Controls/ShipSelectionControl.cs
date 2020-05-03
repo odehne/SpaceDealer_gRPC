@@ -18,7 +18,7 @@ namespace SpaceDealerCoreUi.Controls
 		public void Init(Ship ship)
 		{
 			lbPlanetName.Text = $"Name: {ship.ShipName}";
-			lblPosition.Text = $"Position: {ship.CurrentPlanet.ToPositiontring()}";
+			lblPosition.Text = $"Position: {ship.CurrentPlanet.ToPlanetPosition()}";
 			pictureBox1.Load(".\\Spaceships\\Collector.jpg");
 		}
 

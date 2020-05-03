@@ -20,12 +20,12 @@ namespace SpaceDealer
 			FleetCommanders.Arrived += FleetCommanders_Arrived;
 		}
 		
-		private void FleetCommanders_Arrived(string message, Coordinates newPosition, Ship ship, Player player)
+		private void FleetCommanders_Arrived(string message, Coordinates newPosition, DbShip ship, DbPlayer player)
 		{
 			Logger.Log($"{player.Name}::{ship.Name} arrived at {ship.Cruise.Destination}", TraceEventType.Information);
 		}
 
-		private void FleetCommanders_Interrupted(Enums.InterruptionType interruptionType, string message, Ship ship, Player player, Coordinates newPosition)
+		private void FleetCommanders_Interrupted(Enums.InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Coordinates newPosition)
 		{
 			Logger.Log($"{player.Name}::{ship.Name} interruped at {newPosition.ToString()} by {interruptionType.ToString()}", TraceEventType.Information);
 		}

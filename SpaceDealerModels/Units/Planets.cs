@@ -4,26 +4,26 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class Planets : List<Planet>
+	public class Planets : List<DbPlanet>
 	{
 		
-		public Planet GetPlanetByName(string planetName)
+		public DbPlanet GetPlanetByName(string planetName)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(planetName, System.StringComparison.InvariantCultureIgnoreCase));
 		}
-		public Planet GetPlanetInSector(Coordinates coordinates)
+		public DbPlanet GetPlanetInSector(Coordinates coordinates)
 		{
 			return this.FirstOrDefault(x => x.Sector.X == coordinates.X & x.Sector.Y == coordinates.Y & x.Sector.Z == coordinates.Z);
 		}
 
-		public Planets GetAllPlanets(Planet excludeThisPlanet)
+		public Planets GetAllPlanets(DbPlanet excludeThisPlanet)
 		{
 			var planets = new Planets();
 			planets.AddRange(this.Where(x => !x.Name.Equals(excludeThisPlanet.Name, System.StringComparison.InvariantCultureIgnoreCase)));
 			return planets;
 		}
 
-		public Planet AddPlanet(Planet newPlanet)
+		public DbPlanet AddPlanet(DbPlanet newPlanet)
 		{
 			var p = GetPlanetByName(newPlanet.Name);
 			if (p != null)

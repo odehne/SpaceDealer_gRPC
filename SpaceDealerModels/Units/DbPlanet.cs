@@ -3,41 +3,37 @@ using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
 {
-
-	public class Planet : BaseUnit
+	public class DbPlanet : BaseUnit
 	{
 		[JsonProperty("sector")]
 		public Coordinates Sector { get; set; }
 		[JsonProperty("market")]
 		public Market Market { get; set; }
 		[JsonProperty("industries")]
-		public Industries Industries { get; set; }
+		public DbIndustry Industry { get; set; }
 
-		public Planet()
+		public DbPlanet()
 		{
 		}
 
-		public Planet(string name, Coordinates position, Market market, Industries industries) : base(name)
+		public DbPlanet(string name, Coordinates position, Market market, DbIndustry industry) : base(name)
 		{
 			Sector = position;
 			Market = market;
-			Industries = industries;
+			Industry = industry;
 		}
 
-		public Planet(string name) : base(name)
+		public DbPlanet(string name) : base(name)
 		{
 			Market = new Market($"{Name}.Market", this);
-			Industries = new Industries(this);
+			Industry = new DbIndustry($"{Name}.Industry");
 		}
 
 		public override void Update()
 		{
 			base.Update();
 			Market.Update();
-			foreach (var industry in Industries)
-			{
-				industry.Update();
-			}
+			Industry.Update();
 		}
 		public override string ToString()
 		{

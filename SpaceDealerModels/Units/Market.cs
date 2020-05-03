@@ -1,31 +1,27 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
 {
 	public class Market : BaseUnit
 	{
 		[JsonIgnore]
-		public Planet Parent { get; set; }
+		public DbPlanet Parent { get; set; }
 
 		public Market()
 		{
 
 		}
 	
-		public Market(string name, Planet parent) : base(name)
+		public Market(string name, DbPlanet parent) : base(name)
 		{
 			Parent = parent;
 		}
 		public ProductsInStock GetProductsToSell()
 		{
 			var productsToSell = new ProductsInStock();
-			foreach (var industry in Parent.Industries)
+			foreach (var p in Parent.Industry.ProductsNeeded)
 			{
-				foreach (var p in industry.ProductsNeeded)
-				{
-					productsToSell.Add(p);
-				}
+				productsToSell.Add(p);
 			}
 			return productsToSell;
 		}
@@ -33,12 +29,9 @@ namespace SpaceDealerModels.Units
 		public ProductsInStock GetProductsToBuy()
 		{
 			var productsToBuy = new ProductsInStock();
-			foreach (var industry in Parent.Industries)
+			foreach (var p in Parent.Industry.GeneratedProducts)
 			{
-				foreach(var p in industry.GeneratedProducts)
-				{
-					productsToBuy.Add(p);
-				}
+				productsToBuy.Add(p);
 			}
 			return productsToBuy;
 		}

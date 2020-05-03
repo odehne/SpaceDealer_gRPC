@@ -30,10 +30,10 @@
 		{
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.lblHeadline = new System.Windows.Forms.Label();
-			this.lblSubHeadline = new System.Windows.Forms.TextBox();
 			this.ColorCodeBox = new System.Windows.Forms.PictureBox();
 			this.btnHelp = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
+			this.lblSubHeadline = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ColorCodeBox)).BeginInit();
 			this.SuspendLayout();
@@ -58,16 +58,6 @@
 			this.lblHeadline.Text = "Wir werden angegriffen!";
 			this.lblHeadline.Click += new System.EventHandler(this.lblHeadline_Click);
 			// 
-			// lblSubHeadline
-			// 
-			this.lblSubHeadline.Location = new System.Drawing.Point(149, 45);
-			this.lblSubHeadline.Multiline = true;
-			this.lblSubHeadline.Name = "lblSubHeadline";
-			this.lblSubHeadline.ReadOnly = true;
-			this.lblSubHeadline.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.lblSubHeadline.Size = new System.Drawing.Size(389, 82);
-			this.lblSubHeadline.TabIndex = 2;
-			// 
 			// ColorCodeBox
 			// 
 			this.ColorCodeBox.BackColor = System.Drawing.Color.OrangeRed;
@@ -90,12 +80,22 @@
 			// button1
 			// 
 			this.button1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
-			this.button1.Location = new System.Drawing.Point(149, 133);
+			this.button1.Location = new System.Drawing.Point(147, 133);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(207, 33);
 			this.button1.TabIndex = 5;
 			this.button1.Text = "Leider zu weit weg";
 			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// lblSubHeadline
+			// 
+			this.lblSubHeadline.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold);
+			this.lblSubHeadline.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.lblSubHeadline.Location = new System.Drawing.Point(147, 45);
+			this.lblSubHeadline.Name = "lblSubHeadline";
+			this.lblSubHeadline.Size = new System.Drawing.Size(389, 75);
+			this.lblSubHeadline.TabIndex = 11;
+			this.lblSubHeadline.Text = "Name: USS ";
 			// 
 			// DistressCallControl
 			// 
@@ -103,10 +103,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Lavender;
 			this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.Controls.Add(this.lblSubHeadline);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.ColorCodeBox);
-			this.Controls.Add(this.lblSubHeadline);
 			this.Controls.Add(this.lblHeadline);
 			this.Controls.Add(this.pictureBox1);
 			this.ForeColor = System.Drawing.SystemColors.WindowFrame;
@@ -123,9 +123,9 @@
 
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label lblHeadline;
-		private System.Windows.Forms.TextBox lblSubHeadline;
 		private System.Windows.Forms.PictureBox ColorCodeBox;
 		private System.Windows.Forms.Button btnHelp;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Label lblSubHeadline;
 	}
 }
