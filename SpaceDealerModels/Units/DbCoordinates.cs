@@ -3,7 +3,7 @@ using System;
 
 namespace SpaceDealerModels.Units
 {
-	public class Coordinates 
+	public class DbCoordinates 
 	{
 		[JsonProperty("x")]
 		public double X { get; set; }
@@ -12,11 +12,11 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("z")]
 		public double Z { get; set; }
 
-		public Coordinates()
+		public DbCoordinates()
 		{
 		}
 
-		public Coordinates(double x, double y, double z)
+		public DbCoordinates(double x, double y, double z)
 		{
 			X = x;
 			Y = y;
@@ -25,16 +25,16 @@ namespace SpaceDealerModels.Units
 
 		public override bool Equals(object obj)
 		{
-			var target = (Coordinates)obj;
+			var target = (DbCoordinates)obj;
 			return (target.X == X & target.Y == Y & target.Z == Z);
 		}
 
-		public static Coordinates GetDistanceVector(Coordinates source, Coordinates destination)
+		public static DbCoordinates GetDistanceVector(DbCoordinates source, DbCoordinates destination)
 		{
-			return new Coordinates(destination.X - source.X, destination.Y - source.Y, destination.Z - source.Z);
+			return new DbCoordinates(destination.X - source.X, destination.Y - source.Y, destination.Z - source.Z);
 		}
 
-		public static double GetDistanceLength(Coordinates source, Coordinates destination)
+		public static double GetDistanceLength(DbCoordinates source, DbCoordinates destination)
 		{
 			var v = GetDistanceVector(source, destination);
 			if (v.X < 0) v.X *= -1;
@@ -43,9 +43,9 @@ namespace SpaceDealerModels.Units
 			return Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2) + Math.Pow(v.Z, 2));
 		}
 
-		private static Coordinates Clone(Coordinates origin)
+		private static DbCoordinates Clone(DbCoordinates origin)
 		{
-			return new Coordinates(origin.X, origin.Y, origin.Z);
+			return new DbCoordinates(origin.X, origin.Y, origin.Z);
 		}
 
 		private static double CalculateNewPosition(double currentValue, double destinationValue, double step = 1)
@@ -62,9 +62,9 @@ namespace SpaceDealerModels.Units
 			}
 		}
 
-		public static Coordinates Move(Coordinates currentPosition, Coordinates destination)
+		public static DbCoordinates Move(DbCoordinates currentPosition, DbCoordinates destination)
 		{
-			return new Coordinates(
+			return new DbCoordinates(
 				CalculateNewPosition(currentPosition.X, destination.X),
 				CalculateNewPosition(currentPosition.Y, destination.Y),
 				CalculateNewPosition(currentPosition.Z, destination.Z)

@@ -9,7 +9,7 @@ namespace SpaceDealerModels.Units
 	{
 		public DbShipFeatures Features { get; set; }
 		public string Name { get; set; }
-		public Coordinates Sector { get; set; }
+		public DbCoordinates Sector { get; set; }
 		public abstract int AttackRoll();
 		public abstract int DefenceRoll();
 		public abstract int Shields { get; set; }
@@ -41,7 +41,7 @@ namespace SpaceDealerModels.Units
 
 	public class SimplePirateShip : PirateShip
 	{
-		public SimplePirateShip(string name, Coordinates sector, DbShipFeatures featureSet)
+		public SimplePirateShip(string name, DbCoordinates sector, DbShipFeatures featureSet)
 		{
 			if (featureSet == null)
 			{
@@ -77,7 +77,7 @@ namespace SpaceDealerModels.Units
 		public override int Shields { get; set; }
 		public override int Hull { get; set; }
 
-		public CruiserPirateShip(string name, Coordinates sector, DbShipFeatures featureSet)
+		public CruiserPirateShip(string name, DbCoordinates sector, DbShipFeatures featureSet)
 		{
 			if (featureSet == null)
 			{
@@ -110,7 +110,7 @@ namespace SpaceDealerModels.Units
 		public override int Shields { get; set; }
 		public override int Hull { get; set; }
 
-		public HeavyCruiserPirateShip(string name, Coordinates sector, DbShipFeatures featureSet)
+		public HeavyCruiserPirateShip(string name, DbCoordinates sector, DbShipFeatures featureSet)
 		{
 			if (featureSet == null)
 			{

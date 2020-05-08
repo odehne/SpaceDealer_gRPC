@@ -1,21 +1,27 @@
-﻿using SpaceDealerModels.Units;
+﻿using SpaceDealer;
+using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace SpaceDealerService.Repos
 {
+
 	public class FeaturesRepository
 	{
 		public string DbPath { get; set; }
+		public ILogger Logger { get; set; }
 
-		public FeaturesRepository(string dbPath)
+		public FeaturesRepository(ILogger logger, string dbPath)
 		{
 			DbPath = dbPath;
+			Logger = logger;
 		}
 		public List<DbFeature> GetFeatures()
 		{
 			var lst = new List<DbFeature>();
+			
 			return lst;
 		}
 
@@ -39,17 +45,30 @@ namespace SpaceDealerService.Repos
 			}
 		}
 
-		public DbFeature GetFeature(string featureId)
+		public DbFeature GetFeature(string name, string id)
 		{
+			var parameter = new SQLiteParameter();
+			var query = "SELECT Id, Name, AttackBonus, RangeBonus, SpeedBonus, Description FROM Features WHERE ";
+			if (!string.IsNullOrEmpty(name))
+			{
+				query += "Name = @name;";
+				parameter.ParameterName = "@name";
+				parameter.Value = name;
+			}
+			else
+			{
+				query += "Id = @id;";
+				parameter.ParameterName = "@id";
+				parameter.Value = id;
+			}
 			var p = new DbFeature();
-			var query = "SELECT Id, Name, AttackBonus, RangeBonus, SpeedBonus, Description FROM Features WHERE Id = @id;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + DbPath);
 				connection.Open();
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@id", featureId);
+				command.Parameters.Add(parameter);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -69,13 +88,13 @@ namespace SpaceDealerService.Repos
 				}
 				else
 				{
-					Console.WriteLine("No rows found.");
+					Logger.Log($"Failed to get feature with Id [{id}]", TraceEventType.Error);
 				}
 				reader.Close();
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
-				throw e;
+				Logger.Log($"Failed to get feature with Id [{e.Message}]", TraceEventType.Error);
 			}
 			return p;
 		}
@@ -121,7 +140,6 @@ namespace SpaceDealerService.Repos
 			}
 			return false;
 		}
-
 
 		public bool ShipHasFeature(string shipId, string featureId)
 		{

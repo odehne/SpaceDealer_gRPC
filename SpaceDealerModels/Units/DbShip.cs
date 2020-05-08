@@ -9,9 +9,9 @@ namespace SpaceDealerModels.Units
 	public class DbShip : BaseUnit
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship);
+		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
 
 		[JsonProperty("cruise")]
 		public Journey Cruise { get; set; }
@@ -60,12 +60,12 @@ namespace SpaceDealerModels.Units
 			Cruise.Interrupted += Cruise_Interrupted;
 		}
 
-		private void Cruise_Interrupted(InterruptionType interruptionType, string message, Coordinates newPosition)
+		private void Cruise_Interrupted(InterruptionType interruptionType, string message, DbCoordinates newPosition)
 		{
 			Interrupted?.Invoke(interruptionType, message, this, newPosition); ;
 		}
 
-		private void Cruise_Arrived(string message, Coordinates newPosition)
+		private void Cruise_Arrived(string message, DbCoordinates newPosition)
 		{
 			CurrentPlanet = Cruise.Destination;
 			Arrived?.Invoke(message, newPosition, this);

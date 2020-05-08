@@ -8,9 +8,9 @@ namespace SpaceDealerModels.Units
 	public class Players : List<DbPlayer>
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship, DbPlayer player);
+		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition);
 
 		public DbPlayer AddPlayer(DbPlayer player)
 		{
@@ -24,12 +24,12 @@ namespace SpaceDealerModels.Units
 			return player;
 		}
 
-		private void Player_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Coordinates newPosition)
+		private void Player_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition)
 		{
 			Interrupted?.Invoke(interruptionType, message, ship, player, newPosition);
 		}
 
-		private void Player_Arrived(string message, Coordinates newPosition, DbShip ship, DbPlayer player)
+		private void Player_Arrived(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player)
 		{
 			Arrived?.Invoke(message, newPosition, ship, player);
 		}

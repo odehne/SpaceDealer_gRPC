@@ -21,7 +21,7 @@ namespace SpaceDealerService.Repos
 		{
 			var lst = new List<DbProductInStock>();
 
-			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound FROM Products;";
+			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + DbPath);
@@ -39,6 +39,7 @@ namespace SpaceDealerService.Repos
 						p.Weight = reader.GetDouble(2);
 						p.PricePerTon = reader.GetDouble(3);
 						p.AmountGeneratedPerRound = reader.GetDouble(4);
+						p.PicturePath = reader.GetString(5);
 						lst.Add(p);
 					}
 				}
@@ -52,18 +53,33 @@ namespace SpaceDealerService.Repos
 			return lst;
 		}
 
-		public DbProductInStock GetProduct(string id)
+		public DbProductInStock GetProduct(string name, string id)
 		{
+			var parameter = new SQLiteParameter();
+
+			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE ";
+			if (!string.IsNullOrEmpty(name))
+			{
+				query += "Name = @name;";
+				parameter.ParameterName = "@name";
+				parameter.Value = name;
+			}
+			else
+			{
+				query += "Id = @id;";
+				parameter.ParameterName = "@id";
+				parameter.Value = id;
+			}
+
 			var p = new DbProductInStock();
 
-			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound FROM Products WHERE Id = @id;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + DbPath);
 				connection.Open();
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@id", id);
+				command.Parameters.Add(parameter);
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -74,6 +90,7 @@ namespace SpaceDealerService.Repos
 						p.Weight = reader.GetDouble(2);
 						p.PricePerTon = reader.GetDouble(3);
 						p.AmountGeneratedPerRound = reader.GetDouble(4);
+						p.PicturePath = reader.GetString(5);
 					}
 				}
 
@@ -120,11 +137,13 @@ namespace SpaceDealerService.Repos
 					connection.Open();
 					using (var command = new SQLiteCommand(connection))
 					{
-						command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon) VALUES (@id, @name, @weight, @pricePerTon);";
+						command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath) VALUES (@id, @name, @weight, @pricePerTon, @amountGeneratedPerRound, @picturePath);";
 						command.Parameters.AddWithValue("@id", product.Id);
 						command.Parameters.AddWithValue("@name", product.Name);
 						command.Parameters.AddWithValue("@weight", product.Weight);
 						command.Parameters.AddWithValue("@PricePerTon", product.PricePerTon);
+						command.Parameters.AddWithValue("@amountGeneratedPerRound", product.AmountGeneratedPerRound);
+						command.Parameters.AddWithValue("@picturePath", product.PicturePath);
 						command.ExecuteNonQuery();
 						Logger.Log($"Product {product.Id} saved.", TraceEventType.Information);
 

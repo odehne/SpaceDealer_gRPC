@@ -41,7 +41,7 @@ namespace SpaceDealerService.Repos
 					{
 						var productId = reader.GetString(0);
 						var interest = reader.GetDouble(1);
-						var product = ProdRepo.GetProduct(productId);
+						var product = ProdRepo.GetProduct(null, productId);
 						product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
 						lst.AddProduct(product);
 					}
@@ -50,7 +50,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get NeededProducts for player Id [{planetId}] {e.Message}", TraceEventType.Error);
+				Logger.Log($"Failed to get NeededProducts for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
 			}
 
 			return lst;
@@ -75,7 +75,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to save NeededProducts for player Id [{planetId},{productId}] {e.Message}", TraceEventType.Error);
+				Logger.Log($"Failed to save NeededProducts for planet Id [{planetId},{productId}] {e.Message}", TraceEventType.Error);
 			}
 		}
 	}

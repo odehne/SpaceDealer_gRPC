@@ -42,7 +42,7 @@ namespace SpaceDealerService
 			return ret;
 		}
 
-		public static Coordinates ConvertToCoordinates(SpaceDealerModels.Units.Coordinates uCoords)
+		public static Coordinates ConvertToCoordinates(SpaceDealerModels.Units.DbCoordinates uCoords)
 		{
 			return new Coordinates { X = uCoords.X, Y = uCoords.Y, Z = uCoords.Z };
 		}

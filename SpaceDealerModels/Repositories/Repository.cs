@@ -126,11 +126,11 @@ namespace SpaceDealerModels.Repositories
 			return PlanetNames[i];
 		}
 
-		public static DbPlanet GetRandomPlanet(Coordinates sector)
+		public static DbPlanet GetRandomPlanet(DbCoordinates sector)
 		{
 			var planetName = GetRandomPlanetName();
 			var p = new DbPlanet(planetName);
-			p.Market = new Market("Marktplatz von " + planetName, p);
+			p.Market = new DbMarket("Marktplatz von " + planetName, p);
 			p.Industry = GetRandomIndustry();
 			p.Sector = sector;
 			return p;

@@ -65,16 +65,30 @@ namespace SpaceDealerService.Repos
 		}
 
 
-		public DbPlayer GetPlayer(string id)
+		public DbPlayer GetPlayer(string name, string id)
 		{
-			var query = "SELECT id, Name, Credits, PlayerType, PicturePath FROM Players WHERE Id = @id;";
+			var parameter = new SQLiteParameter();
+
+			var query = "SELECT id, Name, Credits, PlayerType, PicturePath FROM Players WHERE ";
+			if (!string.IsNullOrEmpty(name))
+			{
+				query += "Name = @name;";
+				parameter.ParameterName = "@name";
+				parameter.Value = name;
+			}
+			else
+			{
+				query += "Id = @id;";
+				parameter.ParameterName = "@id";
+				parameter.Value = id;
+			}
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + DbPath);
 				connection.Open();
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@id", id);
+				command.Parameters.Add(parameter);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{

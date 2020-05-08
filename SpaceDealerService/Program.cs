@@ -24,11 +24,11 @@ namespace SpaceDealerService
 		public static void Main(string[] args)
 		{
 			TheLogger = new Logger(TraceEventType.Verbose);
+			Persistor = new SqlPersistor(TheLogger, $"{GetAppLocation()}db\\spacedealer.db");
+			
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();
 
-			var dbPath = $"{GetAppLocation()}db\\spacedealer.db";
-			Persistor = new SqlPersistor(TheLogger, dbPath);
 			Persistor.SaveGalaxy(TheGame.Galaxy);
 
 			var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);

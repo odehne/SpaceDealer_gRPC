@@ -13,6 +13,7 @@ namespace SpaceDealerService.Repos
 
 		private NeededProductsRepository NeededProdRepo { get; set; }
 		private GeneratedProductsRepository GeneratedProdRepo { get; set; }
+		private MarketRepository MarketRepo{ get; set; }
 
 		public PlanetsRepository(ILogger logger, string dbPath)
 		{
@@ -20,6 +21,7 @@ namespace SpaceDealerService.Repos
 			Logger = logger;
 			GeneratedProdRepo = new GeneratedProductsRepository(Logger, DbPath);
 			NeededProdRepo = new NeededProductsRepository(Logger, DbPath);
+			MarketRepo = new MarketRepository(Logger, DbPath);
 		}
 
 		public List<DbPlanet> GetPlanets()
@@ -41,10 +43,11 @@ namespace SpaceDealerService.Repos
 						planet.Id = reader.GetString(0);
 						planet.Name = reader.GetString(1);
 						planet.PicturePath = reader.GetString(2);
-						planet.Sector = new SpaceDealerModels.Units.Coordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
+						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
 						planet.Industry = new DbIndustry($"{planet.Id}.industry");
 						planet.Industry.ProductsNeeded = NeededProdRepo.GetNeededProducts(planet.Id);
 						planet.Industry.GeneratedProducts = GeneratedProdRepo.GetGeneratedProducts(planet.Id);
+						planet.Market = MarketRepo.GetMarket(planet.Id);
 						lst.Add(planet);
 					}
 				}
@@ -77,16 +80,32 @@ namespace SpaceDealerService.Repos
 			}
 		}
 
-		public DbPlanet GetPlanet(string id)
+		
+		public DbPlanet GetPlanet(string name, string id)
 		{
-			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE Id = @id;";
+			var parameter = new SQLiteParameter();
+
+			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE ";
+			if (!string.IsNullOrEmpty(name))
+			{
+				query += "Name = @name;";
+				parameter.ParameterName = "@name";
+				parameter.Value = name;
+			}
+			else
+			{
+				query += "Id = @id;";
+				parameter.ParameterName = "@id";
+				parameter.Value = id;
+			}
+
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + DbPath);
 				connection.Open();
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@id", id);
+				command.Parameters.Add(parameter);
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -96,10 +115,11 @@ namespace SpaceDealerService.Repos
 						planet.Id = reader.GetString(0);
 						planet.Name = reader.GetString(1);
 						planet.PicturePath = reader.GetString(2);
-						planet.Sector = new SpaceDealerModels.Units.Coordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
-						planet.Industry = new DbIndustry($"{planet.Id}.industry");  
-
-						//TODO: Hier müssen noch die Needed- u. Generated Products des Planeten rein.
+						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
+						planet.Industry = new DbIndustry($"{planet.Id}.industry");
+						planet.Industry.GeneratedProducts = Program.Persistor.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
+						planet.Industry.ProductsNeeded = Program.Persistor.NeededProductsRepo.GetNeededProducts(planet.Id);
+						planet.Market = Program.Persistor.MarketRepo.GetMarket(planet.Id);
 
 						return planet;
 					}

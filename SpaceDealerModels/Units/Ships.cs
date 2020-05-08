@@ -8,9 +8,9 @@ namespace SpaceDealerModels.Units
 	public class Ships : List<DbShip>
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship);
+		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
 
 
 		[JsonIgnore]
@@ -29,7 +29,7 @@ namespace SpaceDealerModels.Units
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}
-		public DbShip GetShipInSector(Coordinates coordinates)
+		public DbShip GetShipInSector(DbCoordinates coordinates)
 		{
 			return this.FirstOrDefault(x => x.Cruise.CurrentSector.X == coordinates.X & 
 											x.Cruise.CurrentSector.Y == coordinates.Y & 
@@ -49,12 +49,12 @@ namespace SpaceDealerModels.Units
 			return false;
 		}
 
-		private void NewShip_Arrived(string message, Coordinates newPosition, DbShip ship)
+		private void NewShip_Arrived(string message, DbCoordinates newPosition, DbShip ship)
 		{
 			Arrived?.Invoke(message, newPosition, ship);
 		}
 
-		private void NewShip_Interrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition)
+		private void NewShip_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition)
 		{
 			Interrupted?.Invoke(interruptionType, message, ship, newPosition);
 		}

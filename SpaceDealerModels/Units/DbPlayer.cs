@@ -13,9 +13,9 @@ namespace SpaceDealerModels.Units
 		public Queue UpdateQueue { get; set; }
 
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition, DbShip ship, DbPlayer player);
+		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition);
 
 		[JsonProperty("playerType")]
 		public PlayerTypes PlayerType { get; set; }
@@ -45,13 +45,13 @@ namespace SpaceDealerModels.Units
 			Fleet.Arrived += Fleet_Arrived;
 		}
 
-		private void Fleet_Arrived(string message, Coordinates newPosition, DbShip ship)
+		private void Fleet_Arrived(string message, DbCoordinates newPosition, DbShip ship)
 		{
 			UpdateQueue.Enqueue(new UpdateInfo(ship, UpdateStates.ArrivedOnTarget));
 			Arrived?.Invoke(message, newPosition, ship, this);
 		}
 
-		private void Fleet_Interrupted(InterruptionType interruptionType, string message, DbShip ship, Coordinates newPosition)
+		private void Fleet_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition)
 		{
 			switch (interruptionType)
 			{

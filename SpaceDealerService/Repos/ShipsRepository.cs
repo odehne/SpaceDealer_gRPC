@@ -48,22 +48,36 @@ namespace SpaceDealerService.Repos
 
 			foreach (var shipId in ids)
 			{
-				lst.Add(GetShip(shipId));
+				lst.Add(GetShip(null, shipId));
 			}
 
 			return lst;
 		}
 
-		public DbShip GetShip(string id)
+		public DbShip GetShip(string name, string id)
 		{
-			var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState, Name FROM Ships WHERE Id = @id;";
+			var parameter = new SQLiteParameter();
+
+			var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState, Name FROM Ships WHERE ";
+			if (!string.IsNullOrEmpty(name))
+			{
+				query += "Name = @name;";
+				parameter.ParameterName = "@name";
+				parameter.Value = name;
+			}
+			else
+			{
+				query += "Id = @id;";
+				parameter.ParameterName = "@id";
+				parameter.Value = id;
+			}
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + DbPath);
 				connection.Open();
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@id", id);
+				command.Parameters.Add(parameter);
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{

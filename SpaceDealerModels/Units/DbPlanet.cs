@@ -6,9 +6,9 @@ namespace SpaceDealerModels.Units
 	public class DbPlanet : BaseUnit
 	{
 		[JsonProperty("sector")]
-		public Coordinates Sector { get; set; }
+		public DbCoordinates Sector { get; set; }
 		[JsonProperty("market")]
-		public Market Market { get; set; }
+		public DbMarket Market { get; set; }
 		[JsonProperty("industries")]
 		public DbIndustry Industry { get; set; }
 
@@ -16,7 +16,7 @@ namespace SpaceDealerModels.Units
 		{
 		}
 
-		public DbPlanet(string name, Coordinates position, Market market, DbIndustry industry) : base(name)
+		public DbPlanet(string name, DbCoordinates position, DbMarket market, DbIndustry industry) : base(name)
 		{
 			Sector = position;
 			Market = market;
@@ -25,7 +25,7 @@ namespace SpaceDealerModels.Units
 
 		public DbPlanet(string name) : base(name)
 		{
-			Market = new Market($"{Name}.Market", this);
+			Market = new DbMarket($"{Name}.Market", this);
 			Industry = new DbIndustry($"{Name}.Industry");
 		}
 

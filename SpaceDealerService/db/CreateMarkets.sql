@@ -1,0 +1,1 @@
+﻿CREATE TABLE "Markets" ("Id" TEXT NOT NULL, "Name" TEXT NOT NULL, "PlanetId" TEXT NOT NULL, PRIMARY KEY("Id") );

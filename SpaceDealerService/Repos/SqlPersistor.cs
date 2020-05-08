@@ -19,6 +19,8 @@ namespace SpaceDealerService.Repos
         public NeededProductsRepository NeededProductsRepo { get; set; }
         public GeneratedProductsRepository GeneratedProductsRepo { get; set; }
         public DiscoveredPlanetsRepository DiscoveredPlanetsRepo { get; set; }
+        public FeaturesRepository FeaturesRepo { get; set; }
+        public MarketRepository MarketRepo { get; set; }
 
 
         public SqlPersistor(ILogger logger, string dbPath)
@@ -33,6 +35,7 @@ namespace SpaceDealerService.Repos
             NeededProductsRepo = new NeededProductsRepository(Logger, DbPath);
             GeneratedProductsRepo = new GeneratedProductsRepository(Logger, DbPath);
             DiscoveredPlanetsRepo = new DiscoveredPlanetsRepository(Logger, DbPath);
+            MarketRepo = new MarketRepository(Logger, DbPath);
 
 
             if (!File.Exists(DbPath))
@@ -56,6 +59,8 @@ namespace SpaceDealerService.Repos
                     ProductRepo.SaveProduct(np);
                     GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, np.Id);
                 }
+
+                MarketRepo.SaveMarket(planet.Id, planet.Market);
             }
             return true;
         }

@@ -11,7 +11,7 @@ namespace SpaceDealerModels.Units
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(planetName, System.StringComparison.InvariantCultureIgnoreCase));
 		}
-		public DbPlanet GetPlanetInSector(Coordinates coordinates)
+		public DbPlanet GetPlanetInSector(DbCoordinates coordinates)
 		{
 			return this.FirstOrDefault(x => x.Sector.X == coordinates.X & x.Sector.Y == coordinates.Y & x.Sector.Z == coordinates.Z);
 		}

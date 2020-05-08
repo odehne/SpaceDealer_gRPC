@@ -8,9 +8,9 @@ namespace SpaceDealerModels.Units
 	public class Journey
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Coordinates newPosition);
+		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Coordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbCoordinates newPosition);
 
 		[JsonIgnore]
 		public DbShip Parent { get; set; }
@@ -19,7 +19,7 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("detination")]
 		public DbPlanet Destination { get; set; }
 		[JsonProperty("currentSector")]
-		public Coordinates CurrentSector { get; set; }
+		public DbCoordinates CurrentSector { get; set; }
 		[JsonProperty("stte")]
 		JourneyState State { get; set; }
 		[JsonProperty("enemyBattleShip")]
@@ -32,7 +32,7 @@ namespace SpaceDealerModels.Units
 
 		}
 
-		public Journey(DbPlanet departure, DbPlanet destination, Coordinates position, DbShip parent)
+		public Journey(DbPlanet departure, DbPlanet destination, DbCoordinates position, DbShip parent)
 		{
 			Parent = parent;
 			Departure = departure;
@@ -45,7 +45,7 @@ namespace SpaceDealerModels.Units
 		{ 
 			get
 			{
-				return Coordinates.GetDistanceLength(CurrentSector, Destination.Sector);
+				return DbCoordinates.GetDistanceLength(CurrentSector, Destination.Sector);
 			}
 		} // in parsec 3.26 Light years
 		
@@ -56,7 +56,7 @@ namespace SpaceDealerModels.Units
 				if (!CurrentSector.Equals(Destination.Sector))
 				{
 					State = JourneyState.Travelling;
-					CurrentSector = Coordinates.Move(CurrentSector, Destination.Sector);
+					CurrentSector = DbCoordinates.Move(CurrentSector, Destination.Sector);
 				}
 				if (CurrentSector.Equals(Destination.Sector))
 				{

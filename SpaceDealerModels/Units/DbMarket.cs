@@ -2,17 +2,17 @@
 
 namespace SpaceDealerModels.Units
 {
-	public class Market : BaseUnit
+	public class DbMarket : BaseUnit
 	{
 		[JsonIgnore]
 		public DbPlanet Parent { get; set; }
 
-		public Market()
+		public DbMarket()
 		{
 
 		}
 	
-		public Market(string name, DbPlanet parent) : base(name)
+		public DbMarket(string name, DbPlanet parent) : base(name)
 		{
 			Parent = parent;
 		}
