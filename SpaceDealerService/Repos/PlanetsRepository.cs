@@ -8,20 +8,11 @@ namespace SpaceDealerService.Repos
 {
 	public class PlanetsRepository
 	{
-		public string DbPath { get; set; }
-		public ILogger Logger { get; set; }
+		public SqlPersistor Parent { get; set; }
 
-		private NeededProductsRepository NeededProdRepo { get; set; }
-		private GeneratedProductsRepository GeneratedProdRepo { get; set; }
-		private MarketRepository MarketRepo{ get; set; }
-
-		public PlanetsRepository(ILogger logger, string dbPath)
+		public PlanetsRepository(SqlPersistor parent)
 		{
-			DbPath = dbPath;
-			Logger = logger;
-			GeneratedProdRepo = new GeneratedProductsRepository(Logger, DbPath);
-			NeededProdRepo = new NeededProductsRepository(Logger, DbPath);
-			MarketRepo = new MarketRepository(Logger, DbPath);
+			Parent = parent;
 		}
 
 		public List<DbPlanet> GetPlanets()
@@ -30,7 +21,7 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
 				connection.Open();
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
@@ -45,17 +36,19 @@ namespace SpaceDealerService.Repos
 						planet.PicturePath = reader.GetString(2);
 						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
 						planet.Industry = new DbIndustry($"{planet.Id}.industry");
-						planet.Industry.ProductsNeeded = NeededProdRepo.GetNeededProducts(planet.Id);
-						planet.Industry.GeneratedProducts = GeneratedProdRepo.GetGeneratedProducts(planet.Id);
-						planet.Market = MarketRepo.GetMarket(planet.Id);
+						planet.Industry.ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id);
+						planet.Industry.GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
+						planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
 						lst.Add(planet);
 					}
 				}
+				reader.Close();
+				connection.Close();
 
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to read planet {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to read planet {e.Message}", TraceEventType.Error);
 			}
 
 			return lst;
@@ -66,16 +59,18 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT Id FROM Planets WHERE Name = @name;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@name", name);
-				return (string)command.ExecuteScalar();
+				var ret = (string)command.ExecuteScalar();
+				Parent.CloseConnection(connection);
+				return ret;
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get planet Id {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get planet Id {e.Message}", TraceEventType.Error);
 				return null;
 			}
 		}
@@ -101,8 +96,8 @@ namespace SpaceDealerService.Repos
 
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
@@ -117,18 +112,20 @@ namespace SpaceDealerService.Repos
 						planet.PicturePath = reader.GetString(2);
 						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
 						planet.Industry = new DbIndustry($"{planet.Id}.industry");
-						planet.Industry.GeneratedProducts = Program.Persistor.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
-						planet.Industry.ProductsNeeded = Program.Persistor.NeededProductsRepo.GetNeededProducts(planet.Id);
-						planet.Market = Program.Persistor.MarketRepo.GetMarket(planet.Id);
-
+						planet.Industry.GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
+						planet.Industry.ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id);
+						planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
+						connection.Close();
 						return planet;
 					}
 				}
+				reader.Close();
+				Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to read planet {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to read planet {e.Message}", TraceEventType.Error);
 			}
 
 			return null;
@@ -138,12 +135,12 @@ namespace SpaceDealerService.Repos
 		{
 			var id = GetPlanetId(planet.Name);
 			if (id != null)
-				planet.Id = id;
+				return;
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + DbPath))
+				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
 				{
-					connection.Open();
+					Parent.OpenConnection(connection);
 					using (var command = new SQLiteCommand(connection))
 					{
 						command.CommandText = $"INSERT OR REPLACE INTO Planets (Id, Name, X, Y, Z, PicturePath, IndustryName) VALUES (@id, @name, @x, @y, @z, @picturePath, @industryName);";
@@ -154,15 +151,25 @@ namespace SpaceDealerService.Repos
 						command.Parameters.AddWithValue("@x", planet.Sector.X);
 						command.Parameters.AddWithValue("@y", planet.Sector.Y);
 						command.Parameters.AddWithValue("@z", planet.Sector.Z);
-						command.ExecuteNonQuery();
-						Logger.Log($"Planet {planet.Name} saved.", TraceEventType.Information);
-
+						try
+						{
+							command.ExecuteNonQuery();
+							Parent.Logger.Log($"Planet {planet.Name} saved.", TraceEventType.Information);
+						}
+						catch (System.Exception e)
+						{
+							Parent.Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
+						}
+						finally
+						{
+							Parent.CloseConnection(connection);
+						}
 					}
 				}
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
 
 			}
 		}

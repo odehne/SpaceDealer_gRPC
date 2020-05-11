@@ -13,7 +13,6 @@ namespace SpaceDealer
 		public Planets Galaxy { get; set; }
 		public Players FleetCommanders { get; set; }
 		public ILogger Logger { get; set; }
-	
 		public SpaceDealerGame(ILogger logger)
 		{
 			Logger = logger;
@@ -24,6 +23,10 @@ namespace SpaceDealer
 
 		public void Init()
 		{
+			Repository.LoadFeatures(Program.Persistor.FeaturesRepo.GetFeatures());
+
+			Program.Persistor.FeaturesRepo.SaveAll(Repository.Features);
+
 			var earth = Program.Persistor.PlanetsRepo.GetPlanet("Erde", "");
 			if(earth==null)
 			{
@@ -64,6 +67,8 @@ namespace SpaceDealer
 			Galaxy.AddPlanet(earth);
 			Galaxy.AddPlanet(moon);
 			Galaxy.AddPlanet(tatooine);
+
+			
 		}
 
 		

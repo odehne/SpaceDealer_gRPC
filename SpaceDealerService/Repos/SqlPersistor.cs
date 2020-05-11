@@ -22,28 +22,43 @@ namespace SpaceDealerService.Repos
         public FeaturesRepository FeaturesRepo { get; set; }
         public MarketRepository MarketRepo { get; set; }
 
-
         public SqlPersistor(ILogger logger, string dbPath)
         {
             Logger = logger;
             DbPath = dbPath;
 
-            PlanetsRepo = new PlanetsRepository(Logger, DbPath);
-            PlayersRepo = new PlayersRepository(Logger, DbPath);
-            ShipsRepo = new ShipsRepository(Logger, DbPath);
-            ProductRepo = new ProductsRepository(Logger, DbPath);
-            NeededProductsRepo = new NeededProductsRepository(Logger, DbPath);
-            GeneratedProductsRepo = new GeneratedProductsRepository(Logger, DbPath);
-            DiscoveredPlanetsRepo = new DiscoveredPlanetsRepository(Logger, DbPath);
-            MarketRepo = new MarketRepository(Logger, DbPath);
+            PlanetsRepo = new PlanetsRepository(this);
+            PlayersRepo = new PlayersRepository(this);
+            ShipsRepo = new ShipsRepository(this);
+            ProductRepo = new ProductsRepository(this);
+            NeededProductsRepo = new NeededProductsRepository(this);
+            GeneratedProductsRepo = new GeneratedProductsRepository(this);
+            DiscoveredPlanetsRepo = new DiscoveredPlanetsRepository(this);
+            MarketRepo = new MarketRepository(this);
+            FeaturesRepo = new FeaturesRepository(this);
 
 
             if (!File.Exists(DbPath))
                 CreateDatabase();
         }
 
+        public void OpenConnection(SQLiteConnection connection) 
+        {
+            StackTrace stackTrace = new StackTrace();
+            Logger.Log($"Opening connection - {stackTrace.GetFrame(1).GetMethod().Name}", TraceEventType.Start);
+            connection.Open();
+        }
+
+        public void CloseConnection(SQLiteConnection connection)
+        {
+            StackTrace stackTrace = new StackTrace();
+            Logger.Log($"Closing connection - {stackTrace.GetFrame(1).GetMethod().Name}", TraceEventType.Stop);
+            connection.Close();
+        }
+
         public bool SaveGalaxy(Planets galaxy)
         {
+            
             foreach (var planet in galaxy)
             {
                 PlanetsRepo.SavePlanet(planet);
@@ -116,13 +131,25 @@ namespace SpaceDealerService.Repos
                     {
                         // Erstellen der Tabelle, sofern diese noch nicht existiert.
                         command.CommandText = sql;
-                        command.ExecuteNonQuery();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                            Logger.Log($"Table creted.", TraceEventType.Information);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Log($"Failed to create table {e.Message}", TraceEventType.Error);
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
                     }
                 }
             }
             catch (System.Exception e)
             {
-                Console.WriteLine("Failed to create table [" + e.Message + "].");
+                Logger.Log($"Failed to create table{e.Message}", TraceEventType.Error);
             }
 
         }

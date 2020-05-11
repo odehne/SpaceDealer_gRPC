@@ -1,6 +1,7 @@
 ﻿using SpaceDealer;
 using SpaceDealerModels;
 using SpaceDealerModels.Units;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -10,16 +11,11 @@ namespace SpaceDealerService.Repos
 
 	public class NeededProductsRepository
 	{
-		public string DbPath { get; set; }
-		public ILogger Logger { get; set; }
+		public SqlPersistor Parent { get; set; }
 
-		public ProductsRepository ProdRepo { get; set; }
-
-		public NeededProductsRepository(ILogger logger, string dbPath)
+		public NeededProductsRepository(SqlPersistor parent)
 		{
-			DbPath = dbPath;
-			Logger = logger;
-			ProdRepo = new ProductsRepository(logger, dbPath);
+			Parent = parent;
 		}
 
 		public ProductsInStock GetNeededProducts(string planetId)
@@ -29,8 +25,8 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT ProductId, Interest FROM NeededProducts WHERE PlanetId = @planetId;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@planetId", planetId);
@@ -41,41 +37,94 @@ namespace SpaceDealerService.Repos
 					{
 						var productId = reader.GetString(0);
 						var interest = reader.GetDouble(1);
-						var product = ProdRepo.GetProduct(null, productId);
+						var product = Parent.ProductRepo.GetProduct(null, productId);
 						product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
 						lst.AddProduct(product);
 					}
 				}
-
+				reader.Close();
+				Parent.CloseConnection(connection);
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get NeededProducts for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get NeededProducts for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
 			}
 
 			return lst;
 		}
 
-		public void SaveNeededProduct(string planetId, string productId)
+		public DbProductInStock GetProductInStock(string planetId, string productId)
 		{
+		
+			var query = "SELECT Interest FROM NeededProducts WHERE PlanetId = @planetId AND ProductId = @productId;";
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + DbPath))
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
+				using var command = new SQLiteCommand(connection);
+				command.CommandText = query;
+				command.Parameters.AddWithValue("@planetId", planetId);
+				command.Parameters.AddWithValue("@productId", productId);
+				using var reader = command.ExecuteReader();
+				if (reader.HasRows)
 				{
-					connection.Open();
+					while (reader.Read())
+					{
+						var interest = reader.GetDouble(0);
+						var product = Parent.ProductRepo.GetProduct(null, productId);
+						product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
+						reader.Close();
+						Parent.CloseConnection(connection);
+						return product;
+					}
+				}
+				reader.Close();
+				Parent.CloseConnection(connection);
+			}
+			catch (System.Exception e)
+			{
+				Parent.Logger.Log($"Failed to get NeededProducts for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
+			}
+
+			return null;
+		}
+
+		public void SaveNeededProduct(string planetId, string productId)
+		{
+			var p = GetProductInStock(planetId, productId);
+			if (p != null)
+				return;
+
+			try
+			{
+				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				{
+					Parent.OpenConnection(connection);
 					using (var command = new SQLiteCommand(connection))
 					{
 						command.CommandText = $"INSERT OR REPLACE INTO NeededProducts (PlanetId, ProductId, Interest) VALUES (@planetId, @productId, @interest);";
 						command.Parameters.AddWithValue("@planetId", planetId);
 						command.Parameters.AddWithValue("@productId", productId);
 						command.Parameters.AddWithValue("@interest", 10.0);
-						command.ExecuteNonQuery();
+						try
+						{
+							command.ExecuteNonQuery();
+							Parent.Logger.Log($"Needed product {productId} saved.", TraceEventType.Information);
+						}
+						catch (Exception e)
+						{
+							Parent.Logger.Log($"Failed to save needed product {e.Message}", TraceEventType.Error);
+						}
+						finally
+						{
+							Parent.CloseConnection(connection);
+						}
 					}
 				}
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
-				Logger.Log($"Failed to save NeededProducts for planet Id [{planetId},{productId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to save NeededProducts for planet Id [{planetId},{productId}] {e.Message}", TraceEventType.Error);
 			}
 		}
 	}

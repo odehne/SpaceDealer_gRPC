@@ -9,14 +9,14 @@ namespace SpaceDealerService.Repos
 
 	public class ProductsRepository
 	{
-		public string DbPath { get; set; }
-		public ILogger Logger { get; set; }
 
-		public ProductsRepository(ILogger logger, string dbPath)
+		public SqlPersistor Parent { get; set; }
+
+		public ProductsRepository(SqlPersistor parent)
 		{
-			DbPath = dbPath;
-			Logger = logger;
+			Parent = parent;
 		}
+
 		public List<DbProductInStock> GetProducts()
 		{
 			var lst = new List<DbProductInStock>();
@@ -24,8 +24,8 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				using var reader = command.ExecuteReader();
@@ -43,11 +43,13 @@ namespace SpaceDealerService.Repos
 						lst.Add(p);
 					}
 				}
+				reader.Close();
+				Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get product {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get product {e.Message}", TraceEventType.Error);
 			}
 
 			return lst;
@@ -75,8 +77,8 @@ namespace SpaceDealerService.Repos
 
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
@@ -93,11 +95,13 @@ namespace SpaceDealerService.Repos
 						p.PicturePath = reader.GetString(5);
 					}
 				}
+				reader.Close();
+				Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get product for player Id [{id}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get product for player Id [{id}] {e.Message}", TraceEventType.Error);
 			}
 
 			return p;
@@ -109,18 +113,21 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT Id FROM Products WHERE Name = @name;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@name", name);
-				return (string)command.ExecuteScalar();
+				var ret = (string)command.ExecuteScalar();
+				Parent.CloseConnection(connection);
+				return ret;
 
 			}
 			catch (System.Exception e)
 			{
-				return null;
+				Parent.Logger.Log($"Failed to get product {e.Message}", TraceEventType.Error);
 			}
+			return null;
 		}
 
 		public void SaveProduct(DbProductInStock product)
@@ -128,13 +135,13 @@ namespace SpaceDealerService.Repos
 
 			var id = GetProductId(product.Name);
 			if (id != null)
-				product.Id = id;
+				return;
 
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + DbPath))
+				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
 				{
-					connection.Open();
+					Parent.OpenConnection(connection);
 					using (var command = new SQLiteCommand(connection))
 					{
 						command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath) VALUES (@id, @name, @weight, @pricePerTon, @amountGeneratedPerRound, @picturePath);";
@@ -144,15 +151,26 @@ namespace SpaceDealerService.Repos
 						command.Parameters.AddWithValue("@PricePerTon", product.PricePerTon);
 						command.Parameters.AddWithValue("@amountGeneratedPerRound", product.AmountGeneratedPerRound);
 						command.Parameters.AddWithValue("@picturePath", product.PicturePath);
-						command.ExecuteNonQuery();
-						Logger.Log($"Product {product.Id} saved.", TraceEventType.Information);
-
+						try
+						{
+							command.ExecuteNonQuery();
+							Parent.Logger.Log($"Prouct {product.Name} saved.", TraceEventType.Information);
+						}
+						catch (System.Exception e)
+						{
+							Parent.Logger.Log($"Failed to add product {e.Message}", TraceEventType.Error);
+						}
+						finally
+						{
+							Parent.CloseConnection(connection);
+						}
 					}
 				}
 			}
 			catch (System.Exception e)
 			{
-				throw e;
+				Parent.Logger.Log($"Failed to add product Id {e.Message}", TraceEventType.Error);
+
 			}
 		}
 	}

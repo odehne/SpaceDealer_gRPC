@@ -7,17 +7,11 @@ namespace SpaceDealerService.Repos
 {
 	public class DiscoveredPlanetsRepository
 	{
-		public string DbPath { get; set; }
+		public SqlPersistor Parent { get; set; }
 
-		public ILogger Logger { get; set; }
-
-		private PlanetsRepository PlanetRepo { get; set; }
-
-		public DiscoveredPlanetsRepository(ILogger logger, string dbPath)
+		public DiscoveredPlanetsRepository(SqlPersistor parent)
 		{
-			DbPath = dbPath;
-			Logger = logger;
-			PlanetRepo = new PlanetsRepository(logger, dbPath);
+			Parent = parent;
 		}
 
 		public Planets GetDiscoveredPlanets(string playerId)
@@ -27,8 +21,8 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT PlanetId FROM DiscoveredPlanets WHERE PlayerId= @playerId;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@playerId", playerId);
@@ -38,15 +32,17 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var planetId = reader.GetString(0);
-						var planet = PlanetRepo.GetPlanet("", planetId);
+						var planet = Parent.PlanetsRepo.GetPlanet("", planetId);
 						lst.AddPlanet(planet);
 					}
 				}
+				reader.Close();
+				Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get planets for player Id [{playerId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get planets for player Id [{playerId}] {e.Message}", TraceEventType.Error);
 			}
 
 			return lst;
@@ -56,21 +52,33 @@ namespace SpaceDealerService.Repos
 		{
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + DbPath))
+				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
 				{
-					connection.Open();
+					Parent.OpenConnection(connection);
 					using (var command = new SQLiteCommand(connection))
 					{
 						command.CommandText = $"INSERT OR REPLACE INTO DiscoveredPlanets (PlayerID, PlanetId) VALUES (@playerId, @planetId);";
 						command.Parameters.AddWithValue("@playerId", playerId);
 						command.Parameters.AddWithValue("@planetId", planetId);
-						command.ExecuteNonQuery();
+						try
+						{
+							command.ExecuteNonQuery();
+							Parent.Logger.Log($"Discovered planet {planetId} saved.", TraceEventType.Information);
+						}
+						catch (System.Exception e)
+						{
+							Parent.Logger.Log($"Failed to save generated product {e.Message}", TraceEventType.Error);
+						}
+						finally
+						{
+							Parent.CloseConnection(connection);
+						}
 					}
 				}
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to save discovered planet for planet Id [{planetId},{playerId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to save discovered planet for planet Id [{planetId},{playerId}] {e.Message}", TraceEventType.Error);
 			}
 		}
 	}

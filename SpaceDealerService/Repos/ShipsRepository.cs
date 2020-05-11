@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using SpaceDealer;
@@ -9,15 +10,14 @@ namespace SpaceDealerService.Repos
 
 	public class ShipsRepository
 	{
-		public string DbPath { get; set; }
-		public ILogger Logger { get; set; }
+		public SqlPersistor Parent { get; set; }
 
-		public ShipsRepository(ILogger logger, string dbPath)
+		public ShipsRepository(SqlPersistor parent)
 		{
-			DbPath = dbPath;
-			Logger = logger;
+			Parent = parent;
 		}
 
+		
 		public List<DbShip> GetShips(string playerId)
 		{
 			var ids = new List<string>();
@@ -26,8 +26,8 @@ namespace SpaceDealerService.Repos
 			var query = "SELECT Id FROM Ships WHERE PlayerId = @playerId;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@playerId", playerId);
@@ -39,11 +39,13 @@ namespace SpaceDealerService.Repos
 						ids.Add(reader.GetString(0));
 					}
 				}
-					
+				reader.Close();
+				Parent.CloseConnection(connection);
+
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get ships for player Id [{playerId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get ships for player Id [{playerId}] {e.Message}", TraceEventType.Error);
 			}
 
 			foreach (var shipId in ids)
@@ -73,8 +75,8 @@ namespace SpaceDealerService.Repos
 			}
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + DbPath);
-				connection.Open();
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				Parent.OpenConnection(connection);
 				using var command = new SQLiteCommand(connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
@@ -92,6 +94,9 @@ namespace SpaceDealerService.Repos
 						ship.Hull = reader.GetInt32(5);
 						ship.Shields = reader.GetInt32(6);
 						ship.State = (SpaceDealer.Enums.ShipState)reader.GetInt32(7);
+						reader.Close();
+						Parent.CloseConnection(connection);
+
 						return ship;
 					}
 				}
@@ -99,7 +104,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to get ship with Id [{id}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get ship with Id [{id}] {e.Message}", TraceEventType.Error);
 			}
 			return null;
 		}
@@ -108,9 +113,9 @@ namespace SpaceDealerService.Repos
 		{
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + DbPath))
+				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
 				{
-					connection.Open();
+					Parent.OpenConnection(connection);
 					using (var command = new SQLiteCommand(connection))
 					{
 						command.CommandText = $"INSERT OR REPLACE INTO Ships (Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState) " +
@@ -123,14 +128,34 @@ namespace SpaceDealerService.Repos
 						command.Parameters.AddWithValue("@hull", ship.Hull);
 						command.Parameters.AddWithValue("@shield", ship.Shields);
 						command.Parameters.AddWithValue("@shipState", ship.State);
-						command.ExecuteNonQuery();
-						Logger.Log($"Ship {ship.Name} saved.", TraceEventType.Information);
+						try
+						{
+							command.ExecuteNonQuery();
+							Parent.Logger.Log($"Ship {ship.Id} saved.", TraceEventType.Information);
+						}
+						catch (Exception e)
+						{
+							Parent.Logger.Log($"Failed to save ship {e.Message}", TraceEventType.Error);
+						}
+						finally
+						{
+							Parent.CloseConnection(connection);
+						}
 					}
+					foreach (var ft in ship.Features)
+					{
+						if (ft != null)
+						{
+							Parent.FeaturesRepo.Save(ft);
+							Parent.FeaturesRepo.SaveShipFeature(ship.Id, ft.Id);
+						}
+					}
+					Parent.Logger.Log($"Ship {ship.Name} saved.", TraceEventType.Information);
 				}
 			}
 			catch (System.Exception e)
 			{
-				Logger.Log($"Failed to save ship with Id [{ship.Id}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to save ship with Id [{ship.Id}] {e.Message}", TraceEventType.Error);
 
 			}
 		}

@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
 using SpaceDealer.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class DbShipFeatures : List<DbFeature>
+	public class DbFeatures : List<DbFeature>
 	{
 		public DbFeature GetFeatureByName(string name)
 		{
@@ -36,6 +37,7 @@ namespace SpaceDealerModels.Units
 
 		public DbFeature(string name, string description, int attackBonus, int defenceBonus, int rangeBonus, int speedBonus)
 		{
+			Id = Guid.NewGuid().ToString();
 			Name = name;
 			Description = description;
 			AttackBonus= attackBonus;

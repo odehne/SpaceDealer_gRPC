@@ -146,7 +146,7 @@ namespace SpaceDealerService
 		{
 			var g = Program.TheGame;
 			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "Signal Reichweite" })) { CargoSize = 30, Parent = p.Fleet };
+			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" })) { CargoSize = 30, Parent = p.Fleet };
 			s.PlayerId = p.Id;
 			s.PicturePath = ".\\Spaceships\\MediumFrighter.jpg";
 			p.Fleet.AddShip(s);

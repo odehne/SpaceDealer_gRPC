@@ -26,7 +26,52 @@ namespace SpaceDealer
 				if (LogLevel == TraceEventType.Information)
 					return;
 			}
-			Console.WriteLine(message);
-		}
-	}
+            OutputToConsole(severity, message);
+
+        }
+
+        private void OutputToConsole(TraceEventType eventType, string message)
+        {
+          
+            switch (eventType)
+            {
+                case TraceEventType.Start:
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write("[STR]\t");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(message);
+                    break;
+                case TraceEventType.Stop:
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write("[STP]\t");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(message);
+                    break;
+                case TraceEventType.Verbose:
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("[VER]\t");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(message);
+                    break;
+                case TraceEventType.Information:
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write("[INF]\t");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(message);
+                    break;
+                case TraceEventType.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("[ERR]\t");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(message);
+                    break;
+                case TraceEventType.Warning:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("[WRN]\t");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(message);
+                    break;
+            }
+        }
+    }
 }

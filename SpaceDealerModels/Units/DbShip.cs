@@ -20,7 +20,7 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("currentLoad")]
 		public ProductsInStock CurrentLoad { get; set; }
 		[JsonProperty("features")]
-		public DbShipFeatures Features {get; set;}
+		public DbFeatures Features {get; set;}
 		[JsonIgnore]
 		public Ships Parent { get; set; }
 		[JsonProperty("state")]
@@ -42,7 +42,7 @@ namespace SpaceDealerModels.Units
 		{
 		}
 
-		public DbShip(string name, DbPlanet homeplanet, DbShipFeatures featureSet) : base(name)
+		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet) : base(name)
 		{
 			State = ShipState.Idle;
 			Shields = 2;

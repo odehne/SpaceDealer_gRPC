@@ -12,7 +12,7 @@ namespace SpaceDealerModels.Repositories
 		public static List<string> ShipNames { get; set; }
 		public static List<string> PlanetNames { get; set; }
 
-		public static DbShipFeatures Library { get; set; }
+		public static DbFeatures Features { get; set; }
 		public static List<DbIndustry> IndustryLibrary { get; set; }
 
 		public static ProductsInStock ProductLibrary { get; set; }
@@ -20,12 +20,26 @@ namespace SpaceDealerModels.Repositories
 
 		public static void Init()
 		{
-			NewFeatureLibary();
 			NewSpaceShipNames();
 			NewPlanetNames();
 			NewProductLibary();
 			NewIndustryLibrary();
 			//NewPlanetLibrary();
+		}
+
+		public static void LoadFeatures(DbFeatures dbFeatures)
+		{
+			Features = dbFeatures;
+			if (Features == null)
+				Features = new DbFeatures();
+			if (Features.Count < 5)
+			{
+				Features.Add(new DbFeature("ShieldBonus+1", "Verbesserte Schile (+1)", 0, 1, 0, 0));
+				Features.Add(new DbFeature("Phasers+1", "Phaser-Bänke", 1, 0, 0, 0));
+				Features.Add(new DbFeature("Torpedos+2", "Torpedos", 2, 1, 0, 0));
+				Features.Add(new DbFeature("AdvancedWarp+1", "Verbesserte Geschwindigkeit", 0, 0, 0, 1));
+				Features.Add(new DbFeature("SignalRange+1", "Verbesserter Signalempfang", 0, 0, 1, 0));
+			}
 		}
 
 		private static void NewPlanetNames()
@@ -264,16 +278,6 @@ namespace SpaceDealerModels.Repositories
 
 		}
 
-		private static void NewFeatureLibary()
-		{
-			Library = new DbShipFeatures();
-			Library.Add(new DbFeature("ShieldBonus+1", "Verbesserte Schile (+1)", 0, 1, 0,0));
-			Library.Add(new DbFeature("Phasers+1", "Phaser-Bänke", 1, 0, 0,0));
-			Library.Add(new DbFeature("Torpedos+2", "Torpedos", 2, 1, 0,0));
-			Library.Add(new DbFeature("AdvancedWarp+1", "Verbesserte Geschwindigkeit", 0, 0, 0, 1));
-			Library.Add(new DbFeature("SignalRange+1", "Verbesserter Signalempfang", 0, 0, 1,0));
-		}
-
 		public static ProductsInStock GetRandomProducts(int howMany, bool needed)
 		{
 			var ret = new ProductsInStock();
@@ -288,9 +292,9 @@ namespace SpaceDealerModels.Repositories
 			return ret;
 		}
 
-		public static DbShipFeatures GetFeatureSet(string[] featureNames )
+		public static DbFeatures GetFeatureSet(string[] featureNames )
 		{
-			var featureSet = new DbShipFeatures();
+			var featureSet = new DbFeatures();
 			foreach (var featureName in featureNames)
 			{
 				featureSet.Add(GetFeature(featureName));
@@ -300,7 +304,7 @@ namespace SpaceDealerModels.Repositories
 
 		public static DbFeature GetFeature(string featureName)
 		{
-			return Library.FirstOrDefault(x => x.Name.Equals(featureName, StringComparison.InvariantCultureIgnoreCase));
+			return Features.FirstOrDefault(x => x.Name.Equals(featureName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
 	}
