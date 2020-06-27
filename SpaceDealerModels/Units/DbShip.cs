@@ -14,11 +14,11 @@ namespace SpaceDealerModels.Units
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
 
 		[JsonProperty("cruise")]
-		public Journey Cruise { get; set; }
+		public DbJourney Cruise { get; set; }
 		[JsonProperty("cargoSize")]
 		public double CargoSize { get; set; } // in tons
 		[JsonProperty("currentLoad")]
-		public ProductsInStock CurrentLoad { get; set; }
+		public DbProductsInStock CurrentLoad { get; set; }
 		[JsonProperty("features")]
 		public DbFeatures Features {get; set;}
 		[JsonIgnore]
@@ -40,6 +40,7 @@ namespace SpaceDealerModels.Units
 
 		public DbShip()
 		{
+			Features = new DbFeatures();
 		}
 
 		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet) : base(name)
@@ -48,14 +49,14 @@ namespace SpaceDealerModels.Units
 			Shields = 2;
 			Hull = 3;
 			Features = featureSet;
-			CurrentLoad = new ProductsInStock();
+			CurrentLoad = new DbProductsInStock();
 			CurrentPlanet = homeplanet;
 			//Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
 		}
 
 		public void StartCruise(DbPlanet source, DbPlanet destination)
 		{
-			Cruise = new Journey(source, destination, source.Sector, this);
+			Cruise = new DbJourney(source, destination, source.Sector, this);
 			Cruise.Arrived += Cruise_Arrived;
 			Cruise.Interrupted += Cruise_Interrupted;
 		}
@@ -76,7 +77,7 @@ namespace SpaceDealerModels.Units
 			return base.GetHashCode();
 		}
 
-		public Result Load(ProductsInStock productsToLoad)
+		public Result Load(DbProductsInStock productsToLoad)
 		{
 			if (State != ShipState.Idle)
 			{
@@ -105,12 +106,16 @@ namespace SpaceDealerModels.Units
 		public override void Update()
 		{
 			base.Update();
-			foreach (var load in CurrentLoad)
+
+			if (CurrentLoad != null)
 			{
-				load.Update();
+				foreach (var load in CurrentLoad)
+				{
+					load.Update();
+				}
 			}
 			//Evaluate current position
-			if(Cruise!=null)
+			if (Cruise!=null)
 				Cruise.Update();
 		}
 

@@ -32,6 +32,7 @@ namespace SpaceDealerModels.Units
 		
 		public DbPlayer()
 		{
+
 		}
 
 		public DbPlayer(string name, DbPlanet homeplanet, Planets planets) : base(name)

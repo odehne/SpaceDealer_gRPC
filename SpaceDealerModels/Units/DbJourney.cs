@@ -5,7 +5,7 @@ using System;
 
 namespace SpaceDealerModels.Units
 {
-	public class Journey
+	public class DbJourney
 	{
 		public event ArrivedAtDestination Arrived;
 		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition);
@@ -20,19 +20,19 @@ namespace SpaceDealerModels.Units
 		public DbPlanet Destination { get; set; }
 		[JsonProperty("currentSector")]
 		public DbCoordinates CurrentSector { get; set; }
-		[JsonProperty("stte")]
+		[JsonProperty("state")]
 		JourneyState State { get; set; }
 		[JsonProperty("enemyBattleShip")]
 		public PirateShip EnemyBattleShip { get; set; }
 		[JsonProperty("newlyDisoveredPlanet")]
 		public DbPlanet NewlyDiscoveredPlanet { get; set; }
 		
-		public Journey()
+		public DbJourney()
 		{
 
 		}
 
-		public Journey(DbPlanet departure, DbPlanet destination, DbCoordinates position, DbShip parent)
+		public DbJourney(DbPlanet departure, DbPlanet destination, DbCoordinates position, DbShip parent)
 		{
 			Parent = parent;
 			Departure = departure;

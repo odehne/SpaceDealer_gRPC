@@ -62,7 +62,7 @@ namespace SpaceDealerService
 			
 		}
 
-		public static Journey ConvertToJourney(SpaceDealerModels.Units.Journey uJourny)
+		public static Journey ConvertToJourney(SpaceDealerModels.Units.DbJourney uJourny)
 		{
 			var ret = new Journey
 			{
@@ -141,7 +141,7 @@ namespace SpaceDealerService
 			}
 
 			var pload = new Load();
-			if (uShip.CurrentLoad.Any())
+			if (uShip.CurrentLoad != null)
 			{
 				foreach (var upis in uShip.CurrentLoad)
 				{

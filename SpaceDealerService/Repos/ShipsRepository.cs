@@ -8,29 +8,85 @@ using SpaceDealerModels.Units;
 namespace SpaceDealerService.Repos
 {
 
-	public class ShipsRepository
+	public class ShipsRepository : Repository<DbShip>
 	{
-		public SqlPersistor Parent { get; set; }
-
-		public ShipsRepository(SqlPersistor parent)
+		public ShipsRepository(SqlPersistor parent) : base(parent)
 		{
-			Parent = parent;
 		}
 
-		
-		public List<DbShip> GetShips(string playerId)
-		{
-			var ids = new List<string>();
-			var lst = new List<DbShip>();
 
-			var query = "SELECT Id FROM Ships WHERE PlayerId = @playerId;";
+		public override void Save(DbShip ship)
+		{
+			Parent.Logger.Log($"Saving ship with id {ship.Id}.", TraceEventType.Information);
+
+			if (ship.Cruise == null)
+			{
+				var earth = Program.Persistor.PlanetsRepo.GetItem("Erde", "");
+				ship.Cruise = new DbJourney() { CurrentSector = earth.Sector, Destination = earth, Departure = earth };
+			}
+
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using (var command = new SQLiteCommand(Parent.Connection))
+				{
+					command.CommandText = $"INSERT OR REPLACE INTO Ships (Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState, Journey_Source, Journey_Destination, Current_SectorX, Current_SectorY,Current_SectorZ ) " +
+						$"VALUES (@id, @playerId, @name, @picturePath, @cargoSize, @hull, @shield, @shipState, @source, @destination, @currentX, @currentY, @currentZ);";
+					command.Parameters.AddWithValue("@id", ship.Id);
+					command.Parameters.AddWithValue("@name", ship.Name);
+					command.Parameters.AddWithValue("@playerId", ship.PlayerId);
+					command.Parameters.AddWithValue("@picturePath", ship.PicturePath);
+					command.Parameters.AddWithValue("@cargoSize", ship.CargoSize);
+					command.Parameters.AddWithValue("@hull", ship.Hull);
+					command.Parameters.AddWithValue("@shield", ship.Shields);
+					command.Parameters.AddWithValue("@shipState", ship.State);
+
+					command.Parameters.AddWithValue("@source", ship.Cruise.Departure.Id);
+					command.Parameters.AddWithValue("@destination", ship.Cruise.Destination.Id);
+					command.Parameters.AddWithValue("@currentX", ship.Cruise.CurrentSector.X);
+					command.Parameters.AddWithValue("@currentY", ship.Cruise.CurrentSector.Y);
+					command.Parameters.AddWithValue("@currentZ", ship.Cruise.CurrentSector.Z);
+
+					try
+					{
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Ship {ship.Id} saved.", TraceEventType.Information);
+					}
+					catch (Exception e)
+					{
+						Parent.Logger.Log($"Failed to save ship {e.Message}", TraceEventType.Error);
+					}
+				
+				}
+				foreach (var ft in ship.Features)
+				{
+					if (ft != null)
+					{
+						Parent.FeaturesRepo.Save(ft);
+						Parent.FeaturesRepo.SaveShipFeature(ship.Id, ft.Id);
+					}
+				}
+				Parent.Logger.Log($"Ship {ship.Name} saved.", TraceEventType.Information);
+				
+			}
+			catch (System.Exception e)
+			{
+				Parent.Logger.Log($"Failed to save ship with Id [{ship.Id}] {e.Message}", TraceEventType.Error);
+
+			}
+		}
+
+		public override List<DbShip> GetAll()
+		{
+			Parent.Logger.Log($"Loading all ships.", TraceEventType.Information);
+
+			var ids = new List<string>();
+			var lst = new Ships();
+
+			var query = "SELECT Id FROM Ships;";
+			try
+			{
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@playerId", playerId);
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -40,27 +96,28 @@ namespace SpaceDealerService.Repos
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
-
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get ships for player Id [{playerId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to get all ships  {e.Message}", TraceEventType.Error);
 			}
 
 			foreach (var shipId in ids)
 			{
-				lst.Add(GetShip(null, shipId));
+				lst.Add(GetItem(null, shipId));
 			}
 
 			return lst;
 		}
 
-		public DbShip GetShip(string name, string id)
+		public override DbShip GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
+			Parent.Logger.Log($"Loading ship with {name}, {id}.", TraceEventType.Information);
 
-			var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState, Name FROM Ships WHERE ";
+			var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState," +
+						" Journey_Source, Journey_Destination, Current_SectorX," +
+						" Current_SectorY, Current_SectorZ FROM Ships WHERE ";
 			if (!string.IsNullOrEmpty(name))
 			{
 				query += "Name = @name;";
@@ -75,9 +132,7 @@ namespace SpaceDealerService.Repos
 			}
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
 				using var reader = command.ExecuteReader();
@@ -94,9 +149,18 @@ namespace SpaceDealerService.Repos
 						ship.Hull = reader.GetInt32(5);
 						ship.Shields = reader.GetInt32(6);
 						ship.State = (SpaceDealer.Enums.ShipState)reader.GetInt32(7);
-						reader.Close();
-						Parent.CloseConnection(connection);
+						ship.Features.AddRange(Program.Persistor.FeaturesRepo.GetAll(ship.Id));
 
+						var source = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(8));
+						var destination = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(9));
+						var currentSector = new DbCoordinates(reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12));
+						
+						ship.CurrentPlanet = source;
+
+						ship.Cruise = new DbJourney() { Departure = source, Destination = destination, CurrentSector = currentSector };
+
+						reader.Close();
+				
 						return ship;
 					}
 				}
@@ -109,55 +173,46 @@ namespace SpaceDealerService.Repos
 			return null;
 		}
 
-		public void SaveShip(DbShip ship)
+		public override string GetItemId(string name)
 		{
+			throw new NotImplementedException();
+		}
+
+		public override List<DbShip> GetAll(string id)
+		{
+			Parent.Logger.Log($"Loading all ships of player {id}.", TraceEventType.Information);
+			var ids = new List<string>();
+			var lst = new Ships();
+
+			var query = "SELECT Id FROM Ships WHERE PlayerId = @playerId;";
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				using var command = new SQLiteCommand(Parent.Connection);
+				command.CommandText = query;
+				command.Parameters.AddWithValue("@playerId", id);
+				using var reader = command.ExecuteReader();
+				if (reader.HasRows)
 				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
+					while (reader.Read())
 					{
-						command.CommandText = $"INSERT OR REPLACE INTO Ships (Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState) " +
-							$"VALUES (@id, @playerId, @name, @picturePath, @cargoSize, @hull, @shield, @shipState);";
-						command.Parameters.AddWithValue("@id", ship.Id);
-						command.Parameters.AddWithValue("@name", ship.Name);
-						command.Parameters.AddWithValue("@playerId", ship.PlayerId);
-						command.Parameters.AddWithValue("@picturePath", ship.PicturePath);
-						command.Parameters.AddWithValue("@cargoSize", ship.CargoSize);
-						command.Parameters.AddWithValue("@hull", ship.Hull);
-						command.Parameters.AddWithValue("@shield", ship.Shields);
-						command.Parameters.AddWithValue("@shipState", ship.State);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Ship {ship.Id} saved.", TraceEventType.Information);
-						}
-						catch (Exception e)
-						{
-							Parent.Logger.Log($"Failed to save ship {e.Message}", TraceEventType.Error);
-						}
-						finally
-						{
-							Parent.CloseConnection(connection);
-						}
+						ids.Add(reader.GetString(0));
 					}
-					foreach (var ft in ship.Features)
-					{
-						if (ft != null)
-						{
-							Parent.FeaturesRepo.Save(ft);
-							Parent.FeaturesRepo.SaveShipFeature(ship.Id, ft.Id);
-						}
-					}
-					Parent.Logger.Log($"Ship {ship.Name} saved.", TraceEventType.Information);
 				}
+				reader.Close();
+				//Parent.CloseConnection(connection);
+
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to save ship with Id [{ship.Id}] {e.Message}", TraceEventType.Error);
-
+				Parent.Logger.Log($"Failed to get ships for player Id [{id}] {e.Message}", TraceEventType.Error);
 			}
+
+			foreach (var shipId in ids)
+			{
+				lst.Add(GetItem(null, shipId));
+			}
+
+			return lst;
 		}
 	}
 }

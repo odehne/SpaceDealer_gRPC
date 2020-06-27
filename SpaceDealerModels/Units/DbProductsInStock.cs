@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class ProductsInStock : List<DbProductInStock>
+	public class DbProductsInStock : List<DbProductInStock>
 	{
 		public DbProductInStock GetProductByName(string name)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}
 
-		public ProductsInStock()
+		public DbProductsInStock()
 		{
 
 		}
@@ -28,7 +28,7 @@ namespace SpaceDealerModels.Units
 			return ret;
 		}
 
-		public ProductsInStock(DbProductInStock p)
+		public DbProductsInStock(DbProductInStock p)
 		{
 			Add(p);
 		}

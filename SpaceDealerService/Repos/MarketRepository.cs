@@ -16,13 +16,12 @@ namespace SpaceDealerService.Repos
 
 		public DbMarket GetMarket(string planetId)
 		{
+			Parent.Logger.Log($"Loading market for planet {planetId}.", TraceEventType.Information);
 			var market = new DbMarket();
 			var query = "SELECT Id, Name FROM Markets WHERE PlanetId = @planetId;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@planetId", planetId);
 				using var reader = command.ExecuteReader();
@@ -36,8 +35,6 @@ namespace SpaceDealerService.Repos
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
-
 			}
 			catch (System.Exception e)
 			{
@@ -48,30 +45,23 @@ namespace SpaceDealerService.Repos
 
 		public void SaveMarket(string planetId, DbMarket market)
 		{
+			Parent.Logger.Log($"Saving market of planet {planetId}.", TraceEventType.Information);
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
+					command.CommandText = $"INSERT OR REPLACE INTO Markets (Id, PlanetId, Name) VALUES (@id, @planetId, @name);";
+					command.Parameters.AddWithValue("@planetId", planetId);
+					command.Parameters.AddWithValue("@id", market.Id);
+					command.Parameters.AddWithValue("@name", market.Name);
+					try
 					{
-						command.CommandText = $"INSERT OR REPLACE INTO Markets (Id, PlanetId, Name) VALUES (@id, @planetId, @name);";
-						command.Parameters.AddWithValue("@planetId", planetId);
-						command.Parameters.AddWithValue("@id", market.Id);
-						command.Parameters.AddWithValue("@name", market.Name);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Generated market {market.Id} saved.", TraceEventType.Information);
-						}
-						catch (System.Exception e)
-						{
-							Parent.Logger.Log($"Failed to save market {e.Message}", TraceEventType.Error);
-						}
-						finally
-						{
-							connection.Close();
-						}
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Generated market {market.Id} saved.", TraceEventType.Information);
+					}
+					catch (System.Exception e)
+					{
+						Parent.Logger.Log($"Failed to save market {e.Message}", TraceEventType.Error);
 					}
 				}
 			}

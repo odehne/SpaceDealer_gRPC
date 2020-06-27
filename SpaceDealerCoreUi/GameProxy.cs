@@ -51,13 +51,7 @@ namespace SpaceDealerCoreUi
 			return reply;
 		}
 
-		public static async Task<Player> GetPlayer(string playerName)
-		{
-			using var channel = GrpcChannel.ForAddress(ServiceURL);
-			var client = new Game.GameClient(channel);
-			var reply = await client.GetPlayerAsync(new PlayerRequest { PlayerName = playerName });
-			return reply.Player;
-		}
+
 
 		public static async Task<BattleReply> BattleAttack(string playerName, string shipName)
 		{
@@ -128,6 +122,14 @@ namespace SpaceDealerCoreUi
 			var client = new Game.GameClient(channel);
 			var cruiseStarted = await client.ContinueCruiseAsync(new CruiseRequest { DestinationPlanetName = planetName, PlayerName = playerName, ShipName = shipName });
 			return cruiseStarted.OnItsWay;
+		}
+
+		public static async Task<Player> GetPlayer(string playerName)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var reply = await client.GetPlayerAsync(new PlayerRequest { PlayerName = playerName });
+			return reply.Player;
 		}
 
 		public static async Task<RepeatedField<Planet>> GetAllPlanets()

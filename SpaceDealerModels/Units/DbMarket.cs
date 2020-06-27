@@ -16,9 +16,9 @@ namespace SpaceDealerModels.Units
 		{
 			Parent = parent;
 		}
-		public ProductsInStock GetProductsToSell()
+		public DbProductsInStock GetProductsToSell()
 		{
-			var productsToSell = new ProductsInStock();
+			var productsToSell = new DbProductsInStock();
 			foreach (var p in Parent.Industry.ProductsNeeded)
 			{
 				productsToSell.Add(p);
@@ -26,9 +26,9 @@ namespace SpaceDealerModels.Units
 			return productsToSell;
 		}
 
-		public ProductsInStock GetProductsToBuy()
+		public DbProductsInStock GetProductsToBuy()
 		{
-			var productsToBuy = new ProductsInStock();
+			var productsToBuy = new DbProductsInStock();
 			foreach (var p in Parent.Industry.GeneratedProducts)
 			{
 				productsToBuy.Add(p);

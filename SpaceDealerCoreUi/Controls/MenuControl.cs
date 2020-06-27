@@ -44,8 +44,7 @@ namespace SpaceDealerCoreUi.Controls
 		private void btnLoadGame_Click(object sender, EventArgs e)
 		{
 			Program.MainForm.LoadPlayer();
-			Program.MainForm.ShowShip();
-		}
+			}
 
 	
 	}

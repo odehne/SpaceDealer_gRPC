@@ -7,26 +7,22 @@ using System.Diagnostics;
 namespace SpaceDealerService.Repos
 {
 
-	public class ProductsRepository
+	public class ProductsRepository : Repository<DbProductInStock>
 	{
-
-		public SqlPersistor Parent { get; set; }
-
-		public ProductsRepository(SqlPersistor parent)
+		public ProductsRepository(SqlPersistor parent) : base(parent)
 		{
-			Parent = parent;
 		}
 
-		public List<DbProductInStock> GetProducts()
+		public override List<DbProductInStock> GetAll()
 		{
 			var lst = new List<DbProductInStock>();
+
+			Parent.Logger.Log($"Loading all products.", TraceEventType.Information);
 
 			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
@@ -44,7 +40,7 @@ namespace SpaceDealerService.Repos
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
+				//Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
@@ -55,9 +51,15 @@ namespace SpaceDealerService.Repos
 			return lst;
 		}
 
-		public DbProductInStock GetProduct(string name, string id)
+		public override List<DbProductInStock> GetAll(string id)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public override DbProductInStock GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
+			Parent.Logger.Log($"Loading product with {name} or {id}.", TraceEventType.Information);
 
 			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE ";
 			if (!string.IsNullOrEmpty(name))
@@ -78,8 +80,8 @@ namespace SpaceDealerService.Repos
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
 				using var reader = command.ExecuteReader();
@@ -96,7 +98,7 @@ namespace SpaceDealerService.Repos
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
+				//Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
@@ -107,19 +109,20 @@ namespace SpaceDealerService.Repos
 			return p;
 		}
 
-		public string GetProductId(string name)
+		public override string GetItemId(string name)
 		{
 			var p = new DbFeature();
+			Parent.Logger.Log($"Loading product with name {name}.", TraceEventType.Information);
 			var query = "SELECT Id FROM Products WHERE Name = @name;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@name", name);
 				var ret = (string)command.ExecuteScalar();
-				Parent.CloseConnection(connection);
+				//Parent.CloseConnection(connection);
 				return ret;
 
 			}
@@ -130,40 +133,32 @@ namespace SpaceDealerService.Repos
 			return null;
 		}
 
-		public void SaveProduct(DbProductInStock product)
+		public override void Save(DbProductInStock item)
 		{
-
-			var id = GetProductId(product.Name);
+			var id = GetItemId(item.Name);
 			if (id != null)
 				return;
+			Parent.Logger.Log($"Saving product {item.Name}.", TraceEventType.Information);
 
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
+					command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath) VALUES (@id, @name, @weight, @pricePerTon, @amountGeneratedPerRound, @picturePath);";
+					command.Parameters.AddWithValue("@id", item.Id);
+					command.Parameters.AddWithValue("@name", item.Name);
+					command.Parameters.AddWithValue("@weight", item.Weight);
+					command.Parameters.AddWithValue("@PricePerTon", item.PricePerTon);
+					command.Parameters.AddWithValue("@amountGeneratedPerRound", item.AmountGeneratedPerRound);
+					command.Parameters.AddWithValue("@picturePath", item.PicturePath);
+					try
 					{
-						command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath) VALUES (@id, @name, @weight, @pricePerTon, @amountGeneratedPerRound, @picturePath);";
-						command.Parameters.AddWithValue("@id", product.Id);
-						command.Parameters.AddWithValue("@name", product.Name);
-						command.Parameters.AddWithValue("@weight", product.Weight);
-						command.Parameters.AddWithValue("@PricePerTon", product.PricePerTon);
-						command.Parameters.AddWithValue("@amountGeneratedPerRound", product.AmountGeneratedPerRound);
-						command.Parameters.AddWithValue("@picturePath", product.PicturePath);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Prouct {product.Name} saved.", TraceEventType.Information);
-						}
-						catch (System.Exception e)
-						{
-							Parent.Logger.Log($"Failed to add product {e.Message}", TraceEventType.Error);
-						}
-						finally
-						{
-							Parent.CloseConnection(connection);
-						}
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Prouct {item.Name} saved.", TraceEventType.Information);
+					}
+					catch (System.Exception e)
+					{
+						Parent.Logger.Log($"Failed to add product {e.Message}", TraceEventType.Error);
 					}
 				}
 			}
@@ -173,5 +168,6 @@ namespace SpaceDealerService.Repos
 
 			}
 		}
+
 	}
 }

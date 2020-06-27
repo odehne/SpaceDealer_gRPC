@@ -4,11 +4,14 @@ using System;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 
 namespace SpaceDealerService.Repos
 {
     public class SqlPersistor
 	{
+        private int CurrentlyOpenConnections = 0;
+
         public string DbPath { get; set; }
         public ILogger Logger { get; set; }
 
@@ -21,6 +24,7 @@ namespace SpaceDealerService.Repos
         public DiscoveredPlanetsRepository DiscoveredPlanetsRepo { get; set; }
         public FeaturesRepository FeaturesRepo { get; set; }
         public MarketRepository MarketRepo { get; set; }
+        public SQLiteConnection Connection { get; set; }
 
         public SqlPersistor(ILogger logger, string dbPath)
         {
@@ -40,20 +44,25 @@ namespace SpaceDealerService.Repos
 
             if (!File.Exists(DbPath))
                 CreateDatabase();
+
+            Connection = new SQLiteConnection("Data Source=" + DbPath);
+            OpenConnection();
         }
 
-        public void OpenConnection(SQLiteConnection connection) 
+        private void OpenConnection() 
         {
+            Connection.Open();
+            CurrentlyOpenConnections += 1;
             StackTrace stackTrace = new StackTrace();
-            Logger.Log($"Opening connection - {stackTrace.GetFrame(1).GetMethod().Name}", TraceEventType.Start);
-            connection.Open();
+            Logger.Log($"OPEN [{CurrentlyOpenConnections}] - {stackTrace.GetFrame(1).GetMethod().ReflectedType.Name}:{stackTrace.GetFrame(1).GetMethod().Name}", TraceEventType.Start);
         }
 
-        public void CloseConnection(SQLiteConnection connection)
+        private void CloseConnection()
         {
+            CurrentlyOpenConnections -= 1;
+            Connection.Close();
             StackTrace stackTrace = new StackTrace();
-            Logger.Log($"Closing connection - {stackTrace.GetFrame(1).GetMethod().Name}", TraceEventType.Stop);
-            connection.Close();
+            Logger.Log($"CLOSE [{CurrentlyOpenConnections}] - {stackTrace.GetFrame(1).GetMethod().ReflectedType.Name}:{stackTrace.GetFrame(1).GetMethod().Name}", TraceEventType.Stop);
         }
 
         public bool SaveGalaxy(Planets galaxy)
@@ -61,17 +70,17 @@ namespace SpaceDealerService.Repos
             
             foreach (var planet in galaxy)
             {
-                PlanetsRepo.SavePlanet(planet);
+                PlanetsRepo.Save(planet);
 
                 foreach (var np in planet.Industry.ProductsNeeded)
                 {
-                    ProductRepo.SaveProduct(np);
+                    ProductRepo.Save(np);
                     NeededProductsRepo.SaveNeededProduct(planet.Id, np.Id);
                 }
                 
                 foreach (var np in planet.Industry.GeneratedProducts)
                 {
-                    ProductRepo.SaveProduct(np);
+                    ProductRepo.Save(np);
                     GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, np.Id);
                 }
 
@@ -86,15 +95,18 @@ namespace SpaceDealerService.Repos
             {
                 foreach (var player in players)
                 {
-                    PlayersRepo.SavePlayer(player);
+                    PlayersRepo.Save(player);
                     foreach (var ship in player.Fleet)
                     {
-                        ShipsRepo.SaveShip(ship);
+                        ShipsRepo.Save(ship);
                     }
 
-                    foreach(var planet in player.Galaxy)
+                    if (player.Galaxy != null)
                     {
-                        DiscoveredPlanetsRepo.SaveDiscoveredPlanet(player.Id, planet.Id);
+                        foreach (var planet in player.Galaxy)
+                        {
+                            DiscoveredPlanetsRepo.SaveDiscoveredPlanet(player.Id, planet.Id);
+                        }
                     }
                 }
             }

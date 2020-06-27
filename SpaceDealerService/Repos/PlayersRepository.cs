@@ -8,69 +8,62 @@ using System.Diagnostics;
 namespace SpaceDealerService.Repos
 {
 
-	public class PlayersRepository
+	public class PlayersRepository : Repository<DbPlayer>
 	{
-
-
-		public SqlPersistor Parent { get; set; }
-
-		public PlayersRepository(SqlPersistor parent)
+		public PlayersRepository(SqlPersistor parent) : base(parent)
 		{
-			Parent = parent;
 		}
 
-		public List<Player> GetPlayers()
+		public override List<DbPlayer> GetAll()
 		{
-			var lst = new List<Player>();
+			var lst = new Players();
+			Parent.Logger.Log($"Loading all players.", TraceEventType.Information);
 
-			return lst;
-		}
-
-		public DbPlayer GetPlayerByName(string name)
-		{
-			var query = "SELECT id, Name, Credits, PlayerType, PicturePath FROM Players WHERE Name = @name;";
+			var query = "SELECT id FROM Players;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
-				command.Parameters.AddWithValue("@name", name);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
 					while (reader.Read())
 					{
-						return new DbPlayer
-						{
-							Id = reader.GetString(0),
-							Name = reader.GetString(1),
-							Credits = reader.GetDouble(2),
-							PlayerType = (SpaceDealer.Enums.PlayerTypes)reader.GetInt32(3),
-							PicturePath = reader.GetString(4)
-						};
+						var id = reader.GetString(0);
+						lst.Add(GetItem("", id));
 					}
+					reader.Close();
+					//Parent.CloseConnection(connection);
 				}
 				else
 				{
-					Parent.Logger.Log($"Player with name not found [{name}].", TraceEventType.Warning);
+					Parent.Logger.Log($"No players loaded.", TraceEventType.Warning);
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
+				//Parent.CloseConnection(connection);
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to read player {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to read players {e.Message}", TraceEventType.Error);
 			}
-			return null;
+
+			return lst;
 		}
 
-
-		public DbPlayer GetPlayer(string name, string id)
+		public override List<DbPlayer> GetAll(string id)
 		{
-			var parameter = new SQLiteParameter();
+			throw new NotImplementedException();
+		}
 
-			var query = "SELECT id, Name, Credits, PlayerType, PicturePath FROM Players WHERE ";
+		public override DbPlayer GetItem(string name, string id)
+		{
+			Parent.Logger.Log($"Loading player {name}, {id}.", TraceEventType.Information);
+			var parameter = new SQLiteParameter();
+			DbPlayer player = null;
+
+			var query = "SELECT id, Name, Credits, PlayerType, PicturePath, HomePlanetId FROM Players WHERE ";
 			if (!string.IsNullOrEmpty(name))
 			{
 				query += "Name = @name;";
@@ -86,8 +79,8 @@ namespace SpaceDealerService.Repos
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
 				var reader = command.ExecuteReader();
@@ -95,43 +88,55 @@ namespace SpaceDealerService.Repos
 				{
 					while (reader.Read())
 					{
-						return new DbPlayer
+						var pId = reader.GetString(0);
+						var pName = reader.GetString(1);
+						var pCredits = reader.GetDouble(2);
+						var pPlayerType = (SpaceDealer.Enums.PlayerTypes)reader.GetInt32(3);
+						var pPicturePath = reader.GetString(4);
+						var pHomePlanet = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(5));
+						var galaxy = new Planets();
+						galaxy.AddRange(Parent.PlanetsRepo.GetAll());
+
+						player = new DbPlayer(pName, pHomePlanet, galaxy)
 						{
-							Id = reader.GetString(0),
-							Name = reader.GetString(1),
-							Credits = reader.GetDouble(2),
-							PlayerType = (SpaceDealer.Enums.PlayerTypes)reader.GetInt32(3),
-							PicturePath = reader.GetString(4)
+							Id = pId,
+							Credits = pCredits,
+							PlayerType = pPlayerType,
+							PicturePath = pPicturePath
 						};
+						
+						player.Fleet.AddRange(Program.Persistor.ShipsRepo.GetAll(player.Id));
 					}
 					reader.Close();
-					Parent.CloseConnection(connection);
+					//Parent.CloseConnection(connection);
 				}
 				else
 				{
 					Parent.Logger.Log($"Player with Id not found [{id}].", TraceEventType.Warning);
 				}
 				reader.Close();
+				//Parent.CloseConnection(connection);
 			}
 			catch (System.Exception e)
 			{
 				Parent.Logger.Log($"Failed to read player {e.Message}", TraceEventType.Error);
 			}
-			return null;
+			return player;
 		}
 
-		public string GetPlayerId(string name)
+		public override string GetItemId(string name)
 		{
+			Parent.Logger.Log($"Loading player with name {name}.", TraceEventType.Information);
 			var query = "SELECT Id FROM Players WHERE Name = @name;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@name", name);
 				var ret = (string)command.ExecuteScalar();
-				Parent.CloseConnection(connection);
+				//Parent.CloseConnection(connection);
 				return ret;
 			}
 			catch (System.Exception e)
@@ -141,40 +146,34 @@ namespace SpaceDealerService.Repos
 			}
 		}
 
-		public void SavePlayer(DbPlayer player)
+		public override void Save(DbPlayer player)
 		{
+			Parent.Logger.Log($"Saving player {player.Name}.", TraceEventType.Information);
 
-			var id = GetPlayerId(player.Name);
+			var id = GetItemId(player.Name);
 			if (id == null)
 				id = player.Id;
 
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
+					//Erstellen der Tabelle, sofern diese noch nicht existiert.
+				    command.CommandText = $"INSERT OR REPLACE INTO Players (id, Name, Credits, PlayerType, PicturePath, HomePlanetId) VALUES (@id, @name, @credits, @playerType, @picturePath, @homePlanetId);";
+					command.Parameters.AddWithValue("@id", player.Id);
+					command.Parameters.AddWithValue("@name", player.Name);
+					command.Parameters.AddWithValue("@credits", player.Credits);
+					command.Parameters.AddWithValue("@playerType", player.PlayerType);
+					command.Parameters.AddWithValue("@picturePath", player.PicturePath);
+					command.Parameters.AddWithValue("@homePlanetId", player.HomePlanet.Id);
+					try
 					{
-						//Erstellen der Tabelle, sofern diese noch nicht existiert.
-					    command.CommandText = $"INSERT OR REPLACE INTO Players (id, Name, Credits, PlayerType, PicturePath) VALUES (@id, @name, @credits, @playerType, @picturePath);";
-						command.Parameters.AddWithValue("@id", player.Id);
-						command.Parameters.AddWithValue("@name", player.Name);
-						command.Parameters.AddWithValue("@credits", player.Credits);
-						command.Parameters.AddWithValue("@playerType", player.PlayerType);
-						command.Parameters.AddWithValue("@picturePath", player.PicturePath);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Player {player.Name} saved.", TraceEventType.Information);
-						}
-						catch (Exception e)
-						{
-							Parent.Logger.Log($"Failed to save feature {e.Message}", TraceEventType.Error);
-						}
-						finally
-						{
-							Parent.CloseConnection(connection);
-						}
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Player {player.Name} saved.", TraceEventType.Information);
+					}
+					catch (Exception e)
+					{
+						Parent.Logger.Log($"Failed to save feature {e.Message}", TraceEventType.Error);
 					}
 				}
 			}
@@ -183,5 +182,7 @@ namespace SpaceDealerService.Repos
 				Parent.Logger.Log($"Failed to add player Id {e.Message}", TraceEventType.Error);
 			}
 		}
+
+	
 	}
 }

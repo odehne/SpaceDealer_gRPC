@@ -6,24 +6,21 @@ using SpaceDealerModels.Units;
 
 namespace SpaceDealerService.Repos
 {
-	public class PlanetsRepository
+	public class PlanetsRepository : Repository<DbPlanet>
 	{
-		public SqlPersistor Parent { get; set; }
-
-		public PlanetsRepository(SqlPersistor parent)
+		public PlanetsRepository(SqlPersistor parent) : base(parent)
 		{
-			Parent = parent;
 		}
 
-		public List<DbPlanet> GetPlanets()
+		public override List<DbPlanet> GetAll()
 		{
+			Parent.Logger.Log($"Loading planets.", TraceEventType.Information);
 			var lst = new List<DbPlanet>();
 			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				connection.Open();
-				using var command = new SQLiteCommand(connection);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
@@ -43,7 +40,7 @@ namespace SpaceDealerService.Repos
 					}
 				}
 				reader.Close();
-				connection.Close();
+				//Parent.CloseConnection(connection);
 
 			}
 			catch (System.Exception e)
@@ -54,31 +51,15 @@ namespace SpaceDealerService.Repos
 			return lst;
 		}
 
-		public string GetPlanetId(string name)
+		public override List<DbPlanet> GetAll(string id)
 		{
-			var query = "SELECT Id FROM Planets WHERE Name = @name;";
-			try
-			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
-				command.CommandText = query;
-				command.Parameters.AddWithValue("@name", name);
-				var ret = (string)command.ExecuteScalar();
-				Parent.CloseConnection(connection);
-				return ret;
-			}
-			catch (System.Exception e)
-			{
-				Parent.Logger.Log($"Failed to get planet Id {e.Message}", TraceEventType.Error);
-				return null;
-			}
+			throw new System.NotImplementedException();
 		}
 
-		
-		public DbPlanet GetPlanet(string name, string id)
+		public override DbPlanet GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
+			Parent.Logger.Log($"Loading planet {name}, {id}.", TraceEventType.Information);
 
 			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE ";
 			if (!string.IsNullOrEmpty(name))
@@ -96,9 +77,7 @@ namespace SpaceDealerService.Repos
 
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
 				using var reader = command.ExecuteReader();
@@ -115,13 +94,10 @@ namespace SpaceDealerService.Repos
 						planet.Industry.GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
 						planet.Industry.ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id);
 						planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
-						connection.Close();
 						return planet;
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
-
 			}
 			catch (System.Exception e)
 			{
@@ -131,39 +107,54 @@ namespace SpaceDealerService.Repos
 			return null;
 		}
 
-		public void SavePlanet(DbPlanet planet)
+		public override string GetItemId(string name)
 		{
-			var id = GetPlanetId(planet.Name);
+			Parent.Logger.Log($"Loading planet with name {name}.", TraceEventType.Information);
+			var query = "SELECT Id FROM Planets WHERE Name = @name;";
+			try
+			{
+				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+				
+				using var command = new SQLiteCommand(Parent.Connection);
+				command.CommandText = query;
+				command.Parameters.AddWithValue("@name", name);
+				var ret = (string)command.ExecuteScalar();
+				//Parent.CloseConnection(connection);
+				return ret;
+			}
+			catch (System.Exception e)
+			{
+				Parent.Logger.Log($"Failed to get planet Id {e.Message}", TraceEventType.Error);
+				return null;
+			}
+		}
+
+		public override void Save(DbPlanet item)
+		{
+			Parent.Logger.Log($"Saving planet with name {item.Name}.", TraceEventType.Information);
+			var id = GetItemId(item.Name);
 			if (id != null)
 				return;
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
+					command.CommandText = $"INSERT OR REPLACE INTO Planets (Id, Name, X, Y, Z, PicturePath, IndustryName) VALUES (@id, @name, @x, @y, @z, @picturePath, @industryName);";
+					command.Parameters.AddWithValue("@id", item.Id);
+					command.Parameters.AddWithValue("@name", item.Name);
+					command.Parameters.AddWithValue("@picturePath", item.PicturePath);
+					command.Parameters.AddWithValue("@industryName", item.Industry.Name);
+					command.Parameters.AddWithValue("@x", item.Sector.X);
+					command.Parameters.AddWithValue("@y", item.Sector.Y);
+					command.Parameters.AddWithValue("@z", item.Sector.Z);
+					try
 					{
-						command.CommandText = $"INSERT OR REPLACE INTO Planets (Id, Name, X, Y, Z, PicturePath, IndustryName) VALUES (@id, @name, @x, @y, @z, @picturePath, @industryName);";
-						command.Parameters.AddWithValue("@id", planet.Id);
-						command.Parameters.AddWithValue("@name", planet.Name);
-						command.Parameters.AddWithValue("@picturePath", planet.PicturePath);
-						command.Parameters.AddWithValue("@industryName", planet.Industry.Name);
-						command.Parameters.AddWithValue("@x", planet.Sector.X);
-						command.Parameters.AddWithValue("@y", planet.Sector.Y);
-						command.Parameters.AddWithValue("@z", planet.Sector.Z);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Planet {planet.Name} saved.", TraceEventType.Information);
-						}
-						catch (System.Exception e)
-						{
-							Parent.Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
-						}
-						finally
-						{
-							Parent.CloseConnection(connection);
-						}
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Planet {item.Name} saved.", TraceEventType.Information);
+					}
+					catch (System.Exception e)
+					{
+						Parent.Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
 					}
 				}
 			}

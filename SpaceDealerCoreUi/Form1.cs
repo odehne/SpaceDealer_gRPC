@@ -145,12 +145,14 @@ namespace SpaceDealerCoreUi
 		}
 
 
-		public void LoadPlayer()
+		public async void LoadPlayer()
 		{
-			if (Program.CurrentPlayer != null)
-			{
-
-			}
+			var frm = new frmPlayerName();
+			frm.SetPlayerName("");
+			frm.ShowDialog();
+			var name = frm.GetPlayerName();
+			Program.CurrentPlayer = await GameProxy.GetPlayer(name);
+			Program.MainForm.ShowShip();
 		}
 
 		private void neuesSpielToolStripMenuItem_Click(object sender, EventArgs e)

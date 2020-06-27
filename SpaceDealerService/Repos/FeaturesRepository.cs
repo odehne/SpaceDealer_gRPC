@@ -8,23 +8,21 @@ using System.Diagnostics;
 namespace SpaceDealerService.Repos
 {
 
-	public class FeaturesRepository
+	public class FeaturesRepository : Repository<DbFeature>
 	{
-		public SqlPersistor Parent { get; set; }
-
-		public FeaturesRepository(SqlPersistor parent)
+		public FeaturesRepository(SqlPersistor parent) : base(parent)
 		{
-			Parent = parent;
 		}
-		public DbFeatures GetFeatures()
+
+		public override List<DbFeature> GetAll()
 		{
+			Parent.Logger.Log($"Loading all features.", TraceEventType.Information);
+
 			var lst = new DbFeatures();
 
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = "SELECT Id, Name, AttackBonus, RangeBonus, DefenceBonus, SpeedBonus, Description FROM Features";
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
@@ -41,11 +39,10 @@ namespace SpaceDealerService.Repos
 							SpeedBonus = reader.GetInt32(5),
 							Description = reader.GetString(6)
 						});
-						
+
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
 			}
 			catch (Exception e)
 			{
@@ -54,16 +51,36 @@ namespace SpaceDealerService.Repos
 			return lst;
 		}
 
-		public void SaveAll(DbFeatures features)
+		public override List<DbFeature> GetAll(string id)
 		{
-			foreach (var feature in features)
+			Parent.Logger.Log($"Loading all features for ship {id}.", TraceEventType.Information);
+			var lst = new DbFeatures();
+
+			var query = "SELECT FeatureId FROM ShipFeatures WHERE ShipId = @shipId";
+			try
 			{
-				Save(feature);
+				using var command = new SQLiteCommand(Parent.Connection);
+				command.CommandText = query;
+				command.Parameters.AddWithValue("@shipId", id);
+				using var reader = command.ExecuteReader();
+				if (reader.HasRows)
+				{
+					while (reader.Read())
+					{
+						lst.Add(GetItem("", reader.GetString(0)));
+					}
+				}
 			}
+			catch (System.Exception e)
+			{
+				Parent.Logger.Log($"Failed to determine if ship has featured {e.Message}.", TraceEventType.Error);
+			}
+			return lst;
 		}
 
-		public DbFeature GetFeature(string name, string id)
+		public override DbFeature GetItem(string name, string id)
 		{
+			Parent.Logger.Log($"Loading feature {name}, {id}.", TraceEventType.Information);
 			var parameter = new SQLiteParameter();
 			var query = "SELECT Id, Name, AttackBonus, RangeBonus, DefenceBonus, SpeedBonus, Description FROM Features WHERE ";
 			if (!string.IsNullOrEmpty(name))
@@ -78,12 +95,10 @@ namespace SpaceDealerService.Repos
 				parameter.ParameterName = "@id";
 				parameter.Value = id;
 			}
-			
+
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.Add(parameter);
 				var reader = command.ExecuteReader();
@@ -95,14 +110,13 @@ namespace SpaceDealerService.Repos
 						{
 							Id = reader.GetString(0),
 							Name = reader.GetString(1),
-							AttackBonus= reader.GetInt32(2),
+							AttackBonus = reader.GetInt32(2),
 							RangeBonus = reader.GetInt32(3),
 							DefenceBonus = reader.GetInt32(4),
 							SpeedBonus = reader.GetInt32(5),
 							Description = reader.GetString(6)
 						};
 						reader.Close();
-						Parent.CloseConnection(connection);
 						return ret;
 					}
 				}
@@ -111,8 +125,6 @@ namespace SpaceDealerService.Repos
 					Parent.Logger.Log($"Failed to get feature with Id [{id}]", TraceEventType.Error);
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
-
 			}
 			catch (Exception e)
 			{
@@ -121,14 +133,67 @@ namespace SpaceDealerService.Repos
 			return null;
 		}
 
+		public override string GetItemId(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Save(DbFeature item)
+		{
+			Parent.Logger.Log($"Saving feature.", TraceEventType.Information);
+			var ft = GetItem(item.Name, null);
+			if (ft != null)
+				return;
+			try
+			{
+				using (var command = new SQLiteCommand(Parent.Connection))
+				{
+					command.CommandText = $"INSERT OR REPLACE INTO Features " +
+						$"(Id,Name,AttackBonus,RangeBonus,DefenceBonus,SpeedBonus,Description) VALUES " +
+						$"(@id, @name,@attackBonus,@rangeBonus,@defenceBonus,@speedBonus,@description);";
+					command.Parameters.AddWithValue("@id", item.Id);
+					command.Parameters.AddWithValue("@name", item.Name);
+					command.Parameters.AddWithValue("@attackBonus", item.AttackBonus);
+					command.Parameters.AddWithValue("@rangeBonus", item.RangeBonus);
+					command.Parameters.AddWithValue("@defenceBonus", item.DefenceBonus);
+					command.Parameters.AddWithValue("@speedBonus", item.SpeedBonus);
+					command.Parameters.AddWithValue("@description", item.Description);
+					try
+					{
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Feature {item.Id} saved.", TraceEventType.Information);
+					}
+					catch (Exception e)
+					{
+						Parent.Logger.Log($"Failed to save feature {e.Message}", TraceEventType.Error);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Parent.Logger.Log($"Failed to persist feature [{item.Id}], {e.Message}", TraceEventType.Error);
+			}
+		}
+
+	
+
+		public void SaveAll(DbFeatures features)
+		{
+			foreach (var feature in features)
+			{
+				Save(feature);
+			}
+		}
+
+
 		public void DeleteShipFeature(string id)
 		{
+			Parent.Logger.Log($"Deleting ship feature reference {id}.", TraceEventType.Information);
+
 			var query = "DELETE FROM ShipFeatures WHERE Id = @id;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@id", id);
 				try
@@ -140,10 +205,6 @@ namespace SpaceDealerService.Repos
 				{
 					Parent.Logger.Log($"Failed to delete ship {e.Message}", TraceEventType.Error);
 				}
-				finally
-				{
-					Parent.CloseConnection(connection);
-				}
 			}
 			catch (System.Exception e)
 			{
@@ -153,12 +214,11 @@ namespace SpaceDealerService.Repos
 
 		public bool DeleteFeature(string featureId)
 		{
+			Parent.Logger.Log($"Deleting feature {featureId}.", TraceEventType.Information);
 			var query = "DELETE FROM Features WHERE Id = @id;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@id", featureId);
 				try
@@ -170,10 +230,6 @@ namespace SpaceDealerService.Repos
 				{
 					Parent.Logger.Log($"Failed to delete feature {e.Message}", TraceEventType.Error);
 				}
-				finally
-				{
-					Parent.CloseConnection(connection);
-				}
 			}
 			catch (System.Exception e)
 			{
@@ -184,12 +240,11 @@ namespace SpaceDealerService.Repos
 
 		public bool ShipHasFeature(string shipId, string featureId)
 		{
+			Parent.Logger.Log($"Checking if ship has feature.", TraceEventType.Information);
 			var query = "SELECT Id FROM ShipFeatures WHERE ShipId = @shipId AND FeatureId = @featureId;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@shipId", shipId);
 				command.Parameters.AddWithValue("@featureId", featureId);
@@ -197,7 +252,6 @@ namespace SpaceDealerService.Repos
 				if (reader.HasRows)
 				{
 					reader.Close();
-					Parent.CloseConnection(connection);
 					return true;
 				}
 			}
@@ -208,58 +262,16 @@ namespace SpaceDealerService.Repos
 			return false;
 		}
 
-		public void Save(DbFeature feature)
-		{
-
-			var ft = GetFeature(feature.Name, null);
-			if (ft != null)
-				return;
-			try
-			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
-				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
-					{
-						command.CommandText = $"INSERT OR REPLACE INTO Features " +
-							$"(Id,Name,AttackBonus,RangeBonus,DefenceBonus,SpeedBonus,Description) VALUES " +
-							$"(@id, @name,@attackBonus,@rangeBonus,@defenceBonus,@speedBonus,@description);";
-						command.Parameters.AddWithValue("@id", feature.Id);
-						command.Parameters.AddWithValue("@name", feature.Name);
-						command.Parameters.AddWithValue("@attackBonus", feature.AttackBonus);
-						command.Parameters.AddWithValue("@rangeBonus", feature.RangeBonus);
-						command.Parameters.AddWithValue("@defenceBonus", feature.DefenceBonus);
-						command.Parameters.AddWithValue("@speedBonus", feature.SpeedBonus);
-						command.Parameters.AddWithValue("@description", feature.Description);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Feature {feature.Id} saved.", TraceEventType.Information);
-						}
-						catch (Exception e)
-						{
-							Parent.Logger.Log($"Failed to save feature {e.Message}", TraceEventType.Error);
-						}
-					}
-					Parent.CloseConnection(connection);
-				}
-			}
-			catch (Exception e)
-			{
-				Parent.Logger.Log($"Failed to persist feature [{feature.Id}], {e.Message}", TraceEventType.Error);
-			}
-		}
 
 
 		public void SaveShipFeature(string shipId, string featureId)
 		{
-			if(!ShipHasFeature(shipId, featureId))
+			Parent.Logger.Log($"Saving ship feature.", TraceEventType.Information);
+			if (!ShipHasFeature(shipId, featureId))
 			{
 				try
 				{
-					using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-					Parent.OpenConnection(connection);
-					using var command = new SQLiteCommand(connection);
+					using var command = new SQLiteCommand(Parent.Connection);
 					command.CommandText = $"INSERT INTO ShipFeatures (Id,ShipId,FeatureId) VALUES (@id,@shipId,@featureId);";
 					command.Parameters.AddWithValue("@id", Guid.NewGuid().ToString());
 					command.Parameters.AddWithValue("@featureId", featureId);
@@ -273,10 +285,7 @@ namespace SpaceDealerService.Repos
 					{
 						Parent.Logger.Log($"Failed to save ship feature {e.Message}", TraceEventType.Error);
 					}
-					finally
-					{
-						Parent.CloseConnection(connection);
-					}
+					
 				}
 				catch (System.Exception e)
 				{
@@ -285,5 +294,7 @@ namespace SpaceDealerService.Repos
 			}
 			
 		}
+
+	
 	}
 }

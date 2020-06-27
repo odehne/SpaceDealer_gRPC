@@ -23,11 +23,14 @@ namespace SpaceDealer
 
 		public void Init()
 		{
-			Repository.LoadFeatures(Program.Persistor.FeaturesRepo.GetFeatures());
+			var feats = new DbFeatures();
+			feats.AddRange(Program.Persistor.FeaturesRepo.GetAll());
+			Repository.LoadFeatures(feats);
 
 			Program.Persistor.FeaturesRepo.SaveAll(Repository.Features);
 
-			var earth = Program.Persistor.PlanetsRepo.GetPlanet("Erde", "");
+		
+			var earth = Program.Persistor.PlanetsRepo.GetItem("Erde", "");
 			if(earth==null)
 			{
 				earth = new DbPlanet("Erde");
@@ -37,7 +40,7 @@ namespace SpaceDealer
 				earth.PicturePath = ".\\Planets\\earth.jpg";
 			}
 
-			var moon = Program.Persistor.PlanetsRepo.GetPlanet("Erden-Mond", "");
+			var moon = Program.Persistor.PlanetsRepo.GetItem("Erden-Mond", "");
 			if (moon == null)
 			{
 				moon = new DbPlanet("Erden-Mond");
@@ -54,7 +57,7 @@ namespace SpaceDealer
 				moon.Industry.AddNeededProduct(Repository.GetProductByName("Board-Kanone"));
 			}
 
-			var tatooine = Program.Persistor.PlanetsRepo.GetPlanet("Tatooine", "");
+			var tatooine = Program.Persistor.PlanetsRepo.GetItem("Tatooine", "");
 			if (tatooine == null)
 			{
 				tatooine = new DbPlanet("Tatooine");
@@ -68,19 +71,16 @@ namespace SpaceDealer
 			Galaxy.AddPlanet(moon);
 			Galaxy.AddPlanet(tatooine);
 
-			
+			FleetCommanders.AddRange(Program.Persistor.PlayersRepo.GetAll());
+
+
 		}
 
-		
+
 		private void Ship_Arrived(string message, Coordinates newPosition, DbShip ship)
 		{
-			//Logger.Log($"Das Schiff ist angekommen: {ship.Cruise.Destination.ToString()}", TraceEventType.Information);
 			ship.Cruise.Departure = ship.Cruise.Destination;
-		//	ShowShipMenu(ship);
 		}
-
-		
-
 
 		public Planets ScanPlanetsInNearbySectors(DbShip ship, double range = 1)
 		{

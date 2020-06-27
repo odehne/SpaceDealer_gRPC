@@ -15,7 +15,7 @@ namespace SpaceDealerModels.Repositories
 		public static DbFeatures Features { get; set; }
 		public static List<DbIndustry> IndustryLibrary { get; set; }
 
-		public static ProductsInStock ProductLibrary { get; set; }
+		public static DbProductsInStock ProductLibrary { get; set; }
 		//public static Planets PlanetLibrary { get; set; }
 
 		public static void Init()
@@ -229,7 +229,7 @@ namespace SpaceDealerModels.Repositories
 
 		private static void NewProductLibary()
 		{
-			ProductLibrary = new ProductsInStock();
+			ProductLibrary = new DbProductsInStock();
 			ProductLibrary.AddProduct("Kuh-Milch", 0.2, 1.0, 1.0, 0.18);
 			ProductLibrary.AddProduct("Wasser", 0.2, 1.0, 1.0, 0.54);
 			ProductLibrary.AddProduct("Mais", 0.2, 1.0, 1.0, 0.16);
@@ -278,9 +278,9 @@ namespace SpaceDealerModels.Repositories
 
 		}
 
-		public static ProductsInStock GetRandomProducts(int howMany, bool needed)
+		public static DbProductsInStock GetRandomProducts(int howMany, bool needed)
 		{
-			var ret = new ProductsInStock();
+			var ret = new DbProductsInStock();
 			var multiplier = 1.0;
 			if (needed)
 				multiplier = 1.3;

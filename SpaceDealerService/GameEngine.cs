@@ -48,7 +48,8 @@ namespace SpaceDealer
 			}
 			foreach (var commander in FleetCommanders)
 			{
-				commander.Update();
+				if(commander!=null)	
+					commander.Update();
 			//	Logger.Log(commander.ToString(), TraceEventType.Verbose);
 			}
 		}

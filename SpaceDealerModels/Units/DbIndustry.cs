@@ -9,14 +9,14 @@ namespace SpaceDealerModels.Units
 	{
 
 		[JsonProperty("generatedProducts")]
-		public ProductsInStock GeneratedProducts { get; set; }
+		public DbProductsInStock GeneratedProducts { get; set; }
 		[JsonProperty("productsNeeded")]
-		public ProductsInStock ProductsNeeded { get; set; }
+		public DbProductsInStock ProductsNeeded { get; set; }
 
 		public DbIndustry(string name) : base(name)
 		{
-			GeneratedProducts = new ProductsInStock();
-			ProductsNeeded = new ProductsInStock();
+			GeneratedProducts = new DbProductsInStock();
+			ProductsNeeded = new DbProductsInStock();
 		}
 
 		public void AddGeneratedProduct(DbProductInStock product)

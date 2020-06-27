@@ -1,5 +1,6 @@
 ﻿using SpaceDealer;
 using SpaceDealerModels.Units;
+using System;
 using System.Data.SQLite;
 using System.Diagnostics;
 
@@ -18,12 +19,11 @@ namespace SpaceDealerService.Repos
 		{
 			var lst = new Planets();
 
+			Parent.Logger.Log($"Loading discovered planets.", TraceEventType.Information);
 			var query = "SELECT PlanetId FROM DiscoveredPlanets WHERE PlayerId= @playerId;";
 			try
 			{
-				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
-				Parent.OpenConnection(connection);
-				using var command = new SQLiteCommand(connection);
+				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
 				command.Parameters.AddWithValue("@playerId", playerId);
 				using var reader = command.ExecuteReader();
@@ -32,13 +32,11 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var planetId = reader.GetString(0);
-						var planet = Parent.PlanetsRepo.GetPlanet("", planetId);
+						var planet = Parent.PlanetsRepo.GetItem("", planetId);
 						lst.AddPlanet(planet);
 					}
 				}
 				reader.Close();
-				Parent.CloseConnection(connection);
-
 			}
 			catch (System.Exception e)
 			{
@@ -50,36 +48,56 @@ namespace SpaceDealerService.Repos
 
 		public void SaveDiscoveredPlanet(string playerId, string planetId)
 		{
+			Parent.Logger.Log($"Saving discovered planets.", TraceEventType.Information);
+		
+			if(!PlayerHasDiscoveredPlanet(playerId, planetId))
+			{
+				try
+				{
+					using var command = new SQLiteCommand(Parent.Connection);
+					command.CommandText = $"INSERT OR REPLACE INTO DiscoveredPlanets (PlayerID, PlanetId) VALUES (@playerId, @planetId);";
+					command.Parameters.AddWithValue("@playerId", playerId);
+					command.Parameters.AddWithValue("@planetId", planetId);
+					try
+					{
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Discovered planet {planetId} saved.", TraceEventType.Information);
+					}
+					catch (System.Exception e)
+					{
+						Parent.Logger.Log($"Failed to save generated product {e.Message}", TraceEventType.Error);
+					}
+				}
+				catch (System.Exception e)
+				{
+					Parent.Logger.Log($"Failed to save discovered planet for planet Id [{planetId},{playerId}] {e.Message}", TraceEventType.Error);
+				}
+			}
+			
+		}
+
+		private bool PlayerHasDiscoveredPlanet(string playerId, string planetId)
+		{
+			Parent.Logger.Log($"Checking if player has discovered this planet already.", TraceEventType.Information);
+			var query = "SELECT PlanetId FROM DiscoveredPlanets WHERE PlayerID = @playerId AND planetId = @planetId;";
 			try
 			{
-				using (var connection = new SQLiteConnection("Data Source=" + Parent.DbPath))
+				using var command = new SQLiteCommand(Parent.Connection);
+				command.CommandText = query;
+				command.Parameters.AddWithValue("@playerId", playerId);
+				command.Parameters.AddWithValue("@planetId", planetId);
+				using var reader = command.ExecuteReader();
+				if (reader.HasRows)
 				{
-					Parent.OpenConnection(connection);
-					using (var command = new SQLiteCommand(connection))
-					{
-						command.CommandText = $"INSERT OR REPLACE INTO DiscoveredPlanets (PlayerID, PlanetId) VALUES (@playerId, @planetId);";
-						command.Parameters.AddWithValue("@playerId", playerId);
-						command.Parameters.AddWithValue("@planetId", planetId);
-						try
-						{
-							command.ExecuteNonQuery();
-							Parent.Logger.Log($"Discovered planet {planetId} saved.", TraceEventType.Information);
-						}
-						catch (System.Exception e)
-						{
-							Parent.Logger.Log($"Failed to save generated product {e.Message}", TraceEventType.Error);
-						}
-						finally
-						{
-							Parent.CloseConnection(connection);
-						}
-					}
+					reader.Close();
+					return true;
 				}
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to save discovered planet for planet Id [{planetId},{playerId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Log($"Failed to determine if player has discovered planet {e.Message}.", TraceEventType.Error);
 			}
+			return false;
 		}
 	}
 }

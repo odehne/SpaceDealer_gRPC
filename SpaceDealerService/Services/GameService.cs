@@ -127,7 +127,7 @@ namespace SpaceDealerService
 		public override Task<PlayerReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
 		{
 			var g = Program.TheGame;
-			var player = Program.Persistor.PlayersRepo.GetPlayer(request.PlayerName, null);
+			var player = Program.Persistor.PlayersRepo.GetItem(request.PlayerName, null);
 
 			if (player == null)
 			{
