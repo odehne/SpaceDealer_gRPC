@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,17 @@ namespace SpaceDealerModels.Units
 {
 	public class Planets : List<DbPlanet>
 	{
-		
+
+		public Planets GetFirstFivePlanets()
+		{
+			var ret = new Planets();
+			for (int i = 0; i < 4; i++)
+			{
+				ret.AddPlanet(this[i]);
+			}
+			return ret;
+		}
+
 		public DbPlanet GetPlanetByName(string planetName)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(planetName, System.StringComparison.InvariantCultureIgnoreCase));
@@ -40,6 +51,13 @@ namespace SpaceDealerModels.Units
 				ret += planet.ToString() + "\n";
 			}
 			return ret.TrimEnd('\n');
+		}
+
+		public DbPlanet GetRandomPlanet()
+		{
+			Random random = new Random();
+			var i = random.Next(0, this.Count-1);
+			return this[i];
 		}
 	}
 }

@@ -59,7 +59,7 @@ namespace SpaceDealerService.Repos
 		public override DbProductInStock GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
-			Parent.Logger.Log($"Loading product with {name} or {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading product with {name} or {id}.", TraceEventType.Information);
 
 			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE ";
 			if (!string.IsNullOrEmpty(name))
@@ -112,7 +112,7 @@ namespace SpaceDealerService.Repos
 		public override string GetItemId(string name)
 		{
 			var p = new DbFeature();
-			Parent.Logger.Log($"Loading product with name {name}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading product with name {name}.", TraceEventType.Information);
 			var query = "SELECT Id FROM Products WHERE Name = @name;";
 			try
 			{

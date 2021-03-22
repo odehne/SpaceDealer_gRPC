@@ -29,6 +29,12 @@ namespace SpaceDealerModels.Units
 			return (target.X == X & target.Y == Y & target.Z == Z);
 		}
 
+		public static DbCoordinates GerRandomCoordniates()
+		{
+			return new DbCoordinates(GetRandomNumber(0, 100), GetRandomNumber(0, 100), GetRandomNumber(0, 100));
+		}
+
+
 		public static DbCoordinates GetDistanceVector(DbCoordinates source, DbCoordinates destination)
 		{
 			return new DbCoordinates(destination.X - source.X, destination.Y - source.Y, destination.Z - source.Z);
@@ -74,6 +80,12 @@ namespace SpaceDealerModels.Units
 		public override string ToString()
 		{
 			return $"[{X},{Y},{Z}]";
+		}
+
+		public static int GetRandomNumber(int lowerBound, int upperBound)
+		{
+			Random random = new Random();
+			return random.Next(lowerBound, upperBound + 1);
 		}
 	}
 }

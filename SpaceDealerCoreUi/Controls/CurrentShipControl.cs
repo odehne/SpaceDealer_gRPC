@@ -21,7 +21,7 @@ namespace SpaceDealerCoreUi.Controls
 		public void Init(Ship ship)
 		{
 			lblShipName.Text = $"Name: {ship.ShipName}";
-			lblCurrentPosition.Text = $"Position: {ship.CurrentPlanet.ToPlanetPosition()}";
+			lblCurrentPosition.Text = $"Position: {ship.Cruise.CurrentSector}";
 			lblCargoSize.Text = $"Ladekapazität: {ship.CargoSize}t";
 
 			pictureBox1.Load(ship.PicturePath);

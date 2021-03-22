@@ -1,4 +1,6 @@
-﻿using SpaceDealerModels.Units;
+﻿using SpaceDealerModels.Repositories;
+using SpaceDealerModels.Units;
+using SpaceDealerService;
 using System.Collections;
 using System.Diagnostics;
 using System.Threading;
@@ -19,7 +21,7 @@ namespace SpaceDealer
 			FleetCommanders.Interrupted += FleetCommanders_Interrupted;
 			FleetCommanders.Arrived += FleetCommanders_Arrived;
 		}
-		
+
 		private void FleetCommanders_Arrived(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player)
 		{
 			Logger.Log($"{player.Name}::{ship.Name} arrived at {ship.Cruise.Destination}", TraceEventType.Information);
@@ -27,7 +29,11 @@ namespace SpaceDealer
 
 		private void FleetCommanders_Interrupted(Enums.InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition)
 		{
-			Logger.Log($"{player.Name}::{ship.Name} interruped at {newPosition.ToString()} by {interruptionType.ToString()}", TraceEventType.Information);
+			if (interruptionType == Enums.InterruptionType.DiscoveredNewPlanet)
+			{
+				Program.Persistor.SaveGalaxy(player.Galaxy);
+			}
+			Logger.Log($"{player.Name}::{ship.Name} interruped at {newPosition} by {interruptionType}", TraceEventType.Information);
 		}
 
 		public void Play()

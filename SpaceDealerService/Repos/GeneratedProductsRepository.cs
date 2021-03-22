@@ -21,7 +21,7 @@ namespace SpaceDealerService.Repos
 		public DbProductsInStock GetGeneratedProducts(string planetId)
 		{
 			var lst = new DbProductsInStock();
-			Parent.Logger.Log($"Loading generated products for planet {planetId}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading generated products for planet {planetId}.", TraceEventType.Information);
 
 			var query = "SELECT ProductId, Interest FROM GeneratedProducts WHERE PlanetId = @planetId;";
 			try
@@ -53,7 +53,7 @@ namespace SpaceDealerService.Repos
 
 		public DbProductInStock GetProductInStock(string planetId, string productId)
 		{
-			Parent.Logger.Log($"Loading products in stock for planet {planetId}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading products in stock for planet {planetId}.", TraceEventType.Information);
 
 			var query = "SELECT Interest FROM GeneratedProducts WHERE PlanetId = @planetId AND ProductId = @productId;";
 			try

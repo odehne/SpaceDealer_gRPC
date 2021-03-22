@@ -21,59 +21,33 @@ namespace SpaceDealer
 			Repository.Init();
 		}
 
-		public void Init()
+		public void AddPlanets(int amount = 100)
 		{
-			var feats = new DbFeatures();
-			feats.AddRange(Program.Persistor.FeaturesRepo.GetAll());
-			Repository.LoadFeatures(feats);
-
-			Program.Persistor.FeaturesRepo.SaveAll(Repository.Features);
+			for (int i = 0; i < amount - 1; i++)
+			{
+				var randomPlanet = Repository.GetRandomPlanet(DbCoordinates.GerRandomCoordniates());
+				randomPlanet.Name = $"{randomPlanet.Name}-{i}";
+				randomPlanet.PicturePath = ".\\Planets\\image_part_" + Repository.GetRandomNumber(1, 36) + ".jpg";
+				Galaxy.AddPlanet(randomPlanet);
+			}
+		}
 
 		
-			var earth = Program.Persistor.PlanetsRepo.GetItem("Erde", "");
-			if(earth==null)
+
+		public void Init()
+		{
+			foreach (var p in Program.Persistor.PlanetsRepo.GetAll())
 			{
-				earth = new DbPlanet("Erde");
-				earth.Market = new DbMarket("Berlin", earth);
-				earth.Sector = new DbCoordinates(0, 0, 0);
-				earth.Industry = Repository.GetIndustryByName("Landwirtschaft");
-				earth.PicturePath = ".\\Planets\\earth.jpg";
+				Galaxy.AddPlanet(p);
 			}
 
-			var moon = Program.Persistor.PlanetsRepo.GetItem("Erden-Mond", "");
-			if (moon == null)
+			foreach (var p in Program.Persistor.PlayersRepo.GetAll())
 			{
-				moon = new DbPlanet("Erden-Mond");
-				moon.Properties = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Beschreibung", "Kreist um den Planeten Erde. Besitzt keine eigene Athmossphäre.") };
-				moon.Market = new DbMarket("Mondbasis Aplha 1", moon);
-				moon.Sector = new DbCoordinates(1, 0, 0);
-				moon.PicturePath = ".\\Planets\\moon.jpg";
-				moon.Industry = Repository.GetIndustryByName("Raumschiff Fabrik");
-				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Kleines Raumschiff Kapazität (30t)"));
-				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Mittleres Raumschiff Kapazität (60t)"));
-				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Kreuzer (100t) +Bewaffnung"));
-				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Sensor-Einheit"));
-				moon.Industry.AddGeneratedProduct(Repository.GetProductByName("Board-Kanone"));
-				moon.Industry.AddNeededProduct(Repository.GetProductByName("Board-Kanone"));
+				FleetCommanders.AddPlayer(p);
 			}
 
-			var tatooine = Program.Persistor.PlanetsRepo.GetItem("Tatooine", "");
-			if (tatooine == null)
-			{
-				tatooine = new DbPlanet("Tatooine");
-				tatooine.PicturePath = ".\\Planets\\tatooine.jpg";
-				tatooine.Market = new DbMarket("Moseisley", earth);
-				tatooine.Sector = new DbCoordinates(10, 7, 1);
-				tatooine.Industry = Repository.GetIndustryByName("Weltraumschrott Sammler");
-			}
-
-			Galaxy.AddPlanet(earth);
-			Galaxy.AddPlanet(moon);
-			Galaxy.AddPlanet(tatooine);
-
-			FleetCommanders.AddRange(Program.Persistor.PlayersRepo.GetAll());
-
-
+			//AddPlanets(100);
+			//AddFleetCommanders(100);
 		}
 
 

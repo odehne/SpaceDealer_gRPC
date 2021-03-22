@@ -16,7 +16,7 @@ namespace SpaceDealerService.Repos
 
 		public DbMarket GetMarket(string planetId)
 		{
-			Parent.Logger.Log($"Loading market for planet {planetId}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading market for planet {planetId}.", TraceEventType.Information);
 			var market = new DbMarket();
 			var query = "SELECT Id, Name FROM Markets WHERE PlanetId = @planetId;";
 			try

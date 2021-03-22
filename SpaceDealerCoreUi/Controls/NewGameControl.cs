@@ -112,6 +112,7 @@ namespace SpaceDealerCoreUi.Controls
 			var ship = await GameProxy.AddShip(Program.CurrentPlayer.Name, txtShipName.Text);
 			var result = await GameProxy.SaveGame(Program.CurrentPlayer.Name);
 			Program.CurrentPlayer.Ships.Add(ship);
+			Program.CurrentShip = ship;
 			Program.MainForm.ShowPlayerStats();
 		}
 

@@ -59,7 +59,7 @@ namespace SpaceDealerService.Repos
 		public override DbPlanet GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
-			Parent.Logger.Log($"Loading planet {name}, {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading planet {name}, {id}.", TraceEventType.Information);
 
 			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE ";
 			if (!string.IsNullOrEmpty(name))

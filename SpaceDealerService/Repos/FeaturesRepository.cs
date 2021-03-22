@@ -16,7 +16,7 @@ namespace SpaceDealerService.Repos
 
 		public override List<DbFeature> GetAll()
 		{
-			Parent.Logger.Log($"Loading all features.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading all features.", TraceEventType.Information);
 
 			var lst = new DbFeatures();
 
@@ -80,7 +80,7 @@ namespace SpaceDealerService.Repos
 
 		public override DbFeature GetItem(string name, string id)
 		{
-			Parent.Logger.Log($"Loading feature {name}, {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading feature {name}, {id}.", TraceEventType.Information);
 			var parameter = new SQLiteParameter();
 			var query = "SELECT Id, Name, AttackBonus, RangeBonus, DefenceBonus, SpeedBonus, Description FROM Features WHERE ";
 			if (!string.IsNullOrEmpty(name))

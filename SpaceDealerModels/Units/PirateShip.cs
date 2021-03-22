@@ -55,6 +55,7 @@ namespace SpaceDealerModels.Units
 			Hull = 3;
 			Name = name;
 			Sector = sector;
+			PicturePath = ".\\Spaceships\\Contauri.jpg";
 			Credits = SimpleDiceRoller.GetRandomCredits(1000, 5000);
 		}
 
@@ -91,6 +92,7 @@ namespace SpaceDealerModels.Units
 			Hull = 5;
 			Name = name;
 			Sector = sector;
+			PicturePath = ".\\Spaceships\\Dominion.jpg";
 			Credits = SimpleDiceRoller.GetRandomCredits(5000, 15000);
 		}
 
@@ -126,6 +128,7 @@ namespace SpaceDealerModels.Units
 			Hull = 5;
 			Name = name;
 			Sector = sector;
+			PicturePath = ".\\Spaceships\\Praditor.jpg";
 			Credits = SimpleDiceRoller.GetRandomCredits(50000, 150000);
 		}
 

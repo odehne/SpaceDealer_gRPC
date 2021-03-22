@@ -24,12 +24,12 @@ namespace SpaceDealerModels.Repositories
 			NewPlanetNames();
 			NewProductLibary();
 			NewIndustryLibrary();
+			LoadFeatures();
 			//NewPlanetLibrary();
 		}
 
-		public static void LoadFeatures(DbFeatures dbFeatures)
+		public static void LoadFeatures()
 		{
-			Features = dbFeatures;
 			if (Features == null)
 				Features = new DbFeatures();
 			if (Features.Count < 5)
@@ -131,6 +131,13 @@ namespace SpaceDealerModels.Repositories
 			Random random = new Random();
 			var i = random.Next(0, PlanetNames.Count -1);
 			return PlanetNames[i];
+		}
+
+		public static string GetRandomNumber(int minN, int maxN)
+		{
+			Random random = new Random();
+			var i = random.Next(minN, maxN);
+			return $"{i}".PadLeft(3, '0');
 		}
 
 		public static string GetRandomPlanetName()

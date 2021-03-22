@@ -12,7 +12,6 @@ namespace SpaceDealerModels.Units
 		public event JourneyInterrupted Interrupted;
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
 
-
 		[JsonIgnore]
 		public DbPlayer Parent { get; set; }
 

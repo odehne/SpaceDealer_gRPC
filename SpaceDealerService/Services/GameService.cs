@@ -131,7 +131,7 @@ namespace SpaceDealerService
 
 			if (player == null)
 			{
-				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy);
+				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy.GetFirstFivePlanets());
 				player.PicturePath = request.PicturePath;
 			}
 
@@ -180,16 +180,4 @@ namespace SpaceDealerService
 		}
 	}
 
-	//var player1 = new Player("Oliver", null, earth);
-	//player1.Fleet = new Ships(player1);
-	//var ship = new Ship("Dark Star", null, earth) { MaxWeight = 3.0 };
-	//var ship2 = new Ship("Dark Star 2", null, earth) { MaxWeight = 5.0 };
-	//ship.Arrived += Ship_Arrived;
-	//		ship2.Arrived += Ship_Arrived;
-	//		player1.Fleet.AddShip(ship);
-	//		player1.Fleet.AddShip(ship2);
-	//		player1.CurrentPlanet = earth;
-	//		player1.Fleet[0].StartCruise(earth, earth);
-	//player1.Fleet[1].StartCruise(earth, earth);
-	//FleetCommanders.Add(player1);
 }

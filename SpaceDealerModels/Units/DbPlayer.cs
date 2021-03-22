@@ -29,7 +29,7 @@ namespace SpaceDealerModels.Units
 		public DbPlanet HomePlanet { get; set; }
 		[JsonProperty("galaxy")]
 		public Planets Galaxy { get; set; }
-		
+
 		public DbPlayer()
 		{
 

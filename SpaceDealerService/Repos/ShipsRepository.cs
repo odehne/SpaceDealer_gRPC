@@ -22,7 +22,7 @@ namespace SpaceDealerService.Repos
 			if (ship.Cruise == null)
 			{
 				var earth = Program.Persistor.PlanetsRepo.GetItem("Erde", "");
-				ship.Cruise = new DbJourney() { CurrentSector = earth.Sector, Destination = earth, Departure = earth };
+				ship.Cruise = new DbJourney() { CurrentSector = earth.Sector, Destination = earth, Departure = earth, Parent = ship };
 			}
 
 			try
@@ -157,7 +157,7 @@ namespace SpaceDealerService.Repos
 						
 						ship.CurrentPlanet = source;
 
-						ship.Cruise = new DbJourney() { Departure = source, Destination = destination, CurrentSector = currentSector };
+						ship.Cruise = new DbJourney() { Departure = source, Destination = destination, CurrentSector = currentSector, Parent = ship };
 
 						reader.Close();
 				

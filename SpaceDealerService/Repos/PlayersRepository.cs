@@ -1,9 +1,11 @@
 ﻿using SpaceDealer;
+using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.IO;
 
 namespace SpaceDealerService.Repos
 {
@@ -14,10 +16,69 @@ namespace SpaceDealerService.Repos
 		{
 		}
 
+		public List<string> PeoplePicPaths(string rootPath)
+		{
+			var paths = new List<string>();
+
+			if (!Directory.Exists(rootPath))
+				throw new ArgumentException($"Path to people pics not found [{rootPath}].");
+
+			foreach (var fil in Directory.GetFiles(rootPath))
+			{
+				paths.Add(fil);
+			}
+			return paths;
+		}
+
+		public void AddFleetCommanders(Planets theGalaxy, int amount = 100)
+		{
+			var lst = new Players();
+			var fleetCommanderNames = new string[]
+				{
+					"Stery Gonzal",
+					"Raymy Reson",
+					"Jeffry Watson",
+					"Johny Whelley",
+					"Kenne Barner",
+					"Danio Parking",
+					"Raymy Ander",
+					"Jery Clery",
+					"Jamy Ganes",
+					"Phardy Hillee",
+					"Justeph Hughy",
+					"Tine Coopet",
+					"Rege Belley",
+					"Wardy Rodra",
+					"Johnne Pera",
+					"Aadan Jenkell",
+					"Randy Hernes",
+					"Justev Finels",
+					"Peteph Sonett",
+					"Grence Bennels"
+				};
+
+			foreach (var fcn in fleetCommanderNames)
+			{
+				var planet = theGalaxy.GetRandomPlanet();
+				var player = new DbPlayer(fcn, planet, theGalaxy);
+				var ship = new DbShip($"{player}s Raumschiff", player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }))
+				{
+					CargoSize = 30,
+					Parent = player.Fleet,
+					PlayerId = player.Id,
+					PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
+				};
+				player.PlayerType = SpaceDealer.Enums.PlayerTypes.NPC;
+				player.Fleet.AddShip(ship);
+				lst.Add(player);
+			}
+		}
+
+
 		public override List<DbPlayer> GetAll()
 		{
 			var lst = new Players();
-			Parent.Logger.Log($"Loading all players.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading all players.", TraceEventType.Information);
 
 			var query = "SELECT id FROM Players;";
 			try
@@ -59,7 +120,7 @@ namespace SpaceDealerService.Repos
 
 		public override DbPlayer GetItem(string name, string id)
 		{
-			Parent.Logger.Log($"Loading player {name}, {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading player {name}, {id}.", TraceEventType.Information);
 			var parameter = new SQLiteParameter();
 			DbPlayer player = null;
 
@@ -105,7 +166,11 @@ namespace SpaceDealerService.Repos
 							PicturePath = pPicturePath
 						};
 						
-						player.Fleet.AddRange(Program.Persistor.ShipsRepo.GetAll(player.Id));
+						var playersShips = Program.Persistor.ShipsRepo.GetAll(player.Id);
+						foreach (var item in playersShips)
+						{
+							player.Fleet.AddShip(item);
+						}
 					}
 					reader.Close();
 					//Parent.CloseConnection(connection);
@@ -126,7 +191,7 @@ namespace SpaceDealerService.Repos
 
 		public override string GetItemId(string name)
 		{
-			Parent.Logger.Log($"Loading player with name {name}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading player with name {name}.", TraceEventType.Information);
 			var query = "SELECT Id FROM Players WHERE Name = @name;";
 			try
 			{

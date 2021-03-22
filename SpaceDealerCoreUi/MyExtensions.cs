@@ -17,6 +17,11 @@ namespace SpaceDealerCoreUi
             return $"{planet.PlanetName} [{planet.Sector.X},{planet.Sector.Y},{planet.Sector.Z}]";
         }
 
+        public static string ToPosition(this Coordinates sector)
+        {
+            return $"Sektor [{sector.X},{sector.Y},{sector.Z}]";
+        }
+
         public static string Tabyfy(this string str)
         {
             if (str.Length < 8)

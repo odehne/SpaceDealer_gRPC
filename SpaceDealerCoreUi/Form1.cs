@@ -64,8 +64,8 @@ namespace SpaceDealerCoreUi
 		{
 			for (int i = fp1.Controls.Count - 1; i > 0; i--)
 			{
-				if (fp2.Controls[i].GetType() == typeof(TravellingControl))
-					fp1.Controls.Remove(fp2.Controls[i]);
+				if (fp1.Controls[i].GetType() == typeof(TravellingControl))
+					fp1.Controls.Remove(fp1.Controls[i]);
 			}
 		}
 
@@ -197,7 +197,7 @@ namespace SpaceDealerCoreUi
 		private void UnderAttack(Ship ship)
 		{
 			ClearMessagePanel();
-			var position = ship.CurrentPlanet.ToPlanetPosition();
+			var position = ship.Cruise.CurrentSector.ToPosition();
 			var mc1 = new DistressCallControl();
 			mc1.SetMessage(Program.PeopleAssets.GetRandomAsset().Path, $"Roter Alarm!", $"Wir machen deinen Mini-Frachter fertig! Du hast keine Chance gegen uns. Gib lieber gleich auf oder wir zermalmen dich!\nPosition: {position}.");
 			fp1.Controls.Add(mc1);
@@ -207,7 +207,7 @@ namespace SpaceDealerCoreUi
 		{
 			ClearMessagePanel();
 			var planetName = ship.CurrentPlanet.PlanetName;
-			var position = ship.CurrentPlanet.ToPlanetPosition();
+			var position = ship.Cruise.Destination.ToPlanetPosition();
 			var mc1 = new FoundNewPlanetControl();
 			mc1.SetMessage(Program.PlanetAssets.GetRandomAsset().Path, $"Willkommen in {planetName}", $"Dein Frachter {ship.ShipName} befindet sich im Orbit des Zielplanetens.\nPosition: {position}."); ;
 			fp1.Controls.Add(mc1);
@@ -216,8 +216,8 @@ namespace SpaceDealerCoreUi
 		private void FoundNewPlanet(Ship ship)
 		{
 			ClearMessagePanel();
-			var planetName = ship.CurrentPlanet.PlanetName;
-			var position = ship.CurrentPlanet.ToPlanetPosition();
+			var planetName = ship.Cruise.NewPlanetDiscovered.PlanetName;
+			var position = ship.Cruise.NewPlanetDiscovered.ToPlanetPosition();
 			var mc1 = new FoundNewPlanetControl();
 			mc1.SetMessage(Program.PlanetAssets.GetRandomAsset().Path, $"Willkommen in {planetName}", $"Dein Frachter {ship.ShipName} hat einen neuen Planeten entdeckt.\nPosition: {position}.");
 			fp1.Controls.Add(mc1);

@@ -23,7 +23,7 @@ namespace SpaceDealerService
 			};
 		}
 
-		public static Industry ConverToIndustry(SpaceDealerModels.Units.DbIndustry ui)
+		public static Industry ConverToIndustry(DbIndustry ui)
 		{
 			var ret = new Industry
 			{
@@ -36,7 +36,15 @@ namespace SpaceDealerService
 			}
 			foreach (var generated in ui.GeneratedProducts)
 			{
-				ret.GeneratedProducts.Add(ConvertToProductInStock(generated));
+				if (!string.IsNullOrEmpty(generated.Name))
+				{
+					ret.GeneratedProducts.Add(ConvertToProductInStock(generated));
+				}
+				else
+				{
+					Console.WriteLine("Industry has no name!!!");
+				}
+				
 			}
 
 			return ret;
@@ -48,7 +56,7 @@ namespace SpaceDealerService
 		}
 
 	
-		public static Planet ConvertToPlanet(SpaceDealerModels.Units.DbPlanet uP)
+		public static Planet ConvertToPlanet(DbPlanet uP)
 		{
 			var ret = new Planet
 			{
