@@ -1,6 +1,5 @@
 ﻿using Cope.SpaceRogue.Fighting.API.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,29 +21,17 @@ namespace Fighting.API.Domain
 		FightFinished
 	}
 
-	public class Fights
-	{
-		public List<Fight> Sessions { get; set; }
-
-		public FightStates AddFight(ShipModel attacker, ShipModel defender)
-		{
-			var fight = new Fight { Attacker = attacker, Defender = defender, RoundNumber = 0 };
-			Sessions.Add(fight);
-			return FightStates.FightStarted;
-		}
-
-		public FightStates RemoveFight(ShipModel attacker, ShipModel defender)
-		{
-			var fight = new Fight { Attacker = attacker, Defender = defender, RoundNumber = 0 };
-			Sessions.Add(fight);
-			return FightStates.FightStarted;
-		}
-	}
-
 	public class Fight
 	{
 		public int RoundNumber { get; set; }
 		public ShipModel Attacker { get; set; }
 		public ShipModel Defender { get; set; }
+
+		public Fight(int roundNumber, ShipModel attacker, ShipModel defender)
+		{
+			RoundNumber = roundNumber;
+			Attacker = attacker;
+			Defender = defender;
+		}
 	}
 }

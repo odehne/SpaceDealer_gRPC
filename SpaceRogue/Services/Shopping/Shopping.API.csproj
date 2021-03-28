@@ -27,4 +27,10 @@
     <ProjectReference Include="..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\IntegrationEvents\EventHandling\" />
+    <Folder Include="Application\IntegrationEvents\Events\" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

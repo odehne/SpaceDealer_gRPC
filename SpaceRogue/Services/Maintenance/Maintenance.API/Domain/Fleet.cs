@@ -1,4 +1,5 @@
-﻿using Cope.SpaceRogue.Maintenance.API.InfraStructure;
+﻿using Cope.SpaceRogue.InfraStructure;
+using Cope.SpaceRogue.Maintenance.API.Domain.SeedWork;
 using System.Collections.Generic;
 
 namespace Cope.SpaceRogue.Maintenance.API.Domain

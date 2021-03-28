@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ship.API.Application.IntegrationEvents
 {
-	public interface IShipInteractionIntegrationEventService
+	public interface IFightInteractionIntegrationEventService
 	{
 		Task PublishEventsThroughEventBusAsync(Guid transactionId);
 		Task AddAndSaveEventAsync(IntegrationEvent evt);

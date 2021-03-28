@@ -2,7 +2,7 @@
 
 namespace Ship.API.Application.IntegrationEvents.Events
 {
-	public record JourneyInterruptedByOtherShipIntegrationEvent : IntegrationEvent
+	public class JourneyInterruptedByOtherShipIntegrationEvent : IntegrationEvent
     {
         public string ShipId { get; set; }
         public string OtherShipId { get; set; }

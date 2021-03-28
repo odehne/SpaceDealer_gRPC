@@ -2,7 +2,7 @@
 
 namespace Ship.API.Application.IntegrationEvents.Events
 {
-	public record JourneyReachedDestinationIntegrationEvent : IntegrationEvent
+	public class JourneyReachedDestinationIntegrationEvent : IntegrationEvent
     {
         public string ShipId { get; set; }
         public string PlanetId { get; set; }

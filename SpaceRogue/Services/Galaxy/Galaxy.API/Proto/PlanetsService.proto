@@ -1,0 +1,34 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
+
+service PlanetsService {
+  rpc GetPlanets (SectorRequest) returns (PlanetsReply);
+  rpc GetPlanet (PlanetRequest) returns (PlanetReply);
+}
+
+message PlanetRequest {
+   string PlanetId = 1;
+}
+
+message PlanetReply {
+   PlanetMessage Planet = 1;
+}
+
+message SectorRequest {
+	int32 PosX = 1;
+	int32 PosY = 2;
+	int32 PosZ = 3;
+}
+
+message PlanetsReply {
+   repeated PlanetMessage Planets = 1;
+}
+
+message PlanetMessage {
+	string PlanetId = 1;
+	string Name = 2;
+	int32 PosX = 3;
+	int32 PosY = 4;
+	int32 PosZ = 5;
+}

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ship.API.Application.IntegrationEvents.Events
 {
-	public record JourneyStartedIntegrationEvent : IntegrationEvent
+	public class  JourneyStartedIntegrationEvent : IntegrationEvent
     {
         public string ShipId { get; set; }
 

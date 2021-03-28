@@ -3,7 +3,7 @@ using System;
 
 namespace Ship.API.Application.IntegrationEvents.Events
 {
-	public record PlayerStartedJourneyIntegrationEvent : IntegrationEvent
+	public class PlayerStartedJourneyIntegrationEvent : IntegrationEvent
 	{
 		public Guid RequestId { get; set; }
 		public string PlayerId { get; init; }

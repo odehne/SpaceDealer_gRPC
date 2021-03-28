@@ -1,19 +1,21 @@
-﻿using Cope.SpaceRogue.Maintenance.API.Domain.SeedWork;
-using Cope.SpaceRogue.Maintenance.API.InfraStructure;
+﻿
+using Cope.SpaceRogue.InfraStructure;
+using Cope.SpaceRogue.Maintenance.API.Domain.SeedWork;
 
 namespace Cope.SpaceRogue.Maintenance.API.Domain
 {
-
 	public class Feature : Entity
 	{
-		public EntityId FeatureId { get; set; }
+		public Entity FeatureId { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public double BattleAdvantage { get; set; }
-		public double BattleDisadvantage { get; set; }
-		public double FreightCapacityAdvantage { get; set; }
-		public double FreightCapacityDisadvantage { get; set; }
-		public double SensorRangeAdvantage { get; set; }
+		public int SpeedModifier { get; set; }
+		public int AttackModifier { get; set; }
+		public int DefenceModifier { get; set; }
+		public int SensorModifier { get; set; }
+		public int ShieldModifier { get; set; }
+		public int HullModifier { get; set; }
+		public double CapacityModifier { get; set; }
 
 		protected override void EnsureValidState()
 		{

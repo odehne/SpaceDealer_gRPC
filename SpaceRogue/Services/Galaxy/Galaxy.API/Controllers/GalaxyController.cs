@@ -1,4 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.API.InfraStructure;
+﻿using Cope.SpaceRogue.Galaxy.API.Domain;
+using Cope.SpaceRogue.Galaxy.API.InfraStructure;
 using Cope.SpaceRogue.Galaxy.API.Model;
 using Cope.SpaceRogue.Galaxy.API.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Controllers
 {
-	[Route("api/v1/[controller]")]
+
+    [Route("api/v1/[controller]")]
 	[ApiController]
 	public class GalaxyController : ControllerBase
 	{

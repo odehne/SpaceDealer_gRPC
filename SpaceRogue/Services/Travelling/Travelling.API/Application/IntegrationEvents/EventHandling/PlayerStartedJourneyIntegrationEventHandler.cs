@@ -1,5 +1,4 @@
-﻿using Cope.SpaceRogue.Services.Ship.API;
-using MediatR;
+﻿using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
 using Microsoft.Extensions.Logging;

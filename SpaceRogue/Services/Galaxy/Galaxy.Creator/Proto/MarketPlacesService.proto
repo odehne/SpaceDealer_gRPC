@@ -1,0 +1,43 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Cope.SpaceRogue.Galaxy.Creator.Proto";
+
+service MarketPlacesService {
+  rpc AddMarketPlace (AddMarketPlacegRequest) returns (AddMarketPlaceReply);
+  rpc UpdateMarketPlace (UpdateMarketPlaceRequest) returns (UpdateMarketPlaceReply);
+  rpc DeleteMarketPlace (DeleteMarketPlaceRequest) returns (DeleteMarketPlaceReply);
+}
+
+message AddMarketPlacegRequest {
+	string PlanetId = 1;
+    string MarketPlaceId = 2;
+	string ProductOfferingsCatalogId = 3;
+	string ProductDemandsCatalogId = 4;
+}
+
+message AddMarketPlaceReply {
+	string MarketPlaceId = 1;
+	string Message = 2;
+}
+
+message UpdateMarketPlaceRequest {
+	string MarketPlaceId = 1;
+	string ProductOfferingsCatalogId = 2;
+	string ProductDemandsCatalogId = 3;
+}
+
+message UpdateMarketPlaceReply {
+	bool Updated = 1;
+	string Message = 2;
+}
+
+message DeleteMarketPlaceRequest {
+	string MarketPlaceId = 1;
+	string ProductOfferingsCatalogId = 2;
+	string ProductDemandsCatalogId = 3;
+}
+
+message DeleteMarketPlaceReply {
+	bool Deleted = 1;
+	string Message = 2;
+}

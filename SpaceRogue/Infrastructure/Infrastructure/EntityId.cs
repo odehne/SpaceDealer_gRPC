@@ -8,7 +8,7 @@ namespace Cope.SpaceRogue.InfraStructure
 		public EntityId(Guid value)
 		{
 			if (value == default)
-				throw new ArgumentException(nameof(value), "Planet id cannot be empty");
+				throw new ArgumentException(nameof(value), "Entity id cannot be empty");
 			Value = value;
 		}
 

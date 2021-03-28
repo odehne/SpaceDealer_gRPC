@@ -1,0 +1,59 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Cope.SpaceRogue.Traveling.API.Proto";
+
+service TravelService {
+  rpc GetShips (SectorRequest) returns (ShipsReply);
+  rpc GetPosition (ShipIdRequest) returns (PositionReply);
+  rpc GetPlanets (SectorRequest) returns (PlanetsReply);
+}
+
+message SectorRequest {
+	int32 PosX = 1;
+	int32 PosY = 2;
+	int32 PosZ = 3;
+}
+
+message PositionReply {
+	int32 PosX = 1;
+	int32 PosY = 2;
+	int32 PosZ = 3;
+}
+
+message ShipIdRequest {
+   string shipId = 1;
+}
+
+message ShipsReply {
+   repeated ShipMessage ships = 1;
+}
+
+message GetShipsReply {
+   ShipMessage ship = 1;
+}
+
+message AddShipRequest {
+	string ShipId = 1;
+	string Name = 2;
+	string PlayerId = 3;
+}
+
+message PlanetsReply {
+	repeated PlanetMessage Planet = 1;
+}
+
+message PlanetMessage {
+	string PlanetId = 1;
+	string Name = 2;
+	int32 PosX = 3;
+	int32 PosY = 4;
+	int32 PosZ = 5;
+}
+
+message ShipMessage {
+	string ShipId = 1;
+	string Name = 2;
+	int32 PosX = 3;
+	int32 PosY = 4;
+	int32 PosZ = 5;
+}
