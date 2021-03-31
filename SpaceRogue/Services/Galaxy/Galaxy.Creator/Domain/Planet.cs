@@ -21,6 +21,25 @@ namespace Cope.SpaceRogue.Galaxy.API.Model
 		public int PosY { get; set; }
 		public int PosZ { get; set; }
 
+		public Planet()
+		{
+		}
+
+		public Planet(Guid marketPlaceId, string name, string description, int posX, int posY, int posZ)
+		{
+			ID = Guid.NewGuid();
+			if (marketPlaceId == default)
+				throw new ArgumentException("Market cannot be null");
+			if(string.IsNullOrEmpty(name))
+				throw new ArgumentException("The planet's name cannot be empty");
+			MarketPlaceId = marketPlaceId;
+			Name = name;
+			Description = description;
+			PosX = posX;
+			PosY = posY; 
+			PosZ = posZ;
+		}
+
 		protected override void EnsureValidState()
 		{
 			var valid = ID != default &&

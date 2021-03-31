@@ -1,5 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Galaxy.API.Domain;
+﻿using Galaxy.API.Domain;
+using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -11,25 +11,17 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace Cope.SpaceRogue.Services.Galaxy.Creator
+namespace Cope.SpaceRogue.Galaxy.Creator
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			//using var galContext = new GalaxyDbContext();
 
-			//galContext.Add(new Planet
-			//{
-			//	PlanetId = Guid.NewGuid(),
-			//	PosX = 0,
-			//	PosY = 0,
-			//	PosZ = 0,
-			//	Description = "Erde",
-			//	Name = "Erde",
-			//	MarketPlaceId = Guid.NewGuid()
-			//});
-			//galContext.SaveChanges();
+			using var galContext = new GalaxyDbContext();
+			var prodRepo = new ProductRepository(galContext);
+			prodRepo.AddDefaults();
+
 
 			//var planets = galContext.Planets.ToList();
 			var configuration = GetConfiguration();

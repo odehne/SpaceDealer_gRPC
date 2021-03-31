@@ -14,12 +14,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 
 		public Catalog()
 		{
-			CatalogItems = new List<CatalogItem>();
-		}
-
-		public Catalog(Guid id)
-		{
-			ID = id;
+			ID = Guid.NewGuid();
 			CatalogItems = new List<CatalogItem>();
 		}
 
@@ -27,13 +22,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 		{
 			EnsureValidState();
 
-			var catalogItemId = Guid.NewGuid();
-
-			CatalogItems.Add(new CatalogItem(catalogItemId,product, title, price));
+			CatalogItems.Add(new CatalogItem(product, title, price));
 
 			Raise(new CatalogItemAddedEvent
 			{
-				CatalogId = catalogItemId,
 				CatalogItemId = ID,
 				ProductId = product.ID,
 				Title = title,

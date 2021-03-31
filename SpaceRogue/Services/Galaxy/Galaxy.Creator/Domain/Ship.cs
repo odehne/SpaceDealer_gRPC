@@ -46,7 +46,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 
 
 		[ForeignKey("Player")]
-		public virtual Player Owener { get; set; }
+		public virtual Player Owner { get; set; }
 
 		public double LoadedCapacity { get; set; }
 		public ICollection<Feature> Features { get; set; }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Galaxy.API.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Services;
 
-namespace Cope.SpaceRogue.Services.Galaxy.Creator
+namespace Cope.SpaceRogue.Galaxy.Creator
 {
 	public class Startup
 	{

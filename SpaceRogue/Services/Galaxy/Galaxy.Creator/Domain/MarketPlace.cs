@@ -4,8 +4,6 @@ using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 {
@@ -23,9 +21,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 			ID = Guid.NewGuid();
 		}
 
-		public MarketPlace(Guid marketPlaceId, List<CatalogItem> offerings, List<CatalogItem> demands)
+		public MarketPlace( List<CatalogItem> offerings, List<CatalogItem> demands)
 		{
-			ID = marketPlaceId;
+			ID = Guid.NewGuid();
 			ProductOfferings = offerings;
 			ProductDemands = demands;
 
@@ -33,7 +31,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 
 			Raise(new Events.MarketPlaceAddedEvent
 			{
-				MarketPlaceId = marketPlaceId
+				MarketPlaceId = ID
 			});
 		}
 

@@ -20,10 +20,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 		{
 		}
 
-		public CatalogItem(Guid id, Product product, string title, decimal price)
+		public CatalogItem(Product product, string title, decimal price)
 		{
-			ID = id;
-			//MarketPlaceId = marketPlaceId;
+			ID = Guid.NewGuid();
 			Product = product;
 			Title = title;
 			Price = price;
