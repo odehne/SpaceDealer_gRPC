@@ -9,7 +9,7 @@ namespace Galaxy.API.Domain
 {
 	public class GalaxyDbContext : DbContext
 	{
-		public const string DbFileName = "c:\\temp\\SpaceRogue.db";
+		public const string DbFileName = "/Users/oliverde/Documents/SpaceRogue.db";
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlite($"Data Source={DbFileName}");
@@ -63,25 +63,25 @@ namespace Galaxy.API.Domain
 			modelBuilder.Entity<Player>().HasMany(c => c.Fleet);
 
 
-			var earthOfferings = new List<CatalogItem>();
-			var earthDemands = new List<CatalogItem>();
+			// var earthOfferings = new List<CatalogItem>();
+			// var earthDemands = new List<CatalogItem>();
 
-			var market = new MarketPlace(earthOfferings, earthDemands);
+			// var market = new MarketPlace(earthOfferings, earthDemands);
 
-			modelBuilder.Entity<MarketPlace>().HasData(market);
+			// modelBuilder.Entity<MarketPlace>().HasData(market);
 
-			var earth = new Planet { ID = Guid.NewGuid(), PosX = 0, PosY = 0, PosZ = 0, Description = "Erde", Name = "Erde", Market = market };
-			var moon = new Planet { ID = Guid.NewGuid(), PosX = 0, PosY = 0, PosZ = 1, Description = "Mond", Name = "Mond", Market = market };
+			// var earth = new Planet { ID = Guid.NewGuid(), PosX = 0, PosY = 0, PosZ = 0, Description = "Erde", Name = "Erde", Market = market };
+			// var moon = new Planet { ID = Guid.NewGuid(), PosX = 0, PosY = 0, PosZ = 1, Description = "Mond", Name = "Mond", Market = market };
 		
-			var planets = new Planet[]
-			{
-				earth,
-				moon
-			};
+			// var planets = new Planet[]
+			// {
+			// 	earth,
+			// 	moon
+			// };
 
 			//modelBuilder.Entity<Planet>().HasData(planets);
 
-			var player = new Player(Guid.NewGuid(), "Olli", earth, 1000, Player.PlayerTypes.Human);
+			// var player = new Player(Guid.NewGuid(), "Olli", earth, 1000, Player.PlayerTypes.Human);
 
 			base.OnModelCreating(modelBuilder);
 		}

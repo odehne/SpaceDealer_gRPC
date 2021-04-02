@@ -21,12 +21,12 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 			ID = Guid.NewGuid();
 		}
 
-		public MarketPlace( List<CatalogItem> offerings, List<CatalogItem> demands)
+		public MarketPlace(List<CatalogItem> offerings, List<CatalogItem> demands)
 		{
 			ID = Guid.NewGuid();
 			ProductOfferings = offerings;
 			ProductDemands = demands;
-
+			
 			EnsureValidState();
 
 			Raise(new Events.MarketPlaceAddedEvent

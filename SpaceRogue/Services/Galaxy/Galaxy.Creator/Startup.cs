@@ -11,7 +11,6 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 	public class Startup
 	{
 		public IConfiguration Configuration { get; }
-
 		public void ConfigureServices(IServiceCollection services)
 		{
 			using var context = new GalaxyDbContext();

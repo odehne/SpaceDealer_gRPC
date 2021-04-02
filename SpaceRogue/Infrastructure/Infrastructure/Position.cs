@@ -20,7 +20,12 @@ namespace Cope.SpaceRogue.InfraStructure
 			return $"[{X},{Y},{Z}]";
 		}
 
-		public static Position GetDistanceVector(Position source, Position destination)
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static Position GetDistanceVector(Position source, Position destination)
 		{
 			return new Position(destination.X - source.X, destination.Y - source.Y, destination.Z - source.Z);
 		}

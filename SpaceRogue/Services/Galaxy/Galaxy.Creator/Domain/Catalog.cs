@@ -18,24 +18,46 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 			CatalogItems = new List<CatalogItem>();
 		}
 
-		public void AddCatalogItem(Product product, string title, decimal price)
+		public void AddCatalogItem(Product product, string title, int percentValue = 0)
 		{
 			EnsureValidState();
 
-			CatalogItems.Add(new CatalogItem(product, title, price));
+			var price = CalculatePrice(product, percentValue);
+
+			CatalogItems.Add(new CatalogItem(product, title, (decimal)price));
 
 			Raise(new CatalogItemAddedEvent
 			{
 				CatalogItemId = ID,
 				ProductId = product.ID,
 				Title = title,
-				Price = price
+				Price = (decimal)price
 			});
 		}
 
-		protected override void EnsureValidState()
+        private double CalculatePrice(Product product, int percentValue)
+        {
+			var newPrice = 0.0;
+            var currentPrice = product.PricePerUnit;
+			if(percentValue==100)
+				return currentPrice;
+
+			if(percentValue>0){
+				newPrice = ((currentPrice * percentValue) / 100) + currentPrice;
+			}else{
+				newPrice = currentPrice - ((currentPrice * (percentValue * -1))) / 100;
+			}
+			return newPrice;
+        }
+
+        private double AddPercentOnProductPrice(Product product, int plusPercentOnPrice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void EnsureValidState()
 		{
-			var valid = ID == default &&
+			var valid = ID != default &&
 				CatalogItems != null;
 			if (!valid)
 				throw new InvalidEntityStateException(this, $"Postchecks failed.");

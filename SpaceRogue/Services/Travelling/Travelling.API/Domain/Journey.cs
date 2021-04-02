@@ -28,7 +28,8 @@ namespace Cope.SpaceRogue.Traveling.API.Domain
 
 		public JourneyStates Move()
 		{
-
+			//TODO: Needs to go through all objects and move each of them
+			return JourneyStates.Idle;
 		}
 
 		protected override void EnsureValidState()

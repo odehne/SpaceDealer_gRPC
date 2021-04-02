@@ -20,8 +20,24 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
 			using var galContext = new GalaxyDbContext();
 			var prodRepo = new ProductRepository(galContext);
-			prodRepo.AddDefaults();
+			var planetRepo = new PlanetRepository(galContext);
+			planetRepo.AddDefaults();
+			var ps = planetRepo.GetItems();
 
+			foreach(var p in ps)
+			{
+				Console.WriteLine($"[{p.Name}] {p.Description}");
+				Console.WriteLine("Zu kaufende Produkte: ");
+				foreach (var item in p.Market.ProductOfferings)
+				{
+					Console.WriteLine($"[{item.Title}] {item.Price}");
+				}
+				Console.WriteLine("Zu kaufende Produkte: ");
+				foreach (var item in p.Market.ProductOfferings)
+				{
+					Console.WriteLine($"[{item.Title}] {item.Price}");
+				}
+			}
 
 			//var planets = galContext.Planets.ToList();
 			var configuration = GetConfiguration();

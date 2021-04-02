@@ -77,5 +77,30 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		{
 			throw new NotImplementedException();
 		}
+
+		public void AddDefaults()
+		{
+			var offerings = new Catalog();
+			var demands = new Catalog();
+			var productRepo = new ProductRepository(Context);
+
+			offerings.AddCatalogItem(productRepo.GetItemByName("Milch"), "Kuh-Milch", -15);
+			offerings.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", -25);
+			offerings.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", -5);
+			
+			demands.AddCatalogItem(productRepo.GetItemByName("Holz"), "Holz", 5);
+			demands.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", 11);
+			demands.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", 15);
+
+			var market = new MarketPlace(offerings.CatalogItems.ToList(), demands.CatalogItems.ToList());
+			var marketRepo = new MarketPlaceRepository(Context);
+			marketRepo.AddItem(market);
+
+			var planet = new Planet(market.ID, "Erde", "Der blaue Planet", 0,0,0);
+
+			
+			AddItem(planet);
+
+		}
 	}
 }

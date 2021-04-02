@@ -28,7 +28,7 @@ namespace Ship.API.Application.Commands
 			var journeyStartedIntegrationEvent = new JourneyStartedIntegrationEvent(request.ShipId);
 			await _shipInteractionIntegrationEventService.AddAndSaveEventAsync(journeyStartedIntegrationEvent);
 
-
+			return true;
 		}
 	}
 }

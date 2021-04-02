@@ -27,11 +27,17 @@ namespace Fighting.API.Domain
 		public ShipModel Attacker { get; set; }
 		public ShipModel Defender { get; set; }
 
+		public Fight()
+		{
+
+		}
+
 		public Fight(int roundNumber, ShipModel attacker, ShipModel defender)
 		{
 			RoundNumber = roundNumber;
 			Attacker = attacker;
 			Defender = defender;
 		}
-	}
+
+    }
 }
