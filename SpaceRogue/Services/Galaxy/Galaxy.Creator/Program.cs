@@ -18,33 +18,40 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 		static void Main(string[] args)
 		{
 
+			var configuration = GetConfiguration();
+			Log.Logger = CreateSerilogLogger(configuration);
+			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
+			var host = CreateHostBuilder(configuration, args);
+
 			using var galContext = new GalaxyDbContext();
-			var prodRepo = new ProductRepository(galContext);
+			
+			// var prodRepo = new ProductRepository(galContext);
 			var planetRepo = new PlanetRepository(galContext);
-			planetRepo.AddDefaults();
-			var ps = planetRepo.GetItems();
+			// var podGroupsRepo = new ProductGroupRepository(galContext);
+			// podGroupsRepo.AddDefaults();
+			// prodRepo.AddDefaults();
+			// planetRepo.AddDefaults();
+			var marketsRepo = new MarketPlaceRepository(galContext);
+			var markets = marketsRepo.GetItems();
+			var ps = planetRepo.GetItems();	
 
 			foreach(var p in ps)
 			{
 				Console.WriteLine($"[{p.Name}] {p.Description}");
 				Console.WriteLine("Zu kaufende Produkte: ");
-				foreach (var item in p.Market.ProductOfferings)
+				foreach (var item in p.Market.ProductOfferings.CatalogItems)
 				{
 					Console.WriteLine($"[{item.Title}] {item.Price}");
 				}
 				Console.WriteLine("Zu kaufende Produkte: ");
-				foreach (var item in p.Market.ProductOfferings)
+				foreach (var item in p.Market.ProductDemands.CatalogItems)
 				{
 					Console.WriteLine($"[{item.Title}] {item.Price}");
 				}
 			}
 
 			//var planets = galContext.Planets.ToList();
-			var configuration = GetConfiguration();
-			Log.Logger = CreateSerilogLogger(configuration);
-			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
-			var host = CreateHostBuilder(configuration, args);
-
+		
 			Console.WriteLine("Hello World!");
 		}
 

@@ -9,9 +9,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Model
 {
 	public class Planet : Entity
 	{
+		[Key]
 		public Guid ID { get; set; }
 
-		public virtual Guid MarketPlaceId { get; set; }
 		public virtual MarketPlace Market { get; set; }
 
 		public string Name { get; set; }
@@ -25,14 +25,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Model
 		{
 		}
 
-		public Planet(Guid marketPlaceId, string name, string description, int posX, int posY, int posZ)
+		public Planet(MarketPlace market, string name, string description, int posX, int posY, int posZ)
 		{
 			ID = Guid.NewGuid();
-			if (marketPlaceId == default)
+			if (market == null)
 				throw new ArgumentException("Market cannot be null");
 			if(string.IsNullOrEmpty(name))
 				throw new ArgumentException("The planet's name cannot be empty");
-			MarketPlaceId = marketPlaceId;
+			Market = market;
 			Name = name;
 			Description = description;
 			PosX = posX;

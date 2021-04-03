@@ -1,6 +1,7 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Model;
 using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +20,23 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public List<Planet> GetItems()
 		{
-			return Context.Planets.ToList();
+			return Context.Planets
+					.Include(x=>x.Market)
+					.Include(x=>x.Market.ProductDemands)
+					.Include(x=>x.Market.ProductOfferings)
+					.Include(x=>x.Market.ProductDemands.CatalogItems)
+					.Include(x=>x.Market.ProductOfferings.CatalogItems)
+					.ToList();
 		}
 
 		public Planet GetItem(Guid id)
 		{
-			return Context.Planets.FirstOrDefault(x => x.ID.Equals(id));
+			return Context.Planets.Include(x => x.Market).FirstOrDefault(x => x.ID.Equals(id));
 		}
 
 		public Planet GetItemByName(string name)
 		{
-			return Context.Planets.FirstOrDefault(x => x.Name.Equals(name));
+			return Context.Planets.Include(x => x.Market).FirstOrDefault(y=>y.Name.Equals(name));
 		}
 
 		public Planet UpdateItem(Planet item)
@@ -92,11 +99,11 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			demands.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", 11);
 			demands.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", 15);
 
-			var market = new MarketPlace(offerings.CatalogItems.ToList(), demands.CatalogItems.ToList());
+			var market = new MarketPlace("Marktplatz New New York", offerings, demands);
 			var marketRepo = new MarketPlaceRepository(Context);
 			marketRepo.AddItem(market);
 
-			var planet = new Planet(market.ID, "Erde", "Der blaue Planet", 0,0,0);
+			var planet = new Planet(market, "Erde", "Der blaue Planet", 0,0,0);
 
 			
 			AddItem(planet);

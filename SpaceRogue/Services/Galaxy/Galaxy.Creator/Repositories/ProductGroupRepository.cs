@@ -71,5 +71,16 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			}
 			return item;
 		}
+
+		public void AddDefaults()
+		{
+			var metal = new ProductGroup("Metallverarbeitung");
+			var food = new ProductGroup("Food");
+			var material = new ProductGroup("Baumaterial");
+
+			AddItem(metal);
+			AddItem(food);
+			AddItem(material);
+		}
 	}
 }

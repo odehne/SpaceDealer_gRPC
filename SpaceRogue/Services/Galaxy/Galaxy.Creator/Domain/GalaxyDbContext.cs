@@ -2,15 +2,14 @@
 using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 namespace Galaxy.API.Domain
 {
 	public class GalaxyDbContext : DbContext
 	{
 		public const string DbFileName = "/Users/oliverde/Documents/SpaceRogue.db";
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlite($"Data Source={DbFileName}");
 			base.OnConfiguring(optionsBuilder);
@@ -22,14 +21,10 @@ namespace Galaxy.API.Domain
 		public DbSet<Product> Products { get; set; }
 		public DbSet<Player> Players { get; set; }
 		public DbSet<ProductGroup> ProductGroups { get; set; }
-
-		internal void FirstOrDefault()
-		{
-			throw new NotImplementedException();
-		}
-
 		public DbSet<Ship> Ships { get; set; }
 		public DbSet<Feature> Features { get; set; }
+
+
 		
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -37,15 +32,15 @@ namespace Galaxy.API.Domain
 			modelBuilder.Entity<Planet>().HasOne(p => p.Market);
 
 			modelBuilder.Entity<MarketPlace>().HasKey(c => c.ID);
-			modelBuilder.Entity<MarketPlace>().HasOne(c => c.Planet);
-			modelBuilder.Entity<MarketPlace>().HasMany(c => c.ProductDemands);
-			modelBuilder.Entity<MarketPlace>().HasMany(c => c.ProductOfferings);
+			modelBuilder.Entity<MarketPlace>().HasOne(c => c.ProductDemands);
+			modelBuilder.Entity<MarketPlace>().HasOne(c => c.ProductOfferings);
 
 			modelBuilder.Entity<CatalogItem>().HasKey(c => c.ID);
 			modelBuilder.Entity<CatalogItem>().HasOne(c => c.Product);
 			modelBuilder.Entity<CatalogItem>().HasOne(c => c.Market);
 
 			modelBuilder.Entity<ProductGroup>().HasKey(c => c.ID);
+			modelBuilder.Entity<ProductGroup>().HasMany(c => c.Products);
 			
 			modelBuilder.Entity<Product>().HasKey(c => c.ID);
 			modelBuilder.Entity<Product>().HasOne(c => c.Group);
@@ -62,6 +57,15 @@ namespace Galaxy.API.Domain
 			modelBuilder.Entity<Player>().HasKey(c => c.ID);
 			modelBuilder.Entity<Player>().HasMany(c => c.Fleet);
 
+			var groups = new ProductGroup[]
+			{
+				new ProductGroup("Baumaterialien"),
+				new ProductGroup("Grundnahrungsmittel"),
+				new ProductGroup("Waffen"),
+				new ProductGroup("Spielzeug")
+			};
+
+			modelBuilder.Entity<ProductGroup>().HasData(groups);
 
 			// var earthOfferings = new List<CatalogItem>();
 			// var earthDemands = new List<CatalogItem>();
