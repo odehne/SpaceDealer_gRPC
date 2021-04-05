@@ -31,7 +31,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public Planet GetItem(Guid id)
 		{
-			return Context.Planets.Include(x => x.Market).FirstOrDefault(x => x.ID.Equals(id));
+			return Context.Planets
+					.Include(x => x.Market)
+					
+					.FirstOrDefault(x => x.ID.Equals(id));
 		}
 
 		public Planet GetItemByName(string name)
@@ -67,6 +70,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			{
 				Context.Planets.Add(item);
 				Context.SaveChanges();
+			}
+			else
+			{
+				UpdateItem(item);
 			}
 		}
 

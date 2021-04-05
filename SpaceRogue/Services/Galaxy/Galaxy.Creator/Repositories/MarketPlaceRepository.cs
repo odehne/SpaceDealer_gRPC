@@ -52,6 +52,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				Context.MarketPlaces.Add(item);
 				Context.SaveChanges();
 			}
+			else
+			{
+				UpdateItem(item);
+			}
 		}
 
 		public void DeleteItem(MarketPlace item)

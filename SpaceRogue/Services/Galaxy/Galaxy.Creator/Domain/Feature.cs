@@ -20,9 +20,22 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 
 		public Feature()
 		{
+			ID = Guid.NewGuid();
 		}
 
-		protected override void EnsureValidState()
+        public Feature(string name, string description, double battleAdvantage, double battleDisadvantage, double freightCapacityAdvantage, double freightCapacityDisadvantage, double sensorRangeAdvantage)
+        {
+            ID = Guid.NewGuid();
+            Name = name;
+            Description = description;
+            BattleAdvantage = battleAdvantage;
+            BattleDisadvantage = battleDisadvantage;
+            FreightCapacityAdvantage = freightCapacityAdvantage;
+            FreightCapacityDisadvantage = freightCapacityDisadvantage;
+            SensorRangeAdvantage = sensorRangeAdvantage;
+        }
+
+        protected override void EnsureValidState()
 		{
 			var valid = !string.IsNullOrEmpty(Name) && ID != default;
 			if(!valid)

@@ -29,6 +29,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				Context.Features.Add(item);
 				Context.SaveChanges();
 			}
+			else
+			{
+				UpdateItem(item);
+			}
 		}
 
 		public void DeleteItem(Feature item)
@@ -76,6 +80,17 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		public void DeleteMany(Guid id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public void AddDefaults()
+		{
+			var sensor = new Feature("Erweiterter Sensorik", "Kann andere Schiffe und Planeten schneller erkennen.", 0,0,0,0, 1);
+			var battle = new Feature("Verbesserte Laserbänke", "Angriff +1.", 1,0,0,0,0);
+			var cargo = new Feature("Vergrösserter Frachtraum", "Frachtraum vergößert um 10 Tonnen.",0,0,10,0,0);
+			
+			AddItem(sensor);
+			AddItem(battle);
+			AddItem(cargo);
 		}
 	}
 }

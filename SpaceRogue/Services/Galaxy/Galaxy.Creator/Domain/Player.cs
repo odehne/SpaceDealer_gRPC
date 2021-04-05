@@ -28,9 +28,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 		{
 		}
 
-		public Player(Guid playerId, string name, Planet homePlanet, decimal credits, PlayerTypes playerType)
+		public Player(string name, Planet homePlanet, decimal credits, PlayerTypes playerType)
 		{
-			ID = playerId;
+			ID = Guid.NewGuid();
 			Name = name;
 			HomePlanet = homePlanet;
 			Credits = credits;

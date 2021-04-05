@@ -4,6 +4,7 @@ using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 {
@@ -11,6 +12,8 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 	{
 		public Guid ID { get; set; }
 		public virtual ICollection<CatalogItem> CatalogItems { get; set; }
+
+		
 
 		public Catalog()
 		{
@@ -62,5 +65,21 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 			if (!valid)
 				throw new InvalidEntityStateException(this, $"Postchecks failed.");
 		}
-	}
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+			var s = CatalogItems.Select(x=>x.Title).ToArray();
+			return string.Join(", ", s);
+        }
+    }
 }

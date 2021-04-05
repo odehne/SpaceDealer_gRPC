@@ -3,6 +3,7 @@ using Galaxy.API.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -28,6 +29,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			{
 				Context.ProductGroups.Add(item);
 				Context.SaveChanges();
+			}
+			else
+			{
+				UpdateItem(item);
 			}
 		}
 
@@ -58,7 +63,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public List<ProductGroup> GetItems()
 		{
-			return Context.ProductGroups.ToList();
+			return Context.ProductGroups
+					.Include(x=>x.Products)
+					.ToList();
 		}
 
 		public ProductGroup UpdateItem(ProductGroup item)

@@ -24,6 +24,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				Context.CatalogItems.Add(item);
 				Context.SaveChanges();
 			}
+			else
+			{
+				UpdateItem(item);
+			}
 		}
 
 		public void DeleteItem(CatalogItem item)

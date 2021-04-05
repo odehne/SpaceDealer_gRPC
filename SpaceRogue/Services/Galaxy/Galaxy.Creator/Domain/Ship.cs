@@ -44,11 +44,15 @@ namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
 		public int Shields { get; set; }
 		public string Name { get; set; }
 
+        public Ship(string name, int hull, int shields)
+        {
+            ID = Guid.NewGuid();
+		    Hull = hull;
+            Shields = shields;
+            Name = name;
+        }
 
-		[ForeignKey("Player")]
-		public virtual Player Owner { get; set; }
-
-		public double LoadedCapacity { get; set; }
+        public double LoadedCapacity { get; set; }
 		public ICollection<Feature> Features { get; set; }
 		public ICollection<Payload> Cargo { get; set; }
 
