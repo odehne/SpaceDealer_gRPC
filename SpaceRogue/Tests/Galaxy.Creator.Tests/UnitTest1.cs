@@ -22,7 +22,7 @@ namespace Galaxy.Creator.Tests
 			var offerings = new List<CatalogItem>();
 			var demands = new List<CatalogItem>();
 
-			var marketPlace = new MarketPlace(marketPlaceId, offerings, demands);
+			//var marketPlace = new MarketPlace(marketPlaceId, offerings, demands);
 
 
 

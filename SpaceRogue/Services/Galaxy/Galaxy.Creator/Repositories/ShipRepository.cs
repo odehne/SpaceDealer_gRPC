@@ -23,14 +23,15 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			if (string.IsNullOrEmpty(item.Name))
 				throw new ArgumentException("Ship must have a name.");
 
-			if(item.Owner==null)
-				throw new ArgumentException("Ship must have an owner.");
-
 			var pn = GetItemByName(item.Name);
 			if (pn == null)
 			{
 				Context.Ships.Add(item);
 				Context.SaveChanges();
+			}
+			else
+			{
+				UpdateItem(item);
 			}
 		}
 
@@ -41,19 +42,6 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			{
 				Context.Ships.Remove(itm);
 				Context.SaveChanges();
-			}
-		}
-
-		public void DeleteMany(Guid ownerId)
-		{
-			var ships = Context.Ships.Where(x => x.Owner.ID.Equals(ownerId));
-			if (ships.Any())
-			{
-				foreach(var ship in ships)
-				{
-					Context.Ships.Remove(ship);
-					Context.SaveChanges();
-				}
 			}
 		}
 
@@ -117,5 +105,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			}
 			return item;
 		}
-	}
+
+        public void DeleteMany(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Model;
 using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +20,26 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public List<Planet> GetItems()
 		{
-			return Context.Planets.ToList();
+			return Context.Planets
+					.Include(x=>x.Market)
+					.Include(x=>x.Market.ProductDemands)
+					.Include(x=>x.Market.ProductOfferings)
+					.Include(x=>x.Market.ProductDemands.CatalogItems)
+					.Include(x=>x.Market.ProductOfferings.CatalogItems)
+					.ToList();
 		}
 
 		public Planet GetItem(Guid id)
 		{
-			return Context.Planets.FirstOrDefault(x => x.ID.Equals(id));
+			return Context.Planets
+					.Include(x => x.Market)
+					
+					.FirstOrDefault(x => x.ID.Equals(id));
 		}
 
 		public Planet GetItemByName(string name)
 		{
-			return Context.Planets.FirstOrDefault(x => x.Name.Equals(name));
+			return Context.Planets.Include(x => x.Market).FirstOrDefault(y=>y.Name.Equals(name));
 		}
 
 		public Planet UpdateItem(Planet item)
@@ -61,6 +71,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				Context.Planets.Add(item);
 				Context.SaveChanges();
 			}
+			else
+			{
+				UpdateItem(item);
+			}
 		}
 
 		public void DeleteItem(Planet item)
@@ -80,37 +94,27 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public void AddDefaults()
 		{
-			var prodRep= new ProductRepository(Context);
 			var offerings = new Catalog();
 			var demands = new Catalog();
+			var productRepo = new ProductRepository(Context);
 
-			offerings.AddCatalogItem(prodRep.GetItemByName("Eisen"), "Eisen", 7.00);
+			offerings.AddCatalogItem(productRepo.GetItemByName("Milch"), "Kuh-Milch", -15);
+			offerings.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", -25);
+			offerings.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", -5);
+			
+			demands.AddCatalogItem(productRepo.GetItemByName("Holz"), "Holz", 5);
+			demands.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", 11);
+			demands.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", 15);
 
+			var market = new MarketPlace("Marktplatz New New York", offerings, demands);
+			var marketRepo = new MarketPlaceRepository(Context);
+			marketRepo.AddItem(market);
 
-			var market = new MarketPlace();
+			var planet = new Planet(market, "Erde", "Der blaue Planet", 0,0,0);
 
+			
+			AddItem(planet);
 
-			var ps = new Product[]
-			{
-				new Product("Eisen", metal.ID, 1.0, 600.0, 10.0 ),
-				new Product("Stahl", metal.ID, 1.0, 570.0, 80.0 ),
-				new Product("Kupfer", metal.ID, 1.0, 570.0, 80.0 ),
-				new Product("Silber", metal.ID, 1.0, 60.0, 1000.0 ),
-				new Product("Gold", metal.ID, 1.0, 60.0, 10000.0 ),
-				new Product("Messing", metal.ID, 1.0, 600.0, 10.0 ),
-				new Product("Fisch", food.ID, 1.0, 300.0, 100.0 ),
-				new Product("Milch", food.ID, 1.0, 5000.0, 15.0 ),
-				new Product("Mehl", food.ID, 1.0, 5000.0, 15.0 ),
-				new Product("Wasser", food.ID, 1.0, 1000.0, 15.0 ),
-				new Product("Holz", material.ID, 1.0, 1000.0, 45.0 ),
-				new Product("Granit", material.ID, 3.0, 1000.0, 15.0 ),
-				new Product("Mamor", material.ID, 3.0, 700.0, 65.0 )
-			};
-
-			foreach (var p in ps)
-			{
-				AddItem(p);
-			}
 		}
 	}
 }

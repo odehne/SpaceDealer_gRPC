@@ -6,8 +6,6 @@ using System.Linq;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
-
-
 	public class ProductRepository : IRepository<Product>
 	{
 		public GalaxyDbContext Context { get; }
@@ -75,14 +73,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		public void AddDefaults()
 		{
 			var groupsRep = new ProductGroupRepository(Context);
-			var metal = new ProductGroup("Metallverarbeitung");
-			var food = new ProductGroup("Food");
-			var material = new ProductGroup("Baumaterial");
-
-			groupsRep.AddItem(metal);
-			groupsRep.AddItem(food);
-			groupsRep.AddItem(material);
-
+			var metal = groupsRep.GetItemByName("Metallverarbeitung");
+			var food = groupsRep.GetItemByName("Food");
+			var material = groupsRep.GetItemByName("Baumaterial");
+			
 			var ps = new Product[]
 			{
 				new Product("Eisen", metal.ID, 1.0, 600.0, 10.0 ),

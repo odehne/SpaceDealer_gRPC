@@ -33,7 +33,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public MarketPlace UpdateItem(MarketPlace item)
 		{
-			var ci = Context.MarketPlaces.FirstOrDefault(x => x.Planet.ID.Equals(item.Planet.ID));
+			var ci = Context.MarketPlaces.FirstOrDefault(x => x.ID.Equals(item.ID));
 			if (ci != null)
 			{
 				ci.Name = item.Name;
@@ -46,11 +46,15 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public void AddItem(MarketPlace item)
 		{
-			var ci = Context.MarketPlaces.FirstOrDefault(x => x.Planet.ID.Equals(item.Planet.ID));
+			var ci = Context.MarketPlaces.FirstOrDefault(x => x.ID.Equals(item.ID));
 			if (ci == null)
 			{
 				Context.MarketPlaces.Add(item);
 				Context.SaveChanges();
+			}
+			else
+			{
+				UpdateItem(item);
 			}
 		}
 

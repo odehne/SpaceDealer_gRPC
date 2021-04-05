@@ -15,12 +15,29 @@ namespace Cope.SpaceRogue.InfraStructure
 			Z = z;
 		}
 
+		public static Position GetPositionByString(string positionString)
+		{
+			if(string.IsNullOrEmpty(positionString))
+				throw new ArgumentException("String must have a value in the format 'x,y,z'");
+			positionString = positionString.Replace(" ", "");
+			positionString = positionString.Trim(' ');
+			var s = positionString.Split(',');
+			if(s.Length<2)
+				throw new ArgumentException("String must have a value in the format 'x,y,z'");
+			return new Position(double.Parse(s[0]), double.Parse(s[1]), double.Parse(s[2]));
+		}
+
 		public override string ToString()
 		{
 			return $"[{X},{Y},{Z}]";
 		}
 
-		public static Position GetDistanceVector(Position source, Position destination)
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static Position GetDistanceVector(Position source, Position destination)
 		{
 			return new Position(destination.X - source.X, destination.Y - source.Y, destination.Z - source.Z);
 		}

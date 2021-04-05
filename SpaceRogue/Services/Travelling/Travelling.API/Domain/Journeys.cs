@@ -31,15 +31,8 @@ namespace Cope.SpaceRogue.Traveling.API.Domain
 
 		public JourneyStates StartJourney(Journey journey)
 		{
-			try
-			{
-				Items.Add(journey);
-				return JourneyStates.JourneyStarted;
-			}
-			catch (Exception e)
-			{
-				throw;
-			}
+			Items.Add(journey);
+			return JourneyStates.JourneyStarted;
 		}
 
 		public JourneyStates FinishJourney(EntityId journeyId)

@@ -1,5 +1,6 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,21 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		}
 		public void AddItem(Player item)
 		{
-			throw new NotImplementedException();
+			if (item.ID == default)
+				throw new ArgumentException("Product must have an Id.");
+
+			if (string.IsNullOrEmpty(item.Name))
+				throw new ArgumentException("Product must have a name.");
+			var pn = GetItemByName(item.Name);
+			if (pn == null)
+			{
+				Context.Players.Add(item);
+				Context.SaveChanges();
+			}
+			else
+			{
+				UpdateItem(item);
+			}
 		}
 
 		public void DeleteItem(Player item)
@@ -27,7 +42,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				if (itm.Fleet.Any())
 				{
 					var shipRep = new ShipRepository(Context);
-					shipRep.DeleteMany(itm.ID);
+					foreach (var s in itm.Fleet)
+					{
+						shipRep.DeleteItem(s);
+					}
 				}
 				Context.Players.Remove(itm);
 				Context.SaveChanges();
@@ -41,7 +59,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 		public Player GetItemByName(string name)
 		{
-			return Context.Players.FirstOrDefault(x => x.Name.Equals(name));
+			return Context.Players
+				.Include(x=>x.Fleet)
+				.ThenInclude(x=>x.Features)
+				.FirstOrDefault(x => x.Name.Equals(name));
 		}
 
 		public List<Player> GetItems()
