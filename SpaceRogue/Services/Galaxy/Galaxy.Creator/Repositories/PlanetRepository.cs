@@ -77,5 +77,40 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		{
 			throw new NotImplementedException();
 		}
+
+		public void AddDefaults()
+		{
+			var prodRep= new ProductRepository(Context);
+			var offerings = new Catalog();
+			var demands = new Catalog();
+
+			offerings.AddCatalogItem(prodRep.GetItemByName("Eisen"), "Eisen", 7.00);
+
+
+			var market = new MarketPlace();
+
+
+			var ps = new Product[]
+			{
+				new Product("Eisen", metal.ID, 1.0, 600.0, 10.0 ),
+				new Product("Stahl", metal.ID, 1.0, 570.0, 80.0 ),
+				new Product("Kupfer", metal.ID, 1.0, 570.0, 80.0 ),
+				new Product("Silber", metal.ID, 1.0, 60.0, 1000.0 ),
+				new Product("Gold", metal.ID, 1.0, 60.0, 10000.0 ),
+				new Product("Messing", metal.ID, 1.0, 600.0, 10.0 ),
+				new Product("Fisch", food.ID, 1.0, 300.0, 100.0 ),
+				new Product("Milch", food.ID, 1.0, 5000.0, 15.0 ),
+				new Product("Mehl", food.ID, 1.0, 5000.0, 15.0 ),
+				new Product("Wasser", food.ID, 1.0, 1000.0, 15.0 ),
+				new Product("Holz", material.ID, 1.0, 1000.0, 45.0 ),
+				new Product("Granit", material.ID, 3.0, 1000.0, 15.0 ),
+				new Product("Mamor", material.ID, 3.0, 700.0, 65.0 )
+			};
+
+			foreach (var p in ps)
+			{
+				AddItem(p);
+			}
+		}
 	}
 }
