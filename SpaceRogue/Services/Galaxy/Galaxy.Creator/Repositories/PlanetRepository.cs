@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -18,33 +19,32 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			Context = context;
 		}
 
-		public List<Planet> GetItems()
+		public async Task<List<Planet>> GetItems()
 		{
-			return Context.Planets
+			return await Context.Planets
 					.Include(x=>x.Market)
 					.Include(x=>x.Market.ProductDemands)
 					.Include(x=>x.Market.ProductOfferings)
 					.Include(x=>x.Market.ProductDemands.CatalogItems)
 					.Include(x=>x.Market.ProductOfferings.CatalogItems)
-					.ToList();
+					.ToListAsync();
 		}
 
-		public Planet GetItem(Guid id)
+		public async Task<Planet> GetItem(Guid id)
 		{
-			return Context.Planets
+			return await Context.Planets
 					.Include(x => x.Market)
-					
-					.FirstOrDefault(x => x.ID.Equals(id));
+					.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public Planet GetItemByName(string name)
+		public async Task<Planet> GetItemByName(string name)
 		{
-			return Context.Planets.Include(x => x.Market).FirstOrDefault(y=>y.Name.Equals(name));
+			return await Context.Planets.Include(x => x.Market).FirstOrDefaultAsync(y=>y.Name.Equals(name));
 		}
 
-		public Planet UpdateItem(Planet item)
+		public async Task<Planet> UpdateItem(Planet item)
 		{
-			var itm = Context.Planets.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Planets.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				itm.Name = item.Name;
@@ -57,7 +57,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			return item;
 		}
 
-		public void AddItem(Planet item)
+		public async Task<bool> AddItem(Planet item)
 		{
 			if (item.ID == default)
 				throw new ArgumentException("Planet must have an Id.");
@@ -65,55 +65,51 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			if (string.IsNullOrEmpty(item.Name))
 				throw new ArgumentException("Planet must have a name.");
 
-			var pn = GetItemByName(item.Name);
+			var pn = await GetItemByName(item.Name);
 			if (pn == null)
 			{
 				Context.Planets.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			else
 			{
-				UpdateItem(item);
+				var p = await UpdateItem(item);
 			}
+			return true;
 		}
 
-		public void DeleteItem(Planet item)
+		public async Task<bool> DeleteItem(Planet item)
 		{
-			var itm = Context.Planets.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Planets.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				Context.Planets.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
+			return true;
 		}
 
-		public void DeleteMany(Guid id)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void AddDefaults()
+		public async Task<bool> AddDefaults()
 		{
 			var offerings = new Catalog();
 			var demands = new Catalog();
 			var productRepo = new ProductRepository(Context);
 
-			offerings.AddCatalogItem(productRepo.GetItemByName("Milch"), "Kuh-Milch", -15);
-			offerings.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", -25);
-			offerings.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", -5);
+			offerings.AddCatalogItem(await productRepo.GetItemByName("Milch"), "Kuh-Milch", -15);
+			offerings.AddCatalogItem(await productRepo.GetItemByName("Wasser"), "Gletscherwasser", -25);
+			offerings.AddCatalogItem(await productRepo.GetItemByName("Mehl"), "Weizen-Mehl", -5);
 			
-			demands.AddCatalogItem(productRepo.GetItemByName("Holz"), "Holz", 5);
-			demands.AddCatalogItem(productRepo.GetItemByName("Wasser"), "Gletscherwasser", 11);
-			demands.AddCatalogItem(productRepo.GetItemByName("Mehl"), "Weizen-Mehl", 15);
+			demands.AddCatalogItem(await productRepo.GetItemByName("Holz"), "Holz", 5);
+			demands.AddCatalogItem(await productRepo.GetItemByName("Wasser"), "Gletscherwasser", 11);
+			demands.AddCatalogItem(await productRepo.GetItemByName("Mehl"), "Weizen-Mehl", 15);
 
 			var market = new MarketPlace("Marktplatz New New York", offerings, demands);
 			var marketRepo = new MarketPlaceRepository(Context);
-			marketRepo.AddItem(market);
+			var b = await marketRepo.AddItem(market);
 
 			var planet = new Planet(market, "Erde", "Der blaue Planet", 0,0,0);
-
 			
-			AddItem(planet);
+			return await AddItem(planet);
 
 		}
 	}

@@ -1,8 +1,10 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -15,34 +17,36 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			Context = context;
 		}
 
-		public void DeleteItem(Product item)
+		public async Task<bool> DeleteItem(Product item)
 		{
-			var itm = Context.Products.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Products.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				Context.Products.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
+			return false;
 		}
 
-		public Product GetItem(Guid id)
+		public async Task<Product> GetItem(Guid id)
 		{
-			return Context.Products.FirstOrDefault(x => x.ID.Equals(id));
+			return await Context.Products.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public Product GetItemByName(string name)
+		public async Task<Product>  GetItemByName(string name)
 		{
-			return Context.Products.FirstOrDefault(x => x.Name.Equals(name));
+			return await Context.Products.FirstOrDefaultAsync(x => x.Name.Equals(name));
 		}
 
-		public List<Product> GetItems()
+		public async Task<List<Product>> GetItems()
 		{
-			return Context.Products.ToList();
+			return await Context.Products.ToListAsync();
 		}
 
-		public Product UpdateItem(Product item)
+		public async Task<Product> UpdateItem(Product item)
 		{
-			var itm = Context.Products.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Products.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				itm.Name = item.Name;
@@ -50,32 +54,33 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				itm.Group= item.Group;
 				itm.Rarity = item.Rarity;
 				itm.SizeInUnits = item.SizeInUnits;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			return item;
 		}
 
-		public void AddItem(Product item)
+		public async Task<bool>  AddItem(Product item)
 		{
 			if (item.ID == default)
 				throw new ArgumentException("Product must have an Id.");
 
 			if (string.IsNullOrEmpty(item.Name))
 				throw new ArgumentException("Product must have a name.");
-			var pn = GetItemByName(item.Name);
+			var pn = await GetItemByName(item.Name);
 			if (pn == null)
 			{
 				Context.Products.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
+			return true;
 		}
 
-		public void AddDefaults()
+		public async Task<bool> AddDefaults()
 		{
 			var groupsRep = new ProductGroupRepository(Context);
-			var metal = groupsRep.GetItemByName("Metallverarbeitung");
-			var food = groupsRep.GetItemByName("Food");
-			var material = groupsRep.GetItemByName("Baumaterial");
+			var metal = await groupsRep.GetItemByName("Metallverarbeitung");
+			var food = await groupsRep.GetItemByName("Food");
+			var material = await groupsRep.GetItemByName("Baumaterial");
 			
 			var ps = new Product[]
 			{
@@ -96,13 +101,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
 			foreach (var p in ps)
 			{
-				AddItem(p);
+				var b = AddItem(p);
 			}
+			return true;
 		}
 
-		public void DeleteMany(Guid id)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

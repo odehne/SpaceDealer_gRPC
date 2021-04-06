@@ -12,13 +12,14 @@ using System.Linq;
 using System.Net;
 using System.Collections.Generic;
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
 {
 
     class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 
 			var configuration = GetConfiguration();
@@ -40,6 +41,8 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
 			using var galContext = new GalaxyDbContext();
 			var menu = new Menu(galContext);
+
+			await menu.ShowMenu();
 
 			// var prodRepo = new ProductRepository(galContext);
 			// var planetRepo = new PlanetRepository(galContext);

@@ -1,8 +1,10 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -16,61 +18,60 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		}
 
 
-		public void AddItem(CatalogItem item)
+		public async Task<bool> AddItem(CatalogItem item)
 		{
-			var ci = Context.CatalogItems.FirstOrDefault(x => x.Market.ID.Equals(item.Market.ID) & x.Product.Name.Equals(item.Product.Name));
+			var ci = await Context.CatalogItems.FirstOrDefaultAsync(x => x.Market.ID.Equals(item.Market.ID) & x.Product.Name.Equals(item.Product.Name));
 			if (ci == null)
 			{
 				Context.CatalogItems.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			else
 			{
-				UpdateItem(item);
+				var result = UpdateItem(item);
 			}
+			return true;
 		}
 
-		public void DeleteItem(CatalogItem item)
+		public async Task<bool>  DeleteItem(CatalogItem item)
 		{
-			var itm = Context.CatalogItems.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.CatalogItems.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				Context.CatalogItems.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
+			return false;
 		}
 
-		public CatalogItem GetItem(Guid id)
+		public async Task<CatalogItem> GetItem(Guid id)
 		{
-			return Context.CatalogItems.FirstOrDefault(x => x.ID.Equals(id));
+			return await Context.CatalogItems.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public CatalogItem GetItemByName(string name)
+		public async Task<CatalogItem> GetItemByName(string name)
 		{
-			return Context.CatalogItems.FirstOrDefault(x => x.Title.Equals(name));
+			return await Context.CatalogItems.FirstOrDefaultAsync(x => x.Title.Equals(name));
 		}
 
-		public List<CatalogItem> GetItems()
+		public async Task<List<CatalogItem>> GetItems()
 		{
-			return Context.CatalogItems.ToList();
+			return await Context.CatalogItems.ToListAsync();
 		}
 
-		public CatalogItem UpdateItem(CatalogItem item)
+		public async Task<CatalogItem> UpdateItem(CatalogItem item)
 		{
-			var itm = Context.CatalogItems.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.CatalogItems.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				itm.Price = item.Price;
 				itm.Product = item.Product;
 				itm.Title = item.Title;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			return item;
 		}
 
-		public void DeleteMany(Guid id)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

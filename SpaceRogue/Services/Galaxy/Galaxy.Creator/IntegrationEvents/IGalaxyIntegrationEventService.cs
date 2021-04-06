@@ -10,10 +10,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.IntegrationEvents
 	public interface IGalaxyIntegrationEventService
 	{
 		Task SaveEventAndGalaxyChangesAsync(IntegrationEvent evt);
-
 		Task PublishThroughEventBusAsync(IntegrationEvent evt);
-
-		
 	}
 
 }

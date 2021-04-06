@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -15,28 +16,29 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		{
 			Context = context;
 		}
-		public void AddItem(Player item)
+		public async Task<bool> AddItem(Player item)
 		{
 			if (item.ID == default)
 				throw new ArgumentException("Product must have an Id.");
 
 			if (string.IsNullOrEmpty(item.Name))
 				throw new ArgumentException("Product must have a name.");
-			var pn = GetItemByName(item.Name);
+			var pn = await GetItemByName(item.Name);
 			if (pn == null)
 			{
 				Context.Players.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			else
 			{
-				UpdateItem(item);
+				var itm = await UpdateItem(item);
 			}
+			return true;
 		}
 
-		public void DeleteItem(Player item)
+		public async Task<bool>  DeleteItem(Player item)
 		{
-			var itm = Context.Players.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				if (itm.Fleet.Any())
@@ -44,40 +46,37 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 					var shipRep = new ShipRepository(Context);
 					foreach (var s in itm.Fleet)
 					{
-						shipRep.DeleteItem(s);
+						await shipRep.DeleteItem(s);
 					}
 				}
 				Context.Players.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
+			return true;
 		}
 
-		public Player GetItem(Guid id)
+		public async Task<Player> GetItem(Guid id)
 		{
-			return Context.Players.FirstOrDefault(x => x.ID.Equals(id));
+			return await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public Player GetItemByName(string name)
+		public async Task<Player> GetItemByName(string name)
 		{
-			return Context.Players
+			return await Context.Players
 				.Include(x=>x.Fleet)
 				.ThenInclude(x=>x.Features)
-				.FirstOrDefault(x => x.Name.Equals(name));
+				.FirstOrDefaultAsync(x => x.Name.Equals(name));
 		}
 
-		public List<Player> GetItems()
+		public async Task<List<Player>> GetItems()
 		{
-			return Context.Players.ToList();
+			return await Context.Players.ToListAsync();
 		}
 
-		public Player UpdateItem(Player item)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void DeleteMany(Guid id)
+		public async Task<Player> UpdateItem(Player item)
 		{
 			throw new NotImplementedException();
 		}
+
 	}
 }

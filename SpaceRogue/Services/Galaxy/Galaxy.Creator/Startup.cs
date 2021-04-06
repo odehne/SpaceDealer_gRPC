@@ -15,9 +15,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 		{
 			using var context = new GalaxyDbContext();
 			context.Database.EnsureCreated();
-			services.AddGrpc();
+	    	services.AddGrpc();
 		}
-
+		
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
@@ -36,9 +36,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 			});
 		}
 
-		public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
-	}
+    }
 }
