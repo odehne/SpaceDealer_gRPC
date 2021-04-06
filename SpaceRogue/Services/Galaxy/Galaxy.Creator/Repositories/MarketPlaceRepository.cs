@@ -1,8 +1,10 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -16,61 +18,59 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			Context = context;
 		}
 
-		public List<MarketPlace> GetItems()
+		public async Task<List<MarketPlace>> GetItems()
 		{
-			return Context.MarketPlaces.ToList();
+			return await Context.MarketPlaces.ToListAsync();
 		}
 
-		public MarketPlace GetItem(Guid id)
+		public async Task<MarketPlace> GetItem(Guid id)
 		{
-			return Context.MarketPlaces.FirstOrDefault(x => x.ID.Equals(id));
+			return await Context.MarketPlaces.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public MarketPlace GetItemByName(string name)
+		public async Task<MarketPlace> GetItemByName(string name)
 		{
-			return Context.MarketPlaces.FirstOrDefault(x => x.Name.Equals(name));
+			return await Context.MarketPlaces.FirstOrDefaultAsync(x => x.Name.Equals(name));
 		}
 
-		public MarketPlace UpdateItem(MarketPlace item)
+		public async Task<MarketPlace> UpdateItem(MarketPlace item)
 		{
-			var ci = Context.MarketPlaces.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var ci = await Context.MarketPlaces.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (ci != null)
 			{
 				ci.Name = item.Name;
 				ci.ProductDemands = item.ProductDemands;
 				ci.ProductOfferings = item.ProductOfferings;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			return item;
 		}
 
-		public void AddItem(MarketPlace item)
+		public async Task<bool> AddItem(MarketPlace item)
 		{
-			var ci = Context.MarketPlaces.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var ci = await Context.MarketPlaces.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (ci == null)
 			{
 				Context.MarketPlaces.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			else
 			{
-				UpdateItem(item);
+				var result = UpdateItem(item);
 			}
+			return true;
 		}
 
-		public void DeleteItem(MarketPlace item)
+		public async Task<bool> DeleteItem(MarketPlace item)
 		{
-			var itm = Context.MarketPlaces.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.MarketPlaces.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				Context.MarketPlaces.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
-		}
-
-		public void DeleteMany(Guid id)
-		{
-			throw new NotImplementedException();
+			return false;
 		}
 	}
 }

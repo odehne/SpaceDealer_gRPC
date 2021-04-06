@@ -1,10 +1,11 @@
 ﻿using System;
+using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.IntegrationEvents
 {
-	public class PlanetAddedEvent
+	public class PlanetAddedEvent : IntegrationEvent
 	{
-		public Guid PlanetId { get; set; }
+		public string PlanetId { get; set; }
 		public string Name { get; set; }
 		public int PosX { get; set; }
 		public int PosY { get; set; }

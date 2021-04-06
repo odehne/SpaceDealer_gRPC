@@ -1,8 +1,10 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
 using Galaxy.API.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -15,7 +17,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			Context = context;
 		}
 
-		public void AddItem(Ship item)
+		public async Task<bool> AddItem(Ship item)
 		{
 			if (item.ID == default)
 				throw new ArgumentException("Ship must have an Id.");
@@ -23,77 +25,85 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 			if (string.IsNullOrEmpty(item.Name))
 				throw new ArgumentException("Ship must have a name.");
 
-			var pn = GetItemByName(item.Name);
+			var pn = await GetItemByName(item.Name);
 			if (pn == null)
 			{
 				Context.Ships.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			else
 			{
-				UpdateItem(item);
+				await UpdateItem(item);
 			}
+			return true;
 		}
 
-		public void DeleteItem(Ship item)
+		public async Task<bool> DeleteItem(Ship item)
 		{
-			var itm = Context.Ships.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				Context.Ships.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
+			return true;
 		}
 
-		public Ship GetItem(Guid id)
+		public async Task<Ship> GetItem(Guid id)
 		{
-			return Context.Ships.FirstOrDefault(x => x.ID.Equals(id));
+			return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public Ship GetItemByName(string name)
+		public async Task<Ship> GetItemByName(string name)
 		{
-			return Context.Ships.FirstOrDefault(x => x.Name.Equals(name));
+			return await Context.Ships.FirstOrDefaultAsync(x => x.Name.Equals(name));
 		}
 
-		public List<Ship> GetItems()
+		public async Task<List<Ship>> GetItems()
 		{
-			return Context.Ships.ToList();
+			return await Context.Ships.ToListAsync();
 		}
 
-		public void UpdateHull(int id, int newHullValue)
+		public async Task<bool> UpdateHull(int id, int newHullValue)
 		{
-			var itm = Context.Ships.FirstOrDefault(x => x.ID.Equals(id));
+			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
 			if (itm != null)
 			{
 				itm.Hull = newHullValue;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
+			return false;
 		}
 
-		public void UpdateShields(int id, int newShieldValue)
+		public async Task<bool> UpdateShields(int id, int newShieldValue)
 		{
-			var itm = Context.Ships.FirstOrDefault(x => x.ID.Equals(id));
+			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
 			if (itm != null)
 			{
 				itm.Shields = newShieldValue;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
+			return false;
 		}
 
-		public void UpdateCargo(int id, List<Payload> cargo)
+		public async Task<bool> UpdateCargo(int id, List<Payload> cargo)
 		{
-			var itm = Context.Ships.FirstOrDefault(x => x.ID.Equals(id));
+			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
 			if (itm != null)
 			{
 				itm.Cargo = cargo;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
+			return false;
 		}
 
 
-		public Ship UpdateItem(Ship item)
+		public async Task<Ship> UpdateItem(Ship item)
 		{
-			var itm = Context.Ships.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				itm.Name = item.Name;
@@ -101,14 +111,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 				itm.Features = item.Features;
 				itm.Hull = item.Hull;
 				itm.Shields = item.Shields;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			return item;
 		}
-
-        public void DeleteMany(Guid id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

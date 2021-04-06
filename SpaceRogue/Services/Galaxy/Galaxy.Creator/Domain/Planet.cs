@@ -3,7 +3,7 @@ using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Cope.SpaceRogue.Galaxy.Creator.IntegrationEvents;
 
 namespace Cope.SpaceRogue.Galaxy.API.Model
 {
@@ -38,6 +38,18 @@ namespace Cope.SpaceRogue.Galaxy.API.Model
 			PosX = posX;
 			PosY = posY; 
 			PosZ = posZ;
+		}
+
+		public void SetPlanetAdded() 
+		{
+			Raise(new PlanetAddedEvent 
+					{ 
+						PlanetId = ID.ToString(), 
+						Name = this.Name, 
+						PosX = this.PosX, 
+						PosY = this.PosY, 
+						PosZ = this.PosZ 
+					});
 		}
 
 		protected override void EnsureValidState()

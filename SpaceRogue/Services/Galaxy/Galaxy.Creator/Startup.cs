@@ -69,7 +69,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
 			return services;
 		}
-
+		
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())

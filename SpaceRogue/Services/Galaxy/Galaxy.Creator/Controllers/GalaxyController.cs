@@ -1,6 +1,7 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.InfraStructure;
 using Cope.SpaceRogue.Galaxy.API.Model;
 using Cope.SpaceRogue.Galaxy.API.ViewModel;
+using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,24 +18,44 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
 	public class GalaxyController : ControllerBase
 	{
 		
-		private readonly GalaxyRepository _galaxyContext;
+		private readonly PlanetRepository _repo;
 
-		public GalaxyController(GalaxyRepository galaxyContext)
+		public GalaxyController(PlanetRepository repo)
 		{
-			_galaxyContext = galaxyContext;
+			_repo = repo;
 		}
 
         // GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
         [HttpGet]
-        [Route("items")]
+        [Route("planets")]
         [ProducesResponseType(typeof(PaginatedItemsViewModel<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> PlanetsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string ids = null)
         {
-            var lst = await _galaxyContext.Read();
+            var lst = await _repo.GetItems();
             var totalItems = lst.Count;
+                
+            var itemsOnPage = lst
+                .OrderBy(c => c.Name)
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize);
 
+            var model = new PaginatedItemsViewModel<Planet>(pageIndex, pageSize, totalItems, itemsOnPage);
+
+            return Ok(model);
+        }
+
+        // GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
+        [HttpGet]
+        [Route("planets/{x:int}/{y:int}/{z:int}")]
+        [ProducesResponseType(typeof(PaginatedItemsViewModel<Planet>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<Planet>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> PlanetsAtPositionAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string ids = null)
+        {
+            var lst = await _repo.GetItems();
+            var totalItems = lst.Count;
                 
             var itemsOnPage = lst
                 .OrderBy(c => c.Name)
@@ -47,13 +68,13 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
         }
 
         [HttpGet]
-        [Route("items/{id:string}")]
+        [Route("planets/{id:string}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Planet), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Planet>> ItemByIdAsync(string id)
         {
-            var planet = await _galaxyContext.GetItem(id);
+            var planet = await _repo.GetItem(Guid.Parse(id));
          
             if (planet != null)
             {
@@ -63,22 +84,5 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
             return NotFound();
         }
 
-        // GET api/v1/[controller]/items/withname/samplename[?pageSize=3&pageIndex=10]
-        [HttpGet]
-        [Route("items/withname/{name:minlength(1)}")]
-        [ProducesResponseType(typeof(PaginatedItemsViewModel<Planet>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<PaginatedItemsViewModel<Planet>>> ItemsWithNameAsync(string name, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
-        {
-            var lst = await _galaxyContext.GetItemsByName(name);
-            var totalItems = lst.Count;
-
-            var itemsOnPage = await _galaxyContext.Read();
-
-            itemsOnPage.Where(c => c.Name.StartsWith(name))
-                 .Skip(pageSize * pageIndex)
-                 .Take(pageSize);
-
-            return new PaginatedItemsViewModel<Planet>(pageIndex, pageSize, totalItems, lst);
-        }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
@@ -15,79 +16,77 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 		{
 			Context = context;
 		}
-
-
-		public void AddItem(ProductGroup item)
+		public async Task<bool> AddItem(ProductGroup item)
 		{
 			if (item.ID == default)
 				throw new ArgumentException("Product group must have an Id.");
 
 			if (string.IsNullOrEmpty(item.Name))
 				throw new ArgumentException("Product group must have a name.");
-			var pn = GetItemByName(item.Name);
+			var pn = await GetItemByName(item.Name);
 			if (pn == null)
 			{
 				Context.ProductGroups.Add(item);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			else
 			{
-				UpdateItem(item);
+				var result = await UpdateItem(item);
 			}
+			return true;
 		}
 
-		public void DeleteItem(ProductGroup item)
+		public async Task<bool> DeleteItem(ProductGroup item)
 		{
-			var itm = Context.ProductGroups.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.ProductGroups.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				Context.ProductGroups.Remove(itm);
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
+				return true;
 			}
+			return false;
 		}
 
-		public void DeleteMany(Guid id)
+		public async Task<ProductGroup>  GetItem(Guid id)
 		{
-			throw new NotImplementedException();
+			return await Context.ProductGroups.FirstOrDefaultAsync(x => x.ID.Equals(id));
 		}
 
-		public ProductGroup GetItem(Guid id)
+		public async Task<ProductGroup> GetItemByName(string name)
 		{
-			return Context.ProductGroups.FirstOrDefault(x => x.ID.Equals(id));
+			return await Context.ProductGroups.FirstOrDefaultAsync(x => x.Name.Equals(name));
 		}
 
-		public ProductGroup GetItemByName(string name)
+		public async Task<List<ProductGroup>> GetItems()
 		{
-			return Context.ProductGroups.FirstOrDefault(x => x.Name.Equals(name));
-		}
-
-		public List<ProductGroup> GetItems()
-		{
-			return Context.ProductGroups
+			return await Context.ProductGroups
 					.Include(x=>x.Products)
-					.ToList();
+					.ToListAsync();
 		}
 
-		public ProductGroup UpdateItem(ProductGroup item)
+		public async Task<ProductGroup> UpdateItem(ProductGroup item)
 		{
-			var itm = Context.ProductGroups.FirstOrDefault(x => x.ID.Equals(item.ID));
+			var itm = await Context.ProductGroups.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
 			if (itm != null)
 			{
 				itm.Name = item.Name;
-				Context.SaveChanges();
+				await Context.SaveChangesAsync();
 			}
 			return item;
 		}
 
-		public void AddDefaults()
+		public async Task<bool> AddDefaults()
 		{
 			var metal = new ProductGroup("Metallverarbeitung");
 			var food = new ProductGroup("Food");
 			var material = new ProductGroup("Baumaterial");
 
-			AddItem(metal);
-			AddItem(food);
-			AddItem(material);
+			var result = await AddItem(metal);
+			result = await AddItem(food);
+			result = await AddItem(material);
+
+			return result;
 		}
 	}
 }
