@@ -1,4 +1,4 @@
-﻿using Galaxy.API.Domain;
+﻿using Cope.SpaceRogue.Galaxy.Creator;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

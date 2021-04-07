@@ -1,9 +1,10 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
+﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.ComponentModel.DataAnnotations;
 using Cope.SpaceRogue.Galaxy.Creator.IntegrationEvents;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Model
 {
@@ -20,6 +21,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Model
 		public int PosX { get; set; }
 		public int PosY { get; set; }
 		public int PosZ { get; set; }
+		public PlanetStates PlanetState { get; private set; }
+
+		public enum PlanetStates
+		{
+			Created,
+			Spawned,
+			MarketOpen,
+		}
 
 		public Planet()
 		{
@@ -38,18 +47,12 @@ namespace Cope.SpaceRogue.Galaxy.API.Model
 			PosX = posX;
 			PosY = posY; 
 			PosZ = posZ;
+			PlanetState = PlanetStates.Created;
 		}
 
-		public void SetPlanetAdded() 
+		public void ChangeState(PlanetStates newState)
 		{
-			Raise(new PlanetAddedEvent 
-					{ 
-						PlanetId = ID.ToString(), 
-						Name = this.Name, 
-						PosX = this.PosX, 
-						PosY = this.PosY, 
-						PosZ = this.PosZ 
-					});
+			PlanetState = newState;
 		}
 
 		protected override void EnsureValidState()

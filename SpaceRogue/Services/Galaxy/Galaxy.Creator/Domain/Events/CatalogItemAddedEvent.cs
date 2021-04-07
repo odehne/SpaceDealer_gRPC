@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain.Events
+namespace Cope.SpaceRogue.Galaxy.Creator.Domain.Events
 {
 	public class CatalogItemAddedEvent
 	{

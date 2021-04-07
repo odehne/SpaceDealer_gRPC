@@ -1,15 +1,13 @@
-using Galaxy.API.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 using System;
-using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
-using Cope.SpaceRogue.InfraStructure;
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using Cope.SpaceRogue.InfraStructure;
 using Cope.SpaceRogue.Galaxy.API.Model;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
 {
-    public class Menu
+	public class Menu
 	{
 		public GalaxyDbContext Context {get; set; }
 		public Menu(GalaxyDbContext context) 

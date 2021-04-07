@@ -1,5 +1,5 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
-using Galaxy.API.Domain;
+using Cope.SpaceRogue.Galaxy.Creator;
 using System;
 using System.Collections.Generic;
 using System.Linq;

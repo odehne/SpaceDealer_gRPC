@@ -2,7 +2,7 @@
 using Cope.SpaceRogue.InfraStructure;
 using System;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
+namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 {
 	public class Payload : Entity
 	{

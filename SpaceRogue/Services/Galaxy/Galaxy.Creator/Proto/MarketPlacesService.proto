@@ -3,16 +3,63 @@
 option csharp_namespace = "Cope.SpaceRogue.Galaxy.Creator.Proto";
 
 service MarketPlacesService {
-  rpc AddMarketPlace (AddMarketPlacegRequest) returns (AddMarketPlaceReply);
+  rpc AddProduct (AddProductRequest) returns (AddProductReply);
+  rpc AddProductGroup (AddProductGroupRequest) returns (AddProductGroupReply);
+  rpc AddMarketPlace (AddMarketPlaceRequest) returns (AddMarketPlaceReply);
+  rpc AddCatalogItem (AddCatalogItemRequest) returns (AddCatalogItemReply);
+  rpc AddCatalog (AddCatalogRequest) returns (AddCatalogReply);
   rpc UpdateMarketPlace (UpdateMarketPlaceRequest) returns (UpdateMarketPlaceReply);
   rpc DeleteMarketPlace (DeleteMarketPlaceRequest) returns (DeleteMarketPlaceReply);
 }
 
-message AddMarketPlacegRequest {
+message AddCatalogRequest {
+	string CatalogId = 1;
+	repeated AddCatalogItemRequest CatalogItems = 2;
+}
+
+message AddCatalogReply {
+	bool OK = 1;
+}
+
+message AddCatalogItemRequest {
+	string CatalogItemId = 1;
+	string Title = 2;
+	double Price = 3;
+	string ProductId = 4;
+}
+
+message AddCatalogItemReply {
+	bool OK = 1;
+}
+
+message AddProductGroupRequest {
+	string ProductGroupId = 1;
+	string Name = 2;
+}
+
+message AddProductGroupReply {
+	bool OK = 1;
+}
+
+message AddProductReply {
+	bool OK = 1;
+}
+
+message AddProductRequest {
+	string ProductId = 1;
+	string ProductGroupId = 2;
+	string Name = 3;
+	double PricePerUnit = 4;
+	int32 Rarity = 5;
+	double Capacity = 6;
+}
+
+message AddMarketPlaceRequest {
 	string PlanetId = 1;
     string MarketPlaceId = 2;
-	string ProductOfferingsCatalogId = 3;
-	string ProductDemandsCatalogId = 4;
+	string Name = 3;
+	AddCatalogRequest Offerings = 4;
+	AddCatalogRequest Demands = 5;
 }
 
 message AddMarketPlaceReply {

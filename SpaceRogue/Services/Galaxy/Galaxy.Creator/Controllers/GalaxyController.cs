@@ -1,8 +1,11 @@
-﻿using Cope.SpaceRogue.Galaxy.API.InfraStructure;
-using Cope.SpaceRogue.Galaxy.API.Model;
+﻿using Cope.SpaceRogue.Galaxy.API.Model;
 using Cope.SpaceRogue.Galaxy.API.ViewModel;
+using Cope.SpaceRogue.Galaxy.Creator.Application.Commands;
 using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +13,28 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.API.Controllers
+namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
 {
 
     [Route("api/v1/[controller]")]
 	[ApiController]
 	public class GalaxyController : ControllerBase
 	{
-		
-		private readonly PlanetRepository _repo;
+        private readonly IMediator _mediator;
+        private readonly ILogger<GalaxyController> _logger;
+        private readonly PlanetRepository _repo;
 
-		public GalaxyController(PlanetRepository repo)
+		public GalaxyController(IMediator mediator, ILogger<GalaxyController> logger, PlanetRepository repo)
 		{
+			_mediator = mediator;
+			_logger = logger;
 			_repo = repo;
 		}
 
-        // GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
-        [HttpGet]
+
+
+		// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
+		[HttpGet]
         [Route("planets")]
         [ProducesResponseType(typeof(PaginatedItemsViewModel<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<Planet>), (int)HttpStatusCode.OK)]
@@ -65,6 +73,66 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
             var model = new PaginatedItemsViewModel<Planet>(pageIndex, pageSize, totalItems, itemsOnPage);
 
             return Ok(model);
+        }
+
+        [Route("products/new")]
+        [HttpPost]
+        public async Task<ActionResult<ProductDTO>> CreateProductAsync([FromBody] AddProductCommand createProductCommand)
+        {
+            _logger.LogInformation(
+                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                createProductCommand.GetGenericTypeName(),
+                nameof(createProductCommand.ProductName), createProductCommand.ProductGroupId, createProductCommand.PricePerUnit);
+
+            return await _mediator.Send(createProductCommand);
+        }
+
+        [Route("productgroups/new")]
+        [HttpPost]
+        public async Task<ActionResult<ProductGroupDTO>> CreateProductGroupAsync([FromBody] AddProductGroupCommand createProductGroupCommand)
+        {
+            _logger.LogInformation(
+                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                createProductGroupCommand.GetGenericTypeName(),
+                nameof(createProductGroupCommand.ProductGroupName), createProductGroupCommand.ProductGroupId);
+
+            return await _mediator.Send(createProductGroupCommand);
+        }
+
+        [Route("catalogitems/new")]
+        [HttpPost]
+        public async Task<ActionResult<CatalogItemDTO>> CreateCatalogItemAsync([FromBody] AddCatalogItemCommand createCatalogItemCommand)
+        {
+            _logger.LogInformation(
+                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                createCatalogItemCommand.GetGenericTypeName(),
+                nameof(createCatalogItemCommand.CatalogId), createCatalogItemCommand.ProductId);
+
+            return await _mediator.Send(createCatalogItemCommand);
+        }
+
+        [Route("marketplaces/new")]
+        [HttpPost]
+        public async Task<ActionResult<MarketPlaceDTO>> CreateMarketPlaceAsync([FromBody] CreateMarketPlaceCommand createdMarketPlaceCommand)
+        {
+            _logger.LogInformation(
+                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                createdMarketPlaceCommand.GetGenericTypeName(),
+                nameof(createdMarketPlaceCommand.PlanetId), createdMarketPlaceCommand.MarketPlaceId);
+
+            return await _mediator.Send(createdMarketPlaceCommand);
+        }
+
+        [Route("planets/new")]
+        [HttpPost]
+        public async Task<ActionResult<PlanetDTO>> CreatePlanetAsync([FromBody] CreatePlanetCommand createPlanetCommand)
+        {
+            _logger.LogInformation(
+                "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+                createPlanetCommand.GetGenericTypeName(),
+                nameof(createPlanetCommand.PlanetId), createPlanetCommand.PlanetName);
+
+            return await _mediator.Send(createPlanetCommand);
         }
 
         [HttpGet]

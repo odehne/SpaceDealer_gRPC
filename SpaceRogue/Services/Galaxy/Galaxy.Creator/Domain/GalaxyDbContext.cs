@@ -1,17 +1,22 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
+using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Galaxy.API.Domain
+namespace Cope.SpaceRogue.Galaxy.Creator
 {
 	public class GalaxyDbContext : DbContext
 	{
-		public const string DbFileName = "/Users/oliverde/Documents/SpaceRogue.db";
+		public string ConnectionString { get; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		public GalaxyDbContext(string connectionString)
 		{
-			optionsBuilder.UseSqlite($"Data Source={DbFileName}");
+			ConnectionString = connectionString;
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.UseSqlite($"Data Source={ConnectionString}");
 			base.OnConfiguring(optionsBuilder);
 		}
 

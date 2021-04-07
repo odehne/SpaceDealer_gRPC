@@ -1,5 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.API.Domain;
-using Cope.SpaceRogue.Galaxy.Creator.API.Domain.Events;
+﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using Cope.SpaceRogue.Galaxy.Creator.Domain.Events;
 using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;

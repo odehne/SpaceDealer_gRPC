@@ -4,7 +4,7 @@ using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
+namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 {
 	public class Feature : Entity
 	{

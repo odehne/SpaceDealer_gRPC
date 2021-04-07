@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
+namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 {
 
 	public class MarketPlace : Entity

@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.API.Domain.Events;
+﻿using Cope.SpaceRogue.Galaxy.Creator.Domain.Events;
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
+namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 {
 	public class Catalog : Entity
 	{

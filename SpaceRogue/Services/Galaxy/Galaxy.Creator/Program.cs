@@ -1,4 +1,4 @@
-﻿using Galaxy.API.Domain;
+﻿using Cope.SpaceRogue.Galaxy.Creator;
 using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -39,9 +39,8 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 			// Environment.Exit(0);
 		
 
-			using var galContext = new GalaxyDbContext();
-			var menu = new Menu(galContext);
-
+			//using var galContext = new GalaxyDbContext();
+			var menu = new Menu(new GalaxyDbContext("c:\\temp\\GalaxyRouge.db"));
 			await menu.ShowMenu();
 
 			// var prodRepo = new ProductRepository(galContext);

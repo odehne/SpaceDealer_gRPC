@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.API.Domain
+namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 {
 	public class Ship : Entity
 	{
