@@ -27,6 +27,7 @@ using Galaxy.Creator.Domain;
 using System.Reflection;
 using RabbitMQ.Client;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
+using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
 {
@@ -52,13 +53,21 @@ namespace Cope.SpaceRogue.Galaxy.Creator
                 .AddApplicationInsights(Configuration)
                 .AddHealthChecks(Configuration)
                 .AddSwaggerGen()
-                .AddCustomIntegrations(Configuration)
+                .AddCustomIntegrations(Configuration)   
                 .AddCustomConfiguration(Configuration)
-                .AddEventBus(Configuration);
+                .AddEventBus(Configuration)
+                .AddScoped<IShipRepository, ShipRepository>()
+                .AddScoped<ICatalogItemsRepository, CatalogItemsRepository>()
+                .AddScoped<IFeatureRepository, FeatureRepository>()
+                .AddScoped<IMarketPlaceRepository, MarketPlaceRepository>()
+                .AddScoped<IProductGroupRepository, ProductGroupRepository>()
+                .AddScoped<IProductRepository, ProductRepository>()
+                .AddScoped<IPlayerRepository, PlayerRepository>()
+                .AddScoped<IPlanetRepository, PlanetRepository>();
+                
 
-			var container = new ContainerBuilder();
+			var container = new ContainerBuilder(); 
 			container.Populate(services);
-
 			container.RegisterModule(new MediatorModule());
 			container.RegisterModule(new ApplicationModule(Configuration["ConnectionString"]));
 

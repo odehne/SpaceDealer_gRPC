@@ -113,7 +113,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
 
         [Route("marketplaces/new")]
         [HttpPost]
-        public async Task<ActionResult<MarketPlaceDTO>> CreateMarketPlaceAsync([FromBody] CreateMarketPlaceCommand createdMarketPlaceCommand)
+        public async Task<ActionResult<MarketPlaceDTO>> CreateMarketPlaceAsync([FromBody] AddMarketPlaceCommand createdMarketPlaceCommand)
         {
             _logger.LogInformation(
                 "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
@@ -125,7 +125,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
 
         [Route("planets/new")]
         [HttpPost]
-        public async Task<ActionResult<PlanetDTO>> CreatePlanetAsync([FromBody] CreatePlanetCommand createPlanetCommand)
+        public async Task<ActionResult<PlanetDTO>> CreatePlanetAsync([FromBody] AddPlanetCommand createPlanetCommand)
         {
             _logger.LogInformation(
                 "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",

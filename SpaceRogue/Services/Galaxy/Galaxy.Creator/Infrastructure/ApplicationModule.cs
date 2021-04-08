@@ -24,31 +24,35 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Infrastructure
 		protected override void Load(ContainerBuilder builder)
 		{
 			builder.Register(c => new ProductGroupRepository(Context))
-				.As<IRepository<ProductGroup>>()
+				.As<IProductGroupRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.Register(c => new ProductRepository(Context))
-				.As<IRepository<Product>>()
+				.As<IProductRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.Register(c => new PlayerRepository(Context))
-				.As<IRepository<Player>>()
+				.As<IPlayerRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.Register(c => new MarketPlaceRepository(Context))
-				.As<IRepository<MarketPlace>>()
+				.As<IMarketPlaceRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.Register(c => new CatalogItemsRepository(Context))
-				.As<IRepository<CatalogItem>>()
+				.As<ICatalogItemsRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.Register(c => new FeatureRepository(Context))
-				.As<IRepository<Feature>>()
+				.As<IFeatureRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.Register(c => new ShipRepository(Context))
-				.As<IRepository<Ship>>()
+				.As<IShipRepository>()
+				.InstancePerLifetimeScope();
+			
+			builder.Register(c => new PlanetRepository(Context))
+				.As<IPlanetRepository>()
 				.InstancePerLifetimeScope();
 
 			builder.RegisterAssemblyTypes(typeof(PlanetSpawnedIntegrationEvent).GetTypeInfo().Assembly)

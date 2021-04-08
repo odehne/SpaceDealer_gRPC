@@ -11,9 +11,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 		private readonly MarketPlaceRepository _repository;
 		private readonly IMediator _mediator;
 
-		public AddCatalogCommandHandler(IMediator mediator)
+		public AddCatalogCommandHandler(IMediator mediator, MarketPlaceRepository repository)
 		{
 			_mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 		}
 
 		public async Task<CatalogDTO> Handle(AddCatalogCommand request, CancellationToken cancellationToken)

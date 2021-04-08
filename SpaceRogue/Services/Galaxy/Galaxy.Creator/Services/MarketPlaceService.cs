@@ -59,9 +59,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Services
 			return base.UpdateMarketPlace(request, context);
 		}
 
-		private static CreateMarketPlaceCommand MapToCreateMarketPlaceCommand(AddMarketPlaceRequest addMarketPlaceRequest)
+		private static AddMarketPlaceCommand MapToCreateMarketPlaceCommand(AddMarketPlaceRequest addMarketPlaceRequest)
 		{
-			return new CreateMarketPlaceCommand
+			return new AddMarketPlaceCommand
 			{
 				PlanetId = addMarketPlaceRequest.PlanetId,
 				MarketPlaceName = addMarketPlaceRequest.Name,

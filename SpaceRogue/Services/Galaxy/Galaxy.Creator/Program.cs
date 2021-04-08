@@ -1,17 +1,11 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator;
-using Cope.SpaceRogue.Galaxy.Creator.Repositories;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Collections.Generic;
-using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
@@ -37,10 +31,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 			// Console.WriteLine($"Size: {p.SizeInUnits}t");
 			
 			// Environment.Exit(0);
-		
 
 			//using var galContext = new GalaxyDbContext();
-			var menu = new Menu(new GalaxyDbContext("c:\\temp\\GalaxyRouge.db"));
+			var menu = new Menu(new GalaxyDbContext("/Users/oliverde/Documents/GalaxyRouge.db"));
 			await menu.ShowMenu();
 
 			// var prodRepo = new ProductRepository(galContext);

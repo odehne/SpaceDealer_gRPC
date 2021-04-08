@@ -1,6 +1,5 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Model;
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
-using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cope.SpaceRogue.Galaxy.Creator

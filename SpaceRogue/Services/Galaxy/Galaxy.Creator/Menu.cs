@@ -4,15 +4,21 @@ using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Cope.SpaceRogue.InfraStructure;
 using Cope.SpaceRogue.Galaxy.API.Model;
 using System.Threading.Tasks;
+using Cope.SpaceRogue.Galaxy.Creator.Application.Commands;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
 {
 	public class Menu
 	{
-		public GalaxyDbContext Context {get; set; }
+        private readonly IMediator _mediator;
+        private readonly ILogger<Menu> _logger;
+        private readonly GalaxyDbContext _context;
+
 		public Menu(GalaxyDbContext context) 
 		{
-			Context = context;
+            _context = context;
 		}
 
         public async Task ShowMenu()
@@ -75,7 +81,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
             Console.Write("Name des zu aktualisierenden Produktes: ");
             var line = Console.ReadLine();
-            var repo = new ProductRepository(Context);
+            var repo = new ProductRepository(_context);
             var prod = await repo.GetItemByName(line);
             if(prod==null)
             {
@@ -108,7 +114,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
             Console.Write("Name des zu löschenden Produktes: ");
             var line = Console.ReadLine();
-            var repo = new ProductRepository(Context);
+            var repo = new ProductRepository(_context);
             var prod = await repo.GetItemByName(line);
             if(prod==null)
             {
@@ -122,7 +128,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
              Console.Write("Name der zu löschenden Produktgruppe: ");
             var line = Console.ReadLine();
-            var repo = new ProductGroupRepository(Context);
+            var repo = new ProductGroupRepository(_context);
             var prod = await repo.GetItemByName(line);
             if(prod==null)
             {
@@ -134,7 +140,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
         private async Task ListProducts()
         {
-            var productRepo = new ProductRepository(Context);
+            var productRepo = new ProductRepository(_context);
             var lst = await productRepo.GetItems();
             var i=0;
             foreach (var prod in lst)
@@ -146,7 +152,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
         private async Task<bool> ListProductGroups()
         {
-            var prodGroupRepo = new ProductGroupRepository(Context);
+            var prodGroupRepo = new ProductGroupRepository(_context);
             var lst = await prodGroupRepo.GetItems();
             var i=0;
             foreach (var group in lst)
@@ -161,16 +167,16 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
             Console.Write("Name des neuen Produktgruppe: ");
             var line = Console.ReadLine();
-            var repo = new ProductGroupRepository(Context);
             var group = new ProductGroup(line);
-            await repo.AddItem(group);
+            var command = new AddProductGroupCommand(group.ID.ToString(), group.Name);
+            await _mediator.Send(command);
         }
 
         private async Task AddProduct()
         {
             Console.Write("Name der zugehörigen Produktgruppe: ");
             var groupName = Console.ReadLine();
-            var repo = new ProductGroupRepository(Context);
+            var repo = new ProductGroupRepository(_context);
             var group = await repo.GetItemByName(groupName);
             if(group==null){
                 Console.WriteLine($"Gruppe {groupName} nicht gefunden.");
@@ -185,7 +191,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
             Console.Write("Preis pro Tonne: ");
             var price = Console.ReadLine();
             var product = new Product(prodName, group.ID, double.Parse(tonsPerUnit), double.Parse(rarity), double.Parse(price));
-            var prodRepo = new ProductRepository(Context);
+            var prodRepo = new ProductRepository(_context);
             var result = await prodRepo.AddItem(product);
         }
 
@@ -193,7 +199,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
             Console.Write("Name des zu löschenden Planeten: ");
             var line = Console.ReadLine();
-            var repo = new PlanetRepository(Context);
+            var repo = new PlanetRepository(_context);
             var planet = await repo.GetItemByName(line);
             if(planet==null)
             {
@@ -205,7 +211,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
         private async Task ListPlanets()
         {
-            var planetRepo = new PlanetRepository(Context);
+            var planetRepo = new PlanetRepository(_context);
             var lst = await planetRepo.GetItems();
             var i=0;
             foreach (var planet in lst)
@@ -261,10 +267,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 				offerings.AddCatalogItem(product, product.Name, -5);
 			}
 
-			var marketRepo = new MarketPlaceRepository(Context);
+			var marketRepo = new MarketPlaceRepository(_context);
 			var market = new MarketPlace(marketPlaceName, offerings, demands);
 			await marketRepo.AddItem(market);
-			var planetRepo = new PlanetRepository(Context);
+			var planetRepo = new PlanetRepository(_context);
 			var planet = new Planet(market, name, "Neuer Planet entdeckt!", (int)position.X, (int)position.Y, (int)position.Z);
 			await planetRepo.AddItem(planet); 
 			
@@ -273,7 +279,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
         private async Task<ProductGroup> SelectProductGroup()
         {
-            var groupRepo = new ProductGroupRepository(Context);
+            var groupRepo = new ProductGroupRepository(_context);
 			var lst = await groupRepo.GetItems();
 			var i = 0;
 			foreach (var group in lst)

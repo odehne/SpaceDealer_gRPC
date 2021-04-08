@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 {
-	public class CreatePlanetCommand : IRequest<PlanetDTO>
+	public class AddPlanetCommand : IRequest<PlanetDTO>
 	{
 		[DataMember]
 		public string PlanetId { get; private set; }
@@ -31,7 +31,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 
 	}
 
-	public class CreateMarketPlaceCommand : IRequest<MarketPlaceDTO>
+	public class AddMarketPlaceCommand : IRequest<MarketPlaceDTO>
 	{
 		[DataMember]
 		public string MarketPlaceId { get; set; }
@@ -44,11 +44,11 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 		[DataMember]
 		public CatalogDTO Demands { get; set; }
 
-		public CreateMarketPlaceCommand()
+		public AddMarketPlaceCommand()
 		{
 		}
 
-		public CreateMarketPlaceCommand(string marketPlaceId, string marketPlaceName, string planetId, CatalogDTO offerings, CatalogDTO demands)
+		public AddMarketPlaceCommand(string marketPlaceId, string marketPlaceName, string planetId, CatalogDTO offerings, CatalogDTO demands)
 		{
 			MarketPlaceId = marketPlaceId;
 			MarketPlaceName = marketPlaceName;

@@ -8,112 +8,126 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 {
-	public class ShipRepository : IRepository<Ship>
-	{
-		public GalaxyDbContext Context { get; }
+    public interface IShipRepository
+    {
+        GalaxyDbContext Context { get; }
+        Task<bool> AddItem(Ship item);
+        Task<bool> DeleteItem(Ship item);
+        Task<Ship> GetItem(Guid id);
+        Task<Ship> GetItemByName(string name);
+        Task<List<Ship>> GetItems();
+        Task<bool> UpdateCargo(int id, List<Payload> cargo);
+        Task<bool> UpdateHull(int id, int newHullValue);
+        Task<Ship> UpdateItem(Ship item);
+        Task<bool> UpdateShields(int id, int newShieldValue);
+    }
 
-		public ShipRepository(GalaxyDbContext context)
-		{
-			Context = context;
-		}
+    public class ShipRepository : IShipRepository
+    {
+        public GalaxyDbContext Context { get; }
 
-		public async Task<bool> AddItem(Ship item)
-		{
-			if (item.ID == default)
-				throw new ArgumentException("Ship must have an Id.");
+        public ShipRepository(GalaxyDbContext context)
+        {
+            Context = context;
+        }
 
-			if (string.IsNullOrEmpty(item.Name))
-				throw new ArgumentException("Ship must have a name.");
+        public async Task<bool> AddItem(Ship item)
+        {
+            if (item.ID == default)
+                throw new ArgumentException("Ship must have an Id.");
 
-			var pn = await GetItemByName(item.Name);
-			if (pn == null)
-			{
-				Context.Ships.Add(item);
-				await Context.SaveChangesAsync();
-			}
-			else
-			{
-				await UpdateItem(item);
-			}
-			return true;
-		}
+            if (string.IsNullOrEmpty(item.Name))
+                throw new ArgumentException("Ship must have a name.");
 
-		public async Task<bool> DeleteItem(Ship item)
-		{
-			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
-			if (itm != null)
-			{
-				Context.Ships.Remove(itm);
-				await Context.SaveChangesAsync();
-			}
-			return true;
-		}
+            var pn = await GetItemByName(item.Name);
+            if (pn == null)
+            {
+                Context.Ships.Add(item);
+                await Context.SaveChangesAsync();
+            }
+            else
+            {
+                await UpdateItem(item);
+            }
+            return true;
+        }
 
-		public async Task<Ship> GetItem(Guid id)
-		{
-			return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
-		}
+        public async Task<bool> DeleteItem(Ship item)
+        {
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
+            if (itm != null)
+            {
+                Context.Ships.Remove(itm);
+                await Context.SaveChangesAsync();
+            }
+            return true;
+        }
 
-		public async Task<Ship> GetItemByName(string name)
-		{
-			return await Context.Ships.FirstOrDefaultAsync(x => x.Name.Equals(name));
-		}
+        public async Task<Ship> GetItem(Guid id)
+        {
+            return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+        }
 
-		public async Task<List<Ship>> GetItems()
-		{
-			return await Context.Ships.ToListAsync();
-		}
+        public async Task<Ship> GetItemByName(string name)
+        {
+            return await Context.Ships.FirstOrDefaultAsync(x => x.Name.Equals(name));
+        }
 
-		public async Task<bool> UpdateHull(int id, int newHullValue)
-		{
-			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
-			if (itm != null)
-			{
-				itm.Hull = newHullValue;
-				await Context.SaveChangesAsync();
-				return true;
-			}
-			return false;
-		}
+        public async Task<List<Ship>> GetItems()
+        {
+            return await Context.Ships.ToListAsync();
+        }
 
-		public async Task<bool> UpdateShields(int id, int newShieldValue)
-		{
-			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
-			if (itm != null)
-			{
-				itm.Shields = newShieldValue;
-				await Context.SaveChangesAsync();
-				return true;
-			}
-			return false;
-		}
+        public async Task<bool> UpdateHull(int id, int newHullValue)
+        {
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (itm != null)
+            {
+                itm.Hull = newHullValue;
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
 
-		public async Task<bool> UpdateCargo(int id, List<Payload> cargo)
-		{
-			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
-			if (itm != null)
-			{
-				itm.Cargo = cargo;
-				await Context.SaveChangesAsync();
-				return true;
-			}
-			return false;
-		}
+        public async Task<bool> UpdateShields(int id, int newShieldValue)
+        {
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (itm != null)
+            {
+                itm.Shields = newShieldValue;
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateCargo(int id, List<Payload> cargo)
+        {
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (itm != null)
+            {
+                itm.Cargo = cargo;
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
 
 
-		public async Task<Ship> UpdateItem(Ship item)
-		{
-			var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
-			if (itm != null)
-			{
-				itm.Name = item.Name;
-				itm.Cargo = item.Cargo;
-				itm.Features = item.Features;
-				itm.Hull = item.Hull;
-				itm.Shields = item.Shields;
-				await Context.SaveChangesAsync();
-			}
-			return item;
-		}
+        public async Task<Ship> UpdateItem(Ship item)
+        {
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
+            if (itm != null)
+            {
+                itm.Name = item.Name;
+                itm.Cargo = item.Cargo;
+                itm.Features = item.Features;
+                itm.Hull = item.Hull;
+                itm.Shields = item.Shields;
+                await Context.SaveChangesAsync();
+            }
+            return item;
+        }
     }
 }
