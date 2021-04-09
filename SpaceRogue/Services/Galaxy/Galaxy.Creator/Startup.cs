@@ -42,19 +42,22 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
 		public virtual IServiceProvider ConfigureServices(IServiceCollection services)
 		{
-			//using var context = new GalaxyDbContext("c:\\temp\\GalaxyRogue.db");
-			//context.Database.EnsureCreated();
-			services
-				.AddGrpc(options =>
-				{
-					options.EnableDetailedErrors = true;
-				})
-				.Services
+            //using var context = new GalaxyDbContext("c:\\temp\\SpaceRogue.db");
+            //context.Database.EnsureCreated();
+
+       
+        	services
                 .AddApplicationInsights(Configuration)
+                .AddGrpc(options =>
+                {
+                    options.EnableDetailedErrors = true;
+                }).Services
+                .AddCustomMvc()
                 .AddHealthChecks(Configuration)
                 .AddSwaggerGen()
                 .AddCustomIntegrations(Configuration)   
                 .AddCustomConfiguration(Configuration)
+                .AddCustomDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddScoped<IShipRepository, ShipRepository>()
                 .AddScoped<ICatalogItemsRepository, CatalogItemsRepository>()
@@ -64,14 +67,14 @@ namespace Cope.SpaceRogue.Galaxy.Creator
                 .AddScoped<IProductRepository, ProductRepository>()
                 .AddScoped<IPlayerRepository, PlayerRepository>()
                 .AddScoped<IPlanetRepository, PlanetRepository>();
-                
-
-			var container = new ContainerBuilder(); 
+           
+            var container = new ContainerBuilder(); 
 			container.Populate(services);
-			container.RegisterModule(new MediatorModule());
+			container.RegisterModule(new MediatorModule(Configuration["ConnectionString"]));
 			container.RegisterModule(new ApplicationModule(Configuration["ConnectionString"]));
 
-			return new AutofacServiceProvider(container.Build());
+            Factory.ServiceProvider = new AutofacServiceProvider(container.Build());
+            return Factory.ServiceProvider;
 		}
 		
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -90,19 +93,22 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
 			app.UseRouting();
 
-            app.UseSwagger()
-               .UseSwaggerUI(c =>
-               {
-                   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Ordering.API V1");
-                   c.OAuthClientId("orderingswaggerui");
-                   c.OAuthAppName("Ordering Swagger UI");
-               });
+			app.UseSwagger()
+			   .UseSwaggerUI(c =>
+			   {
+				   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Ordering.API V1");
+				   c.OAuthClientId("orderingswaggerui");
+				   c.OAuthAppName("Ordering Swagger UI");
+			   });
 
-            app.UseEndpoints(endpoints =>
+			app.UseEndpoints(endpoints =>
 			{
-				// Communication with gRPC endpoints must be made through a gRPC client.
-				// To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909
-				endpoints.MapGrpcService<PlanetService>();
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
+
+                // Communication with gRPC endpoints must be made through a gRPC client.
+                // To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909
+                endpoints.MapGrpcService<PlanetService>();
 				endpoints.MapGrpcService<MarketPlaceService>();
 			});
 		}
@@ -140,8 +146,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
                 // Added for functional tests
                 .AddApplicationPart(typeof(GalaxyController).Assembly)
                 .AddNewtonsoftJson()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-            ;
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddCors(options =>
             {
@@ -160,8 +165,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
             var hcBuilder = services.AddHealthChecks();
 
-            hcBuilder
-                    .AddRabbitMQ(
+            hcBuilder.AddRabbitMQ(
                         $"amqp://{configuration["EventBusConnection"]}",
                         name: "ordering-rabbitmqbus-check",
                         tags: new string[] { "rabbitmqbus" });
@@ -173,7 +177,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
         {
             services.AddDbContext<GalaxyDbContext>(options =>
             {
-                options.UseSqlite("c:\\temp\\GalaxyRogue.db",
+                options.UseSqlite(configuration["ConnectionString"],
                     sqlOptions =>
                     {
                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
@@ -185,7 +189,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 
             services.AddDbContext<IntegrationEventLogContext>(options =>
             {
-                options.UseSqlite("c:\\temp\\GalaxyRogueEvents.db",
+                options.UseSqlite("c:\\temp\\SpaceRogueEvents.db",
                                      options =>
                                      {
                                          options.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);

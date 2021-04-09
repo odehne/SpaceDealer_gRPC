@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using Cope.SpaceRogue.InfraStructure;
+using MediatR;
+using System;
 using System.Runtime.Serialization;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
@@ -17,6 +20,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 			ProductGroupName = productGroupName;
 		}
 	}
+
 	public class ProductGroupDTO
 	{
 		public string ProductGroupId { get; private set; }
@@ -27,6 +31,12 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 			ProductGroupId = productGroupId;
 			ProductGroupName = productGroupName;
 		}
+
+		internal static ProductGroupDTO MapToDto(ProductGroup itm)
+		{
+			return new ProductGroupDTO(itm.ID.ToString(), itm.Name);
+		}
+
 	}
 
 }

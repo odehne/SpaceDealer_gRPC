@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
-using Cope.SpaceRogue.Galaxy.Creator.Application.Commands;
-using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using System;
 using System.Reflection;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Infrastructure
@@ -16,7 +15,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Infrastructure
 		public ApplicationModule(string connectionString)
 		{
 			if (string.IsNullOrEmpty(connectionString))
-				connectionString = "/Users/oliverde/Documents/SpaceRogue.db";
+				throw new ArgumentException("Connection string not found");
 
 			Context = new GalaxyDbContext(connectionString);
 		}

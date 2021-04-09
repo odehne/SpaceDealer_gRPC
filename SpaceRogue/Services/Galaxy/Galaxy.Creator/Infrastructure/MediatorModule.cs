@@ -1,10 +1,13 @@
 ﻿using Autofac;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
 using Cope.SpaceRogue.Galaxy.Creator.Application.Commands;
+using Cope.SpaceRogue.Galaxy.Creator.Repositories;
 using FluentValidation;
 using Galaxy.Creator.Application.Behaviors;
+using Galaxy.Creator.Application.Commands;
 using Galaxy.Creator.Application.Validations;
 using MediatR;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -12,13 +15,32 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Infrastructure
 {
 	public class MediatorModule : Autofac.Module
 	{
+		public GalaxyDbContext Context { get; }
+
+		public MediatorModule(string connectionString)
+		{
+			if (string.IsNullOrEmpty(connectionString))
+				throw new ArgumentException("Connection string not found");
+
+			Context = new GalaxyDbContext(connectionString);
+		}
+
 		protected override void Load(ContainerBuilder builder)
 		{
 			builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
 				.AsImplementedInterfaces();
-
+			
 			// Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
 			builder.RegisterAssemblyTypes(typeof(SpawnPlanetCommand).GetTypeInfo().Assembly)
+				.AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+			builder.RegisterAssemblyTypes(typeof(AddProductGroupCommand).GetTypeInfo().Assembly)
+				.AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+			builder.RegisterAssemblyTypes(typeof(AddProductCommand).GetTypeInfo().Assembly)
+				.AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+			builder.RegisterAssemblyTypes(typeof(ProductsQuery).GetTypeInfo().Assembly)
 				.AsClosedTypesOf(typeof(IRequestHandler<,>));
 
 			// Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using Autofac.Extensions.DependencyInjection;
+using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
@@ -10,9 +12,23 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
 {
-
-    class Program
+	public static class Factory
 	{
+		public static AutofacServiceProvider ServiceProvider { get; set; }
+
+		public static IShipRepository ShipRepository => (IShipRepository)ServiceProvider.GetService(typeof(IShipRepository));
+		public static IPlanetRepository PlanetRepository => (IPlanetRepository)ServiceProvider.GetService(typeof(IPlanetRepository));
+		public static IPlayerRepository PlayerRepository => (IPlayerRepository)ServiceProvider.GetService(typeof(IPlayerRepository));
+		public static IProductGroupRepository ProductGroupRepository => (IProductGroupRepository)ServiceProvider.GetService(typeof(IProductGroupRepository));
+		public static IProductRepository ProductRepository => (IProductRepository)ServiceProvider.GetService(typeof(IProductRepository));
+		public static IMarketPlaceRepository MarketPlaceRepository => (IMarketPlaceRepository)ServiceProvider.GetService(typeof(IMarketPlaceRepository));
+		public static ICatalogItemsRepository CatalogItemsRepository => (ICatalogItemsRepository)ServiceProvider.GetService(typeof(ICatalogItemsRepository));
+	}
+
+	public class Program
+	{
+		
+
 		static async Task Main(string[] args)
 		{
 
@@ -20,6 +36,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 			Log.Logger = CreateSerilogLogger(configuration);
 			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
 			var host = CreateHostBuilder(configuration, args);
+			host.Run();
 
 			// var p = new Product();
 			// p.PricePerUnit = 11.78;
@@ -33,7 +50,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 			// Environment.Exit(0);
 
 			//using var galContext = new GalaxyDbContext();
-			var menu = new Menu(new GalaxyDbContext("/Users/oliverde/Documents/GalaxyRouge.db"));
+			var menu = new Menu(new GalaxyDbContext(configuration["ConnectionString"]), Factory.ShipRepository);
 			await menu.ShowMenu();
 
 			// var prodRepo = new ProductRepository(galContext);
@@ -88,15 +105,14 @@ namespace Cope.SpaceRogue.Galaxy.Creator
 		{
 			return WebHost.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
-				.CaptureStartupErrors(false)
+				.CaptureStartupErrors(true)
 				.ConfigureKestrel(options =>
 				{
-					var ports = GetDefinedPorts(configuration);
-					options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
+					options.Listen(IPAddress.Loopback, 51777, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
 					});
-					options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
+					options.Listen(IPAddress.Loopback, 8891, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http2;
 					});

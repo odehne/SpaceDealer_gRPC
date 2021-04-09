@@ -33,11 +33,11 @@ namespace Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers
 				throw new ArgumentException("Planet not found.");
 			}
 
-			p.ChangeState(Planet.PlanetStates.Spawned);
+			//p.ChangeState(Planet.PlanetStates.Spawned);
 
 			if (p.Market != null)
 			{
-				p.ChangeState(Planet.PlanetStates.MarketOpen);
+				//p.ChangeState(Planet.PlanetStates.MarketOpen);
 				await _planetRepository.UpdateItem(p);
 
 				var newMarketOpenEvent = new PlanetSpawnedIntegrationEvent(planetSpawnedEvent.ID, planetSpawnedEvent.Name, planetSpawnedEvent.PosX, planetSpawnedEvent.PosY, planetSpawnedEvent.PosZ);

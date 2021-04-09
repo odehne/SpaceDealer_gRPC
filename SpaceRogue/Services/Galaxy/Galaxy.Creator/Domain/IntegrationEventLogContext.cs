@@ -11,7 +11,7 @@ namespace Galaxy.Creator.Domain
         {
             var optionsBuilder = new DbContextOptionsBuilder<IntegrationEventLogContext>();
 
-            optionsBuilder.UseSqlite($"Data Source=c:\\temp\\GalaxyRogueEvents.db", options => options.MigrationsAssembly(GetType().Assembly.GetName().Name));
+            optionsBuilder.UseSqlite($"Data Source=c:\\temp\\SpaceRogueEvents.db", options => options.MigrationsAssembly(GetType().Assembly.GetName().Name));
 
             return new IntegrationEventLogContext(optionsBuilder.Options);
         }
