@@ -81,7 +81,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Services
 
 			foreach (var item in catalogRequest.CatalogItems)
 			{
-				items.Add(new CatalogItemDTO(item.CatalogItemId, catDto.CatalogId, item.ProductId, item.Title, item.Price));
+				items.Add(new CatalogItemDTO(item.CatalogItemId, item.ProductId, item.Title, item.Price));
 			}
 
 			catDto.CatalogItems = items;

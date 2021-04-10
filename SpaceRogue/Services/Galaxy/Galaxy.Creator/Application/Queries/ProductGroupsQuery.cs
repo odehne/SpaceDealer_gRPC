@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Galaxy.Creator.Application.Commands
 {
-	public class ProductGroupsQuery : IRequest<IEnumerable<ProductGroupDTO>> { }
+
+    public class ProductGroupsQuery : IRequest<IEnumerable<ProductGroupDTO>> { }
 
     public class ProductGroupsQueryHandler : IRequestHandler<ProductGroupsQuery, IEnumerable<ProductGroupDTO>>
     {

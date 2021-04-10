@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using MediatR;
+using System;
 using System.Runtime.Serialization;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
@@ -26,7 +28,6 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 	public class CatalogItemDTO
 	{
 		public string CatalogItemId { get; set; }
-		public string CatalogId { get; set; }
 		public string ProductId { get; set; }
 		public string Title { get; set; }
 		public double Price { get; set; }
@@ -35,13 +36,17 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 		{
 		}
 
-		public CatalogItemDTO(string catalogItemId, string catalogId, string productId, string title, double price)
+		public CatalogItemDTO(string catalogItemId, string productId, string title, double price)
 		{
 			CatalogItemId = catalogItemId;
-			CatalogId = catalogId;
 			ProductId = productId;
 			Title = title;
 			Price = price;
 		}
-	}
+
+        internal static CatalogItemDTO MapToDto(CatalogItem itm)
+        {
+            return new CatalogItemDTO(itm.ID.ToString(), itm.ProductId.ToString(), itm.Title, (double)itm.Price);
+        }
+    }
 }

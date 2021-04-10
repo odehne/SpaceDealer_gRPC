@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -25,18 +27,30 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 	public class CatalogDTO
 	{
 		public string CatalogId { get;  set; }
-		public string MarketPlaceId { get;  set; }
 		public IEnumerable<CatalogItemDTO> CatalogItems { get;  set; }
 
 		public CatalogDTO()
 		{
 		}
 
-		public CatalogDTO(string catalogId, string marketPlaceId, IEnumerable<CatalogItemDTO> catalogItems)
+		public CatalogDTO(string catalogId, IEnumerable<CatalogItemDTO> catalogItems)
 		{
 			CatalogId = catalogId;
-			MarketPlaceId = marketPlaceId;
 			CatalogItems = catalogItems;
 		}
-	}
+
+        internal static CatalogDTO MapToDto(Catalog catalog)
+        {
+            var dto = new CatalogDTO { CatalogId = catalog.ID.ToString() };
+			var lst = new List<CatalogItemDTO>();
+
+			foreach (var item in catalog.CatalogItems)
+			{
+				lst.Add(CatalogItemDTO.MapToDto(item));
+			}
+
+			dto.CatalogItems = lst;
+			return dto;
+        }
+    }
 }

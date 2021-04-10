@@ -33,12 +33,25 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
 			_repo = repo;
 		}
 
-        // GET api/v1/[controller]/products]
         [HttpGet]
-        [Route("products")]
-        public async Task<IEnumerable<ProductDTO>> Get()
+        public async Task<IEnumerable<PlanetDTO>> Get()
         {
-            return await _mediator.Send(new ProductsQuery());
+            return await _mediator.Send(new PlanetsQuery());
+        }
+        // GET api/v1/[controller]/id]
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<PlanetDTO> GetPlanet(string id)
+        {
+            return await _mediator.Send(new PlanetQuery(id));
+        }
+
+        // GET api/v1/[controller]/id]
+        [HttpGet]
+        [Route("{id}/marketplace")]
+        public async Task<MarketPlaceDTO> GetMarketPlace(string id)
+        {
+            return await _mediator.Send(new MarketPlaceQuery(id));
         }
 
         //// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]

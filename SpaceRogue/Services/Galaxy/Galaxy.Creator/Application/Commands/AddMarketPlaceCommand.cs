@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Cope.SpaceRogue.Galaxy.API.Model;
+using MediatR;
+using System;
 using System.Runtime.Serialization;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
@@ -29,7 +31,18 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 		public int PosZ { get; private set; }
 		public MarketPlaceDTO MarketPlace { get; private set; }
 
-	}
+        internal static PlanetDTO MapToDto(Planet itm)
+        {
+            return new PlanetDTO {
+				PlanetId = itm.ID.ToString(),
+				PlanetName = itm.Name,
+				PosX = itm.PosX,
+				PosY = itm.PosY,
+				PosZ = itm.PosZ,
+				MarketPlace = MarketPlaceDTO.MapToDto(itm.Market)
+			};
+        }
+    }
 
 	public class AddMarketPlaceCommand : IRequest<MarketPlaceDTO>
 	{

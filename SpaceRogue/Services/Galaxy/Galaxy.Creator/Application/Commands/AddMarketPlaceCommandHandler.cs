@@ -20,7 +20,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 		{
 			var market = await _repository.GetItem(request.PlanetId.ToGuid());
 			
-			return new MarketPlaceDTO(request.MarketPlaceId, request.PlanetId, market.Name);
+			return new MarketPlaceDTO(request.MarketPlaceId.ToString(), market.Name);
 		}
 
 	}

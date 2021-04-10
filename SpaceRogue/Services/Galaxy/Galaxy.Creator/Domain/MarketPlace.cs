@@ -14,6 +14,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Domain
 		[Key]
 		public Guid ID { get; set; }
 		public string Name { get; set; }
+
 		public virtual Catalog ProductOfferings { get; set; }
 		public virtual Catalog ProductDemands { get; set; }
 

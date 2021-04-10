@@ -40,7 +40,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 			if (string.IsNullOrEmpty(marketId))
 				throw new ArgumentException("Market not found.");
 
-			return new CatalogDTO(request.CatalogId, marketId, request.CatalogItems);
+			return new CatalogDTO(request.CatalogId, request.CatalogItems);
 		}
 
 	}

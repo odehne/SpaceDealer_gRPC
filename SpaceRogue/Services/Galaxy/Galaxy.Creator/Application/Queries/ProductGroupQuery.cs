@@ -11,8 +11,6 @@ using System.Linq;
 
 namespace Galaxy.Creator.Application.Commands
 {
-
-
     public class ProductGroupQuery : IRequest<ProductGroupDTO> 
     { 
         [DataMember]
