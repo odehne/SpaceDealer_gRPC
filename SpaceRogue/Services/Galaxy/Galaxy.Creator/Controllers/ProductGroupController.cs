@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
 {
-	[Route("api/v1/[controller]")]
+
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ProductGroupsController : ControllerBase
     {

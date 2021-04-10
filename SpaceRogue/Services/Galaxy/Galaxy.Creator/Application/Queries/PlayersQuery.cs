@@ -8,27 +8,26 @@ using System.Threading.Tasks;
 
 namespace Galaxy.Creator.Application.Commands
 {
+    public class PlayersQuery : IRequest<IEnumerable<PlayerDTO>> { }
 
-    public class PlanetsQuery : IRequest<IEnumerable<PlanetDTO>> { }
-
-    public class PlanetsQueryHandler : IRequestHandler<PlanetsQuery, IEnumerable<PlanetDTO>>
+    public class PlayersQueryHandler : IRequestHandler<PlayersQuery, IEnumerable<PlayerDTO>>
     {
-        private readonly IPlanetRepository _repository;
+        private readonly IPlayerRepository _repository;
 
-        public PlanetsQueryHandler(IPlanetRepository repository)
+        public PlayersQueryHandler(IPlayerRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<IEnumerable<PlanetDTO>> Handle(PlanetsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PlayerDTO>> Handle(PlayersQuery request, CancellationToken cancellationToken)
         {
             {
                 var itms = await _repository.GetItems();
-                var dtos = new List<PlanetDTO>();
+                var dtos = new List<PlayerDTO>();
 
                 foreach (var itm in itms)
                 {
-                    dtos.Add(PlanetDTO.MapToDto(itm));
+                    dtos.Add(PlayerDTO.MapToDto(itm));
                 }
 
                 return dtos;

@@ -9,6 +9,7 @@ using MediatR;
 
 namespace Galaxy.Creator.Application.Commands
 {
+
     public class PlanetQuery : IRequest<PlanetDTO> 
     { 
         [DataMember]

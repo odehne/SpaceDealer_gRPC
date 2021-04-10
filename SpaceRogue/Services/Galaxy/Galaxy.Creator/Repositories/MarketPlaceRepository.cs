@@ -43,7 +43,14 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
         public async Task<MarketPlace> GetItem(Guid id)
         {
-            return await Context.MarketPlaces.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.MarketPlaces
+							.Include(demands => demands.ProductDemands)
+							.ThenInclude(catItems => catItems.CatalogItems)
+							.ThenInclude(product => product.Product)
+							.Include(offerings => offerings.ProductOfferings)
+							.ThenInclude(catItems => catItems.CatalogItems)
+							.ThenInclude(product => product.Product)
+							.FirstOrDefaultAsync(x => x.ID.Equals(id));
         }
 
         public async Task<MarketPlace> GetItemByName(string name)

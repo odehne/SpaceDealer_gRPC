@@ -12,27 +12,27 @@ namespace Galaxy.Creator.Application.Commands
     public class MarketPlaceQuery : IRequest<MarketPlaceDTO> 
     { 
         [DataMember]
-        public string PlanetId { get; private set; }
+        public string MarketPlaceId { get; private set; }
 
-		public MarketPlaceQuery(string planetId)
+		public MarketPlaceQuery(string marketPlaceId)
 		{
-			PlanetId = planetId;
+			MarketPlaceId = marketPlaceId;
 		}
 	}
 
     public class MarketPlaceQueryHandler : IRequestHandler<MarketPlaceQuery, MarketPlaceDTO>
     {
-        private readonly IPlanetRepository _repository;
+        private readonly IMarketPlaceRepository _repository;
   
-        public MarketPlaceQueryHandler(IPlanetRepository repository)
+        public MarketPlaceQueryHandler(IMarketPlaceRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public async Task<MarketPlaceDTO> Handle(MarketPlaceQuery request, CancellationToken cancellationToken)
         {
-            var planet = await _repository.GetItem(request.PlanetId.ToGuid());
-            return MarketPlaceDTO.MapToDto(planet.Market);
+            var market = await _repository.GetItem(request.MarketPlaceId.ToGuid());
+            return MarketPlaceDTO.MapToDto(market);
         }
     }
 }

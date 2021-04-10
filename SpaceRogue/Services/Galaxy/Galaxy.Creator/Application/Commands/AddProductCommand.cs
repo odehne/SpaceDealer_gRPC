@@ -2,13 +2,12 @@
 using Cope.SpaceRogue.Galaxy.Creator.Domain;
 using MediatR;
 using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 {
 
-	public class AddProductCommand : IRequest<ProductDTO>
+    public class AddProductCommand : IRequest<ProductDTO>
     {
 		[DataMember]
 		public string ProductId { get; private set; }

@@ -69,7 +69,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
         public async Task<Player> GetItem(Guid id)
         {
-            return await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.Players
+                    .Include( x=> x.Fleet)
+                    .ThenInclude ( x=>x.Features)
+                        .FirstOrDefaultAsync(x => x.ID.Equals(id));
         }
 
         public async Task<Player> GetItemByName(string name)
@@ -82,7 +85,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
 
         public async Task<List<Player>> GetItems()
         {
-            return await Context.Players.ToListAsync();
+            return await Context.Players
+            .Include(x => x.Fleet)
+                .ThenInclude(x => x.Features)
+                .ToListAsync();
         }
 
         public async Task<Player> UpdateItem(Player item)

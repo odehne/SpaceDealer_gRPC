@@ -16,23 +16,22 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
 {
-	//// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
 
-	[Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]")]
 	[ApiController]
-	public class GalaxyController : ControllerBase
+	public class PlanetController : ControllerBase
 	{
         private readonly IMediator _mediator;
-        private readonly ILogger<GalaxyController> _logger;
+        private readonly ILogger<PlanetController> _logger;
         private readonly IPlanetRepository _repo;
 
-		public GalaxyController(IMediator mediator, ILogger<GalaxyController> logger, IPlanetRepository repo)
+		public PlanetController(IMediator mediator, ILogger<PlanetController> logger, IPlanetRepository repo)
 		{
 			_mediator = mediator;
 			_logger = logger;
 			_repo = repo;
 		}
-
+    
         [HttpGet]
         public async Task<IEnumerable<PlanetDTO>> Get()
         {
@@ -44,14 +43,6 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Controllers
         public async Task<PlanetDTO> GetPlanet(string id)
         {
             return await _mediator.Send(new PlanetQuery(id));
-        }
-
-        // GET api/v1/[controller]/id]
-        [HttpGet]
-        [Route("{id}/marketplace")]
-        public async Task<MarketPlaceDTO> GetMarketPlace(string id)
-        {
-            return await _mediator.Send(new MarketPlaceQuery(id));
         }
 
         //// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]

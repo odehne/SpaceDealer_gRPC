@@ -8,12 +8,13 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 {
 	public class AddMarketPlaceCommandHandler : IRequestHandler<AddMarketPlaceCommand, MarketPlaceDTO>
 	{
-		private readonly PlanetRepository _repository;
+		private readonly MarketPlaceRepository _repository;
 		private readonly IMediator _mediator;
 
-		public AddMarketPlaceCommandHandler(IMediator mediator, PlanetRepository repository)
+		public AddMarketPlaceCommandHandler(IMediator mediator, MarketPlaceRepository repository)
 		{
 			_mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 		}
 
 		public async Task<MarketPlaceDTO> Handle(AddMarketPlaceCommand request, CancellationToken cancellationToken)

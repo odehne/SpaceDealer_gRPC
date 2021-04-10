@@ -144,7 +144,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             })
                 // Added for functional tests
-                .AddApplicationPart(typeof(GalaxyController).Assembly)
+                .AddApplicationPart(typeof(PlanetController).Assembly)
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 

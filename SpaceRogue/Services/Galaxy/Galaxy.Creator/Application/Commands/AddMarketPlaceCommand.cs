@@ -29,7 +29,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 		public int PosX { get; private set; }
 		public int PosY { get; private set; }
 		public int PosZ { get; private set; }
-		public MarketPlaceDTO MarketPlace { get; private set; }
+		public string MarketPlaceId { get; private set; }
 
         internal static PlanetDTO MapToDto(Planet itm)
         {
@@ -39,7 +39,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
 				PosX = itm.PosX,
 				PosY = itm.PosY,
 				PosZ = itm.PosZ,
-				MarketPlace = MarketPlaceDTO.MapToDto(itm.Market)
+				MarketPlaceId = itm.Market.ID.ToString()
 			};
         }
     }
