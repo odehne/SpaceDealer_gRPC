@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Galaxy.Creator.Application.Commands
 {
-
     public class PlanetsQuery : IRequest<IEnumerable<PlanetDTO>> { }
 
     public class PlanetsQueryHandler : IRequestHandler<PlanetsQuery, IEnumerable<PlanetDTO>>
