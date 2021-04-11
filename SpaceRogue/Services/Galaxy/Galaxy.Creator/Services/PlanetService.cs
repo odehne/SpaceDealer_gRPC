@@ -1,10 +1,10 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.Proto;
+﻿using Cope.SpaceRogue.Galaxy.API.Proto;
 using Grpc.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.Services
+namespace Cope.SpaceRogue.Galaxy.API.Services
 {
 	public class PlanetService : PlanetsService.PlanetsServiceBase
 	{

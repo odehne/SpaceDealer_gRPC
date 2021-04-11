@@ -1,5 +1,5 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;

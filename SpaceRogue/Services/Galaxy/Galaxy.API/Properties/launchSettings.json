@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Galaxy.Creator": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

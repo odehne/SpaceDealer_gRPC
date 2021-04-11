@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.IntegrationEvents
+namespace Cope.SpaceRogue.Galaxy.API.IntegrationEvents
 {
 	public interface IGalaxyIntegrationEventService
 	{

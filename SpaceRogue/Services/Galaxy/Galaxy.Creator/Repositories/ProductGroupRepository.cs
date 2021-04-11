@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
+﻿using Cope.SpaceRogue.Galaxy.API.Domain;
 using Cope.SpaceRogue.Galaxy.Creator;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
+namespace Cope.SpaceRogue.Galaxy.API.Repositories
 {
     public interface IProductGroupRepository
     {

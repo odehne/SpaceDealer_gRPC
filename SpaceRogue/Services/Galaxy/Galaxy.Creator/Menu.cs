@@ -1,10 +1,10 @@
-using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 using System;
-using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using Cope.SpaceRogue.Galaxy.API.Domain;
 using Cope.SpaceRogue.InfraStructure;
 using Cope.SpaceRogue.Galaxy.API.Model;
 using System.Threading.Tasks;
-using Cope.SpaceRogue.Galaxy.Creator.Application.Commands;
+using Cope.SpaceRogue.Galaxy.API.Application.Commands;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;

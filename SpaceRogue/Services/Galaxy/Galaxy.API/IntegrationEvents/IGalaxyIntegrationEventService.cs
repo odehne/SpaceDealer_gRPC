@@ -5,15 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Galaxy.API.IntegrationEvents
+namespace Cope.SpaceRogue.Galaxy.API.IntegrationEvents
 {
 	public interface IGalaxyIntegrationEventService
 	{
 		Task SaveEventAndGalaxyChangesAsync(IntegrationEvent evt);
-
 		Task PublishThroughEventBusAsync(IntegrationEvent evt);
-
-		
 	}
 
 }

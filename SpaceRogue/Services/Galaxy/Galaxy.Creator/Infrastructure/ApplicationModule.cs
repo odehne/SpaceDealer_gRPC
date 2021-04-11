@@ -1,13 +1,12 @@
 ﻿using Autofac;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
-using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Reflection;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.Infrastructure
+namespace Cope.SpaceRogue.Galaxy.API.Domain
 {
-
 	public class ApplicationModule : Autofac.Module
 	{
 		public GalaxyDbContext Context { get; }

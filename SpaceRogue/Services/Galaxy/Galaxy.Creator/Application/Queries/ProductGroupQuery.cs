@@ -1,6 +1,6 @@
 ﻿using Cope.SpaceRogue.Galaxy.Creator;
-using Cope.SpaceRogue.Galaxy.Creator.Application.Commands;
-using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using Cope.SpaceRogue.Galaxy.API.Application.Commands;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;

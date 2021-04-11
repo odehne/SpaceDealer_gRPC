@@ -1,5 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.Domain;
-using Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork;
+﻿using Cope.SpaceRogue.Galaxy.API.Domain;
+using Cope.SpaceRogue.Galaxy.API.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.ComponentModel.DataAnnotations;

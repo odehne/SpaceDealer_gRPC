@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.InfraStructure
+namespace Cope.SpaceRogue.Galaxy.API.InfraStructure
 {
 	public class GalaxyRepository : IRepository<Planet>
 	{

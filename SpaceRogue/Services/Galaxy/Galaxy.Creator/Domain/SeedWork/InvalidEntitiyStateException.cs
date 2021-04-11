@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.Domain.SeedWork
+namespace Cope.SpaceRogue.Galaxy.API.Domain.SeedWork
 {
 	public class InvalidEntityStateException : Exception 
 	{

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.Repositories
+namespace Cope.SpaceRogue.Galaxy.API.Repositories
 {
 	public interface IRepository<T>
 	{

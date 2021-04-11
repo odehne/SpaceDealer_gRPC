@@ -1,10 +1,11 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+﻿using Cope.SpaceRogue.Galaxy.API.Repositories;
+using Cope.SpaceRogue.Galaxy.API;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Galaxy.Creator.Application.Commands
+namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
 	public class AddCatalogCommandHandler : IRequestHandler<AddCatalogCommand, CatalogDTO>
 	{

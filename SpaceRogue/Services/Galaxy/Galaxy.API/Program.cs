@@ -1,43 +1,42 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Galaxy.API.Domain;
+﻿using Autofac.Extensions.DependencyInjection;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
 using System.IO;
-using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Services.Galaxy.API
+namespace Cope.SpaceRogue.Galaxy.API
 {
-	class Program
+	public static class Factory
 	{
-		static void Main(string[] args)
+		public static AutofacServiceProvider ServiceProvider { get; set; }
+
+		public static IShipRepository ShipRepository => (IShipRepository)ServiceProvider.GetService(typeof(IShipRepository));
+		public static IPlanetRepository PlanetRepository => (IPlanetRepository)ServiceProvider.GetService(typeof(IPlanetRepository));
+		public static IPlayerRepository PlayerRepository => (IPlayerRepository)ServiceProvider.GetService(typeof(IPlayerRepository));
+		public static IProductGroupRepository ProductGroupRepository => (IProductGroupRepository)ServiceProvider.GetService(typeof(IProductGroupRepository));
+		public static IProductRepository ProductRepository => (IProductRepository)ServiceProvider.GetService(typeof(IProductRepository));
+		public static IMarketPlaceRepository MarketPlaceRepository => (IMarketPlaceRepository)ServiceProvider.GetService(typeof(IMarketPlaceRepository));
+		public static ICatalogItemsRepository CatalogItemsRepository => (ICatalogItemsRepository)ServiceProvider.GetService(typeof(ICatalogItemsRepository));
+	}
+
+	public class Program
+	{
+		
+
+		static async Task Main(string[] args)
 		{
-			//using var galContext = new GalaxyDbContext();
 
-			//galContext.Add(new Planet
-			//{
-			//	PlanetId = Guid.NewGuid(),
-			//	PosX = 0,
-			//	PosY = 0,
-			//	PosZ = 0,
-			//	Description = "Erde",
-			//	Name = "Erde",
-			//	MarketPlaceId = Guid.NewGuid()
-			//});
-			//galContext.SaveChanges();
-
-			//var planets = galContext.Planets.ToList();
 			var configuration = GetConfiguration();
 			Log.Logger = CreateSerilogLogger(configuration);
 			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
 			var host = CreateHostBuilder(configuration, args);
-
-			Console.WriteLine("Hello World!");
+			host.Run();
 		}
 
 		public static string Namespace = typeof(Startup).Namespace;
@@ -48,15 +47,14 @@ namespace Cope.SpaceRogue.Services.Galaxy.API
 		{
 			return WebHost.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
-				.CaptureStartupErrors(false)
+				.CaptureStartupErrors(true)
 				.ConfigureKestrel(options =>
 				{
-					var ports = GetDefinedPorts(configuration);
-					options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
+					options.Listen(IPAddress.Loopback, 51777, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
 					});
-					options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
+					options.Listen(IPAddress.Loopback, 8891, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http2;
 					});

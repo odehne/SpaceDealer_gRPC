@@ -18,7 +18,7 @@ namespace Cope.SpaceRogue.Galaxy.API.InfraStructure
 			{
 				Planets = await Persister.Read();
 			}
-			return Planets.FirstOrDefault(x => x.PlanetId.Equals(itemId));
+			return Planets.FirstOrDefault(x => x.ID.Equals(itemId));
 		}
 
 		public async Task<List<Planet>> GetItemsByName(string name)

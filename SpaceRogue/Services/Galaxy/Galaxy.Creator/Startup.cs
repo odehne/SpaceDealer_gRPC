@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Cope.SpaceRogue.Galaxy.Creator;
-using Cope.SpaceRogue.Galaxy.Creator.Services;
+using Cope.SpaceRogue.Galaxy.API.Services;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ;
@@ -14,8 +14,8 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System;
-using Cope.SpaceRogue.Galaxy.Creator.Infrastructure;
-using Cope.SpaceRogue.Galaxy.Creator.Controllers;
+using Cope.SpaceRogue.Galaxy.API.Infrastructure;
+using Cope.SpaceRogue.Galaxy.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBusServiceBus;
@@ -27,7 +27,7 @@ using Galaxy.Creator.Domain;
 using System.Reflection;
 using RabbitMQ.Client;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
-using Cope.SpaceRogue.Galaxy.Creator.Repositories;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 
 namespace Cope.SpaceRogue.Galaxy.Creator
 {
