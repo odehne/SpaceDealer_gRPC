@@ -66,27 +66,6 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
         //    return Ok(model);
         //}
 
-        //// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
-        //[HttpGet]
-        //[Route("planets/{x:int}/{y:int}/{z:int}")]
-        //[ProducesResponseType(typeof(PaginatedItemsViewModel<Planet>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(IEnumerable<Planet>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        //public async Task<IActionResult> PlanetsAtPositionAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string ids = null)
-        //{
-        //    var lst = await _repo.GetItems();
-        //    var totalItems = lst.Count;
-
-        //    var itemsOnPage = lst
-        //        .OrderBy(c => c.Name)
-        //        .Skip(pageSize * pageIndex)
-        //        .Take(pageSize);
-
-        //    var model = new PaginatedItemsViewModel<Planet>(pageIndex, pageSize, totalItems, itemsOnPage);
-
-        //    return Ok(model);
-        //}
-
         //[Route("products/new")]
         //[HttpPost]
         //public async Task<ActionResult<ProductDTO>> CreateProductAsync([FromBody] AddProductCommand createProductCommand)

@@ -87,5 +87,53 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			catDto.CatalogItems = items;
 			return catDto;
 		}
-	}
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+        public override Task<AddProductReply> AddProduct(AddProductRequest request, ServerCallContext context)
+        {
+            return base.AddProduct(request, context);
+        }
+
+        public async override Task<AddProductGroupReply> AddProductGroup(AddProductGroupRequest request, ServerCallContext context)
+        {
+			var command = new AddProductGroupCommand(request.ProductGroupId, request.Name);
+            var rply = await _mediator.Send(command);
+			return new AddProductGroupReply { OK = true };
+		}
+
+        public override Task<AddCatalogItemReply> AddCatalogItem(AddCatalogItemRequest request, ServerCallContext context)
+        {
+            return base.AddCatalogItem(request, context);
+        }
+
+        public override Task<AddCatalogReply> AddCatalog(AddCatalogRequest request, ServerCallContext context)
+        {
+            return base.AddCatalog(request, context);
+        }
+
+        public override Task<GetProductGroupsReply> GetProductGroups(GetProductGroupsRequest request, ServerCallContext context)
+        {
+			
+            return base.GetProductGroups(request, context);
+        }
+
+        public override Task<GetProductGroupReply> GetProductGroup(GetProductGroupRequest request, ServerCallContext context)
+        {
+            return base.GetProductGroup(request, context);
+        }
+    }
 }

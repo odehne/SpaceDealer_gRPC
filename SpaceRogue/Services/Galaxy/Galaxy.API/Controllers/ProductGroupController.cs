@@ -46,5 +46,12 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
         {
             return await _mediator.Send(new ProductsInGroupQuery(id));
         }
+
+        [Route("new")]
+        [HttpPost]
+        public async Task<ActionResult<ProductGroupDTO>> CreateProductAsync([FromBody] AddProductGroupCommand addProductGroupCommand)
+        {
+           return await _mediator.Send(addProductGroupCommand);
+        }
     }
 }

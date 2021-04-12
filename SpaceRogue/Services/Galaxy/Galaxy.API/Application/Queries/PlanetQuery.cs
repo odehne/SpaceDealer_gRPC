@@ -21,7 +21,7 @@ namespace Galaxy.Creator.Application.Commands
 		}
     }
 
-      public class PlanetQueryHandler : IRequestHandler<PlanetQuery, PlanetDTO>
+    public class PlanetQueryHandler : IRequestHandler<PlanetQuery, PlanetDTO>
     {
         private readonly IPlanetRepository _repository;
 

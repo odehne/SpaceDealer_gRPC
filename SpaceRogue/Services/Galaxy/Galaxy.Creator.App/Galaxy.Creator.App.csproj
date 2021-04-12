@@ -20,4 +20,10 @@
     </Protobuf>
   </ItemGroup>
 
+  <ItemGroup>
+     <Protobuf Include="..\Galaxy.API\Proto\MarketPlacesService.proto" GrpcServices="Client">
+      <Link>Protos\MarketPlacesService.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
 </Project>

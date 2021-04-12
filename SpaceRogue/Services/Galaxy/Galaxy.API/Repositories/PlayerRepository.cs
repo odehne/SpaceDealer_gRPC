@@ -1,5 +1,4 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -93,7 +92,17 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<Player> UpdateItem(Player item)
         {
-            throw new NotImplementedException();
+            var itm = await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
+            if (itm != null)
+            {
+                itm.Name = item.Name;
+                itm.Credits = item.Credits;
+                itm.HomePlanet = item.HomePlanet;
+                itm.PlayerType = item.PlayerType;
+                itm.Fleet = item.Fleet;
+                Context.SaveChanges();
+            }
+            return item;
         }
 
     }
