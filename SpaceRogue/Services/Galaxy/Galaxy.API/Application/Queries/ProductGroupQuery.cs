@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Galaxy.Creator.Application.Commands
 {
-    public class ProductGroupQuery : IRequest<ProductGroupDTO> 
+    public class ProductGroupQuery : IRequest<ProductGroupDto> 
     { 
         [DataMember]
         public string GroupId { get; private set; }
@@ -22,7 +22,7 @@ namespace Galaxy.Creator.Application.Commands
 		}
 	}
 
-    public class ProductGroupQueryHandler : IRequestHandler<ProductGroupQuery, ProductGroupDTO>
+    public class ProductGroupQueryHandler : IRequestHandler<ProductGroupQuery, ProductGroupDto>
     {
         private readonly IProductGroupRepository _repository;
 
@@ -31,10 +31,10 @@ namespace Galaxy.Creator.Application.Commands
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<ProductGroupDTO> Handle(ProductGroupQuery request, CancellationToken cancellationToken)
+        public async Task<ProductGroupDto> Handle(ProductGroupQuery request, CancellationToken cancellationToken)
         {
             var itm = await _repository.GetItem(request.GroupId.ToGuid());
-            return ProductGroupDTO.MapToDto(itm);
+            return AutoMap.Mapper.Map<ProductGroupDto>(itm);
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
 
         // GET api/v1/[controller]/productgroups]
         [HttpGet]
-        public async Task<IEnumerable<ProductGroupDTO>> Get()
+        public async Task<IEnumerable<ProductGroupDto>> Get()
         {
             return await _mediator.Send(new ProductGroupsQuery());
         }
         // GET api/v1/[controller]/id]
         [HttpGet]
         [Route("{id}")]
-        public async Task<ProductGroupDTO> GetProductGroup(string id)
+        public async Task<ProductGroupDto> GetProductGroup(string id)
         {
             return await _mediator.Send(new ProductGroupQuery(id));
         }
@@ -42,14 +42,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
         // GET api/v1/[controller]/productgroups]
         [HttpGet]
         [Route("{id}/products")]
-        public async Task<IEnumerable<ProductDTO>> GetProducts(string id)
+        public async Task<IEnumerable<ProductDto>> GetProducts(string id)
         {
             return await _mediator.Send(new ProductsInGroupQuery(id));
         }
 
         [Route("new")]
         [HttpPost]
-        public async Task<ActionResult<ProductGroupDTO>> CreateProductAsync([FromBody] AddProductGroupCommand addProductGroupCommand)
+        public async Task<ActionResult<ProductGroupDto>> CreateProductAsync([FromBody] AddProductGroupCommand addProductGroupCommand)
         {
            return await _mediator.Send(addProductGroupCommand);
         }

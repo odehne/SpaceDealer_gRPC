@@ -26,7 +26,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
         // GET api/v1/[controller]/id/marketplace]
         [HttpGet]
         [Route("{id}")]
-        public async Task<MarketPlaceDTO> Get(string id)
+        public async Task<MarketPlaceDto> Get(string id)
         {
             return await _mediator.Send(new MarketPlaceQuery(id));
         }

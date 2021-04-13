@@ -1,4 +1,4 @@
-using Cope.SpaceRogue.Galaxy.Creator.Domain;
+using Cope.SpaceRogue.Galaxy.API.Domain;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

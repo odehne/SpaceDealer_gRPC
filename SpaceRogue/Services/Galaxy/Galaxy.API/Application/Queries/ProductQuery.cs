@@ -11,7 +11,7 @@ namespace Galaxy.Creator.Application.Commands
 {
 
 
-    public class ProductQuery : IRequest<ProductDTO> 
+    public class ProductQuery : IRequest<ProductDto> 
     { 
         [DataMember]
         public string ProductId { get; private set; }
@@ -22,7 +22,7 @@ namespace Galaxy.Creator.Application.Commands
 		}
     }
 
-      public class ProductQueryHandler : IRequestHandler<ProductQuery, ProductDTO>
+      public class ProductQueryHandler : IRequestHandler<ProductQuery, ProductDto>
     {
         private readonly IProductRepository _repository;
 
@@ -31,10 +31,10 @@ namespace Galaxy.Creator.Application.Commands
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<ProductDTO> Handle(ProductQuery request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(ProductQuery request, CancellationToken cancellationToken)
         {
             var itm = await _repository.GetItem(request.ProductId.ToGuid());
-            return ProductDTO.MapToDto(itm);
+            return AutoMap.Mapper.Map<ProductDto>(itm);
         }
     }
 }

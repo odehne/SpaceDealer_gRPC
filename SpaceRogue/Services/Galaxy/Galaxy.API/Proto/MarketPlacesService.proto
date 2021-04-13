@@ -3,9 +3,11 @@
 option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
 
 service MarketPlacesService {
+  rpc GetProducts (Empty)  returns (GetProductsReply);
+  rpc GetProduct (GetProductRequest) returns (GetProductReply);
   rpc AddProduct (AddProductRequest) returns (AddProductReply);
   rpc AddProductGroup (AddProductGroupRequest) returns (AddProductGroupReply);
-  rpc GetProductGroups (GetProductGroupsRequest) returns (GetProductGroupsReply);
+  rpc GetProductGroups (Empty) returns (GetProductGroupsReply);
   rpc GetProductGroup (GetProductGroupRequest) returns (GetProductGroupReply);
   rpc AddMarketPlace (AddMarketPlaceRequest) returns (AddMarketPlaceReply);
   rpc AddCatalogItem (AddCatalogItemRequest) returns (AddCatalogItemReply);
@@ -14,7 +16,23 @@ service MarketPlacesService {
   rpc DeleteMarketPlace (DeleteMarketPlaceRequest) returns (DeleteMarketPlaceReply);
 }
 
-message GetProductGroupsRequest { }
+message Empty { }
+
+message GetProductRequest {
+	string ProductId = 1;
+}
+
+message GetProductsReply {
+	repeated GetProductReply Products = 1;
+}
+
+message GetProductReply {
+	string ProductId = 1;
+	string Name = 2;
+	double SizeInUnits = 3;
+	double Rarity = 4;
+	double PricePerUnit = 5;
+}
 
 message GetProductGroupRequest {
 	string ProductGroupId = 1;

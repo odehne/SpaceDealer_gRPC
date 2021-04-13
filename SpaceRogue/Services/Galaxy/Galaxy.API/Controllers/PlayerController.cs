@@ -26,14 +26,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
 
         // GET api/v1/[controller]/productgroups]
         [HttpGet]
-        public async Task<IEnumerable<PlayerDTO>> Get()
+        public async Task<IEnumerable<PlayerDto>> Get()
         {
             return await _mediator.Send(new PlayersQuery());
         }
         // GET api/v1/[controller]/id]
         [HttpGet]
         [Route("{id}")]
-        public async Task<PlayerDTO> GetPlayer(string id)
+        public async Task<PlayerDto> GetPlayer(string id)
         {
             return await _mediator.Send(new PlayerQuery(id));
         }

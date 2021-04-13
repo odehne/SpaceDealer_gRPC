@@ -1,13 +1,14 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.API.Domain;
+﻿using Cope.SpaceRogue.Galaxy.API.Domain;
 using MediatR;
-using System.Collections;
 using System.Runtime.Serialization;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
-
-    public class AddProductCommand : IRequest<ProductDTO>
+	public class AddProductCommand : IRequest<ProductDto>
     {
 		[DataMember]
 		public string ProductId { get; private set; }
@@ -38,31 +39,44 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		}
 	}
 
-	public class ProductDTO
+	public class AddProductCommandHandler : IRequestHandler<AddProductCommand, ProductDto>
 	{
-		public string ProductId { get; private set; }
-		public string ProductGroupId { get; private set; }
-		public string ProductGroupName { get; private set; }
-		public string Name { get; private set; }
-		public double PricePerUnit { get; private set; }
-		public double Capacity { get; private set; }
-		public double Rarity { get; private set; }
-
-		public ProductDTO(string productId, string productGroupId, string productGroupName, string name, double pricePerUnit, double capacity, double rarity)
+		private readonly IProductRepository _repository;
+		private readonly IProductGroupRepository _groupRepository;
+		
+		public AddProductCommandHandler(IMediator mediator, IProductRepository repository, IProductGroupRepository groupRepository)
 		{
-			ProductId = productId;
-			ProductGroupId = productGroupId;
-			ProductGroupName = productGroupName;
-			Name = name;
-			PricePerUnit = pricePerUnit;
-			Capacity = capacity;
-			Rarity = rarity;
+			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
+			_groupRepository = groupRepository ?? throw new ArgumentNullException(nameof(groupRepository));
 		}
 
-		public static ProductDTO MapToDto(Product p)
+		public async Task<ProductDto> Handle(AddProductCommand request, CancellationToken cancellationToken)
 		{
-			return new ProductDTO(p.ID.ToString(), p.Group.ID.ToString(), p.Group.Name, p.Name, p.PricePerUnit, p.SizeInUnits, p.Rarity);
+			var product = await _repository.GetItem(request.ProductId.ToGuid());
+			var group = await _groupRepository.GetItem(request.ProductGroupId.ToGuid());
 
+			if (group == null)
+				throw new ArgumentException($"Group with id {request.ProductGroupId} not found.");
+
+			if (product == null)
+			{
+				product = new Product
+				{
+					Group = group,
+					GroupId = group.ID,
+					ID = Guid.NewGuid(),
+					Name = request.ProductName,
+					PricePerUnit = request.PricePerUnit,
+					Rarity = request.Rarity,
+					SizeInUnits = request.Capacity
+				};
+
+				var b = await _repository.AddItem(product);
+				if (!b)
+					throw new Exception("Failed to add product.");
+			}
+
+			return AutoMap.Mapper.Map<ProductDto>(product);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Application.Commands;
+﻿using Cope.SpaceRogue.Galaxy.API;
+using Cope.SpaceRogue.Galaxy.API.Application.Commands;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using MediatR;
 using System;
@@ -12,9 +13,9 @@ using System.Threading.Tasks;
 namespace Galaxy.Creator.Application.Commands
 {
 	
-    public class ProductsQuery : IRequest<IEnumerable<ProductDTO>> { }
+    public class ProductsQuery : IRequest<IEnumerable<ProductDto>> { }
 
-    public class ProductsQueryHandler : IRequestHandler<ProductsQuery, IEnumerable<ProductDTO>>
+    public class ProductsQueryHandler : IRequestHandler<ProductsQuery, IEnumerable<ProductDto>>
     {
         private readonly IProductRepository _repository;
 
@@ -23,15 +24,15 @@ namespace Galaxy.Creator.Application.Commands
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-		public async Task<IEnumerable<ProductDTO>> Handle(ProductsQuery request, CancellationToken cancellationToken)
+		public async Task<IEnumerable<ProductDto>> Handle(ProductsQuery request, CancellationToken cancellationToken)
 		{
             {
                 var itms = await _repository.GetItems();
-                var dtos = new List<ProductDTO>();
+                var dtos = new List<ProductDto>();
 
                 foreach (var itm in itms)
                 {
-                    dtos.Add(ProductDTO.MapToDto(itm));
+                    dtos.Add(AutoMap.Mapper.Map<ProductDto>(itm));
                 }
 
                 return dtos;

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Galaxy.Creator.Application.Commands
 {
-	public class ProductsInGroupQuery : IRequest<IEnumerable<ProductDTO>>
+	public class ProductsInGroupQuery : IRequest<IEnumerable<ProductDto>>
     {
         [DataMember]
         public string GroupId { get; private set; }
@@ -23,7 +23,7 @@ namespace Galaxy.Creator.Application.Commands
         }
     }
 
-    public class ProductsInGroupQueryHandler : IRequestHandler<ProductsInGroupQuery, IEnumerable<ProductDTO>>
+    public class ProductsInGroupQueryHandler : IRequestHandler<ProductsInGroupQuery, IEnumerable<ProductDto>>
     {
         private readonly IProductRepository _productRepository;
 
@@ -32,16 +32,16 @@ namespace Galaxy.Creator.Application.Commands
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         }
 
-        public async Task<IEnumerable<ProductDTO>> Handle(ProductsInGroupQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ProductDto>> Handle(ProductsInGroupQuery request, CancellationToken cancellationToken)
         {
             var itms = await _productRepository.GetItems();
 
             var inGroup = itms.Where(x => x.GroupId.Equals(request.GroupId.ToGuid()));
-            var lst = new List<ProductDTO>();
+            var lst = new List<ProductDto>();
 
             foreach (var itm in inGroup)
             {
-                lst.Add(ProductDTO.MapToDto(itm));
+                lst.Add(AutoMap.Mapper.Map<ProductDto>(itm));
             }
 
             return lst;

@@ -10,7 +10,7 @@ using MediatR;
 namespace Galaxy.Creator.Application.Commands
 {
 
-    public class PlanetQuery : IRequest<PlanetDTO> 
+    public class PlanetQuery : IRequest<PlanetDto> 
     { 
         [DataMember]
         public string PlanetId { get; private set; }
@@ -21,7 +21,7 @@ namespace Galaxy.Creator.Application.Commands
 		}
     }
 
-    public class PlanetQueryHandler : IRequestHandler<PlanetQuery, PlanetDTO>
+    public class PlanetQueryHandler : IRequestHandler<PlanetQuery, PlanetDto>
     {
         private readonly IPlanetRepository _repository;
 
@@ -30,10 +30,11 @@ namespace Galaxy.Creator.Application.Commands
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<PlanetDTO> Handle(PlanetQuery request, CancellationToken cancellationToken)
+        public async Task<PlanetDto> Handle(PlanetQuery request, CancellationToken cancellationToken)
         {
             var itm = await _repository.GetItem(request.PlanetId.ToGuid());
-            return PlanetDTO.MapToDto(itm);
+
+            return AutoMap.Mapper.Map<PlanetDto>(itm);
         }
     }
 }

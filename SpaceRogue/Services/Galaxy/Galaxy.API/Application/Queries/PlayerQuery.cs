@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Galaxy.Creator.Application.Commands
 {
-    public class PlayerQuery : IRequest<PlayerDTO> 
+    public class PlayerQuery : IRequest<PlayerDto> 
     { 
         [DataMember]
         public string PlayerId { get; private set; }
@@ -19,7 +19,7 @@ namespace Galaxy.Creator.Application.Commands
 			PlayerId = playerId;
 		}
     }
-  public class PlayerQueryHandler : IRequestHandler<PlayerQuery, PlayerDTO>
+  public class PlayerQueryHandler : IRequestHandler<PlayerQuery, PlayerDto>
     {
         private readonly IPlayerRepository _repository;
 
@@ -28,11 +28,11 @@ namespace Galaxy.Creator.Application.Commands
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<PlayerDTO> Handle(PlayerQuery request, CancellationToken cancellationToken)
+        public async Task<PlayerDto> Handle(PlayerQuery request, CancellationToken cancellationToken)
         {
-                var player = await _repository.GetItem(request.PlayerId.ToGuid());
+                var itm = await _repository.GetItem(request.PlayerId.ToGuid());
                 
-                return PlayerDTO.MapToDto(player);
+                return AutoMap.Mapper.Map<PlayerDto>(itm);
         }
     }
     

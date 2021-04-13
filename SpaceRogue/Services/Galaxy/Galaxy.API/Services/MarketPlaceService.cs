@@ -1,5 +1,6 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Application.Commands;
 using Cope.SpaceRogue.Galaxy.API.Proto;
+using Galaxy.Creator.Application.Commands;
 using Google.Protobuf.Collections;
 using Grpc.Core;
 using MediatR;
@@ -39,7 +40,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			{
 				context.Status = new Status(StatusCode.OK, $" market place {addMarketPlaceRequest} does exist");
 
-				return new AddMarketPlaceReply { MarketPlaceId = data.MarketPlaceId, Message = "OK" };
+				return new AddMarketPlaceReply { MarketPlaceId = data.ID, Message = "OK" };
 			}
 			else
 			{
@@ -71,37 +72,22 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			};
 		}
 
-		private static CatalogDTO MapToCatalogDTO(AddCatalogRequest catalogRequest)
+		private static CatalogDto MapToCatalogDTO(AddCatalogRequest catalogRequest)
 		{
-			var catDto = new CatalogDTO
+			var catDto = new CatalogDto
 			{
-				CatalogId = catalogRequest.CatalogId
+				ID = catalogRequest.CatalogId
 			};
-			var items = new List<CatalogItemDTO>();
+			var items = new List<CatalogItemDto>();
 
 			foreach (var item in catalogRequest.CatalogItems)
 			{
-				items.Add(new CatalogItemDTO(item.CatalogItemId, item.ProductId, item.Title, item.Price));
+				items.Add(new CatalogItemDto(item.CatalogItemId, item.ProductId, item.Title, item.Price));
 			}
 
 			catDto.CatalogItems = items;
 			return catDto;
 		}
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
 
         public override Task<AddProductReply> AddProduct(AddProductRequest request, ServerCallContext context)
         {
@@ -125,15 +111,40 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
             return base.AddCatalog(request, context);
         }
 
-        public override Task<GetProductGroupsReply> GetProductGroups(GetProductGroupsRequest request, ServerCallContext context)
+        public async override Task<GetProductGroupsReply> GetProductGroups(Empty request, ServerCallContext context)
         {
-			
-            return base.GetProductGroups(request, context);
+			var groups = await _mediator.Send(new ProductGroupsQuery());
+			var dtos = new GetProductGroupsReply();
+			foreach (var group in groups)
+			{
+				dtos.ProductGroups.Add(new GetProductGroupReply { Name = group.Name, ProductGroupId = group.ID });
+			}
+			return dtos;
         }
 
-        public override Task<GetProductGroupReply> GetProductGroup(GetProductGroupRequest request, ServerCallContext context)
+        public async override Task<GetProductGroupReply> GetProductGroup(GetProductGroupRequest request, ServerCallContext context)
         {
-            return base.GetProductGroup(request, context);
-        }
-    }
+			var group = await _mediator.Send(new ProductGroupQuery(request.ProductGroupId));
+			return new GetProductGroupReply { Name = group.Name, ProductGroupId = group.ID };
+		}
+
+		public async override Task<GetProductsReply> GetProducts(Empty request, ServerCallContext context)
+		{
+			var prds = await _mediator.Send(new ProductsQuery());
+			var reply = new GetProductsReply();
+
+			foreach (var prd in prds)
+			{
+				reply.Products.Add(new GetProductReply { Name = prd.Name, PricePerUnit = prd.PricePerUnit, ProductId = prd.ID, Rarity = prd.Rarity, SizeInUnits = prd.Capacity });
+			}
+
+			return reply;
+		}
+
+		public async override Task<GetProductReply> GetProduct(GetProductRequest request, ServerCallContext context)
+		{
+			var prd = await _mediator.Send(new ProductQuery(request.ProductId));
+			return new GetProductReply { Name = prd.Name, PricePerUnit = prd.PricePerUnit, ProductId = prd.ID, Rarity = prd.Rarity, SizeInUnits = prd.Capacity };
+		}
+	}
 }

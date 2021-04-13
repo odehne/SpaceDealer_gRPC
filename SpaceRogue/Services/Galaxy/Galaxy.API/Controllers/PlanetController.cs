@@ -1,23 +1,16 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.API.ViewModel;
-using Cope.SpaceRogue.Galaxy.API.Application.Commands;
+﻿using Cope.SpaceRogue.Galaxy.API.Application.Commands;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Galaxy.Creator.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Controllers
 {
 
-    [Route("api/v1/[controller]")]
+	[Route("api/v1/[controller]")]
 	[ApiController]
 	public class PlanetController : ControllerBase
 	{
@@ -33,50 +26,19 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
 		}
     
         [HttpGet]
-        public async Task<IEnumerable<PlanetDTO>> Get()
+        public async Task<IEnumerable<PlanetDto>> Get()
         {
             return await _mediator.Send(new PlanetsQuery());
         }
         // GET api/v1/[controller]/id]
         [HttpGet]
         [Route("{id}")]
-        public async Task<PlanetDTO> GetPlanet(string id)
+        public async Task<PlanetDto> GetPlanet(string id)
         {
             return await _mediator.Send(new PlanetQuery(id));
         }
 
-        //// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
-        //[HttpGet]
-        //[Route("planets")]
-        //[ProducesResponseType(typeof(PaginatedItemsViewModel<Planet>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(IEnumerable<Planet>), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        //public async Task<IActionResult> PlanetsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string ids = null)
-        //{
-        //    var lst = await _repo.GetItems();
-        //    var totalItems = lst.Count;
-
-        //    var itemsOnPage = lst
-        //        .OrderBy(c => c.Name)
-        //        .Skip(pageSize * pageIndex)
-        //        .Take(pageSize);
-
-        //    var model = new PaginatedItemsViewModel<Planet>(pageIndex, pageSize, totalItems, itemsOnPage);
-
-        //    return Ok(model);
-        //}
-
-        //[Route("products/new")]
-        //[HttpPost]
-        //public async Task<ActionResult<ProductDTO>> CreateProductAsync([FromBody] AddProductCommand createProductCommand)
-        //{
-        //    _logger.LogInformation(
-        //        "----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-        //        createProductCommand.GetGenericTypeName(),
-        //        nameof(createProductCommand.ProductName), createProductCommand.ProductGroupId, createProductCommand.PricePerUnit);
-
-        //    return await _mediator.Send(createProductCommand);
-        //}
+        
 
         //[Route("productgroups/new")]
         //[HttpPost]

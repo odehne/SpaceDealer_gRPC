@@ -40,7 +40,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
 			foreach (var dto in planets)
 			{
-				rply.Planets.Add(new GetPlanetReply { Id = dto.PlanetId, Name = dto.PlanetName, PosX = dto.PosX, PosY = dto.PosY, PosZ = dto.PosZ });
+				rply.Planets.Add(new GetPlanetReply { Id = dto.ID, Name = dto.Name, PosX = dto.PosX, PosY = dto.PosY, PosZ = dto.PosZ });
 			}
 
 			return rply;

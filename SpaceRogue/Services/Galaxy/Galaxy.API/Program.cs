@@ -1,4 +1,7 @@
 ﻿using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using Cope.SpaceRogue.Galaxy.API.Application.Commands;
+using Cope.SpaceRogue.Galaxy.API.Domain;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -6,9 +9,10 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
+using Cope.SpaceRogue.Galaxy.API.Model;
 
 namespace Cope.SpaceRogue.Galaxy.API
 {
@@ -25,6 +29,31 @@ namespace Cope.SpaceRogue.Galaxy.API
 		public static ICatalogItemsRepository CatalogItemsRepository => (ICatalogItemsRepository)ServiceProvider.GetService(typeof(ICatalogItemsRepository));
 	}
 
+	public static class AutoMap
+	{
+		public static MapperConfiguration Config { get; set; }
+
+		public static IMapper Mapper { get; set; }
+
+		public static void Init()
+		{
+			Config = new MapperConfiguration(
+				cfg =>
+				{
+					cfg.CreateMap<Product, ProductDto>();
+					cfg.CreateMap<ProductGroup, ProductGroupDto>();
+					cfg.CreateMap<Catalog, CatalogDto>();
+					cfg.CreateMap<CatalogItem, CatalogItemDto>();
+					cfg.CreateMap<MarketPlace, MarketPlaceDto>();
+					cfg.CreateMap<Player, PlayerDto>();
+					cfg.CreateMap<Planet, PlanetDto>();
+					cfg.CreateMap<AddProductGroupCommand, Planet>();
+				});
+
+			Mapper = Config.CreateMapper();
+		}
+	}
+
 	public class Program
 	{
 		static void Main(string[] args)
@@ -33,9 +62,14 @@ namespace Cope.SpaceRogue.Galaxy.API
 			var configuration = GetConfiguration();
 			Log.Logger = CreateSerilogLogger(configuration);
 			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
+
+			AutoMap.Init();
 			var host = CreateHostBuilder(configuration, args);
+
 			host.Run();
 		}
+
+		
 
 		public static string Namespace = typeof(Startup).Namespace;
 		public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);

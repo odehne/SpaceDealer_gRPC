@@ -132,29 +132,27 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
        private async Task ListProducts()
        {
-                   throw new NotImplementedException();
-   
-        //    var lst = await Factory.ProductRepository.GetItems();
-        //    var i=0;
-        //    foreach (var prod in lst)
-        //    {
-        //        i++;
-        //        Console.WriteLine($"{i}. {prod.Name} [t/unit: {prod.SizeInUnits}, Selten: {prod.Rarity}, Preis: {prod.PricePerUnit}]");
-        //    }
+            throw new NotImplementedException();
+            //var reply = await Factory.MarketPlacessApiClient.GetProductsAsync(new GetProductsRequest());
+            //var i = 0;
+            //foreach (var prod in reply.Products)
+            //{
+            //	i++;
+            //	Console.WriteLine($"{i}. {prod.Name} [t/unit: {prod.SizeInUnits}, Selten: {prod.Rarity}, Preis: {prod.PricePerUnit}]");
+            //}
         }
 
-       private async Task<bool> ListProductGroups()
+        private async Task<bool> ListProductGroups()
        {
-                   throw new NotImplementedException();
-      //  var lst = await Factory.MarketPlacessApiClient.();
-          //  var i=0;
-          //  foreach (var group in lst)
-          //  {
-          //      i++;
-          //      Console.WriteLine($"{i}. {group.Name}");
-          //  }
-          //  return true;
-       }
+            var reply = await Factory.MarketPlacessApiClient.GetProductGroupsAsync(new GetProductGroupsRequest());
+            var i = 0;
+            foreach (var prod in reply.ProductGroups)
+            {
+                i++;
+                Console.WriteLine($"{i}. [{prod.ProductGroupId}] {prod.Name}");
+            }
+            return true;
+        }
 
        private async Task AddProductGroup()
        {

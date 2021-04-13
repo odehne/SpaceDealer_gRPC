@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Galaxy.Creator.Application.Commands
 {
-    public class MarketPlaceQuery : IRequest<MarketPlaceDTO> 
+    public class MarketPlaceQuery : IRequest<MarketPlaceDto> 
     { 
         [DataMember]
         public string MarketPlaceId { get; private set; }
@@ -20,7 +20,7 @@ namespace Galaxy.Creator.Application.Commands
 		}
 	}
 
-    public class MarketPlaceQueryHandler : IRequestHandler<MarketPlaceQuery, MarketPlaceDTO>
+    public class MarketPlaceQueryHandler : IRequestHandler<MarketPlaceQuery, MarketPlaceDto>
     {
         private readonly IMarketPlaceRepository _repository;
   
@@ -29,10 +29,10 @@ namespace Galaxy.Creator.Application.Commands
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<MarketPlaceDTO> Handle(MarketPlaceQuery request, CancellationToken cancellationToken)
+        public async Task<MarketPlaceDto> Handle(MarketPlaceQuery request, CancellationToken cancellationToken)
         {
             var market = await _repository.GetItem(request.MarketPlaceId.ToGuid());
-            return MarketPlaceDTO.MapToDto(market);
+            return AutoMap.Mapper.Map<MarketPlaceDto>(market);
         }
     }
 }
