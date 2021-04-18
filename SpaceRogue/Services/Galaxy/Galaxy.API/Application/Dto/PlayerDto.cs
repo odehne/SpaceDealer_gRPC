@@ -1,4 +1,5 @@
-using Cope.SpaceRogue.Galaxy.API.Domain;
+
+using Cope.SpaceRogue.Infrastructure.Domain;
 using System.Collections.Generic;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands

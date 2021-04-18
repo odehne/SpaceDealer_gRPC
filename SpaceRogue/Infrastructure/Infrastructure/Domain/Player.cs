@@ -1,11 +1,11 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
+﻿using Cope.SpaceRogue.Infrastructure.Model;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Cope.SpaceRogue.Galaxy.API.Domain
+namespace Cope.SpaceRogue.Infrastructure.Domain
 {
 	public class Player : Entity
 	{

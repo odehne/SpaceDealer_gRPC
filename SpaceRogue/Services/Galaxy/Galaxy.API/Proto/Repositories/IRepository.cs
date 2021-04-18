@@ -1,8 +1,6 @@
-﻿using Cope.SpaceRogue.Galaxy.API;
-using Microsoft.EntityFrameworkCore;
+﻿using Cope.SpaceRogue.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Repositories

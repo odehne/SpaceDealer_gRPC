@@ -1,6 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API.Repositories;
-using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Galaxy.API.Repositories;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using MediatR;
 using System;
 using System.Runtime.Serialization;

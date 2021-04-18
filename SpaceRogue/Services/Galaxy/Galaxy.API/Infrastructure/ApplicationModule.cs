@@ -4,6 +4,7 @@ using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Reflection;
+using Cope.SpaceRogue.Infrastructure;
 
 namespace Cope.SpaceRogue.Galaxy.API.Infrastructure
 {

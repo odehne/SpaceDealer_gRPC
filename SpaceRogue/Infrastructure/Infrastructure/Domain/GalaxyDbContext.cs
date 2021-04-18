@@ -1,8 +1,8 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.API.Domain;
+﻿using Cope.SpaceRogue.Infrastructure.Model;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cope.SpaceRogue.Galaxy.API
+namespace Cope.SpaceRogue.Infrastructure
 {
 	public class GalaxyDbContext : DbContext
 	{

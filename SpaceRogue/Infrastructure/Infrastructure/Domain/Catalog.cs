@@ -1,12 +1,10 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain.Events;
-using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API.Domain.SeedWork;
+﻿using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cope.SpaceRogue.Galaxy.API.Domain
+namespace Cope.SpaceRogue.Infrastructure.Domain
 {
 	public class Catalog : Entity
 	{
@@ -29,13 +27,13 @@ namespace Cope.SpaceRogue.Galaxy.API.Domain
 
 			CatalogItems.Add(new CatalogItem(product, title, (decimal)price));
 
-			Raise(new CatalogItemAddedEvent
-			{
-				CatalogItemId = ID,
-				ProductId = product.ID,
-				Title = title,
-				Price = (decimal)price
-			});
+			//Raise(new CatalogItemAddedEvent
+			//{
+			//	CatalogItemId = ID,
+			//	ProductId = product.ID,
+			//	Title = title,
+			//	Price = (decimal)price
+			//});
 		}
 
         private double CalculatePrice(Product product, int percentValue)

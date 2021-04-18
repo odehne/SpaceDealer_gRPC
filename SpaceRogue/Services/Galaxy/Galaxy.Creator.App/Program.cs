@@ -54,7 +54,7 @@ namespace Galaxy.Creator.App
 	{
 		static async Task Main(string[] args)
 		{
-			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new Cope.SpaceRogue.Galaxy.API.Proto.GetPlanetsRequest());
+			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new Cope.SpaceRogue.Galaxy.API.Proto.PlanetsEmpty());
 			foreach (var planet in reply.Planets)
 			{
 				Console.WriteLine($"[{planet.Id}]\t{planet.Name}");

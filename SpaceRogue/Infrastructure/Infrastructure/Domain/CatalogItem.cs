@@ -1,10 +1,8 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API.Domain.Events;
-using Cope.SpaceRogue.Galaxy.API.Domain.SeedWork;
+﻿using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 
-namespace Cope.SpaceRogue.Galaxy.API.Domain
+namespace Cope.SpaceRogue.Infrastructure.Domain
 {
 	public class CatalogItem : Entity
 	{
@@ -38,11 +36,11 @@ namespace Cope.SpaceRogue.Galaxy.API.Domain
 				throw new ArgumentException("Catalog item title must have a value.");
 			Title = title;
 			EnsureValidState();
-			Raise(new CatalogItemTitleChangedEvent
-			{
-				Id = ID,
-				Title = title
-			}); 
+			//Raise(new CatalogItemTitleChangedEvent
+			//{
+			//	Id = ID,
+			//	Title = title
+			//}); 
 		}
 
 		public void SetPrice(decimal newPrice)

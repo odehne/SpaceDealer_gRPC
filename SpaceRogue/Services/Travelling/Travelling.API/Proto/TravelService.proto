@@ -3,33 +3,53 @@
 option csharp_namespace = "Cope.SpaceRogue.Traveling.API.Proto";
 
 service TravelService {
-  rpc GetShips (SectorRequest) returns (ShipsReply);
-  rpc GetPosition (ShipIdRequest) returns (PositionReply);
-  rpc GetPlanets (SectorRequest) returns (PlanetsReply);
+  rpc GetShips (Empty) returns (GetShipsReply);
+  rpc GetShip (GetShipRequest) returns (GetShipReply);
+  rpc GetPosition (GetPositionRequest) returns (GetPositionReply);
+  rpc GetPlanets (Empty) returns (GetPlanetsReply);
+  rpc GetPlanet (GetPlanetRequest) returns (GetPlanetReply);
 }
 
-message SectorRequest {
+message Empty 
+{ 
+	
+}
+
+message GetPlanetsReply {
+    repeated GetPlanetReply Planets = 1;
+}
+
+message GetPlanetRequest 
+{ 
+	string PlanetId = 1;
+}
+
+message GetShipRequest 
+{ 
+	string ShipId = 1;
+}
+
+message GetPlanetReply {
+    string Id = 1;
+    string Name = 2;
+    int32 PosX = 3;
+	int32 PosY = 4;
+	int32 PosZ = 5; 
+}
+
+message GetPositionReply {
 	int32 PosX = 1;
 	int32 PosY = 2;
 	int32 PosZ = 3;
 }
 
-message PositionReply {
-	int32 PosX = 1;
-	int32 PosY = 2;
-	int32 PosZ = 3;
-}
-
-message ShipIdRequest {
-   string shipId = 1;
-}
-
-message ShipsReply {
-   repeated ShipMessage ships = 1;
+message GetPositionRequest {
+   repeated string shipIds = 1;
+   repeated string planetIds = 2;
 }
 
 message GetShipsReply {
-   ShipMessage ship = 1;
+   repeated GetShipReply ships = 1;
 }
 
 message AddShipRequest {
@@ -38,19 +58,7 @@ message AddShipRequest {
 	string PlayerId = 3;
 }
 
-message PlanetsReply {
-	repeated PlanetMessage Planet = 1;
-}
-
-message PlanetMessage {
-	string PlanetId = 1;
-	string Name = 2;
-	int32 PosX = 3;
-	int32 PosY = 4;
-	int32 PosZ = 5;
-}
-
-message ShipMessage {
+message GetShipReply {
 	string ShipId = 1;
 	string Name = 2;
 	int32 PosX = 3;

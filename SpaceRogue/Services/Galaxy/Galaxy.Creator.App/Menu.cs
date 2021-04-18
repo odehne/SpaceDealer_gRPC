@@ -1,10 +1,9 @@
 using System;
-using System.Net.Http;
+using System.Linq;
 using System.Threading.Tasks;
 using Cope.SpaceRogue.Galaxy.API.Proto;
 using Galaxy.Creator.App;
 using Microsoft.Extensions.Logging;
-using static Cope.SpaceRogue.Galaxy.API.Proto.PlanetsService;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.App
 {
@@ -132,26 +131,20 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
        private async Task ListProducts()
        {
-            throw new NotImplementedException();
-            //var reply = await Factory.MarketPlacessApiClient.GetProductsAsync(new GetProductsRequest());
-            //var i = 0;
-            //foreach (var prod in reply.Products)
-            //{
-            //	i++;
-            //	Console.WriteLine($"{i}. {prod.Name} [t/unit: {prod.SizeInUnits}, Selten: {prod.Rarity}, Preis: {prod.PricePerUnit}]");
-            //}
-        }
-
-        private async Task<bool> ListProductGroups()
-       {
-            var reply = await Factory.MarketPlacessApiClient.GetProductGroupsAsync(new GetProductGroupsRequest());
+            var reply = await Factory.MarketPlacessApiClient.GetProductsAsync(new Empty());
             var i = 0;
-            foreach (var prod in reply.ProductGroups)
+            foreach (var prod in reply.Products)
             {
                 i++;
-                Console.WriteLine($"{i}. [{prod.ProductGroupId}] {prod.Name}");
+                Console.WriteLine($"{i}. [{prod.Id}] {prod.Name}");
             }
-            return true;
+            
+        }
+
+        private async Task ListProductGroups()
+        {
+            var reply = await Factory.MarketPlacessApiClient.GetProductGroupsAsync(new Empty());
+            reply.ProductGroups.ToList().ForEach(x => Console.WriteLine($"[{x.Id}] {x.Name}"));
         }
 
        private async Task AddProductGroup()
@@ -163,28 +156,29 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
        private async Task AddProduct()
        {
-                   throw new NotImplementedException();
-   
-        //    Console.Write("Name der zugehörigen Produktgruppe: ");
-        //    var groupName = Console.ReadLine();
-        //    var group = await Factory.ProductGroupRepository.GetItemByName(groupName);
-        //    if(group==null){
-        //        Console.WriteLine($"Gruppe {groupName} nicht gefunden.");
-        //        return;
-        //    }
-        //    Console.Write("Name des neuen Produktes: ");
-        //    var prodName = Console.ReadLine();
-        //    Console.Write("Tonnen pro Einheit: ");
-        //    var tonsPerUnit = Console.ReadLine();
-        //    Console.Write("Seltenheit [10000-nicht selten, 1-sehr selten]: ");
-        //    var rarity = Console.ReadLine();
-        //    Console.Write("Preis pro Tonne: ");
-        //    var price = Console.ReadLine();
-        //    var product = new Product(prodName, group.ID, double.Parse(tonsPerUnit), double.Parse(rarity), double.Parse(price));
-        //     var result = await Factory.ProductRepository.AddItem(product);
-       }
+            throw new NotImplementedException();
 
-       private async Task DeletePlanet()
+            //     	Console.Write("Produktgruppe ID: ");
+            //var groupId = Console.ReadLine();
+            //var group = await Factory.MarketPlacessApiClient.GetProductGroup(new GetProductGroupRequest { ID  = groupId } );
+            //if (group == null)
+            //{
+            //	Console.WriteLine($"Gruppe {groupName} nicht gefunden.");
+            //	return;
+            //}
+            //Console.Write("Name des neuen Produktes: ");
+            //var prodName = Console.ReadLine();
+            //Console.Write("Tonnen pro Einheit: ");
+            //var tonsPerUnit = Console.ReadLine();
+            //Console.Write("Seltenheit [10000-nicht selten, 1-sehr selten]: ");
+            //var rarity = Console.ReadLine();
+            //Console.Write("Preis pro Tonne: ");
+            //var price = Console.ReadLine();
+            //var product = new Product(prodName, group.ID, double.Parse(tonsPerUnit), double.Parse(rarity), double.Parse(price));
+            //var result = await Factory.ProductRepository.AddItem(product);
+        }
+
+        private async Task DeletePlanet()
        {
                    throw new NotImplementedException();
    

@@ -1,12 +1,12 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API.Domain.SeedWork;
+﻿using Cope.SpaceRogue.Infrastructure.Model;
+using Cope.SpaceRogue.Infrastructure.Domain;
+using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cope.SpaceRogue.Galaxy.API.Domain
+namespace Cope.SpaceRogue.Infrastructure.Domain
 {
 
 	public class MarketPlace : Entity
@@ -32,10 +32,10 @@ namespace Cope.SpaceRogue.Galaxy.API.Domain
 			
 			EnsureValidState();
 
-			Raise(new Events.MarketPlaceAddedEvent
-			{
-				MarketPlaceId = ID
-			});
+			//Raise(new Events.MarketPlaceAddedEvent
+			//{
+			//	MarketPlaceId = ID
+			//});
 		}
 
 		protected override void EnsureValidState()

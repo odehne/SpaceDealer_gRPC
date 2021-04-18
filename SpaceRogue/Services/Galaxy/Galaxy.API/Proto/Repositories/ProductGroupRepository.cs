@@ -1,8 +1,7 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API;
+﻿using Cope.SpaceRogue.Infrastructure;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 

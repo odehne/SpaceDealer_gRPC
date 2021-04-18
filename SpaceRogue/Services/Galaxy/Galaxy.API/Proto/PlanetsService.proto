@@ -3,17 +3,14 @@
 option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
 
 service PlanetsService {
-  rpc GetPlanets (GetPlanetsRequest) returns (GetPlanetsReply);
+  rpc GetPlanets (PlanetsEmpty) returns (GetPlanetsReply);
   rpc GetPlanet (GetPlanetRequest) returns (GetPlanetReply);
   rpc AddPlanet (AddPlanetRequest) returns (AddPlanetReply);
   rpc UpdatePlanet (UpdatePlanetRequest) returns (UpdatePlanetReply);
   rpc DeletePlanet (DeletePlanetRequest) returns (DeletePlanetReply);
 }
 
-message GetPlanetsRequest 
-{ 
-	
-}
+message PlanetsEmpty { }
 
 message GetPlanetsReply {
     repeated GetPlanetReply Planets = 1;
@@ -21,7 +18,7 @@ message GetPlanetsReply {
 
 message GetPlanetRequest 
 { 
-	string PlanetId = 1;
+	string Id = 1;
 }
 
 message GetPlanetReply {
@@ -40,12 +37,12 @@ message AddPlanetRequest {
 }
 
 message AddPlanetReply {
-	string PlanetId = 1;
+	string Id = 1;
 	string Message = 2;
 }
 
 message UpdatePlanetRequest {
-	string PlanetId = 1;
+	string Id = 1;
 	string MarketPlaceId = 2;
 	string Name = 3;
     int32 PosX = 4;
@@ -59,7 +56,7 @@ message UpdatePlanetReply {
 }
 
 message DeletePlanetRequest {
-	string PlanetId = 1;
+	string Id = 1;
 }
 
 message DeletePlanetReply {

@@ -21,9 +21,5 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 			Price = price;
 		}
 
-        internal static CatalogItemDto MapToDto(CatalogItem itm)
-        {
-            return new CatalogItemDto(itm.ID.ToString(), itm.ProductId.ToString(), itm.Title, (double)itm.Price);
-        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
 using Cope.SpaceRogue.Galaxy.API.Application.Commands;
-using Cope.SpaceRogue.Galaxy.API.Repositories;
 using FluentValidation;
 using Galaxy.Creator.Application.Behaviors;
 using Galaxy.Creator.Application.Commands;
@@ -10,6 +9,7 @@ using MediatR;
 using System;
 using System.Linq;
 using System.Reflection;
+using Cope.SpaceRogue.Infrastructure;
 
 namespace Cope.SpaceRogue.Galaxy.API.Infrastructure
 {

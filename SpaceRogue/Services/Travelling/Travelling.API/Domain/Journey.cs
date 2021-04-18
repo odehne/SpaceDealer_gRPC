@@ -3,7 +3,6 @@
 
 namespace Cope.SpaceRogue.Traveling.API.Domain
 {
-
 	public class Journey : Entity
 	{
 		public EntityId Id { get; }

@@ -1,8 +1,8 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain;
+﻿using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.InfraStructure;
 using System;
 
-namespace Cope.SpaceRogue.Galaxy.API.Domain
+namespace Cope.SpaceRogue.Infrastructure.Domain
 {
 	public class Payload : Entity
 	{

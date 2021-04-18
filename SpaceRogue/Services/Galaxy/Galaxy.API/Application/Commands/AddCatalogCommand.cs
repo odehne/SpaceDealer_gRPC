@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
+using Cope.SpaceRogue.Infrastructure;
 
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
@@ -46,7 +47,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 				marketId = market.ProductOfferings.ID.ToString();
 				foreach (var item in request.CatalogItems)
 				{
-					market.ProductOfferings.CatalogItems.Add(new Domain.CatalogItem { ID = item.ID.ToGuid() });
+					market.ProductOfferings.CatalogItems.Add(new SpaceRogue.Infrastructure.Domain.CatalogItem { ID = item.ID.ToGuid() });
 				}
 			}
 			if (market.ProductDemands.ID == request.CatalogId.ToGuid())
@@ -54,7 +55,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 				marketId = market.ProductOfferings.ID.ToString();
 				foreach (var item in request.CatalogItems)
 				{
-					market.ProductDemands.CatalogItems.Add(new Domain.CatalogItem { ID = item.ID.ToGuid() });
+					market.ProductDemands.CatalogItems.Add(new SpaceRogue.Infrastructure.Domain.CatalogItem { ID = item.ID.ToGuid() });
 				}
 			}
 			if (string.IsNullOrEmpty(marketId))

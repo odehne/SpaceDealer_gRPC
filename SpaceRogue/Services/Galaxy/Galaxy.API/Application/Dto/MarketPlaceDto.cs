@@ -1,8 +1,8 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain;
+﻿using Cope.SpaceRogue.Infrastructure.Domain;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
-    public class MarketPlaceDto
+	public class MarketPlaceDto
 	{
 		public string ID { get; private set; }
 		public string Name { get; set; }

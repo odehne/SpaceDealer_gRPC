@@ -19,7 +19,7 @@ service MarketPlacesService {
 message Empty { }
 
 message GetProductRequest {
-	string ProductId = 1;
+	string Id = 1;
 }
 
 message GetProductsReply {
@@ -27,7 +27,7 @@ message GetProductsReply {
 }
 
 message GetProductReply {
-	string ProductId = 1;
+	string Id = 1;
 	string Name = 2;
 	double SizeInUnits = 3;
 	double Rarity = 4;
@@ -35,11 +35,11 @@ message GetProductReply {
 }
 
 message GetProductGroupRequest {
-	string ProductGroupId = 1;
+	string Id = 1;
 }
 
 message GetProductGroupReply {
-	string ProductGroupId = 1;
+	string Id = 1;
 	string Name = 2;
 }
 
@@ -57,7 +57,7 @@ message AddCatalogReply {
 }
 
 message AddCatalogItemRequest {
-	string CatalogItemId = 1;
+	string Id = 1;
 	string Title = 2;
 	double Price = 3;
 	string ProductId = 4;
@@ -68,7 +68,7 @@ message AddCatalogItemReply {
 }
 
 message AddProductGroupRequest {
-	string ProductGroupId = 1;
+	string Id = 1;
 	string Name = 2;
 }
 
@@ -81,8 +81,8 @@ message AddProductReply {
 }
 
 message AddProductRequest {
-	string ProductId = 1;
-	string ProductGroupId = 2;
+	string Id = 1;
+	string GroupId = 2;
 	string Name = 3;
 	double PricePerUnit = 4;
 	int32 Rarity = 5;
@@ -90,7 +90,7 @@ message AddProductRequest {
 }
 
 message AddMarketPlaceRequest {
-	string PlanetId = 1;
+	string Id = 1;
     string MarketPlaceId = 2;
 	string Name = 3;
 	AddCatalogRequest Offerings = 4;
@@ -98,12 +98,12 @@ message AddMarketPlaceRequest {
 }
 
 message AddMarketPlaceReply {
-	string MarketPlaceId = 1;
+	string Id = 1;
 	string Message = 2;
 }
 
 message UpdateMarketPlaceRequest {
-	string MarketPlaceId = 1;
+	string Id = 1;
 	string ProductOfferingsCatalogId = 2;
 	string ProductDemandsCatalogId = 3;
 }
@@ -114,7 +114,7 @@ message UpdateMarketPlaceReply {
 }
 
 message DeleteMarketPlaceRequest {
-	string MarketPlaceId = 1;
+	string Id = 1;
 	string ProductOfferingsCatalogId = 2;
 	string ProductDemandsCatalogId = 3;
 }

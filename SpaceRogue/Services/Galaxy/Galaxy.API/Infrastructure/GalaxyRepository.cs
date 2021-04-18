@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
+﻿using Cope.SpaceRogue.Infrastructure.Model;
 using Cope.SpaceRogue.Infrastructure.Repository;
 using System.Collections.Generic;
 using System.Linq;

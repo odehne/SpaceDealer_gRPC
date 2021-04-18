@@ -1,6 +1,6 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.API.Domain;
-using Cope.SpaceRogue.Galaxy.API;
+﻿using Cope.SpaceRogue.Infrastructure;
+using Cope.SpaceRogue.Infrastructure.Domain;
+using Cope.SpaceRogue.Infrastructure.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

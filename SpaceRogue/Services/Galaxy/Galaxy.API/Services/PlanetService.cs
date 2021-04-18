@@ -33,7 +33,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return base.GetPlanet(request, context);
 		}
 
-		public async override Task<GetPlanetsReply> GetPlanets(GetPlanetsRequest request, ServerCallContext context)
+		public async override Task<GetPlanetsReply> GetPlanets(PlanetsEmpty request, ServerCallContext context)
 		{
 			var planets = await _mediator.Send(new PlanetsQuery());
 			var rply = new GetPlanetsReply();

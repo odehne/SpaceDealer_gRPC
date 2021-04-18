@@ -1,14 +1,11 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-using Cope.SpaceRogue.Galaxy.Application.IntegrationEvents;
+﻿using Cope.SpaceRogue.Galaxy.Application.IntegrationEvents;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cope.SpaceRogue.Infrastructure.Model;
 
 namespace Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers
 {

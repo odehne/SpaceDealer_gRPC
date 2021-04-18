@@ -1,6 +1,4 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Model;
-
-namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
+﻿namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
 	public class PlanetDto
 	{

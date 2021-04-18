@@ -1,7 +1,6 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Cope.SpaceRogue.Galaxy.API.Application.Commands;
-using Cope.SpaceRogue.Galaxy.API.Domain;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +11,9 @@ using Serilog;
 using System;
 using System.IO;
 using System.Net;
-using Cope.SpaceRogue.Galaxy.API.Model;
+using Cope.SpaceRogue.Galaxy.API.Proto;
+using Cope.SpaceRogue.Infrastructure.Model;
+using Cope.SpaceRogue.Infrastructure.Domain;
 
 namespace Cope.SpaceRogue.Galaxy.API
 {
@@ -48,6 +49,9 @@ namespace Cope.SpaceRogue.Galaxy.API
 					cfg.CreateMap<Player, PlayerDto>();
 					cfg.CreateMap<Planet, PlanetDto>();
 					cfg.CreateMap<AddProductGroupCommand, Planet>();
+					cfg.CreateMap<ProductDto, GetProductReply>();
+					cfg.CreateMap<ProductGroupDto, GetProductGroupReply>();
+					
 				});
 
 			Mapper = Config.CreateMapper();

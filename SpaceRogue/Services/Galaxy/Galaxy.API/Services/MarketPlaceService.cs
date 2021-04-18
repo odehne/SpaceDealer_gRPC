@@ -25,14 +25,11 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 		public async override Task<AddMarketPlaceReply> AddMarketPlace(AddMarketPlaceRequest addMarketPlaceRequest, ServerCallContext context)
 		{
 			_logger.LogInformation("Begin grpc call from method {Method} for ordering get order draft {CreateOrderDraftCommand}", context.Method, addMarketPlaceRequest);
-			_logger.LogTrace(
-				"----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-				addMarketPlaceRequest.GetGenericTypeName(),
-				nameof(addMarketPlaceRequest.MarketPlaceId),
-				addMarketPlaceRequest.MarketPlaceId, 
-				addMarketPlaceRequest);
-
-			var command = MapToCreateMarketPlaceCommand(addMarketPlaceRequest);
+			var command = new AddMarketPlaceCommand(addMarketPlaceRequest.Id, 
+										  addMarketPlaceRequest.Name, 
+										  addMarketPlaceRequest.Id,
+										  AutoMap.Mapper.Map<CatalogDto>(addMarketPlaceRequest.Offerings),
+										  AutoMap.Mapper.Map<CatalogDto>(addMarketPlaceRequest.Demands));
 
 			var data = await _mediator.Send(command);
 
@@ -40,7 +37,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			{
 				context.Status = new Status(StatusCode.OK, $" market place {addMarketPlaceRequest} does exist");
 
-				return new AddMarketPlaceReply { MarketPlaceId = data.ID, Message = "OK" };
+				return new AddMarketPlaceReply { Id = data.ID, Message = "OK" };
 			}
 			else
 			{
@@ -60,35 +57,6 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return base.UpdateMarketPlace(request, context);
 		}
 
-		private static AddMarketPlaceCommand MapToCreateMarketPlaceCommand(AddMarketPlaceRequest addMarketPlaceRequest)
-		{
-			return new AddMarketPlaceCommand
-			{
-				PlanetId = addMarketPlaceRequest.PlanetId,
-				MarketPlaceName = addMarketPlaceRequest.Name,
-				MarketPlaceId = addMarketPlaceRequest.MarketPlaceId,
-				Demands = MapToCatalogDTO(addMarketPlaceRequest.Demands),
-				Offerings = MapToCatalogDTO(addMarketPlaceRequest.Offerings)
-			};
-		}
-
-		private static CatalogDto MapToCatalogDTO(AddCatalogRequest catalogRequest)
-		{
-			var catDto = new CatalogDto
-			{
-				ID = catalogRequest.CatalogId
-			};
-			var items = new List<CatalogItemDto>();
-
-			foreach (var item in catalogRequest.CatalogItems)
-			{
-				items.Add(new CatalogItemDto(item.CatalogItemId, item.ProductId, item.Title, item.Price));
-			}
-
-			catDto.CatalogItems = items;
-			return catDto;
-		}
-
         public override Task<AddProductReply> AddProduct(AddProductRequest request, ServerCallContext context)
         {
             return base.AddProduct(request, context);
@@ -96,7 +64,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
         public async override Task<AddProductGroupReply> AddProductGroup(AddProductGroupRequest request, ServerCallContext context)
         {
-			var command = new AddProductGroupCommand(request.ProductGroupId, request.Name);
+			var command = new AddProductGroupCommand(request.Id, request.Name);
             var rply = await _mediator.Send(command);
 			return new AddProductGroupReply { OK = true };
 		}
@@ -115,36 +83,28 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
         {
 			var groups = await _mediator.Send(new ProductGroupsQuery());
 			var dtos = new GetProductGroupsReply();
-			foreach (var group in groups)
-			{
-				dtos.ProductGroups.Add(new GetProductGroupReply { Name = group.Name, ProductGroupId = group.ID });
-			}
+			dtos.ProductGroups.Add(AutoMap.Mapper.Map<IList<GetProductGroupReply>>(groups));
 			return dtos;
         }
 
         public async override Task<GetProductGroupReply> GetProductGroup(GetProductGroupRequest request, ServerCallContext context)
         {
-			var group = await _mediator.Send(new ProductGroupQuery(request.ProductGroupId));
-			return new GetProductGroupReply { Name = group.Name, ProductGroupId = group.ID };
+			var group = await _mediator.Send(new ProductGroupQuery(request.Id));
+			return AutoMap.Mapper.Map<GetProductGroupReply>(group);
 		}
 
 		public async override Task<GetProductsReply> GetProducts(Empty request, ServerCallContext context)
 		{
 			var prds = await _mediator.Send(new ProductsQuery());
 			var reply = new GetProductsReply();
-
-			foreach (var prd in prds)
-			{
-				reply.Products.Add(new GetProductReply { Name = prd.Name, PricePerUnit = prd.PricePerUnit, ProductId = prd.ID, Rarity = prd.Rarity, SizeInUnits = prd.Capacity });
-			}
-
+			reply.Products.Add(AutoMap.Mapper.Map<IList<GetProductReply>>(prds));
 			return reply;
 		}
 
 		public async override Task<GetProductReply> GetProduct(GetProductRequest request, ServerCallContext context)
 		{
-			var prd = await _mediator.Send(new ProductQuery(request.ProductId));
-			return new GetProductReply { Name = prd.Name, PricePerUnit = prd.PricePerUnit, ProductId = prd.ID, Rarity = prd.Rarity, SizeInUnits = prd.Capacity };
+			var prd = await _mediator.Send(new ProductQuery(request.Id));
+			return AutoMap.Mapper.Map<GetProductReply>(prd);
 		}
 	}
 }

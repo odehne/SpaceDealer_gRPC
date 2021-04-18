@@ -17,13 +17,11 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<ProductController> _logger;
-        private readonly IProductRepository _repo;
-
-        public ProductController(IMediator mediator, ILogger<ProductController> logger, IProductRepository repo)
+    
+        public ProductController(IMediator mediator, ILogger<ProductController> logger)
         {
             _mediator = mediator;
             _logger = logger;
-            _repo = repo;
         }
 
         // GET api/v1/[controller]/productgroups]
@@ -43,14 +41,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Controllers
 
 		[Route("new")]
 		[HttpPost]
-		public async Task<ActionResult<ProductDto>> CreateProductAsync([FromBody] AddProductCommand createProductCommand)
+		public async Task<ActionResult<ProductDto>> CreateProductAsync([FromBody] AddProductCommand addProductCommand)
 		{
 			_logger.LogInformation(
 				"----- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
-				createProductCommand.GetGenericTypeName(),
-				nameof(createProductCommand.ProductName), createProductCommand.ProductGroupId, createProductCommand.PricePerUnit);
+				addProductCommand.GetGenericTypeName(),
+				nameof(addProductCommand.ProductName), addProductCommand.ProductGroupId, addProductCommand.PricePerUnit);
 
-			return await _mediator.Send(createProductCommand);
+			return await _mediator.Send(addProductCommand);
 		}
 	}
 }

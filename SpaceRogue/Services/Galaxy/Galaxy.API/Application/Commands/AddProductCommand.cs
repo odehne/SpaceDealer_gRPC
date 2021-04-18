@@ -1,10 +1,10 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Domain;
-using MediatR;
+﻿using MediatR;
 using System.Runtime.Serialization;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cope.SpaceRogue.Infrastructure.Domain;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
