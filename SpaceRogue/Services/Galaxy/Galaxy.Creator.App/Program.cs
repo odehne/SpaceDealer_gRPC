@@ -47,9 +47,8 @@ namespace Galaxy.Creator.App
 			}
 		
 		}
-
-		
 	}
+
 	public class Program
 	{
 		static async Task Main(string[] args)

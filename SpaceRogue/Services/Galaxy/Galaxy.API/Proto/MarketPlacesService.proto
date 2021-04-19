@@ -5,18 +5,35 @@ option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
 service MarketPlacesService {
   rpc GetProducts (Empty)  returns (GetProductsReply);
   rpc GetProduct (GetProductRequest) returns (GetProductReply);
-  rpc AddProduct (AddProductRequest) returns (AddProductReply);
-  rpc AddProductGroup (AddProductGroupRequest) returns (AddProductGroupReply);
+  rpc AddProduct (AddProductRequest) returns (OkReply);
+  rpc UpdateProduct (UpdateProductRequest) returns (OkReply);
+  rpc DeleteProduct (GetProductRequest) returns (OkReply);
+  rpc AddProductGroup (AddProductGroupRequest) returns (OkReply);
   rpc GetProductGroups (Empty) returns (GetProductGroupsReply);
   rpc GetProductGroup (GetProductGroupRequest) returns (GetProductGroupReply);
+  rpc DeleteProductGroup (GetProductGroupRequest) returns (OkReply);
+  rpc GetCatalogItem (GetCatalogItemRequest) returns (GetCatalogItemReply);
+  rpc GetCatalogItems (GetCatalogItemsRequest) returns (GetCatalogItemsReply);
+  rpc AddCatalogItem (AddCatalogItemRequest) returns (OkReply);
+  rpc AddCatalog (AddCatalogRequest) returns (OkReply);
   rpc AddMarketPlace (AddMarketPlaceRequest) returns (AddMarketPlaceReply);
-  rpc AddCatalogItem (AddCatalogItemRequest) returns (AddCatalogItemReply);
-  rpc AddCatalog (AddCatalogRequest) returns (AddCatalogReply);
   rpc UpdateMarketPlace (UpdateMarketPlaceRequest) returns (UpdateMarketPlaceReply);
   rpc DeleteMarketPlace (DeleteMarketPlaceRequest) returns (DeleteMarketPlaceReply);
 }
 
 message Empty { }
+
+message OkReply {
+	bool Ok = 1;
+}
+
+message UpdateProductRequest {
+	string Id = 1;
+	string Name = 2;
+	double SizeInUnits = 3;
+	double Rarity = 4;
+	double PricePerUnit = 5;
+}
 
 message GetProductRequest {
 	string Id = 1;
@@ -41,6 +58,7 @@ message GetProductGroupRequest {
 message GetProductGroupReply {
 	string Id = 1;
 	string Name = 2;
+	repeated GetProductReply Products = 3;
 }
 
 message GetProductGroupsReply {
@@ -52,19 +70,33 @@ message AddCatalogRequest {
 	repeated AddCatalogItemRequest CatalogItems = 2;
 }
 
-message AddCatalogReply {
-	bool OK = 1;
+message GetCatalogItemsRequest {
+	string CatalogId = 1;
 }
+
+message GetCatalogItemRequest {
+	string CatalogId = 1;
+}
+
+message GetCatalogItemsReply {
+	repeated GetCatalogItemReply CatalogItems = 1;
+}
+
+message GetCatalogItemReply {
+	string Id = 1;
+	string CatalogId = 2;
+	string ProductIs = 3;
+	double Price = 4;
+	string Title = 5;
+}
+
 
 message AddCatalogItemRequest {
 	string Id = 1;
 	string Title = 2;
-	double Price = 3;
+	int32 PricePercentDelta = 3;
 	string ProductId = 4;
-}
-
-message AddCatalogItemReply {
-	bool OK = 1;
+	string CatalogId = 5;
 }
 
 message AddProductGroupRequest {
@@ -72,20 +104,12 @@ message AddProductGroupRequest {
 	string Name = 2;
 }
 
-message AddProductGroupReply {
-	bool OK = 1;
-}
-
-message AddProductReply {
-	bool OK = 1;
-}
-
 message AddProductRequest {
 	string Id = 1;
 	string GroupId = 2;
 	string Name = 3;
 	double PricePerUnit = 4;
-	int32 Rarity = 5;
+	double Rarity = 5;
 	double Capacity = 6;
 }
 

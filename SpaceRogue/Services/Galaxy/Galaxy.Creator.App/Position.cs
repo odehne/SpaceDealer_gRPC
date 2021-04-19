@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cope.SpaceRogue.InfraStructure
+namespace Cope.SpaceRogue.Galaxy.Creator.App
 {
 	public class Position
 	{

@@ -7,10 +7,14 @@ service PlanetsService {
   rpc GetPlanet (GetPlanetRequest) returns (GetPlanetReply);
   rpc AddPlanet (AddPlanetRequest) returns (AddPlanetReply);
   rpc UpdatePlanet (UpdatePlanetRequest) returns (UpdatePlanetReply);
-  rpc DeletePlanet (DeletePlanetRequest) returns (DeletePlanetReply);
+  rpc DeletePlanet (DeletePlanetRequest) returns (PlanetOkReply);
 }
 
 message PlanetsEmpty { }
+
+message PlanetOkReply {
+	bool Ok = 1;
+}
 
 message GetPlanetsReply {
     repeated GetPlanetReply Planets = 1;

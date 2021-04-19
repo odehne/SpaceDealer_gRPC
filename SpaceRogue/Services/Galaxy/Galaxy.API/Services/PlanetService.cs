@@ -1,4 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Proto;
+﻿using Cope.SpaceRogue.Galaxy.API.Application.Commands;
+using Cope.SpaceRogue.Galaxy.API.Proto;
 using Galaxy.Creator.Application.Commands;
 using Grpc.Core;
 using MediatR;
@@ -18,19 +19,23 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			_logger = logger;
 		}
 
-		public override Task<AddPlanetReply> AddPlanet(AddPlanetRequest request, ServerCallContext context)
+		public async override Task<AddPlanetReply> AddPlanet(AddPlanetRequest request, ServerCallContext context)
 		{
-			return base.AddPlanet(request, context);
+			var command = new AddPlanetCommand(request.Name, request.PosX, request.PosY, request.PosX);
+			var planetDto = await _mediator.Send(command);
+			return AutoMap.Mapper.Map<AddPlanetReply>(planetDto);
 		}
 
-		public override Task<DeletePlanetReply> DeletePlanet(DeletePlanetRequest request, ServerCallContext context)
+		public async override Task<PlanetOkReply> DeletePlanet(DeletePlanetRequest request, ServerCallContext context)
 		{
-			return base.DeletePlanet(request, context);
+			var result = await _mediator.Send(new DeletePlanetCommand(request.Id));
+			return new PlanetOkReply { Ok = result };
 		}
 
-		public override Task<GetPlanetReply> GetPlanet(GetPlanetRequest request, ServerCallContext context)
+		public async override Task<GetPlanetReply> GetPlanet(GetPlanetRequest request, ServerCallContext context)
 		{
-			return base.GetPlanet(request, context);
+			var planetDto = await _mediator.Send(new PlanetQuery(request.Id));
+			return AutoMap.Mapper.Map<GetPlanetReply>(planetDto);
 		}
 
 		public async override Task<GetPlanetsReply> GetPlanets(PlanetsEmpty request, ServerCallContext context)
@@ -40,7 +45,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
 			foreach (var dto in planets)
 			{
-				rply.Planets.Add(new GetPlanetReply { Id = dto.ID, Name = dto.Name, PosX = dto.PosX, PosY = dto.PosY, PosZ = dto.PosZ });
+				rply.Planets.Add(AutoMap.Mapper.Map<GetPlanetReply>(dto));
 			}
 
 			return rply;

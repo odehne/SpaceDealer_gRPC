@@ -41,6 +41,7 @@ namespace Cope.SpaceRogue.Galaxy.API
 			Config = new MapperConfiguration(
 				cfg =>
 				{
+					cfg.CreateMap<UpdateProductCommand, UpdateProductRequest>();
 					cfg.CreateMap<Product, ProductDto>();
 					cfg.CreateMap<ProductGroup, ProductGroupDto>();
 					cfg.CreateMap<Catalog, CatalogDto>();
@@ -48,6 +49,9 @@ namespace Cope.SpaceRogue.Galaxy.API
 					cfg.CreateMap<MarketPlace, MarketPlaceDto>();
 					cfg.CreateMap<Player, PlayerDto>();
 					cfg.CreateMap<Planet, PlanetDto>();
+					cfg.CreateMap<AddPlanetReply, PlanetDto>();
+					cfg.CreateMap<GetPlanetReply, PlanetDto>();
+					cfg.CreateMap<Planet, AddPlanetCommand>();
 					cfg.CreateMap<AddProductGroupCommand, Planet>();
 					cfg.CreateMap<ProductDto, GetProductReply>();
 					cfg.CreateMap<ProductGroupDto, GetProductGroupReply>();

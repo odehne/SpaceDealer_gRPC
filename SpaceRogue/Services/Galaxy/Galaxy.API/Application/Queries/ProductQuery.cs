@@ -11,7 +11,7 @@ namespace Galaxy.Creator.Application.Commands
 {
 
 
-    public class ProductQuery : IRequest<ProductDto> 
+	public class ProductQuery : IRequest<ProductDto> 
     { 
         [DataMember]
         public string ProductId { get; private set; }

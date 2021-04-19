@@ -11,19 +11,20 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 		public decimal Price { get; set; }
 		public virtual Guid ProductId { get; set; }
 		public virtual Product Product { get; set; }
-		public virtual MarketPlace Market { get; set; }
+		public virtual Guid CatalogId { get; set; }
 
 
 		public CatalogItem()
 		{
 		}
 
-		public CatalogItem(Product product, string title, decimal price)
+		public CatalogItem(Product product, string title, decimal price, Guid catalogId)
 		{
 			ID = Guid.NewGuid();
 			Product = product;
 			Title = title;
 			Price = price;
+			CatalogId = catalogId;
 			if (Price == default)
 			{
 				throw new InvalidEntityStateException(this, "The catalog item's price must have a value.");

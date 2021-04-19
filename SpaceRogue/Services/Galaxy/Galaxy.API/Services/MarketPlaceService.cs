@@ -1,10 +1,8 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Application.Commands;
 using Cope.SpaceRogue.Galaxy.API.Proto;
 using Galaxy.Creator.Application.Commands;
-using Google.Protobuf.Collections;
 using Grpc.Core;
 using MediatR;
-using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,6 +18,24 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 		{
 			_mediator = mediator;
 			_logger = logger;
+		}
+
+		public async override Task<OkReply> DeleteProduct(GetProductRequest request, ServerCallContext context)
+		{
+			var result = await _mediator.Send(new DeleteProductComand(request.Id));
+			return new OkReply { Ok = result };
+		}
+
+		public async override Task<OkReply> DeleteProductGroup(GetProductGroupRequest request, ServerCallContext context)
+		{
+			var result = await _mediator.Send(new DeleteProductGroupComand(request.Id));
+			return new OkReply { Ok = result };
+		}
+
+		public async override Task<OkReply> UpdateProduct(UpdateProductRequest request, ServerCallContext context)
+		{
+			var result = await _mediator.Send(AutoMap.Mapper.Map<UpdateProductCommand>(request));
+			return new OkReply { Ok = true };
 		}
 
 		public async override Task<AddMarketPlaceReply> AddMarketPlace(AddMarketPlaceRequest addMarketPlaceRequest, ServerCallContext context)
@@ -57,24 +73,28 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return base.UpdateMarketPlace(request, context);
 		}
 
-        public override Task<AddProductReply> AddProduct(AddProductRequest request, ServerCallContext context)
+        public async override Task<OkReply> AddProduct(AddProductRequest request, ServerCallContext context)
         {
-            return base.AddProduct(request, context);
-        }
+			var command = new AddProductCommand(request.Id, request.Name, request.GroupId, request.PricePerUnit, request.Capacity, request.Rarity);
+			var rply = await _mediator.Send(command);
+			return new OkReply { Ok = true };
+		}
 
-        public async override Task<AddProductGroupReply> AddProductGroup(AddProductGroupRequest request, ServerCallContext context)
+		public async override Task<OkReply> AddProductGroup(AddProductGroupRequest request, ServerCallContext context)
         {
 			var command = new AddProductGroupCommand(request.Id, request.Name);
             var rply = await _mediator.Send(command);
-			return new AddProductGroupReply { OK = true };
+			return new OkReply { Ok = true };
 		}
 
-        public override Task<AddCatalogItemReply> AddCatalogItem(AddCatalogItemRequest request, ServerCallContext context)
+        public async override Task<OkReply> AddCatalogItem(AddCatalogItemRequest request, ServerCallContext context)
         {
-            return base.AddCatalogItem(request, context);
-        }
+			var command = new AddCatalogItemCommand(request.CatalogId, request.ProductId, request.Title, request.PricePercentDelta);
+			var rply = await _mediator.Send(command);
+			return new OkReply { Ok = true };
+		}
 
-        public override Task<AddCatalogReply> AddCatalog(AddCatalogRequest request, ServerCallContext context)
+        public override Task<OkReply> AddCatalog(AddCatalogRequest request, ServerCallContext context)
         {
             return base.AddCatalog(request, context);
         }
@@ -105,6 +125,20 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 		{
 			var prd = await _mediator.Send(new ProductQuery(request.Id));
 			return AutoMap.Mapper.Map<GetProductReply>(prd);
+		}
+
+		public async override Task<GetCatalogItemReply> GetCatalogItem(GetCatalogItemRequest request, ServerCallContext context)
+		{
+			var item = await _mediator.Send(new CatalogItemQuery(request.CatalogId));
+			return AutoMap.Mapper.Map<GetCatalogItemReply>(item);
+		}
+
+		public async override Task<GetCatalogItemsReply> GetCatalogItems(GetCatalogItemsRequest request, ServerCallContext context)
+		{
+			var items = await _mediator.Send(new CatalogItemsQuery());
+			var reply = new GetCatalogItemsReply();
+			reply.CatalogItems.Add(AutoMap.Mapper.Map<IList<GetCatalogItemReply>>(items));
+			return reply;
 		}
 	}
 }

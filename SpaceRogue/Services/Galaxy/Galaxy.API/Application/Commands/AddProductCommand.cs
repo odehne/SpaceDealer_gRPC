@@ -26,9 +26,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public double Capacity { get; private set; }
 
 		[DataMember]
-		public int Rarity { get; private set; }
+		public double Rarity { get; private set; }
 
-		public AddProductCommand(string productId, string productName, string productGroupId, double pricePerUnit, double capacity, int rarity)
+		public AddProductCommand(string productId, string productName, string productGroupId, double pricePerUnit, double capacity, double rarity)
 		{
 			ProductId = productId;
 			ProductName = productName;

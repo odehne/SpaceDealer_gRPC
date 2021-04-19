@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Repositories
 {
+
     public interface ICatalogItemsRepository
     {
         GalaxyDbContext Context { get; }
@@ -32,7 +33,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> AddItem(CatalogItem item)
         {
-            var ci = await Context.CatalogItems.FirstOrDefaultAsync(x => x.Market.ID.Equals(item.Market.ID) & x.Product.Name.Equals(item.Product.Name));
+            var ci = await Context.CatalogItems.FirstOrDefaultAsync(x => x.CatalogId.Equals(item.CatalogId) & x.Product.Name.Equals(item.Product.Name));
             if (ci == null)
             {
                 Context.CatalogItems.Add(item);

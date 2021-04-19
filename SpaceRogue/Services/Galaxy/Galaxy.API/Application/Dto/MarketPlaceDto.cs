@@ -1,4 +1,5 @@
 ﻿using Cope.SpaceRogue.Infrastructure.Domain;
+using System;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
@@ -8,12 +9,17 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public string Name { get; set; }
 
 		public CatalogDto Offerings {get; set;} 
-		public CatalogDto Demands {get; set;} 
-		
+		public CatalogDto Demands {get; set;}
 
-		public MarketPlaceDto(string marketPlaceId, string name)
+		public MarketPlaceDto(string id, string name)
 		{
-			ID = marketPlaceId;
+			ID = id;
+			Name = name;
+		}
+
+		public MarketPlaceDto(string name)
+		{
+			ID = Guid.NewGuid().ToString();
 			Name = name;
 		}
 

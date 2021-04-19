@@ -41,8 +41,7 @@ namespace Cope.SpaceRogue.Infrastructure
 
 			modelBuilder.Entity<CatalogItem>().HasKey(c => c.ID);
 			modelBuilder.Entity<CatalogItem>().HasOne(c => c.Product);
-			modelBuilder.Entity<CatalogItem>().HasOne(c => c.Market);
-
+			
 			modelBuilder.Entity<ProductGroup>().HasKey(c => c.ID);
 			modelBuilder.Entity<ProductGroup>().HasMany(c => c.Products);
 			

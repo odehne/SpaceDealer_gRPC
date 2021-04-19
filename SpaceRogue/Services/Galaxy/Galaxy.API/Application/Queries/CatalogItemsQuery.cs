@@ -7,33 +7,33 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Galaxy.Creator.Application.Commands
 {
+	public class CatalogItemsQuery : IRequest<IEnumerable<CatalogItemDto>> { }
 
-	public class ProductsQuery : IRequest<IEnumerable<ProductDto>> { }
-
-    public class ProductsQueryHandler : IRequestHandler<ProductsQuery, IEnumerable<ProductDto>>
+    public class CatalogItemsQueryHandler : IRequestHandler<CatalogItemsQuery, IEnumerable<CatalogItemDto>>
     {
-        private readonly IProductRepository _repository;
+        private readonly ICatalogItemsRepository _repository;
 
-        public ProductsQueryHandler(IProductRepository repository)
+        public CatalogItemsQueryHandler(ICatalogItemsRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-		public async Task<IEnumerable<ProductDto>> Handle(ProductsQuery request, CancellationToken cancellationToken)
-		{
+        public async Task<IEnumerable<CatalogItemDto>> Handle(CatalogItemsQuery request, CancellationToken cancellationToken)
+        {
             {
                 var itms = await _repository.GetItems();
-                var dtos = new List<ProductDto>();
+                var dtos = new List<CatalogItemDto>();
 
                 foreach (var itm in itms)
                 {
-                    dtos.Add(AutoMap.Mapper.Map<ProductDto>(itm));
+                    dtos.Add(AutoMap.Mapper.Map<CatalogItemDto>(itm));
                 }
 
                 return dtos;
             }
         }
-	}
+    }
 }

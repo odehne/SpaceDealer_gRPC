@@ -69,67 +69,59 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
        private async Task UpdateProduct()
        {
-           throw new NotImplementedException();
-        //    Console.Write("Name des zu aktualisierenden Produktes: ");
-        //    var line = Console.ReadLine();
-        //    var prod = await Factory.ProductRepository.GetItemByName(line);
-        //    if(prod==null)
-        //    {
-        //        Console.WriteLine(prod + " nicht gefunden.");
-        //        return;
-        //    }
-        //    Console.Write($"Neuer Name [{prod.Name}]: ");
-        //    var newName = Console.ReadLine();
-        //    if(!string.IsNullOrEmpty(newName))
-        //        prod.Name = newName;
-            
-        //    Console.Write($"Neuer Preis pro Einheit [{prod.PricePerUnit}]: ");
-        //    var newPricePerUnit = Console.ReadLine();
-        //    if(!string.IsNullOrEmpty(newPricePerUnit))
-        //        prod.PricePerUnit = double.Parse(newPricePerUnit);
-            
-        //    Console.Write($"Neue Seltenheit [{prod.Rarity}]: ");
-        //    var newRarity = Console.ReadLine();
-        //    if(!string.IsNullOrEmpty(newRarity))
-        //        prod.Rarity = double.Parse(newRarity);
-            
-        //    Console.Write($"Neue Größe pro Einheit [{prod.SizeInUnits}]: ");
-        //    var newSize = Console.ReadLine();
-        //    if(!string.IsNullOrEmpty(newSize))
-        //        prod.SizeInUnits = double.Parse(newSize);
-        //    var result = await Factory.ProductRepository.UpdateItem(prod);
-       }
+			Console.Write("Produkt Id: ");
+			var line = Console.ReadLine();
+			var prod = await Factory.MarketPlacessApiClient.GetProductAsync(new GetProductRequest { Id = line });
+       
+            if (prod == null)
+			{
+				Console.WriteLine(prod + " nicht gefunden.");
+				return;
+			}
+
+            var request = new UpdateProductRequest { Id = prod.Id, Name = prod.Name, PricePerUnit = prod.PricePerUnit, Rarity = prod.Rarity, SizeInUnits = prod.SizeInUnits };
+
+            Console.Write($"Neuer Name [{request.Name}]: ");
+			var newName = Console.ReadLine();
+			if (!string.IsNullOrEmpty(newName))
+                request.Name = newName;
+
+			Console.Write($"Neuer Preis pro Einheit [{request.PricePerUnit}]: ");
+			var newPricePerUnit = Console.ReadLine();
+			if (!string.IsNullOrEmpty(newPricePerUnit))
+                request.PricePerUnit = double.Parse(newPricePerUnit);
+
+			Console.Write($"Neue Seltenheit [{request.Rarity}]: ");
+			var newRarity = Console.ReadLine();
+			if (!string.IsNullOrEmpty(newRarity))
+                request.Rarity = double.Parse(newRarity);
+
+			Console.Write($"Neue Größe pro Einheit [{request.SizeInUnits}]: ");
+			var newSize = Console.ReadLine();
+			if (!string.IsNullOrEmpty(newSize))
+                request.SizeInUnits = double.Parse(newSize);
+
+            var reply = await Factory.MarketPlacessApiClient.UpdateProductAsync(request);
+
+    	}
 
        private async Task DeleteProduct()
        {
-                throw new NotImplementedException();
-   //    Console.Write("Name des zu löschenden Produktes: ");
-        //    var line = Console.ReadLine();
-        //    var prod = await Factory.ProductRepository.GetItemByName(line);
-        //    if(prod==null)
-        //    {
-        //        Console.WriteLine(prod + " nicht gefunden.");
-        //        return;
-        //    }
-        //    var result = await Factory.ProductRepository.DeleteItem(prod);
-       }
+			Console.Write("Id des zu löschenden Produktes: ");
+			var line = Console.ReadLine();
+            var deleteProductRequest = new GetProductRequest { Id = line };
+            var result = await Factory.MarketPlacessApiClient.DeleteProductAsync(deleteProductRequest);
+		}
 
-       private async Task DeleteProductGroup()
-       {
-                   throw new NotImplementedException();
-   
-        //     Console.Write("Name der zu löschenden Produktgruppe: ");
-        //    var line = Console.ReadLine();
-        //   var prod = await Factory.ProductGroupRepository.GetItemByName(line);
-        //    if(prod==null)
-        //    {
-        //        Console.WriteLine(prod + " nicht gefunden.");
-        //        return;
-        //    }
-        //    var result = await Factory.ProductGroupRepository.DeleteItem(prod);
-       }
+		private async Task DeleteProductGroup()
+        {
+            Console.Write("Id der zu löschenden Produktegruppe: ");
+            var line = Console.ReadLine();
+            var deleteProductRequest = new GetProductGroupRequest { Id = line };
+            var result = await Factory.MarketPlacessApiClient.DeleteProductGroupAsync(deleteProductRequest);
+        }
 
-       private async Task ListProducts()
+        private async Task ListProducts()
        {
             var reply = await Factory.MarketPlacessApiClient.GetProductsAsync(new Empty());
             var i = 0;
@@ -156,158 +148,153 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
        private async Task AddProduct()
        {
-            throw new NotImplementedException();
-
-            //     	Console.Write("Produktgruppe ID: ");
-            //var groupId = Console.ReadLine();
-            //var group = await Factory.MarketPlacessApiClient.GetProductGroup(new GetProductGroupRequest { ID  = groupId } );
-            //if (group == null)
-            //{
-            //	Console.WriteLine($"Gruppe {groupName} nicht gefunden.");
-            //	return;
-            //}
-            //Console.Write("Name des neuen Produktes: ");
-            //var prodName = Console.ReadLine();
-            //Console.Write("Tonnen pro Einheit: ");
-            //var tonsPerUnit = Console.ReadLine();
-            //Console.Write("Seltenheit [10000-nicht selten, 1-sehr selten]: ");
-            //var rarity = Console.ReadLine();
-            //Console.Write("Preis pro Tonne: ");
-            //var price = Console.ReadLine();
-            //var product = new Product(prodName, group.ID, double.Parse(tonsPerUnit), double.Parse(rarity), double.Parse(price));
-            //var result = await Factory.ProductRepository.AddItem(product);
-        }
+			Console.Write("Produktgruppe ID: ");
+			var groupId = Console.ReadLine();
+			var group = await Factory.MarketPlacessApiClient.GetProductGroupAsync(new GetProductGroupRequest { Id = groupId });
+			if (group == null)
+			{
+				Console.WriteLine($"Gruppe {groupId} nicht gefunden.");
+				return;
+			}
+			Console.Write("Name des neuen Produktes: ");
+			var prodName = Console.ReadLine();
+			Console.Write("Tonnen pro Einheit: ");
+			var tonsPerUnit = Console.ReadLine();
+			Console.Write("Seltenheit [10000-nicht selten, 1-sehr selten]: ");
+			var rarity = Console.ReadLine();
+			Console.Write("Preis pro Tonne: ");
+			var price = Console.ReadLine();
+			var addProductRequest = new AddProductRequest { 
+											Id = Guid.NewGuid().ToString(), 
+											Name = prodName, 
+											GroupId = group.Id, 
+											PricePerUnit = double.Parse(price), 
+											Rarity = int.Parse(rarity), 
+										 	Capacity =  double.Parse(tonsPerUnit) };
+			var result = await Factory.MarketPlacessApiClient.AddProductAsync(addProductRequest);
+		}
 
         private async Task DeletePlanet()
-       {
-                   throw new NotImplementedException();
-   
-        //    Console.Write("Name des zu löschenden Planeten: ");
-        //    var line = Console.ReadLine();
-        //     var planet = await Factory.PlanetRepository.GetItemByName(line);
-        //    if(planet==null)
-        //    {
-        //        Console.WriteLine(planet + " nicht gefunden.");
-        //        return;
-        //    }
-        //    var result = await Factory.PlanetRepository.DeleteItem(planet);
-       }
+        {
+			Console.Write("Id des zu löschenden Planeten: ");
+			var planetId = Console.ReadLine();
+			var planet = await Factory.PlanetsApiClient.GetPlanetAsync(new GetPlanetRequest { Id = planetId });
+			if (planet == null)
+			{
+				Console.WriteLine(planetId + " nicht gefunden.");
+				return;
+			}
+			var result = await Factory.PlanetsApiClient.DeletePlanetAsync(new DeletePlanetRequest { Id = planetId });
+		}
 
        private async Task ListPlanets()
        {
-        //    var httpClient = new HttpClient();
-        //    var client = new PlanetsServiceClient(
-        //         "https://localhost:44322",
-        //         httpClient);
-        //    var planets = await client.GetItems();
+			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new PlanetsEmpty());
 
-        //    foreach (var planet in planets)
-        //    {
-        //        Console.WriteLine($"{planet.Name}");
-        //    }
+			var i = 0;
+			foreach (var planet in reply.Planets)
+			{
+				i++;
+				Console.WriteLine($"{i}. {planet.Name} [{planet.Id}]");
+			}
+			i++;
+			Console.WriteLine($"{i}. Zurück");
+			Console.Write("Details oder zurück: ");
+			var line = Console.ReadLine();
+			var selected = int.Parse(line);
+			if (selected >= i)
+				return;
+			//ShowPlanetDetails(reply.Planets[selected-1].Id);
+	   }
 
-        //    var lst = await Factory.PlanetRepository.GetItems();
-        //    var i=0;
-        //    foreach (var planet in lst)
-        //    {
-        //        i++;
-        //        Console.WriteLine($"{i}. {planet.Name} [{planet.ID}]");
-        //    }
-        //    i++;
-        //    Console.WriteLine($"{i}. Zurück");
-        //    Console.Write("Details oder zurück: ");
-        //    var line = Console.ReadLine();
-        //    var selected = int.Parse(line);
-        //    if( selected >= i)
-        //        return;
-        //     ShowPlanetDetails(lst[selected-1]);
-                throw new NotImplementedException();
-   
-       }
+		//private void ShowPlanetDetails(string planetId)
+		//{
+		//	var reply = await Factory.MarketPlacessApiClient.Get(new PlanetsEmpty());
 
-    //    private void ShowPlanetDetails(Planet planet)
-    //    {
-    //        Console.WriteLine($"Planet {planet.ID}");
-    //        Console.WriteLine($"Name: {planet.Name}");
-    //        Console.WriteLine($"Markt: {planet.Market.Name}");
-    //        Console.WriteLine($"Angebot: {planet.Market.ProductOfferings.ToString()}");
-    //        Console.WriteLine($"Nachfrage: {planet.Market.ProductDemands.ToString()}");
-    //    }
+		//	Console.WriteLine($"Planet {planet.Id}");
+		//	Console.WriteLine($"Name: {planet.Name}");
+		//	Console.WriteLine($"Markt: {planet.Market.Name}");
+		//	Console.WriteLine($"Angebot: {planet.Market.ProductOfferings.ToString()}");
+		//	Console.WriteLine($"Nachfrage: {planet.Market.ProductDemands.ToString()}");
+		//}
 
-       private async Task<string> AddNewPlanet()
-       {
-			// Console.Write("Name des neuen Planeten: ");
-			// var name = Console.ReadLine();
-			// var position = GetPlanetPosition();
+		private async Task<string> AddNewPlanet()
+		{
+
+			Console.Write("Name des neuen Planeten: ");
+			var name = Console.ReadLine();
+			var position = GetPlanetPosition();
+
+			Console.Write("Name des neuen Marktplatzes [Planetenname]: ");
+			var marketPlaceName = Console.ReadLine();
+			if (string.IsNullOrEmpty(marketPlaceName))
+				marketPlaceName = "Markt auf " + name;
+
+			Console.WriteLine("Produktgruppe, die benötigt wird: ");
+			var pgDemands = await SelectProductGroup();
+
+			Console.WriteLine("Produktgruppe, die verkauft wird: ");
+			var pgOfferings = await SelectProductGroup();
+
+			var offerings = new AddCatalogRequest();
+			var demands = new AddCatalogRequest();
+
+			foreach (var product in pgDemands.Products)
+			{
+				demands.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, PricePercentDelta = 15, Title = product.Name });
+			}
+			foreach (var product in pgOfferings.Products)
+			{
+				offerings.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, PricePercentDelta = -5, Title = product.Name });
+			}
+
+			var market = new AddMarketPlaceRequest { Id = Guid.NewGuid().ToString(), MarketPlaceId = Guid.NewGuid().ToString(), Offerings = offerings, Demands = demands, Name = marketPlaceName };
+
+			//var ret = 
+
+			//await Factory.MarketPlaceRepository.AddItem(market);
+			//var planet = new Planet(market, name, "Neuer Planet entdeckt!", (int)position.X, (int)position.Y, (int)position.Z);
+			//await Factory.PlanetRepository.AddItem(planet);
+			//return $"{planet.Name} erstellt.";
+
+			return "OK";
 			
-			// Console.Write("Name des neuen Marktplatzes [Planetenname]: ");
-			// var marketPlaceName = Console.ReadLine();
-			// if(string.IsNullOrEmpty(marketPlaceName))
-			// 	marketPlaceName = "Markt auf " + name;
-
-			// Console.WriteLine("Produktgruppe, die benötigt wird: ");
-			// var pgDemands = await SelectProductGroup();
-			
-			// Console.WriteLine("Produktgruppe, die verkauft wird: ");
-			// var pgOfferings = await SelectProductGroup();
-
-			// var offerings = new Catalog();
-			// var demands = new Catalog();
-			
-			// foreach (var product in pgDemands.Products)
-			// {
-			// 	demands.AddCatalogItem(product, product.Name, 15);
-			// }
-			// foreach (var product in pgOfferings.Products)
-			// {
-			// 	offerings.AddCatalogItem(product, product.Name, -5);
-			// }
-
-			// var market = new MarketPlace(marketPlaceName, offerings, demands);
-			// await Factory.MarketPlaceRepository.AddItem(market);
-			// var planet = new Planet(market, name, "Neuer Planet entdeckt!", (int)position.X, (int)position.Y, (int)position.Z);
-			// await Factory.PlanetRepository.AddItem(planet); 
-			
-			// return $"{planet.Name} erstellt.";
-                    throw new NotImplementedException();
-   
 		}
 
-    //    private async Task<ProductGroup> SelectProductGroup()
-    //    {
-        //    var lst = await Factory.ProductGroupRepository.GetItems();
-		// 	var i = 0;
-		// 	foreach (var group in lst)
-		// 	{
-		// 		i++;
-		// 		Console.WriteLine($"{i}. {group.Name}");
-		// 	}
-		// 	Console.Write("Bitte Gruppe auswählen: ");
-        //    var selectedProduct = Console.ReadLine();
-		// 	return lst[int.Parse(selectedProduct)-1];
-       //         throw new NotImplementedException();
-   
-    //    }
+		private async Task<GetProductGroupReply> SelectProductGroup()
+		{
+			var reply = await Factory.MarketPlacessApiClient.GetProductGroupsAsync(new Empty());
+			var i = 0;
+			foreach (var group in reply.ProductGroups)
+			{
+				i++;
+				Console.WriteLine($"{i}. {group.Name}");
+			}
+			Console.Write("Bitte Gruppe auswählen: ");
+			var selectedProduct = Console.ReadLine();
+			var groupId = reply.ProductGroups[int.Parse(selectedProduct) - 1].Id;
+			return await Factory.MarketPlacessApiClient.GetProductGroupAsync(new GetProductGroupRequest { Id = groupId });
+		}
 
-    //    private Position GetPlanetPosition()
-    //    {
-	// 		var posAdded = false;
-	// 		Position position = null;
-    //        do
-	// 		{
-	// 			Console.Write("Position X, Y, Z: ");
-	// 			var posLine = Console.ReadLine();
-	// 			try
-	// 			{
-	// 				position = Position.GetPositionByString(posLine);
-	// 				posAdded = true;
-	// 			}
-	// 			catch (System.Exception e)
-	// 			{
-	// 				Console.WriteLine("Falsche Eingabe [" + e.Message + "]");
-	// 			}
-	// 		} while (!posAdded);
-	// 		return position;
-    //    }
-   }
+		private Position GetPlanetPosition()
+		{
+			var posAdded = false;
+			Position position = null;
+			do
+			{
+				Console.Write("Position X, Y, Z: ");
+				var posLine = Console.ReadLine();
+				try
+				{
+					position = Position.GetPositionByString(posLine);
+					posAdded = true;
+				}
+				catch (System.Exception e)
+				{
+					Console.WriteLine("Falsche Eingabe [" + e.Message + "]");
+				}
+			} while (!posAdded);
+			return position;
+		}
+	}
 }

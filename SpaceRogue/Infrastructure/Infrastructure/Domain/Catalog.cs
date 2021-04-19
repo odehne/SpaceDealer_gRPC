@@ -25,7 +25,7 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 
 			var price = CalculatePrice(product, percentValue);
 
-			CatalogItems.Add(new CatalogItem(product, title, (decimal)price));
+			CatalogItems.Add(new CatalogItem(product, title, (decimal)price, ID));
 
 			//Raise(new CatalogItemAddedEvent
 			//{
