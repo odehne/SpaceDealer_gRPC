@@ -62,12 +62,16 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<ProductGroup> GetItem(Guid id)
         {
-            return await Context.ProductGroups.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.ProductGroups
+                            .Include(group => group.Products)
+                            .FirstOrDefaultAsync(x => x.ID.Equals(id));
         }
 
         public async Task<ProductGroup> GetItemByName(string name)
         {
-            return await Context.ProductGroups.FirstOrDefaultAsync(x => x.Name.Equals(name));
+            return await Context.ProductGroups
+                            .Include(group => group.Products)
+                            .FirstOrDefaultAsync(x => x.Name.Equals(name));
         }
 
         public async Task<List<ProductGroup>> GetItems()

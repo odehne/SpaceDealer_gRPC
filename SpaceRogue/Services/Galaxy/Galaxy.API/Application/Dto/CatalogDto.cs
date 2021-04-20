@@ -6,13 +6,13 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 	public class CatalogDto
 	{
 		public string ID { get;  set; }
-		public IEnumerable<CatalogItemDto> CatalogItems { get;  set; }
+		public ICollection<CatalogItemDto> CatalogItems { get;  set; }
 
 		public CatalogDto()
 		{
 		}
 
-		public CatalogDto(string catalogId, IEnumerable<CatalogItemDto> catalogItems)
+		public CatalogDto(string catalogId, ICollection<CatalogItemDto> catalogItems)
 		{
 			ID = catalogId;
 			CatalogItems = catalogItems;

@@ -41,11 +41,24 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 		public async override Task<AddMarketPlaceReply> AddMarketPlace(AddMarketPlaceRequest addMarketPlaceRequest, ServerCallContext context)
 		{
 			_logger.LogInformation("Begin grpc call from method {Method} for ordering get order draft {CreateOrderDraftCommand}", context.Method, addMarketPlaceRequest);
+
+			var offerings = new CatalogDto(addMarketPlaceRequest.Offerings.Id, new List<CatalogItemDto>());
+			foreach (var itm in addMarketPlaceRequest.Offerings.CatalogItems)
+			{
+				offerings.CatalogItems.Add(new CatalogItemDto { ID = itm.Id, Price = itm.Price, ProductId = itm.ProductId, Title = itm.Title });
+			}
+
+			var demands = new CatalogDto(addMarketPlaceRequest.Demands.Id, new List<CatalogItemDto>());
+			foreach (var itm in addMarketPlaceRequest.Demands.CatalogItems)
+			{
+				demands.CatalogItems.Add(new CatalogItemDto { ID = itm.Id, Price = itm.Price, ProductId = itm.ProductId, Title = itm.Title });
+			}
+
 			var command = new AddMarketPlaceCommand(addMarketPlaceRequest.Id, 
 										  addMarketPlaceRequest.Name, 
 										  addMarketPlaceRequest.Id,
-										  AutoMap.Mapper.Map<CatalogDto>(addMarketPlaceRequest.Offerings),
-										  AutoMap.Mapper.Map<CatalogDto>(addMarketPlaceRequest.Demands));
+										  offerings,
+										  demands);
 
 			var data = await _mediator.Send(command);
 
@@ -89,7 +102,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
         public async override Task<OkReply> AddCatalogItem(AddCatalogItemRequest request, ServerCallContext context)
         {
-			var command = new AddCatalogItemCommand(request.CatalogId, request.ProductId, request.Title, request.PricePercentDelta);
+			var command = new AddCatalogItemCommand(request.CatalogId, request.ProductId, request.Title, request.Price);
 			var rply = await _mediator.Send(command);
 			return new OkReply { Ok = true };
 		}

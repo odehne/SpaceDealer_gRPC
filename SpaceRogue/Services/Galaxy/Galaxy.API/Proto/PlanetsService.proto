@@ -35,9 +35,10 @@ message GetPlanetReply {
 
 message AddPlanetRequest {
     string Name = 1;
-    int32 PosX = 2;
-	int32 PosY = 3;
-	int32 PosZ = 4;
+	string MarketPlaceId = 2;
+    int32 PosX = 3;
+	int32 PosY = 4;
+	int32 PosZ = 5;
 }
 
 message AddPlanetReply {

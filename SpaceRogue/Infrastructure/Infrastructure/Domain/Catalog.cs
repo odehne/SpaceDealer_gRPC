@@ -11,7 +11,12 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 		public Guid ID { get; set; }
 		public virtual ICollection<CatalogItem> CatalogItems { get; set; }
 
-		
+
+		public Catalog(Guid id)
+		{
+			ID = id;
+			CatalogItems = new List<CatalogItem>();
+		}
 
 		public Catalog()
 		{
@@ -51,10 +56,6 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 			return newPrice;
         }
 
-        private double AddPercentOnProductPrice(Product product, int plusPercentOnPrice)
-        {
-            throw new NotImplementedException();
-        }
 
         protected override void EnsureValidState()
 		{

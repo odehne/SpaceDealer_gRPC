@@ -1,4 +1,5 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Repositories;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Infrastructure.Model;
 using MediatR;
 using System;
@@ -21,32 +22,45 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		[DataMember]
 		public int PosZ { get; private set; }
 		[DataMember]
-		public MarketPlaceDto MarketPlace { get; private set; }
+		public string MarketPlaceId { get; private set; }
 
-		public AddPlanetCommand(string planetName, int posX, int posY, int posZ)
+		public AddPlanetCommand(string planetName, int posX, int posY, int posZ, string marketPlaceId)
 		{
 			Id = Guid.NewGuid().ToString();
 			PlanetName = planetName;
 			PosX = posX;
 			PosY = posY;
 			PosZ = posZ;
-			MarketPlace = new MarketPlaceDto($"Markt auf {PlanetName}");
+			MarketPlaceId = marketPlaceId;
 		}
 	}
 
 	public class AddPlanetCommandHandler : IRequestHandler<AddPlanetCommand, PlanetDto>
 	{
 		private readonly IPlanetRepository _repository;
+		private readonly IMarketPlaceRepository _marketRepository;
 
-		public AddPlanetCommandHandler(IPlanetRepository repository)
+		public AddPlanetCommandHandler(IPlanetRepository repository, IMarketPlaceRepository marketPlaceRepository)
 		{
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
+			_marketRepository = marketPlaceRepository ?? throw new ArgumentNullException(nameof(marketPlaceRepository));
 		}
 
 		public async Task<PlanetDto> Handle(AddPlanetCommand request, CancellationToken cancellationToken)
 		{
-			var planet = AutoMap.Mapper.Map<Planet>(request);
 
+			var market = await _marketRepository.GetItem(request.MarketPlaceId.ToGuid());
+
+			var planet = new Planet
+			{
+				ID = request.Id.ToGuid(),
+				Name = request.PlanetName,
+				PosX = request.PosX,
+				PosY = request.PosY,
+				PosZ = request.PosZ,
+				Market = market
+			};
+		
 			var b = await _repository.AddItem(planet);
 			var p = await _repository.GetItem(planet.ID);
 

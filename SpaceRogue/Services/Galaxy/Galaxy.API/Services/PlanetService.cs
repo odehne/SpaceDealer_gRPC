@@ -21,9 +21,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
 		public async override Task<AddPlanetReply> AddPlanet(AddPlanetRequest request, ServerCallContext context)
 		{
-			var command = new AddPlanetCommand(request.Name, request.PosX, request.PosY, request.PosX);
+			var command = new AddPlanetCommand(request.Name, request.PosX, request.PosY, request.PosZ, request.MarketPlaceId);
 			var planetDto = await _mediator.Send(command);
-			return AutoMap.Mapper.Map<AddPlanetReply>(planetDto);
+			return new AddPlanetReply { Id = planetDto.ID, Message = "OK" };
 		}
 
 		public async override Task<PlanetOkReply> DeletePlanet(DeletePlanetRequest request, ServerCallContext context)
@@ -43,9 +43,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			var planets = await _mediator.Send(new PlanetsQuery());
 			var rply = new GetPlanetsReply();
 
-			foreach (var dto in planets)
+			foreach (var planetDto in planets)
 			{
-				rply.Planets.Add(AutoMap.Mapper.Map<GetPlanetReply>(dto));
+				rply.Planets.Add(new GetPlanetReply { Id = planetDto.ID, Name = planetDto.Name, PosX = planetDto.PosX, PosY = planetDto.PosY, PosZ = planetDto.PosZ });
 			}
 
 			return rply;

@@ -1,4 +1,5 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Repositories;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using MediatR;
 using System;
 using System.Runtime.Serialization;
@@ -11,15 +12,15 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 	public class AddMarketPlaceCommand : IRequest<MarketPlaceDto>
 	{
 		[DataMember]
-		public string MarketPlaceId { get; set; }
+		public string ID { get; set; }
 		[DataMember]
-		public string MarketPlaceName { get; set; }
+		public string Name { get; set; }
 		[DataMember]
 		public string PlanetId { get; set; }
 		[DataMember]
-		public CatalogDto Offerings { get; set; }
+		public CatalogDto ProductOfferings { get; set; }
 		[DataMember]
-		public CatalogDto Demands { get; set; }
+		public CatalogDto ProductDemands { get; set; }
 
 		public AddMarketPlaceCommand()
 		{
@@ -27,20 +28,20 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 
 		public AddMarketPlaceCommand(string marketPlaceId, string marketPlaceName, string planetId, CatalogDto offerings, CatalogDto demands)
 		{
-			MarketPlaceId = marketPlaceId;
-			MarketPlaceName = marketPlaceName;
+			ID = marketPlaceId;
+			Name = marketPlaceName;
 			PlanetId = planetId;
-			Offerings = offerings;
-			Demands = demands;
+			ProductOfferings = offerings;
+			ProductDemands = demands;
 		}
 	}
 
 	public class AddMarketPlaceCommandHandler : IRequestHandler<AddMarketPlaceCommand, MarketPlaceDto>
 	{
-		private readonly MarketPlaceRepository _repository;
+		private readonly IMarketPlaceRepository _repository;
 		private readonly IMediator _mediator;
 
-		public AddMarketPlaceCommandHandler(IMediator mediator, MarketPlaceRepository repository)
+		public AddMarketPlaceCommandHandler(IMediator mediator, IMarketPlaceRepository repository)
 		{
 			_mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -48,9 +49,26 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 
 		public async Task<MarketPlaceDto> Handle(AddMarketPlaceCommand request, CancellationToken cancellationToken)
 		{
-			var market = await _repository.GetItem(request.PlanetId.ToGuid());
+			var offerings = new Catalog { ID = request.ProductOfferings.ID.ToGuid() };
+			var demands= new Catalog { ID = request.ProductDemands.ID.ToGuid() };
 
-			return new MarketPlaceDto(request.MarketPlaceId.ToString(), market.Name);
+			foreach (var item in request.ProductOfferings.CatalogItems)
+			{
+				offerings.CatalogItems.Add(new CatalogItem { ID = item.ID.ToGuid(), Price = (decimal)item.Price, ProductId = item.ProductId.ToGuid(), Title = item.Title });
+			}
+
+			foreach (var item in request.ProductDemands.CatalogItems)
+			{
+				demands.CatalogItems.Add(new CatalogItem { ID = item.ID.ToGuid(), Price = (decimal)item.Price, ProductId = item.ProductId.ToGuid(), Title = item.Title });
+			}
+			var market = new MarketPlace { 
+											ID = request.ID.ToGuid(), 
+											Name = request.Name, 
+											ProductDemands = demands, 
+											ProductOfferings = offerings 
+										  };
+			var result = await _repository.AddItem(market);
+			return new MarketPlaceDto(request.ID.ToString(), market.Name);
 		}
 
 	}

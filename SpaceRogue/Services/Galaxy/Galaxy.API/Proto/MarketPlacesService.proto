@@ -66,7 +66,7 @@ message GetProductGroupsReply {
 }
 
 message AddCatalogRequest {
-	string CatalogId = 1;
+	string Id = 1;
 	repeated AddCatalogItemRequest CatalogItems = 2;
 }
 
@@ -94,7 +94,7 @@ message GetCatalogItemReply {
 message AddCatalogItemRequest {
 	string Id = 1;
 	string Title = 2;
-	int32 PricePercentDelta = 3;
+	double Price = 3;
 	string ProductId = 4;
 	string CatalogId = 5;
 }

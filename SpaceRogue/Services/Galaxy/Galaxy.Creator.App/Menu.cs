@@ -236,30 +236,51 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			Console.WriteLine("Produktgruppe, die verkauft wird: ");
 			var pgOfferings = await SelectProductGroup();
 
-			var offerings = new AddCatalogRequest();
-			var demands = new AddCatalogRequest();
+			var offerings = new AddCatalogRequest { Id = Guid.NewGuid().ToString() };
+			var demands = new AddCatalogRequest { Id = Guid.NewGuid().ToString() };
 
 			foreach (var product in pgDemands.Products)
 			{
-				demands.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, PricePercentDelta = 15, Title = product.Name });
+				var price = CalculatePriceDiff(product.PricePerUnit, 15);
+				demands.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, Price = price, Title = product.Name });
 			}
 			foreach (var product in pgOfferings.Products)
 			{
-				offerings.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, PricePercentDelta = -5, Title = product.Name });
+				var price = CalculatePriceDiff(product.PricePerUnit, 15);
+				offerings.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, Price = price, Title = product.Name });
 			}
 
 			var market = new AddMarketPlaceRequest { Id = Guid.NewGuid().ToString(), MarketPlaceId = Guid.NewGuid().ToString(), Offerings = offerings, Demands = demands, Name = marketPlaceName };
 
-			//var ret = 
+			var marketPlaceReply = await Factory.MarketPlacessApiClient.AddMarketPlaceAsync(market);
 
-			//await Factory.MarketPlaceRepository.AddItem(market);
-			//var planet = new Planet(market, name, "Neuer Planet entdeckt!", (int)position.X, (int)position.Y, (int)position.Z);
-			//await Factory.PlanetRepository.AddItem(planet);
-			//return $"{planet.Name} erstellt.";
+			var addPlanetRequest = new AddPlanetRequest { Name = name, PosX = (int)position.X, PosY = (int)position.Y, PosZ = (int)position.Z, MarketPlaceId = marketPlaceReply.Id };
 
-			return "OK";
+			var planetReply = await Factory.PlanetsApiClient.AddPlanetAsync(addPlanetRequest);
 			
+			return $"{planetReply.Id} erstellt.";
+
 		}
+
+
+		private double CalculatePriceDiff(double orgPrice, int percentValue)
+		{
+			var newPrice = 0.0;
+			if (percentValue == 100)
+				return orgPrice;
+
+			if (percentValue > 0)
+			{
+				newPrice = ((orgPrice * percentValue) / 100) + orgPrice;
+			}
+			else
+			{
+				newPrice = orgPrice - ((orgPrice* (percentValue * -1))) / 100;
+			}
+			return newPrice;
+		}
+
+
 
 		private async Task<GetProductGroupReply> SelectProductGroup()
 		{

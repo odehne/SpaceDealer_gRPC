@@ -8,8 +8,8 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public string ID { get; private set; }
 		public string Name { get; set; }
 
-		public CatalogDto Offerings {get; set;} 
-		public CatalogDto Demands {get; set;}
+		public CatalogDto ProductOfferings {get; set;} 
+		public CatalogDto ProductDemands {get; set;}
 
 		public MarketPlaceDto(string id, string name)
 		{
@@ -23,16 +23,16 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 			Name = name;
 		}
 
-        internal static MarketPlaceDto MapToDto(MarketPlace itm)
-        {
-			var offerings = CatalogDto.MapToDto(itm.ProductOfferings);
-        	var demands = CatalogDto.MapToDto(itm.ProductOfferings);
-			var market = new MarketPlaceDto(itm.ID.ToString(), itm.Name);
+   //     internal static MarketPlaceDto MapToDto(MarketPlace itm)
+   //     {
+			//var offerings = CatalogDto.MapToDto(itm.ProductOfferings);
+   //     	var demands = CatalogDto.MapToDto(itm.ProductOfferings);
+			//var market = new MarketPlaceDto(itm.ID.ToString(), itm.Name);
 
-			market.Offerings = offerings;
-			market.Demands = demands;
+			//market.Offerings = offerings;
+			//market.Demands = demands;
 			
-            return market;
-        }
+   //         return market;
+   //     }
     }
 }

@@ -17,14 +17,14 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		[DataMember]
 		public string Title { get; private set; }
 		[DataMember]
-		public int PercentValue { get; private set; }
+		public double Price { get; private set; }
 
-		public AddCatalogItemCommand(string catalogId, string productId, string title, int percentValue)
+		public AddCatalogItemCommand(string catalogId, string productId, string title, double price)
 		{
 			CatalogId = catalogId;
 			ProductId = productId;
 			Title = title;
-			PercentValue = percentValue;
+			Price = price;
 		}
 	}
 
@@ -44,30 +44,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public async Task<CatalogItemDto> Handle(AddCatalogItemCommand request, CancellationToken cancellationToken)
 		{
 			var product = await _productsRepo.GetItem(request.ProductId.ToGuid());
-			var price = CalculatePrice(product, request.PercentValue);
-			var item = new CatalogItem(product, request.Title, (decimal)price, request.CatalogId.ToGuid());
+			var item = new CatalogItem(product, request.Title, (decimal)request.Price, request.CatalogId.ToGuid());
 			var result = await _repository.AddItem(item);
 			return AutoMap.Mapper.Map<CatalogItemDto>(item);
 		}
-
-		private double CalculatePrice(Product product, int percentValue)
-		{
-			var newPrice = 0.0;
-			var currentPrice = product.PricePerUnit;
-			if (percentValue == 100)
-				return currentPrice;
-
-			if (percentValue > 0)
-			{
-				newPrice = ((currentPrice * percentValue) / 100) + currentPrice;
-			}
-			else
-			{
-				newPrice = currentPrice - ((currentPrice * (percentValue * -1))) / 100;
-			}
-			return newPrice;
-		}
-
-
 	}
 }
