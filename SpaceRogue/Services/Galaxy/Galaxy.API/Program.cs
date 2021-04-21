@@ -42,22 +42,25 @@ namespace Cope.SpaceRogue.Galaxy.API
 				cfg =>
 				{
 					cfg.CreateMap<UpdateProductCommand, UpdateProductRequest>();
+					cfg.CreateMap<Feature, FeatureDto>();
 					cfg.CreateMap<Product, ProductDto>();
+					cfg.CreateMap<Player, PlayerDto>();
+					cfg.CreateMap<Planet, PlanetDto>();
+					cfg.CreateMap<Catalog, CatalogDto>();
 					cfg.CreateMap<ProductGroup, ProductGroupDto>();
 					cfg.CreateMap<AddCatalogRequest, CatalogDto> ();
-					cfg.CreateMap<Catalog, CatalogDto>();
 					cfg.CreateMap<CatalogDto, Catalog>();
 					cfg.CreateMap<CatalogItem, CatalogItemDto>();
 					cfg.CreateMap<MarketPlace, MarketPlaceDto>();
-					cfg.CreateMap<Player, PlayerDto>();
-					cfg.CreateMap<Planet, PlanetDto>();
 					cfg.CreateMap<AddPlanetReply, PlanetDto>();
 					cfg.CreateMap<GetPlanetReply, PlanetDto>();
 					cfg.CreateMap<Planet, AddPlanetCommand>();
 					cfg.CreateMap<AddProductGroupCommand, Planet>();
 					cfg.CreateMap<ProductDto, GetProductReply>();
 					cfg.CreateMap<ProductGroupDto, GetProductGroupReply>();
-					
+					cfg.CreateMap<FeatureDto, GetFeatureReply>();
+					cfg.CreateMap<PlayerDto, GetPlayerReply>();
+					cfg.CreateMap<ShipDto, GetShipReply>();
 				});
 
 			Mapper = Config.CreateMapper();

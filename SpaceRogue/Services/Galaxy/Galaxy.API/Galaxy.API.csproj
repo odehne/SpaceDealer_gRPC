@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Proto\PlayersService.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Protobuf Include="Proto\MarketPlacesService.proto" GrpcServices="Server" />
     <Protobuf Include="Proto\PlanetsService.proto" GrpcServices="Server" />
   </ItemGroup>

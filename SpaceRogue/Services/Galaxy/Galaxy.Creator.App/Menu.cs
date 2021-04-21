@@ -30,11 +30,12 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				Console.WriteLine("10. Produkt löschen");
 				Console.WriteLine("11. Produkt aktualisieren");
                 Console.WriteLine("12. Raumschiff erstellen");
-                Console.WriteLine("13. Beenden");
+				Console.WriteLine("13. Spieler erstellen");
+				Console.WriteLine("14. Beenden");
 
-				Console.Write("Wähle zwischen 1-13: ");
+				Console.Write("Wähle zwischen 1-14: ");
 				var selection = Console.ReadLine();
-				if(selection=="13")
+				if(selection=="14")
 					exitRecieved=true;
 		    	if(selection=="1")
 					result = await AddNewPlanet();
@@ -57,17 +58,41 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			    if(selection=="11")
 					await UpdateProduct();
 				if(selection=="12")
-					result = AddNewShip();
-       		Console.WriteLine(result);
+					await AddNewShip();
+				if (selection == "13")
+					await AddNewPlayer();
+				Console.WriteLine(result);
 			} while (!exitRecieved);
        }
 
-       private string AddNewShip()
-       {
-           throw new NotImplementedException();
-       }
+		private async Task AddNewPlayer()
+		{
+			var reply = await Factory.PlanetsApiClient.GetPlayersAsync(new PlanetsEmpty());
+			var i = 0;
+			foreach (var feat in reply.Players)
+			{
+				i++;
+				Console.WriteLine($"{i}. {feat.Name} [{feat.Id}]");
+			}
+			i++;
+			Console.WriteLine($"{i}. Zurück");
+		}
 
-       private async Task UpdateProduct()
+
+		private async Task AddNewShip()
+       {
+			var reply = await Factory.PlanetsApiClient.GetFeaturesAsync(new PlanetsEmpty());
+			var i = 0;
+			foreach (var feat in reply.Features)
+			{
+				i++;
+				Console.WriteLine($"{i}. {feat.Name} [{feat.Id}]");
+			}
+			i++;
+			Console.WriteLine($"{i}. Zurück");
+		}
+
+		private async Task UpdateProduct()
        {
 			Console.Write("Produkt Id: ");
 			var line = Console.ReadLine();

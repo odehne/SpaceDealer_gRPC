@@ -1,5 +1,6 @@
 ﻿namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
+
 	public class PlanetDto
 	{
 		public string ID { get; private set; }

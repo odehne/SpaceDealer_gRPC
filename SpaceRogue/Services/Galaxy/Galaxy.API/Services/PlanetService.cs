@@ -26,10 +26,30 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return new AddPlanetReply { Id = planetDto.ID, Message = "OK" };
 		}
 
+		public override Task<GetPlayerReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
+		{
+			return base.AddPlayer(request, context);
+		}
+
+		public override Task<GetShipReply> AddShip(AddShipRequest request, ServerCallContext context)
+		{
+			return base.AddShip(request, context);
+		}
+
 		public async override Task<PlanetOkReply> DeletePlanet(DeletePlanetRequest request, ServerCallContext context)
 		{
 			var result = await _mediator.Send(new DeletePlanetCommand(request.Id));
 			return new PlanetOkReply { Ok = result };
+		}
+
+		public override Task<PlayerOkReply> DeletePlayer(DeletePlayerRequest request, ServerCallContext context)
+		{
+			return base.DeletePlayer(request, context);
+		}
+
+		public override Task<ShipOkReply> DeleteShip(DeleteShipRequest request, ServerCallContext context)
+		{
+			return base.DeleteShip(request, context);
 		}
 
 		public async override Task<GetPlanetReply> GetPlanet(GetPlanetRequest request, ServerCallContext context)
@@ -51,9 +71,73 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return rply;
 		}
 
+		public override Task<GetPlayerReply> GetPlayer(GetPlayerRequest request, ServerCallContext context)
+		{
+			return base.GetPlayer(request, context);
+		}
+
+		public async override Task<GetPlayersReply> GetPlayers(PlanetsEmpty request, ServerCallContext context)
+		{
+			var players = await _mediator.Send(new PlayersQuery());
+			var rply = new GetPlayersReply();
+
+			foreach (var player in players)
+			{
+				rply.Players.Add(AutoMap.Mapper.Map<GetPlayerReply>(player));
+			}
+
+			return rply;
+		}
+
+		public override Task<GetShipReply> GetShip(GetShipRequest request, ServerCallContext context)
+		{
+			return base.GetShip(request, context);
+		}
+
+		public async override Task<GetShipsReply> GetShips(PlanetsEmpty request, ServerCallContext context)
+		{
+			var ships = await _mediator.Send(new ShipsQuery());
+			var rply = new GetShipsReply();
+
+			foreach (var ship in ships)
+			{
+				rply.Ships.Add(AutoMap.Mapper.Map<GetShipReply>(ship));
+			}
+
+			return rply;
+		}
+
+		public override Task<GetShipsReply> GetShipsByPlayer(GetPlayerRequest request, ServerCallContext context)
+		{
+			return base.GetShipsByPlayer(request, context);
+		}
+
 		public override Task<UpdatePlanetReply> UpdatePlanet(UpdatePlanetRequest request, ServerCallContext context)
 		{
 			return base.UpdatePlanet(request, context);
+		}
+
+		public override Task<GetPlayerReply> UpdatePlayer(UpdatePlayerRequest request, ServerCallContext context)
+		{
+			return base.UpdatePlayer(request, context);
+		}
+
+		public override Task<GetShipReply> UpdateShip(AddShipRequest request, ServerCallContext context)
+		{
+			return base.UpdateShip(request, context);
+		}
+
+		public async override Task<GetFeaturesReply> GetFeatures(PlanetsEmpty request, ServerCallContext context)
+		{
+			var features = await _mediator.Send(new FeaturesQuery());
+			var rply = new GetFeaturesReply();
+
+			foreach (var feat in features)
+			{
+				rply.Features.Add(AutoMap.Mapper.Map<GetFeatureReply>(feat));
+			}
+
+			return rply;
 		}
 	}
 }

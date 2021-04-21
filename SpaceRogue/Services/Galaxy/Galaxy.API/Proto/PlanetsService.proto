@@ -3,11 +3,23 @@
 option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
 
 service PlanetsService {
-  rpc GetPlanets (PlanetsEmpty) returns (GetPlanetsReply);
-  rpc GetPlanet (GetPlanetRequest) returns (GetPlanetReply);
-  rpc AddPlanet (AddPlanetRequest) returns (AddPlanetReply);
-  rpc UpdatePlanet (UpdatePlanetRequest) returns (UpdatePlanetReply);
-  rpc DeletePlanet (DeletePlanetRequest) returns (PlanetOkReply);
+	rpc GetPlanets (PlanetsEmpty) returns (GetPlanetsReply);
+	rpc GetPlanet (GetPlanetRequest) returns (GetPlanetReply);
+	rpc AddPlanet (AddPlanetRequest) returns (AddPlanetReply);
+	rpc UpdatePlanet (UpdatePlanetRequest) returns (UpdatePlanetReply);
+	rpc DeletePlanet (DeletePlanetRequest) returns (PlanetOkReply);
+	rpc GetPlayers (PlanetsEmpty) returns (GetPlayersReply);
+	rpc GetPlayer (GetPlayerRequest) returns (GetPlayerReply);
+	rpc AddPlayer (AddPlayerRequest) returns (GetPlayerReply);
+	rpc UpdatePlayer (UpdatePlayerRequest) returns (GetPlayerReply);
+	rpc DeletePlayer (DeletePlayerRequest) returns (PlayerOkReply);
+	rpc GetShips (PlanetsEmpty) returns (GetShipsReply);
+	rpc GetShipsByPlayer (GetPlayerRequest) returns (GetShipsReply);
+	rpc GetShip (GetShipRequest) returns (GetShipReply);
+	rpc AddShip (AddShipRequest) returns (GetShipReply);
+	rpc UpdateShip (AddShipRequest) returns (GetShipReply);
+	rpc DeleteShip (DeleteShipRequest) returns (ShipOkReply);
+	rpc GetFeatures (PlanetsEmpty) returns (GetFeaturesReply);
 }
 
 message PlanetsEmpty { }
@@ -67,4 +79,113 @@ message DeletePlanetRequest {
 message DeletePlanetReply {
 	bool Deleted = 1;
 	string Message = 2;
+}
+
+
+message PlayerOkReply {
+	bool Ok = 1;
+}
+
+message ShipOkReply {
+	bool Ok = 1;
+}
+
+message GetPlayersReply {
+	repeated GetPlayerReply Players = 1;
+}
+
+message GetPlayerReply {
+	string Id = 1;
+	string Name = 2;
+	repeated string ShipIds = 3;
+	double Credits = 4;
+	int32 PlayerType = 5;
+}
+
+message GetPlayerRequest {
+	string Id = 1;
+}
+
+message DeletePlayerRequest {
+	string Id = 1;
+}
+
+message AddPlayerRequest {
+	string Id = 1;
+	string Name = 2;
+	int32 PlayType= 3;
+}
+
+message UpdatePlayerRequest {
+	string Id = 1;
+	string Name = 2;
+	repeated string ShipIds = 3;
+	double Credits = 4;
+	int32 PlayerType = 5;
+}
+message GetShipRequest {
+	string Id = 1;
+}
+
+message GetShipsReply {
+	repeated GetShipReply Ships = 1;
+}
+
+message GetShipReply {
+	string Id = 1;
+	int32 Hull = 2;
+	int32 Shields = 3;
+	string Name = 4;
+	repeated GetFeatureReply Features = 5;
+	repeated GetPayloadReply Payload = 6;
+}
+
+message AddShipRequest {
+	string Id = 1;
+	string PlayerId = 2;
+	int32 Shields = 3;
+	int32 Hull = 4;
+}
+
+message UpdateShipRequest {
+	string Id = 1;
+	int32 Shields = 3;
+	int32 Hull = 4;
+	repeated FeatureRequest Features = 5;
+	repeated PayloadRequest Payload = 6;
+}
+
+message DeleteShipRequest {
+	string Id = 1;
+}
+
+message FeatureRequest {
+	string FeatureName = 1;
+}
+
+message PayloadRequest {
+	string Id = 1;
+	double Quantity = 2;
+}
+
+message GetFeaturesReply {
+	repeated GetFeatureReply Features = 1;
+}
+
+message GetFeatureReply {
+	string Id = 1;
+	string Name = 2;
+	string Description = 3;
+	double BattleAdvantage = 4;
+	double BattleDisadvantage = 5;
+	double FreightCapacityAdvantage = 6;
+	double FreightCapacityDisadvantage = 7;
+	double SensorRangeAdvantage = 8;
+}
+
+message GetPayloadReply {
+	string Id = 1;
+	string ProductId = 2;
+	string ProductName = 3;
+	double Quantity = 4;
 }

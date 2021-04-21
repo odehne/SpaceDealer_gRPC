@@ -3,18 +3,16 @@
 option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
 
 service PlayersService {
-  rpc GetPlayers (PlayersEmpty) returns (GetPlayersReply);
-  rpc GetPlayer (GetPlayerRequest) returns (GetPlayerReply);
-  rpc AddPlayer (AddPlayerRequest) returns (GetPlayerReply);
-  rpc UpdatePlayer (UpdatePlayerRequest) returns (GetPlayerReply);
-  rpc DeletePlayer (DeletePlayerRequest) returns (PlayerOkReply);
-  
-  rpc GetShips (PlayersEmpty) returns (GetShipsReply);
-  rpc GetShip (GetShipRequest) returns (GetShipReply);
-  rpc AddShip (AddShipRequest) returns (AddShipReply);
-  rpc UpdateShip (AddShipRequest) returns (AddShipReply);
-  rpc DeleteShip (DeleteShipRequest) returns (ShipOkReply);
-  
+	rpc GetPlayers (PlayersEmpty) returns (GetPlayersReply);
+	rpc GetPlayer (GetPlayerRequest) returns (GetPlayerReply);
+	rpc AddPlayer (AddPlayerRequest) returns (GetPlayerReply);
+	rpc UpdatePlayer (UpdatePlayerRequest) returns (GetPlayerReply);
+	rpc DeletePlayer (DeletePlayerRequest) returns (PlayerOkReply);
+	rpc GetShips (PlayersEmpty) returns (GetShipsReply);
+	rpc GetShip (GetShipRequest) returns (GetShipReply);
+	rpc AddShip (AddShipRequest) returns (GetShipReply);
+	rpc UpdateShip (AddShipRequest) returns (GetShipReply);
+	rpc DeleteShip (DeleteShipRequest) returns (ShipOkReply);
 }
 
 message PlayersEmpty { }
@@ -74,6 +72,34 @@ message GetShipReply {
 	repeated GetPayloadReply Payload = 6;
 }
 
+message AddShipRequest {
+	string Id = 1;
+	string PlayerId = 2;
+	int32 Shields = 3;
+	int32 Hull = 4;
+}
+
+message UpdateShipRequest {
+	string Id = 1;
+	int32 Shields = 3;
+	int32 Hull = 4;
+	repeated FeatureRequest Features = 5;
+	repeated PayloadRequest Payload = 6;
+}
+
+message DeleteShipRequest {
+	string Id = 1;
+}
+
+message FeatureRequest {
+	string FeatureName = 1;
+}
+
+message PayloadRequest {
+	string Id = 1;
+	double Quantity = 2;
+}
+
 message GetFeatureReply {
 	string Id = 1;
 	string Name = 2;
@@ -86,6 +112,8 @@ message GetFeatureReply {
 }
 
 message GetPayloadReply {
-
-
+	string Id = 1;
+	string ProductId = 2;
+	string ProductName = 3;
+	double Quantity = 4;
 }

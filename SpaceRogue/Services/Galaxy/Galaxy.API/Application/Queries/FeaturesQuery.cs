@@ -1,4 +1,4 @@
-using Cope.SpaceRogue.Galaxy.API;
+﻿using Cope.SpaceRogue.Galaxy.API;
 using Cope.SpaceRogue.Galaxy.API.Application.Commands;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using MediatR;
@@ -9,26 +9,26 @@ using System.Threading.Tasks;
 
 namespace Galaxy.Creator.Application.Commands
 {
-	public class PlanetsQuery : IRequest<IEnumerable<PlanetDto>> { }
+    public class FeaturesQuery : IRequest<IEnumerable<FeatureDto>> { }
 
-    public class PlanetsQueryHandler : IRequestHandler<PlanetsQuery, IEnumerable<PlanetDto>>
+    public class FeaturesQueryHandler : IRequestHandler<FeaturesQuery, IEnumerable<FeatureDto>>
     {
-        private readonly IPlanetRepository _repository;
+        private readonly IFeatureRepository _repository;
 
-        public PlanetsQueryHandler(IPlanetRepository repository)
+        public FeaturesQueryHandler(IFeatureRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<IEnumerable<PlanetDto>> Handle(PlanetsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<FeatureDto>> Handle(FeaturesQuery request, CancellationToken cancellationToken)
         {
             {
                 var itms = await _repository.GetItems();
-                var dtos = new List<PlanetDto>();
+                var dtos = new List<FeatureDto>();
 
                 foreach (var itm in itms)
                 {
-                    dtos.Add(AutoMap.Mapper.Map<PlanetDto>(itm));
+                    dtos.Add(AutoMap.Mapper.Map<FeatureDto>(itm));
                 }
 
                 return dtos;
