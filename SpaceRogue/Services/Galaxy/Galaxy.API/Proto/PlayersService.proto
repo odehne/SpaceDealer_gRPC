@@ -1,0 +1,91 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Cope.SpaceRogue.Galaxy.API.Proto";
+
+service PlayersService {
+  rpc GetPlayers (PlayersEmpty) returns (GetPlayersReply);
+  rpc GetPlayer (GetPlayerRequest) returns (GetPlayerReply);
+  rpc AddPlayer (AddPlayerRequest) returns (GetPlayerReply);
+  rpc UpdatePlayer (UpdatePlayerRequest) returns (GetPlayerReply);
+  rpc DeletePlayer (DeletePlayerRequest) returns (PlayerOkReply);
+  
+  rpc GetShips (PlayersEmpty) returns (GetShipsReply);
+  rpc GetShip (GetShipRequest) returns (GetShipReply);
+  rpc AddShip (AddShipRequest) returns (AddShipReply);
+  rpc UpdateShip (AddShipRequest) returns (AddShipReply);
+  rpc DeleteShip (DeleteShipRequest) returns (ShipOkReply);
+  
+}
+
+message PlayersEmpty { }
+
+message PlayerOkReply {
+	bool Ok = 1;
+}
+
+message ShipOkReply {
+	bool Ok = 1;
+}
+
+message GetPlayersReply {
+	repeated Players = 1;
+}
+
+message GetPlayerReply {
+	string Id = 1;
+	string Name = 2;
+	repeated string ShipIds = 3;
+	double Credits = 4;
+	int32 PlayerType = 5;
+}
+
+message GetPlayerRequest {
+	string Id = 1;
+}
+
+message DeletePlayerRequest {
+	string Id = 1;
+}
+
+message AddPlayerRequest {
+	string Id = 1;
+	string Name = 2;
+	int32 PlayType= 3;
+}
+
+message UpdatePlayerRequest {
+	string Id = 1;
+	string Name = 2;
+	repeated string ShipIds = 3;
+	double Credits = 4;
+	int32 PlayerType = 5;
+}
+
+message GetShipsReply {
+	repeated GetShipReply = 1;
+}
+
+message GetShipReply {
+	string Id = 1;
+	int32 Hull = 2;
+	int32 Shields = 3;
+	string Name = 4;
+	repeated GetFeatureReply Features = 5;
+	repeated GetPayloadReply Payload = 6;
+}
+
+message GetFeatureReply {
+	string Id = 1;
+	string Name = 2;
+	string Description = 3;
+	double BattleAdvantage = 4;
+	double BattleDisadvantage = 5;
+	double FreightCapacityAdvantage = 6;
+	double FreightCapacityDisadvantage = 7;
+	double SensorRangeAdvantage = 8;
+}
+
+message GetPayloadReply {
+
+
+}

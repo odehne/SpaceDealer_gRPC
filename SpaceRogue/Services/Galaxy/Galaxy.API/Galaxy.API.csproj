@@ -13,6 +13,11 @@
   <ItemGroup>
     <None Remove="Proto\MarketPlacesService.proto" />
     <None Remove="Proto\PlanetsService.proto" />
+    <None Remove="Proto\PlayersService.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Proto\PlayersService.proto" />
   </ItemGroup>
 
   <ItemGroup>
