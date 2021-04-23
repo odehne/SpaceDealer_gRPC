@@ -89,9 +89,10 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return rply;
 		}
 
-		public override Task<GetShipReply> GetShip(GetShipRequest request, ServerCallContext context)
+		public async override Task<GetShipReply> GetShip(GetShipRequest request, ServerCallContext context)
 		{
-			return base.GetShip(request, context);
+			var dto = await _mediator.Send(new ShipQuery(request.Id));
+			return AutoMap.Mapper.Map<GetShipReply>(dto);
 		}
 
 		public async override Task<GetShipsReply> GetShips(PlanetsEmpty request, ServerCallContext context)
@@ -109,7 +110,15 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
 		public override Task<GetShipsReply> GetShipsByPlayer(GetPlayerRequest request, ServerCallContext context)
 		{
-			return base.GetShipsByPlayer(request, context);
+			var ships = await _mediator.Send(new ShipsQuery());
+			var rply = new GetShipsReply();
+
+			foreach (var ship in ships)
+			{
+				rply.Ships.Add(AutoMap.Mapper.Map<GetShipReply>(ship));
+			}
+
+			return rply;
 		}
 
 		public override Task<UpdatePlanetReply> UpdatePlanet(UpdatePlanetRequest request, ServerCallContext context)

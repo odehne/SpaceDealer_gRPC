@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Galaxy.Creator.Application.Commands
 {
 
+
 	public class ShipsQuery : IRequest<IEnumerable<ShipDto>> { }
 
     public class ShipsQueryHandler : IRequestHandler<ShipsQuery, IEnumerable<ShipDto>>

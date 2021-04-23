@@ -78,6 +78,12 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
             return await Context.Ships.ToListAsync();
         }
 
+        public async Task<List<Ship>> GetItemsByPlayerId(Guid playerId)
+        {
+            var p = await Context.Players.Include(ships => ships.Fleet).FirstOrDefaultAsync(x => x.ID == playerId);
+            return p.Fleet;
+        }
+
         public async Task<bool> UpdateHull(int id, int newHullValue)
         {
             var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));

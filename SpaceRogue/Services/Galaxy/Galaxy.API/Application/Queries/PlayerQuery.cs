@@ -12,11 +12,11 @@ namespace Galaxy.Creator.Application.Commands
     public class PlayerQuery : IRequest<PlayerDto> 
     { 
         [DataMember]
-        public string PlayerId { get; private set; }
+        public string Id { get; private set; }
 
-		public PlayerQuery(string playerId)
+		public PlayerQuery(string id)
 		{
-			PlayerId = playerId;
+			Id = id;
 		}
     }
   public class PlayerQueryHandler : IRequestHandler<PlayerQuery, PlayerDto>
@@ -30,7 +30,7 @@ namespace Galaxy.Creator.Application.Commands
 
         public async Task<PlayerDto> Handle(PlayerQuery request, CancellationToken cancellationToken)
         {
-                var itm = await _repository.GetItem(request.PlayerId.ToGuid());
+                var itm = await _repository.GetItem(request.Id.ToGuid());
                 
                 return AutoMap.Mapper.Map<PlayerDto>(itm);
         }
