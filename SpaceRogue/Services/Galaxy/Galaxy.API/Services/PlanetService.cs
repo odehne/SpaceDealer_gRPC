@@ -108,9 +108,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return rply;
 		}
 
-		public override Task<GetShipsReply> GetShipsByPlayer(GetPlayerRequest request, ServerCallContext context)
+		public async override Task<GetShipsReply> GetShipsByPlayer(GetPlayerRequest request, ServerCallContext context)
 		{
-			var ships = await _mediator.Send(new ShipsQuery());
+			var ships = await _mediator.Send(new ShipsByPlayerQuery(request.Id));
 			var rply = new GetShipsReply();
 
 			foreach (var ship in ships)
