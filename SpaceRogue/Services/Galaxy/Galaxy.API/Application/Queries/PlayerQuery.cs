@@ -9,7 +9,8 @@ using MediatR;
 
 namespace Galaxy.Creator.Application.Commands
 {
-    public class PlayerQuery : IRequest<PlayerDto> 
+
+	public class PlayerQuery : IRequest<PlayerDto> 
     { 
         [DataMember]
         public string Id { get; private set; }

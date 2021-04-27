@@ -4,6 +4,7 @@ using Galaxy.Creator.Application.Commands;
 using Grpc.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Services
@@ -26,14 +27,30 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return new AddPlanetReply { Id = planetDto.ID, Message = "OK" };
 		}
 
-		public override Task<GetPlayerReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
+		public async override Task<PlayerOkReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
 		{
-			return base.AddPlayer(request, context);
+			var command = new AddPlayerCommand { 
+													Id = request.Id, 
+													Name = request.Name, 
+													PlayerType = request.PlayerType, 
+													Credits = request.Credits, 
+													PlanetId = request.PlanetId 
+												};
+			var b = await _mediator.Send(command);
+			return new PlayerOkReply { Ok = b };
 		}
 
-		public override Task<GetShipReply> AddShip(AddShipRequest request, ServerCallContext context)
+		public async override Task<ShipOkReply> AddShip(AddShipRequest request, ServerCallContext context)
 		{
-			return base.AddShip(request, context);
+			var command = new AddShipCommand
+			{
+				Id = request.Id,
+				Name = request.Name,
+				Shields = request.Shields,
+				Hull = request.Hull
+			};
+			var b = await _mediator.Send(command);
+			return new ShipOkReply { Ok = b };
 		}
 
 		public async override Task<PlanetOkReply> DeletePlanet(DeletePlanetRequest request, ServerCallContext context)
@@ -71,9 +88,16 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return rply;
 		}
 
-		public override Task<GetPlayerReply> GetPlayer(GetPlayerRequest request, ServerCallContext context)
+		public async override Task<GetPlayerReply> GetPlayer(GetPlayerRequest request, ServerCallContext context)
 		{
-			return base.GetPlayer(request, context);
+			var dto = await _mediator.Send(new PlayerQuery(request.Id));
+			return AutoMap.Mapper.Map<GetPlayerReply>(dto);
+		}
+
+		public async override Task<GetPlayerReply> GetPlayerByName(GetPlayerByNameRequest request, ServerCallContext context)
+		{
+			var dto = await _mediator.Send(new PlayerByNameQuery(request.Name));
+			return AutoMap.Mapper.Map<GetPlayerReply>(dto);
 		}
 
 		public async override Task<GetPlayersReply> GetPlayers(PlanetsEmpty request, ServerCallContext context)

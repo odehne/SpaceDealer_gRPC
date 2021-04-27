@@ -67,15 +67,25 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
 		private async Task AddNewPlayer()
 		{
-			var reply = await Factory.PlanetsApiClient.GetPlayersAsync(new PlanetsEmpty());
-			var i = 0;
-			foreach (var feat in reply.Players)
+			Console.Write("Name des neuen Spielers: ");
+			var name = Console.ReadLine();
+			var homePlanet = await Factory.PlanetsApiClient.GetPlanets(new PlanetsEmpty());
+			var player = await Factory.PlanetsApiClient.GetPlayerByNameAsync(new GetPlayerByNameRequest { Name = name });
+			
+			if (player != null)
 			{
-				i++;
-				Console.WriteLine($"{i}. {feat.Name} [{feat.Id}]");
+				Console.WriteLine($"Ein Spieler mit dem Namen existiert bereits.");
 			}
-			i++;
-			Console.WriteLine($"{i}. Zurück");
+			else
+			{
+				var p = await Factory.PlanetsApiClient.AddPlayerAsync(new AddPlayerRequest { 
+																				Id = Guid.NewGuid().ToString(),
+																				Name = name,
+				Credits = 5000, PlanetId = });
+
+			}
+
+
 		}
 
 

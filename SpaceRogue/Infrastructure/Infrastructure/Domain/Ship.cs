@@ -44,6 +44,12 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 		public int Shields { get; set; }
 		public string Name { get; set; }
 
+		public Ship()
+		{
+			Features = new List<Feature>();
+			Cargo = new List<Payload>();
+		}
+
         public Ship(string name, int hull, int shields)
         {
             ID = Guid.NewGuid();

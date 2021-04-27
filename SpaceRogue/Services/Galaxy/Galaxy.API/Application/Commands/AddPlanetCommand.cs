@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
+
 	public class AddPlanetCommand : IRequest<PlanetDto>
 	{
 		[DataMember]
@@ -23,6 +24,10 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public int PosZ { get; private set; }
 		[DataMember]
 		public string MarketPlaceId { get; private set; }
+		public AddPlanetCommand()
+		{
+
+		}
 
 		public AddPlanetCommand(string planetName, int posX, int posY, int posZ, string marketPlaceId)
 		{

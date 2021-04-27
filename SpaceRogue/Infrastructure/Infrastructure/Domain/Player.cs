@@ -11,12 +11,12 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 	{
 		public enum PlayerTypes
 		{
-			NPC,
-			Human
+			Human=0,
+			NPC=1
 		}
 
 		[Key]
-		public Guid ID { get; private set; }
+		public Guid ID { get; set; }
 		public string Name { get; set; }
 		[ForeignKey("Planet")]
 		public Planet HomePlanet { get; set; }
@@ -26,11 +26,12 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 
 		public Player()
 		{
+
 		}
 
-		public Player(string name, Planet homePlanet, decimal credits, PlayerTypes playerType)
+		public Player(Guid id, string name, Planet homePlanet, decimal credits, PlayerTypes playerType)
 		{
-			ID = Guid.NewGuid();
+			ID = id;
 			Name = name;
 			HomePlanet = homePlanet;
 			Credits = credits;
