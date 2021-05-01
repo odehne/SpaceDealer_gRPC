@@ -72,7 +72,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 		public async override Task<GetPlanetReply> GetPlanet(GetPlanetRequest request, ServerCallContext context)
 		{
 			var planetDto = await _mediator.Send(new PlanetQuery(request.Id));
-			return AutoMap.Mapper.Map<GetPlanetReply>(planetDto);
+			var reply = AutoMap.Mapper.Map<GetPlanetReply>(planetDto);
+			reply.MarketPlaceId = planetDto.Market.ID;
+			return reply;
 		}
 
 		public async override Task<GetPlanetsReply> GetPlanets(PlanetsEmpty request, ServerCallContext context)
@@ -82,7 +84,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 
 			foreach (var planetDto in planets)
 			{
-				rply.Planets.Add(new GetPlanetReply { Id = planetDto.ID, Name = planetDto.Name, PosX = planetDto.PosX, PosY = planetDto.PosY, PosZ = planetDto.PosZ });
+				var reply = AutoMap.Mapper.Map<GetPlanetReply>(planetDto);
+				reply.MarketPlaceId = planetDto.Market.ID;
+				rply.Planets.Add(reply);
 			}
 
 			return rply;
@@ -91,6 +95,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 		public async override Task<GetPlayerReply> GetPlayer(GetPlayerRequest request, ServerCallContext context)
 		{
 			var dto = await _mediator.Send(new PlayerQuery(request.Id));
+			var reply = AutoMap.Mapper.Map<GetPlayerReply>(dto);
 			return AutoMap.Mapper.Map<GetPlayerReply>(dto);
 		}
 

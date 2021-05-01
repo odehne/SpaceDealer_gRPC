@@ -58,9 +58,10 @@ message GetPlayerByNameRequest {
 message GetPlanetReply {
     string Id = 1;
     string Name = 2;
-    int32 PosX = 3;
+	int32 PosX = 3;
 	int32 PosY = 4;
 	int32 PosZ = 5; 
+	string MarketPlaceId = 6;
 }
 
 message AddPlanetRequest {

@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cope.SpaceRogue.Galaxy.API.Proto;
 using Galaxy.Creator.App;
+using Galaxy.Creator.App.Model;
 using Microsoft.Extensions.Logging;
 
 namespace Cope.SpaceRogue.Galaxy.Creator.App
@@ -10,10 +12,13 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 	public class Menu
 	{
        private readonly ILogger<Menu> _logger;
-        
+	   private List<PlanetModel> Planets { get; set; }
+		
        public async Task ShowMenu()
        {
-        	var exitRecieved = false;
+			Planets = new List<PlanetModel>();
+			await LoadPlanets();
+			var exitRecieved = false;
 			do
 			{
 				var result = "";
@@ -69,7 +74,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		{
 			Console.Write("Name des neuen Spielers: ");
 			var name = Console.ReadLine();
-			var homePlanet = await Factory.PlanetsApiClient.GetPlanets(new PlanetsEmpty());
+			var homePlanetId = Planets[0].Id;
 			var player = await Factory.PlanetsApiClient.GetPlayerByNameAsync(new GetPlayerByNameRequest { Name = name });
 			
 			if (player != null)
@@ -81,7 +86,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				var p = await Factory.PlanetsApiClient.AddPlayerAsync(new AddPlayerRequest { 
 																				Id = Guid.NewGuid().ToString(),
 																				Name = name,
-				Credits = 5000, PlanetId = });
+																				Credits = 5000, 
+					PlanetId = homePlanetId
+				});
 
 			}
 
@@ -241,6 +248,15 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				return;
 			//ShowPlanetDetails(reply.Planets[selected-1].Id);
 	   }
+
+		private async Task LoadPlanets()
+		{
+			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new PlanetsEmpty());
+			foreach (var planet in reply.Planets)
+			{
+				Planets.Add(new PlanetModel { Id = planet.Id, Name = planet.Name, Sector = new Position(planet.PosX, planet.PosY, planet.PosZ) });
+			}
+		}
 
 		//private void ShowPlanetDetails(string planetId)
 		//{

@@ -1,4 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.App;
+﻿using Cope.SpaceRogue.Galaxy.API.Proto;
+using Cope.SpaceRogue.Galaxy.Creator.App;
 using Grpc.Net.Client;
 using System;
 using System.Net.Http;
@@ -53,10 +54,14 @@ namespace Galaxy.Creator.App
 	{
 		static async Task Main(string[] args)
 		{
-			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new Cope.SpaceRogue.Galaxy.API.Proto.PlanetsEmpty());
+			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new PlanetsEmpty());
 			foreach (var planet in reply.Planets)
 			{
 				Console.WriteLine($"[{planet.Id}]\t{planet.Name}");
+				var detailedPlanet = await Factory.PlanetsApiClient.GetPlanetAsync(new GetPlanetRequest { Id = planet.Id });
+				Console.WriteLine($"\tPosition: [{detailedPlanet.PosX},{detailedPlanet.PosY},{detailedPlanet.PosZ}]");
+				Console.WriteLine($"\tMarketPlaceId: [{detailedPlanet.MarketPlaceId}]");
+
 			}
 
 			var menu = new Menu();

@@ -53,7 +53,7 @@ namespace Cope.SpaceRogue.Galaxy.API
 					cfg.CreateMap<CatalogItem, CatalogItemDto>();
 					cfg.CreateMap<MarketPlace, MarketPlaceDto>();
 					cfg.CreateMap<AddPlanetReply, PlanetDto>();
-					cfg.CreateMap<GetPlanetReply, PlanetDto>();
+					cfg.CreateMap<PlanetDto, GetPlanetReply>();
 					cfg.CreateMap<Planet, AddPlanetCommand>();
 					cfg.CreateMap<AddProductGroupCommand, Planet>();
 					cfg.CreateMap<ProductDto, GetProductReply>();
