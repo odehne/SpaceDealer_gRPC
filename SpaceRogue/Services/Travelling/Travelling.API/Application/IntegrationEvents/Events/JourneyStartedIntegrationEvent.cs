@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ship.API.Application.IntegrationEvents.Events
+namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents.Events
 {
 	public class  JourneyStartedIntegrationEvent : IntegrationEvent
     {

@@ -1,12 +1,11 @@
-﻿using Cope.SpaceRogue.Traveling.API.Models;
+﻿using Cope.SpaceRogue.Travelling.API.Models;
 using System.Collections.Generic;
 
-namespace Cope.SpaceRogue.Traveling.API.Models
+namespace Cope.SpaceRogue.Travelling.API.Models
 {
 	public class GalaxyModel 
 	{ 
 		public List<PlanetModel> Planets { get; set; }
-		public List<ShipModel> OtherShips { get; set; }
-
+		public List<ShipModel> Ships { get; set; }
 	}
 }

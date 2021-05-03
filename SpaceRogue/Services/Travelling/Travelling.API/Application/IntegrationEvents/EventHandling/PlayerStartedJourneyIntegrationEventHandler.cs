@@ -1,14 +1,15 @@
-﻿using MediatR;
+﻿using Cope.SpaceRogue.Travelling.API.Application.Commands;
+using Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents.Events;
+using Cope.SpaceRogue.Travelling.API;
+using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Extensions;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
-using Ship.API.Application.Commands;
-using Ship.API.Application.IntegrationEvents.Events;
 using System;
 using System.Threading.Tasks;
 
-namespace Ship.API.Application.IntegrationEvents.EventHandling
+namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents.EventHandling
 {
 	public class PlayerStartedJourneyIntegrationEventHandler : IIntegrationEventHandler<PlayerStartedJourneyIntegrationEvent>
 	{

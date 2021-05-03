@@ -12,12 +12,10 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 	public class Menu
 	{
        private readonly ILogger<Menu> _logger;
-	   private List<PlanetModel> Planets { get; set; }
-		
-       public async Task ShowMenu()
+	   
+
+		public async Task ShowMenu()
        {
-			Planets = new List<PlanetModel>();
-			await LoadPlanets();
 			var exitRecieved = false;
 			do
 			{
@@ -28,17 +26,19 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				Console.WriteLine("3.  Neue Produktgruppe");
 				Console.WriteLine("4.  Neues Produkt");
 				Console.WriteLine("5.  Planeten anzeigen");
-				Console.WriteLine("6.  Planeten löschen");
-				Console.WriteLine("7.  Produktgruppen anzeigen");
+				Console.WriteLine("6.  Spieler anzeigen");
+				Console.WriteLine("7.  Raumschiffe anzeigen");
 				Console.WriteLine("8.  Produkte anzeigen");
-				Console.WriteLine("9.  Produktgruppe löschen");
-				Console.WriteLine("10. Produkt löschen");
-				Console.WriteLine("11. Produkt aktualisieren");
-                Console.WriteLine("12. Raumschiff erstellen");
-				Console.WriteLine("13. Spieler erstellen");
-				Console.WriteLine("14. Beenden");
+				Console.WriteLine("9.  Produktgruppen anzeigen");
+				Console.WriteLine("10.  Planeten löschen");
+				Console.WriteLine("11.  Produktgruppe löschen");
+				Console.WriteLine("12. Produkt löschen");
+				Console.WriteLine("13. Produkt aktualisieren");
+                Console.WriteLine("14. Raumschiff erstellen");
+				Console.WriteLine("15. Spieler erstellen");
+				Console.WriteLine("16. Beenden");
 
-				Console.Write("Wähle zwischen 1-14: ");
+				Console.Write("Wähle zwischen 1-16: ");
 				var selection = Console.ReadLine();
 				if(selection=="14")
 					exitRecieved=true;
@@ -49,22 +49,26 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			    if(selection=="4")
 					await AddProduct();
 			    if(selection=="5")
-					await ListPlanets();
-			    if(selection=="6")
-					await DeletePlanet();
-			    if(selection=="7")
-					await ListProductGroups();
-			    if(selection=="8")
-					await ListProducts();
-			    if(selection=="9")
-					await DeleteProductGroup();
+					ListPlanets();
+				if (selection == "6")
+					ListPlayers();
+				if (selection == "7")
+					ListShips();
+				if (selection=="8")
+					ListProducts();
+				if (selection=="9")
+					ListProductGroups();
 			    if(selection=="10")
-					await DeleteProduct();
+					await DeletePlanet();
 			    if(selection=="11")
+					await DeleteProductGroup();
+			    if(selection=="12")
+					await DeleteProduct();
+			    if(selection=="13")
 					await UpdateProduct();
-				if(selection=="12")
+				if(selection=="14")
 					await AddNewShip();
-				if (selection == "13")
+				if (selection == "15")
 					await AddNewPlayer();
 				Console.WriteLine(result);
 			} while (!exitRecieved);
@@ -74,7 +78,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		{
 			Console.Write("Name des neuen Spielers: ");
 			var name = Console.ReadLine();
-			var homePlanetId = Planets[0].Id;
+			var homePlanetId = CachedGalaxy.Planets[0].Id;
 			var player = await Factory.PlanetsApiClient.GetPlayerByNameAsync(new GetPlayerByNameRequest { Name = name });
 			
 			if (player != null)
@@ -91,8 +95,6 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				});
 
 			}
-
-
 		}
 
 
@@ -163,24 +165,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
             var result = await Factory.MarketPlacessApiClient.DeleteProductGroupAsync(deleteProductRequest);
         }
 
-        private async Task ListProducts()
-       {
-            var reply = await Factory.MarketPlacessApiClient.GetProductsAsync(new Empty());
-            var i = 0;
-            foreach (var prod in reply.Products)
-            {
-                i++;
-                Console.WriteLine($"{i}. [{prod.Id}] {prod.Name}");
-            }
-            
-        }
-
-        private async Task ListProductGroups()
-        {
-            var reply = await Factory.MarketPlacessApiClient.GetProductGroupsAsync(new Empty());
-            reply.ProductGroups.ToList().ForEach(x => Console.WriteLine($"[{x.Id}] {x.Name}"));
-        }
-
+      
        private async Task AddProductGroup()
        {
            Console.Write("Name des neuen Produktgruppe: ");
@@ -229,45 +214,61 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			var result = await Factory.PlanetsApiClient.DeletePlanetAsync(new DeletePlanetRequest { Id = planetId });
 		}
 
-       private async Task ListPlanets()
+       private void ListPlanets()
        {
-			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new PlanetsEmpty());
-
 			var i = 0;
-			foreach (var planet in reply.Planets)
+			foreach (var planet in CachedGalaxy.Planets)
 			{
 				i++;
 				Console.WriteLine($"{i}. {planet.Name} [{planet.Id}]");
 			}
-			i++;
-			Console.WriteLine($"{i}. Zurück");
-			Console.Write("Details oder zurück: ");
-			var line = Console.ReadLine();
-			var selected = int.Parse(line);
-			if (selected >= i)
-				return;
-			//ShowPlanetDetails(reply.Planets[selected-1].Id);
 	   }
 
-		private async Task LoadPlanets()
+		private void ListPlayers()
 		{
-			var reply = await Factory.PlanetsApiClient.GetPlanetsAsync(new PlanetsEmpty());
-			foreach (var planet in reply.Planets)
+			var i = 0;
+			foreach (var player in CachedGalaxy.Players)
 			{
-				Planets.Add(new PlanetModel { Id = planet.Id, Name = planet.Name, Sector = new Position(planet.PosX, planet.PosY, planet.PosZ) });
+				i++;
+				Console.WriteLine($"{i}. {player.Name} [{player.Id}]");
 			}
 		}
 
-		//private void ShowPlanetDetails(string planetId)
-		//{
-		//	var reply = await Factory.MarketPlacessApiClient.Get(new PlanetsEmpty());
+		private void ListShips()
+		{
+			var i = 0;
+			foreach (var ship in CachedGalaxy.Ships)
+			{
+				i++;
+				Console.WriteLine($"{i}. {ship.Name} [{ship.Id}]");
+			}
+		}
 
-		//	Console.WriteLine($"Planet {planet.Id}");
-		//	Console.WriteLine($"Name: {planet.Name}");
-		//	Console.WriteLine($"Markt: {planet.Market.Name}");
-		//	Console.WriteLine($"Angebot: {planet.Market.ProductOfferings.ToString()}");
-		//	Console.WriteLine($"Nachfrage: {planet.Market.ProductDemands.ToString()}");
-		//}
+		private void ListProducts()
+		{
+			var i = 0;
+			foreach (var p in CachedGalaxy.Products)
+			{
+				i++;
+				Console.WriteLine($"{i}. {p.Name} [{p.Id}]");
+			}
+		}
+
+		private void ListProductGroups()
+		{
+			var i = 0;
+			foreach (var pg in CachedGalaxy.ProductGroups)
+			{
+				i++;
+				Console.WriteLine($"{i}. {pg.Name} [{pg.Id}]");
+			}
+		}
+
+
+		private async Task LoadPlanets()
+		{
+			await CachedGalaxy.Load();
+		}
 
 		private async Task<string> AddNewPlanet()
 		{
@@ -308,6 +309,8 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			var addPlanetRequest = new AddPlanetRequest { Name = name, PosX = (int)position.X, PosY = (int)position.Y, PosZ = (int)position.Z, MarketPlaceId = marketPlaceReply.Id };
 
 			var planetReply = await Factory.PlanetsApiClient.AddPlanetAsync(addPlanetRequest);
+
+			CachedGalaxy.Planets.Add(new PlanetModel { Id = planetReply.Id, MarketId = marketPlaceReply.Id, Name = name, Sector = new Position(position.X, position.Y, position.Z) });
 			
 			return $"{planetReply.Id} erstellt.";
 

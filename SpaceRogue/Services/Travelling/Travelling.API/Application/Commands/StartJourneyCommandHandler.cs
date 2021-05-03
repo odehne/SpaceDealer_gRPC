@@ -1,12 +1,11 @@
-﻿using MediatR;
+﻿using Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents;
+using MediatR;
 using Microsoft.Extensions.Logging;
-using Ship.API.Application.IntegrationEvents;
-using Ship.API.Application.IntegrationEvents.Events;
-using System;
+using Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents.Events;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ship.API.Application.Commands
+namespace Cope.SpaceRogue.Travelling.API.Application.Commands
 {
 	public class StartJourneyCommandHandler : IRequestHandler<StartJourneyCommand, bool>
 	{

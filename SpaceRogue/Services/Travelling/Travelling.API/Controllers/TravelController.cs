@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Traveling.API.Controllers;
 
-namespace Traveling.API.Controllers
+namespace Cope.SpaceRogue.Travelling.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -24,10 +25,10 @@ namespace Traveling.API.Controllers
 
         // GET api/v1/[controller]/{posx}/{posy}/{posz}]
         [HttpGet]
-        public async Task<IEnumerable<ObjectsInSectorModel>> Get(int posX, int posY, int posZ)
+        public async Task<ObjectsInSectorModel> Get(int posX, int posY, int posZ)
         {
             _logger.LogInformation($"Reading all objects in sector [{posX}, {posY}, {posZ}].");
-            return await _mediator.Send(new ObjectsInSectorQuery());
+            return await _mediator.Send(new ObjectsInSectorQuery(posX, posY, posZ));
         }
     }
 }

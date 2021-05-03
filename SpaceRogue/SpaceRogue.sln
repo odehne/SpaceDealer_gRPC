@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Galaxy.API", "Services\Gala
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure\Infrastructure.csproj", "{0791E612-F40F-438C-A273-42EE4C432A42}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Traveling", "Traveling", "{230E07F2-D9EC-4BDC-8CE6-FF28EA7D5F2A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Travelling", "Travelling", "{230E07F2-D9EC-4BDC-8CE6-FF28EA7D5F2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traveling.API", "Services\Travelling\Travelling.API\Traveling.API.csproj", "{DEEA8EA4-4851-4612-8173-015C3070D48F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Travelling.API", "Services\Travelling\Travelling.API\Travelling.API.csproj", "{DEEA8EA4-4851-4612-8173-015C3070D48F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shopping", "Shopping", "{B50761F7-2353-420F-BDFA-7C3D0543D527}"
 EndProject

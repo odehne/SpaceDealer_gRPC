@@ -1,7 +1,7 @@
 ﻿using Cope.SpaceRogue.InfraStructure;
 
 
-namespace Cope.SpaceRogue.Traveling.API.Domain
+namespace Cope.SpaceRogue.Travelling.API.Domain
 {
 	public class Journey : Entity
 	{

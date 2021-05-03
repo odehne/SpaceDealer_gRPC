@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "Cope.SpaceRogue.Traveling.API.Proto";
+option csharp_namespace = "Cope.SpaceRogue.Travelling.API.Proto";
 
 service TravelService {
   rpc GetShips (Empty) returns (GetShipsReply);

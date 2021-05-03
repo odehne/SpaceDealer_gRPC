@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Ship.API.Application.Commands
+namespace Cope.SpaceRogue.Travelling.API.Application.Commands
 {
 
 	public class StartJourneyCommand : IRequest<bool>

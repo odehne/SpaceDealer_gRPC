@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cope.SpaceRogue.Traveling.API.Domain
+namespace Cope.SpaceRogue.Travelling.API.Domain
 {
 	public enum JourneyStates
 	{

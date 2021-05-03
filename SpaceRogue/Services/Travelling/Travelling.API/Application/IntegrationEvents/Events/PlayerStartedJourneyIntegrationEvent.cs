@@ -1,7 +1,7 @@
 ﻿using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
 using System;
 
-namespace Ship.API.Application.IntegrationEvents.Events
+namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents.Events
 {
 	public class PlayerStartedJourneyIntegrationEvent : IntegrationEvent
 	{

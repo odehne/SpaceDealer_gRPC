@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.Traveling.API.Proto;
+﻿using Cope.SpaceRogue.Travelling.API.Proto;
 using Grpc.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;

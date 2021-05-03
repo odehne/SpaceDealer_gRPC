@@ -45,6 +45,7 @@ namespace Cope.SpaceRogue.Galaxy.API
 					cfg.CreateMap<Feature, FeatureDto>();
 					cfg.CreateMap<Product, ProductDto>();
 					cfg.CreateMap<Player, PlayerDto>();
+					cfg.CreateMap<Ship, ShipDto>();
 					cfg.CreateMap<Planet, PlanetDto>();
 					cfg.CreateMap<Catalog, CatalogDto>();
 					cfg.CreateMap<ProductGroup, ProductGroupDto>();

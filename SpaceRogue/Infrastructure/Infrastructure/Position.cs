@@ -80,5 +80,12 @@ namespace Cope.SpaceRogue.InfraStructure
 			var target = (Position)obj;
 			return (target.X == X & target.Y == Y & target.Z == Z);
 		}
+
+		public bool InSensorRange(Position target, int offset)
+		{
+			return (target.X >= target.X - offset | target.X <= target.X + offset |
+					target.Y >= target.Y - offset | target.Y <= target.Y + offset |
+					target.Z >= target.Z - offset | target.Z <= target.Z + offset );
+		}
 	}
 }
