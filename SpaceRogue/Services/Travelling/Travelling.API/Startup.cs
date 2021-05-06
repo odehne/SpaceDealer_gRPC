@@ -109,7 +109,9 @@ namespace Cope.SpaceRogue.Travelling.API
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetAddedIntegrationEventHandler>();
+            eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetCreatedIntegrationEventHandler>();
+            eventBus.Subscribe<ShipCreatedIntegrationEvent, ShipCreatedIntegrationEventHandler>();
+            eventBus.Subscribe<JourneyStartedIntegrationEvent, JourneyStartedIntegrationEventHandler>();
         }
     }
 

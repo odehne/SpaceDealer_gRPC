@@ -28,6 +28,7 @@ using RabbitMQ.Client;
 using Cope.SpaceRogue.Galaxy.Application.DomainEventHandlers;
 using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Cope.SpaceRogue.Infrastructure;
+using Galaxy.API.Application.IntegrationEvents;
 
 namespace Cope.SpaceRogue.Galaxy.API
 {
@@ -118,7 +119,8 @@ namespace Cope.SpaceRogue.Galaxy.API
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<PlanetSpawnedIntegrationEvent, IIntegrationEventHandler<PlanetSpawnedIntegrationEvent>>();
+            eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetCreatedIntegrationEventHandler>();
+            eventBus.Subscribe<ShipCreatedIntegrationEvent, ShipCreatedIntegrationEventHandler>();
         }
     }
 

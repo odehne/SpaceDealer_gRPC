@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 {
+
+
 	public class PlanetCreatedIntegrationEvent : IntegrationEvent
 	{
 		public string PlanetId { get; set; }
@@ -17,12 +19,12 @@ namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 		public int PosZ { get; set; }
 	}
 
-	public class PlanetAddedIntegrationEventHandler : IIntegrationEventHandler<PlanetCreatedIntegrationEvent>
+	public class PlanetCreatedIntegrationEventHandler : IIntegrationEventHandler<PlanetCreatedIntegrationEvent>
 	{
-		private readonly ILogger<PlanetAddedIntegrationEventHandler> _logger;
+		private readonly ILogger<PlanetCreatedIntegrationEventHandler> _logger;
 		private readonly IPlanetRepository _planetRepository;
 
-		public PlanetAddedIntegrationEventHandler(IPlanetRepository planetRepository, ILogger<PlanetAddedIntegrationEventHandler> logger)
+		public PlanetCreatedIntegrationEventHandler(IPlanetRepository planetRepository, ILogger<PlanetCreatedIntegrationEventHandler> logger)
 		{
 			_planetRepository = planetRepository;
 			_logger = logger;

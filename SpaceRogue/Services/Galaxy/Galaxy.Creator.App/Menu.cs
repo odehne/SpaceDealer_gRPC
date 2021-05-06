@@ -100,15 +100,23 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
 		private async Task AddNewShip()
        {
-			var reply = await Factory.PlanetsApiClient.GetFeaturesAsync(new PlanetsEmpty());
-			var i = 0;
-			foreach (var feat in reply.Features)
+			
+			Console.Write("Player Id: ");
+			var line = Console.ReadLine();
+			var player = await Factory.PlanetsApiClient.GetPlayerAsync(new GetPlayerRequest { Id = line });
+
+			if (player == null)
 			{
-				i++;
-				Console.WriteLine($"{i}. {feat.Name} [{feat.Id}]");
+				Console.WriteLine("Spieler nicht gefunden.");
+				return;
 			}
-			i++;
-			Console.WriteLine($"{i}. Zurück");
+
+			Console.Write("Name des Schiffes: ");
+			var shipName = Console.ReadLine();
+			var b = await Factory.PlanetsApiClient.AddShipAsync(new AddShipRequest { PlayerId = player.Id, Id = Guid.NewGuid().ToString(), Hull = 3, Shields = 3, Name = shipName });
+
+
+			Console.WriteLine($"Shiff erzeugt: {b}.");
 		}
 
 		private async Task UpdateProduct()

@@ -13,23 +13,23 @@ namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 		public int TargetPosZ { get; set; }
 	}
 
-	//public class JourneyStartedIntegrationEventHandler : IIntegrationEventHandler<JourneyStartedIntegrationEvent>
-	//{
-	//	private readonly IEventBus _eventBus;
-	//	private readonly ILogger<JourneyStartedIntegrationEventHandler> _logger;
+	public class JourneyStartedIntegrationEventHandler : IIntegrationEventHandler<JourneyStartedIntegrationEvent>
+	{
+		private readonly IEventBus _eventBus;
+		private readonly ILogger<JourneyStartedIntegrationEventHandler> _logger;
 
-	//	public JourneyStartedIntegrationEventHandler(IEventBus eventBus, ILogger<JourneyStartedIntegrationEventHandler> logger)
-	//	{
-	//		_eventBus = eventBus;
-	//		_logger = logger;
-	//	}
+		public JourneyStartedIntegrationEventHandler(IEventBus eventBus, ILogger<JourneyStartedIntegrationEventHandler> logger)
+		{
+			_eventBus = eventBus;
+			_logger = logger;
+		}
 
-	//	public async Task Handle(JourneyStartedIntegrationEvent @event)
-	//	{
-	//		_logger.LogInformation("----- Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
-	//		_eventBus.Publish(@event);
-	//		await Task.CompletedTask;
-	//	}
-	//}
-	
+		public async Task Handle(JourneyStartedIntegrationEvent @event)
+		{
+			_logger.LogInformation("----- Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
+			_eventBus.Publish(@event);
+			await Task.CompletedTask;
+		}
+	}
+
 }

@@ -22,6 +22,9 @@ using System.Threading.Tasks;
 namespace Cope.SpaceRogue.Travelling.API
 {
 
+	//Start rabbit mq
+	// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+
 	public static class Factory
 	{
 		public static AutofacServiceProvider ServiceProvider { get; set; }
