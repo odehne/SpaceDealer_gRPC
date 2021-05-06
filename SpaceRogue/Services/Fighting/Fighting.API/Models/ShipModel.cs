@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cope.SpaceRogue.InfraStructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 		public int HullValue { get; set; }
 		public int ShieldsValue { get; set; }
 		public string[] FeatureNames { get; set; }
+		public Position CurrentSector { get; set; }
 	}
 
 }

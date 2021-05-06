@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Cope.SpaceRogue.InfraStructure;
 
 namespace Cope.SpaceRogue.Travelling.Application.Commands
 {
@@ -26,14 +26,22 @@ namespace Cope.SpaceRogue.Travelling.Application.Commands
         public async Task<List<ShipModel>> Handle(ShipsQuery request, CancellationToken cancellationToken)
         {
             var itms = await _repository.GetItems();
-            var dtos = new List<ShipModel>();
+            var model = new List<ShipModel>();
 
             foreach (var itm in itms)
             {
-                dtos.Add(AutoMap.Mapper.Map<ShipModel>(itm));
+                model.Add(new ShipModel
+                {
+                    ShipId = itm.ID,
+                    Name = itm.Name,
+                    CurrentSector = new Position(0, 0, 0),
+                    TargetSector = new Position(0, 0, 0),
+                    SensorRange = 1,
+                    Speed = 1
+                });
             }
 
-            return dtos;
+            return model;
         }
     }
 

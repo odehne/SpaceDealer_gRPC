@@ -6,13 +6,25 @@ service TravelService {
   rpc GetShips (Empty) returns (GetShipsReply);
   rpc GetShip (GetShipRequest) returns (GetShipReply);
   rpc GetPosition (GetPositionRequest) returns (GetPositionReply);
-  rpc GetPlanets (Empty) returns (GetPlanetsReply);
-  rpc GetPlanet (GetPlanetRequest) returns (GetPlanetReply);
+  rpc StartTravel(StartTravelRequest) returns (StartTravelReply);
 }
 
 message Empty 
 { 
 	
+}
+
+message StartTravelRequest
+{ 
+	string ShipId = 1;
+	int32 TargetPosX = 2;
+	int32 TargetPosY = 3;
+	int32 TargetPosZ = 4;
+}
+
+message StartTravelReply {
+	bool OK = 1;
+	string Message = 2;
 }
 
 message GetPlanetsReply {
@@ -37,13 +49,13 @@ message GetPlanetReply {
 	int32 PosZ = 5; 
 }
 
-message GetPositionReply {
+message GetPositionRequest {
 	int32 PosX = 1;
 	int32 PosY = 2;
 	int32 PosZ = 3;
 }
 
-message GetPositionRequest {
+message GetPositionReply {
    repeated string shipIds = 1;
    repeated string planetIds = 2;
 }

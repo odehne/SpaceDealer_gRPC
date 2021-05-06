@@ -1,6 +1,7 @@
 ﻿using Cope.SpaceRogue.Galaxy.API;
 using Cope.SpaceRogue.Galaxy.API.Domain.Events;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,15 @@ using System.Threading.Tasks;
 
 namespace Galaxy.API.Application.IntegrationEvents
 {
+	public class PlanetAddedIntegrationEvent : IntegrationEvent
+	{
+		public string PlanetId { get; set; }
+		public string Name { get; set; }
+		public int PosX { get; set; }
+		public int PosY { get; set; }
+		public int PosZ { get; set; }
+	}
+
 	public class PlanetAddedIntegrationEventHandler : IIntegrationEventHandler<PlanetAddedIntegrationEvent>
 	{
 		private readonly IEventBus _eventBus;

@@ -3,6 +3,7 @@ using AutoMapper;
 using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Infrastructure.Model;
+using Cope.SpaceRogue.Travelling.API.Application.Commands;
 using Cope.SpaceRogue.Travelling.API.Models;
 using Cope.SpaceRogue.Travelling.API.Repositories;
 using MediatR;
@@ -15,6 +16,7 @@ using Serilog;
 using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Travelling.API
@@ -49,34 +51,41 @@ namespace Cope.SpaceRogue.Travelling.API
 	{
 		public static string Namespace = typeof(Startup).Namespace;
 		public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
-		public static Cache TravelCache { get; set; }
 		static async Task Main(string[] args)
 		{
 			var configuration = GetConfiguration();
 			Log.Logger = CreateSerilogLogger(configuration);
-			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
+			Log.Information("Configuring web host ({ApplicationContext})...", AppName);
 
 			AutoMap.Init();
 			var host = CreateHostBuilder(configuration, args);
 
-			TravelCache = new Cache(Factory.Mediator);
-			await TravelCache.Load();
+			await Engine.Init();
+
+			var engineThread = new Thread(Engine.Play) { IsBackground = false };
+			engineThread.Start();
+
+			var command = new StartJourneyCommand { ShipId = Engine.Galaxy.Ships[0].ShipId.ToString(), TargetPosX = 0, TargetPosY = 10, TargetPosZ = 1 };
+			var p = await Factory.Mediator.Send(command);
 
 			host.Run();
 		}
 
 		public static IWebHost CreateHostBuilder(IConfiguration configuration, string[] args)
 		{
+			var http1Port = int.Parse(configuration["Kestrel:http1Port"]);
+			var http2Port = int.Parse(configuration["Kestrel:http2Port"]);
+
 			return WebHost.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
 				.CaptureStartupErrors(true)
 				.ConfigureKestrel(options =>
 				{
-					options.Listen(IPAddress.Loopback, 51777, listenOptions =>
+					options.Listen(IPAddress.Loopback, http1Port, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
 					});
-					options.Listen(IPAddress.Loopback, 8891, listenOptions =>
+					options.Listen(IPAddress.Loopback, http2Port, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http2;
 					});

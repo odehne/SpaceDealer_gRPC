@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cope.SpaceRogue.InfraStructure;
 
 namespace Cope.SpaceRogue.Travelling.Application.Queries
 {
 
-    public class PlanetsQuery : IRequest<IEnumerable<PlanetModel>> { }
+    public class PlanetsQuery : IRequest<List<PlanetModel>> { }
 
-    public class PlanetsQueryHandler : IRequestHandler<PlanetsQuery, IEnumerable<PlanetModel>>
+    public class PlanetsQueryHandler : IRequestHandler<PlanetsQuery, List<PlanetModel>>
     {
         private readonly IPlanetRepository _repository;
 
@@ -23,7 +24,7 @@ namespace Cope.SpaceRogue.Travelling.Application.Queries
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<IEnumerable<PlanetModel>> Handle(PlanetsQuery request, CancellationToken cancellationToken)
+        public async Task<List<PlanetModel>> Handle(PlanetsQuery request, CancellationToken cancellationToken)
         {
             {
                 var itms = await _repository.GetItems();
@@ -31,7 +32,12 @@ namespace Cope.SpaceRogue.Travelling.Application.Queries
 
                 foreach (var itm in itms)
                 {
-                    model.Add(AutoMap.Mapper.Map<PlanetModel>(itm));
+                    model.Add(new PlanetModel
+                    {
+                        PlanetId = itm.ID,
+                        Name = itm.Name,
+                        Sector = new Position(itm.PosX, itm.PosY, itm.PosZ)
+                    });
                 }
 
                 return model;

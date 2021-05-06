@@ -38,8 +38,8 @@ namespace Traveling.API.Controllers
         public async Task<ObjectsInSectorModel> Handle(ObjectsInSectorQuery request, CancellationToken cancellationToken)
         {
             var sector = new Position(request.PosX, request.PosY, request.PosZ);
-            var ships = Program.TravelCache.GetShipsInSector(sector);
-            var planets = Program.TravelCache.GetPlanetsInSector(sector);
+            var ships = Engine.Galaxy.GetShipsInSector(sector);
+            var planets = Engine.Galaxy.GetPlanetsInSector(sector);
 
 			return new ObjectsInSectorModel
 			{

@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cope.SpaceRogue.Infrastructure.Domain
 {
+
+
 	public class Ship : Entity
 	{
 		public enum ShipStates

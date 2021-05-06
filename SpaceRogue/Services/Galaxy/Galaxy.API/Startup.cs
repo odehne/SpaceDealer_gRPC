@@ -111,18 +111,14 @@ namespace Cope.SpaceRogue.Galaxy.API
                 endpoints.MapGrpcService<PlanetService>();
 				endpoints.MapGrpcService<MarketPlaceService>();
 			});
-		}
+
+            ConfigureEventBus(app);
+        }
 
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-
             eventBus.Subscribe<PlanetSpawnedIntegrationEvent, IIntegrationEventHandler<PlanetSpawnedIntegrationEvent>>();
-            //eventBus.Subscribe<GracePeriodConfirmedIntegrationEvent, IIntegrationEventHandler<GracePeriodConfirmedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderStockConfirmedIntegrationEvent, IIntegrationEventHandler<OrderStockConfirmedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderStockRejectedIntegrationEvent, IIntegrationEventHandler<OrderStockRejectedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderPaymentFailedIntegrationEvent, IIntegrationEventHandler<OrderPaymentFailedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderPaymentSucceededIntegrationEvent, IIntegrationEventHandler<OrderPaymentSucceededIntegrationEvent>>();
         }
     }
 

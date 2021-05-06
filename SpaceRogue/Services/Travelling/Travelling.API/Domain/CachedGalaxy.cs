@@ -10,14 +10,14 @@ using Cope.SpaceRogue.Travelling.Application.Queries;
 
 namespace Cope.SpaceRogue.Travelling.API.Models
 {
-	public class Cache
+	public class CachedGalaxy
 	{
-		public IEnumerable<PlanetModel> Planets { get; set; }
+		public List<PlanetModel> Planets { get; set; }
 		public List<ShipModel> Ships { get; set; }
 
 		private IMediator _mediator { get; set; }
 
-		public Cache(IMediator mediator)
+		public CachedGalaxy(IMediator mediator)
 		{
 			_mediator = mediator;
 			Planets = new List<PlanetModel>();
@@ -32,12 +32,12 @@ namespace Cope.SpaceRogue.Travelling.API.Models
 
 		public IEnumerable<ShipModel> GetShipsInRange(Position sector, int sensorRange)
 		{
-			return Ships.Where(x => x.Sector.InSensorRange(sector, sensorRange)).ToList();
+			return Ships.Where(x => x.CurrentSector.InSensorRange(sector, sensorRange)).ToList();
 		}
 
 		public IEnumerable<ShipModel> GetShipsInSector(Position sector)
 		{
-			return Ships.Where(x => x.Sector.Equals(sector)).ToList();
+			return Ships.Where(x => x.CurrentSector.Equals(sector)).ToList();
 		}
 
 		public IEnumerable<PlanetModel> GetPlanetsInRange(Position sector, int sensorRange)
@@ -53,7 +53,16 @@ namespace Cope.SpaceRogue.Travelling.API.Models
 		public void UpdateShipPosition(Guid shipId, Position newPosition)
 		{
 			var ship = Ships.FirstOrDefault(x => x.ShipId.Equals(shipId));
-			ship.Sector = newPosition;
+			ship.CurrentSector = newPosition;
+		}
+
+		public void AddPlanet(PlanetModel newPlanet)
+		{
+			var orgPlanet = Planets.FirstOrDefault(x => x.PlanetId.Equals(newPlanet.PlanetId));
+			if (orgPlanet == null)
+			{
+				Planets.Add(newPlanet);
+			}
 		}
 
 		public void AddShip(ShipModel newShip)

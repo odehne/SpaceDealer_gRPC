@@ -62,6 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\IntegrationEvents\EventHandling\" />
     <Folder Include="Domain\Events\" />
   </ItemGroup>
 

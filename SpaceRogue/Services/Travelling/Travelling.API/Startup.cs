@@ -22,16 +22,15 @@ using System.Reflection;
 using RabbitMQ.Client;
 using Cope.SpaceRogue.Infrastructure;
 using Traveling.API.Services;
-using Cope.SpaceRogue.Travelling.Application.IntegrationEvents;
-using Traveling.API.Controllers;
 using Cope.SpaceRogue.Travelling.API.Domain;
 using Cope.SpaceRogue.Travelling.API.Infrastructure;
 using Cope.SpaceRogue.Travelling.API.Controllers;
 using Cope.SpaceRogue.Travelling.API.Repositories;
+using Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents;
 
 namespace Cope.SpaceRogue.Travelling.API
 {
-    public class Startup
+	public class Startup
     {
         public IConfiguration Configuration { get; }
 
@@ -103,18 +102,14 @@ namespace Cope.SpaceRogue.Travelling.API
                 // To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909
                 endpoints.MapGrpcService<TravellingService>();
             });
+
+            ConfigureEventBus(app);
         }
 
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-
-            eventBus.Subscribe<PlanetSpawnedIntegrationEvent, IIntegrationEventHandler<PlanetSpawnedIntegrationEvent>>();
-            //eventBus.Subscribe<GracePeriodConfirmedIntegrationEvent, IIntegrationEventHandler<GracePeriodConfirmedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderStockConfirmedIntegrationEvent, IIntegrationEventHandler<OrderStockConfirmedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderStockRejectedIntegrationEvent, IIntegrationEventHandler<OrderStockRejectedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderPaymentFailedIntegrationEvent, IIntegrationEventHandler<OrderPaymentFailedIntegrationEvent>>();
-            //eventBus.Subscribe<OrderPaymentSucceededIntegrationEvent, IIntegrationEventHandler<OrderPaymentSucceededIntegrationEvent>>();
+            eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetAddedIntegrationEventHandler>();
         }
     }
 
@@ -275,7 +270,7 @@ namespace Cope.SpaceRogue.Travelling.API
                 {
                     retryCount = int.Parse(configuration["EventBusRetryCount"]);
                 }
-
+        
                 return new DefaultRabbitMQPersistentConnection(factory, logger, retryCount);
             });
             //}

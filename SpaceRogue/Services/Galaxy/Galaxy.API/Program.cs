@@ -19,6 +19,9 @@ namespace Cope.SpaceRogue.Galaxy.API
 {
 	public static class Factory
 	{
+
+		//Start rabbit mq
+		// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
 		public static AutofacServiceProvider ServiceProvider { get; set; }
 
 		public static IShipRepository ShipRepository => (IShipRepository)ServiceProvider.GetService(typeof(IShipRepository));
@@ -91,16 +94,19 @@ namespace Cope.SpaceRogue.Galaxy.API
 
 		public static IWebHost CreateHostBuilder(IConfiguration configuration, string[] args)
 		{
+			var http1Port = int.Parse(configuration["Kestrel:http1Port"]);
+			var http2Port = int.Parse(configuration["Kestrel:http2Port"]);
+			
 			return WebHost.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
 				.CaptureStartupErrors(true)
 				.ConfigureKestrel(options =>
 				{
-					options.Listen(IPAddress.Loopback, 51777, listenOptions =>
+					options.Listen(IPAddress.Loopback, http1Port, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
 					});
-					options.Listen(IPAddress.Loopback, 8891, listenOptions =>
+					options.Listen(IPAddress.Loopback, http2Port, listenOptions =>
 					{
 						listenOptions.Protocols = HttpProtocols.Http2;
 					});
