@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Travelling.API.Models;
 using System.Collections.Generic;
 

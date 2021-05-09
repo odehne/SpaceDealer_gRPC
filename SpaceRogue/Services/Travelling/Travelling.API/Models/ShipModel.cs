@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 using System;
 
 namespace Cope.SpaceRogue.Travelling.API.Models

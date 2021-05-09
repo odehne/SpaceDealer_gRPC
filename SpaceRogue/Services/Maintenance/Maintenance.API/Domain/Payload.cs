@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 
 namespace Cope.SpaceRogue.Maintenance.API.Domain
 {

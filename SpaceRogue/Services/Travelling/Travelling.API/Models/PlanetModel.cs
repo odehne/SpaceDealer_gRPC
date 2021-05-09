@@ -1,6 +1,5 @@
 ﻿
-using Cope.SpaceRogue.InfraStructure;
-using Microsoft.Extensions.Logging;
+using Cope.SpaceRogue.Infrastructure;
 using System;
 
 namespace Cope.SpaceRogue.Travelling.API.Models

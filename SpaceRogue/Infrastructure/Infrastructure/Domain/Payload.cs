@@ -1,6 +1,4 @@
-﻿using Cope.SpaceRogue.Infrastructure.Domain;
-using Cope.SpaceRogue.InfraStructure;
-using System;
+﻿using System;
 
 namespace Cope.SpaceRogue.Infrastructure.Domain
 {

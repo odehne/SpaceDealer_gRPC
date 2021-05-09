@@ -78,20 +78,27 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		{
 			Console.Write("Name des neuen Spielers: ");
 			var name = Console.ReadLine();
-			var homePlanetId = CachedGalaxy.Planets[0].Id;
-			var player = await Factory.PlanetsApiClient.GetPlayerByNameAsync(new GetPlayerByNameRequest { Name = name });
-			
-			if (player != null)
+			var homePlanetId = GalaxyModel.GetRandomPlanet().Id;
+			var reply = await Factory.PlanetsApiClient.PlayerNameTakenAsync(new GetPlayerByNameRequest { Name = name });
+
+			if (reply.Taken)
 			{
 				Console.WriteLine($"Ein Spieler mit dem Namen existiert bereits.");
 			}
 			else
 			{
-				var p = await Factory.PlanetsApiClient.AddPlayerAsync(new AddPlayerRequest { 
-																				Id = Guid.NewGuid().ToString(),
-																				Name = name,
-																				Credits = 5000, 
-					PlanetId = homePlanetId
+				Console.Write("Spieler [0] oder NichtSpieler [1]: ");
+				var line = Console.ReadLine();
+				int playerType;
+				int.TryParse(line, out playerType);
+
+				var p = await Factory.PlanetsApiClient.AddPlayerAsync(new AddPlayerRequest
+				{
+					Id = Guid.NewGuid().ToString(),
+					Name = name,
+					Credits = 5000,
+					PlanetId = homePlanetId,
+					PlayerType = playerType
 				});
 
 			}
@@ -99,8 +106,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
 
 		private async Task AddNewShip()
-       {
-			
+        {
 			Console.Write("Player Id: ");
 			var line = Console.ReadLine();
 			var player = await Factory.PlanetsApiClient.GetPlayerAsync(new GetPlayerRequest { Id = line });
@@ -115,8 +121,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			var shipName = Console.ReadLine();
 			var b = await Factory.PlanetsApiClient.AddShipAsync(new AddShipRequest { PlayerId = player.Id, Id = Guid.NewGuid().ToString(), Hull = 3, Shields = 3, Name = shipName });
 
-
-			Console.WriteLine($"Shiff erzeugt: {b}.");
+			Console.WriteLine($"Neues Schiff erzeugt: {b}.");
 		}
 
 		private async Task UpdateProduct()
@@ -225,7 +230,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
        private void ListPlanets()
        {
 			var i = 0;
-			foreach (var planet in CachedGalaxy.Planets)
+			foreach (var planet in GalaxyModel.Planets)
 			{
 				i++;
 				Console.WriteLine($"{i}. {planet.Name} [{planet.Id}]");
@@ -235,7 +240,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		private void ListPlayers()
 		{
 			var i = 0;
-			foreach (var player in CachedGalaxy.Players)
+			foreach (var player in GalaxyModel.Players)
 			{
 				i++;
 				Console.WriteLine($"{i}. {player.Name} [{player.Id}]");
@@ -245,7 +250,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		private void ListShips()
 		{
 			var i = 0;
-			foreach (var ship in CachedGalaxy.Ships)
+			foreach (var ship in GalaxyModel.Ships)
 			{
 				i++;
 				Console.WriteLine($"{i}. {ship.Name} [{ship.Id}]");
@@ -255,7 +260,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		private void ListProducts()
 		{
 			var i = 0;
-			foreach (var p in CachedGalaxy.Products)
+			foreach (var p in GalaxyModel.Products)
 			{
 				i++;
 				Console.WriteLine($"{i}. {p.Name} [{p.Id}]");
@@ -265,7 +270,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 		private void ListProductGroups()
 		{
 			var i = 0;
-			foreach (var pg in CachedGalaxy.ProductGroups)
+			foreach (var pg in GalaxyModel.ProductGroups)
 			{
 				i++;
 				Console.WriteLine($"{i}. {pg.Name} [{pg.Id}]");
@@ -275,7 +280,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
 		private async Task LoadPlanets()
 		{
-			await CachedGalaxy.Load();
+			await GalaxyModel.Load();
 		}
 
 		private async Task<string> AddNewPlanet()
@@ -318,7 +323,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
 			var planetReply = await Factory.PlanetsApiClient.AddPlanetAsync(addPlanetRequest);
 
-			CachedGalaxy.Planets.Add(new PlanetModel { Id = planetReply.Id, MarketId = marketPlaceReply.Id, Name = name, Sector = new Position(position.X, position.Y, position.Z) });
+			GalaxyModel.Planets.Add(new PlanetModel { Id = planetReply.Id, MarketId = marketPlaceReply.Id, Name = name, Sector = new Position(position.X, position.Y, position.Z) });
 			
 			return $"{planetReply.Id} erstellt.";
 

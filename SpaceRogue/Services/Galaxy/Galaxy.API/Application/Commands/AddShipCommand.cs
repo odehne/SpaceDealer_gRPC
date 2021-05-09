@@ -47,7 +47,8 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 				ID = request.Id.ToGuid(),
 				Name = request.Name,
 				Hull = request.Hull,
-				Shields = request.Shields
+				Shields = request.Shields,
+				PlayerID = request.PlayerId.ToGuid()
 			};
 			var b = await _repository.AddItem(ship);
 

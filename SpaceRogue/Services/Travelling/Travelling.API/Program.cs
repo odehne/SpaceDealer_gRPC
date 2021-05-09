@@ -1,11 +1,8 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Infrastructure.Model;
-using Cope.SpaceRogue.Travelling.API.Application.Commands;
 using Cope.SpaceRogue.Travelling.API.Models;
-using Cope.SpaceRogue.Travelling.API.Repositories;
 using MediatR;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +10,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -65,12 +61,11 @@ namespace Cope.SpaceRogue.Travelling.API
 
 			await Engine.Init();
 
-			var engineThread = new Thread(Engine.Play) { IsBackground = false };
+			var engineThread = new Thread(Engine.Play) { IsBackground = true };
 			engineThread.Start();
 
-			var command = new StartJourneyCommand { ShipId = Engine.Galaxy.Ships[0].ShipId.ToString(), TargetPosX = 0, TargetPosY = 10, TargetPosZ = 1 };
-			var p = await Factory.Mediator.Send(command);
-
+			//var command = new StartJourneyCommand { ShipId = Engine.Galaxy.Ships[0].ShipId.ToString(), TargetPosX = 0, TargetPosY = 10, TargetPosZ = 1 };
+			//var p = await Factory.Mediator.Send(command);
 			host.Run();
 		}
 

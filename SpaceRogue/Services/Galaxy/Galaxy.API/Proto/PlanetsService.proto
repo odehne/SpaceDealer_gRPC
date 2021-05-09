@@ -12,6 +12,7 @@ service PlanetsService {
 	rpc GetPlayer (GetPlayerRequest) returns (GetPlayerReply);
 	rpc GetPlayerByName (GetPlayerByNameRequest) returns (GetPlayerReply);
 	rpc AddPlayer (AddPlayerRequest) returns (PlayerOkReply);
+	rpc PlayerNameTaken (GetPlayerByNameRequest) returns (PlayerNameTakenReply);
 	rpc UpdatePlayer (UpdatePlayerRequest) returns (GetPlayerReply);
 	rpc DeletePlayer (DeletePlayerRequest) returns (PlayerOkReply);
 	rpc GetShips (PlanetsEmpty) returns (GetShipsReply);
@@ -27,6 +28,10 @@ message PlanetsEmpty { }
 
 message PlanetOkReply {
 	bool Ok = 1;
+}
+
+message PlayerNameTakenReply {
+	bool Taken = 1;
 }
 
 message AddPlanetReply {

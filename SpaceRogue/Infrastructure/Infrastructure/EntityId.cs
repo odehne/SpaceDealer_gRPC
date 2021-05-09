@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cope.SpaceRogue.InfraStructure
+namespace Cope.SpaceRogue.Infrastructure
 {
 	public record EntityId
 	{

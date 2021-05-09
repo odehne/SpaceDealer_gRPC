@@ -53,13 +53,20 @@ namespace Galaxy.Creator.App
 		}
 	}
 
-	public static class CachedGalaxy
+	public static class GalaxyModel
 	{
 		public static List<PlanetModel> Planets { get; set; }
 		public static List<PlayerModel> Players { get; set; }
 		public static List<ShipModel> Ships { get; set; }
 		public static List<ProductGroupModel> ProductGroups { get; set; }
 		public static List<ProductModel> Products { get; set; }
+
+		public static PlanetModel GetRandomPlanet()
+		{
+			var random = new Random();
+			var i = random.Next(0, Planets.Count -1);
+			return Planets[i];				
+		}
 
 		public static async Task Load()
 		{
@@ -150,7 +157,7 @@ namespace Galaxy.Creator.App
 	{
 		static async Task Main(string[] args)
 		{
-			await CachedGalaxy.Load();
+			await GalaxyModel.Load();
 						
 			var menu = new Menu();
 			await menu.ShowMenu();

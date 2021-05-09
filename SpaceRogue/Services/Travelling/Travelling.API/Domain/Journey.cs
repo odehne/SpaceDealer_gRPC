@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 using Infrastructure.Domain;
 using Serilog;
 using System;

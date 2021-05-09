@@ -27,6 +27,12 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 			return new AddPlanetReply { Id = planetDto.ID, Message = "OK" };
 		}
 
+		public async override Task<PlayerNameTakenReply> PlayerNameTaken(GetPlayerByNameRequest request, ServerCallContext context)
+		{
+			var reply = await _mediator.Send(new PlayerNameTakenQuery(request.Name));
+			return new PlayerNameTakenReply { Taken = reply };
+		}
+
 		public async override Task<PlayerOkReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
 		{
 			var command = new AddPlayerCommand { 

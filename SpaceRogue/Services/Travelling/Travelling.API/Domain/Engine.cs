@@ -12,12 +12,12 @@ namespace Cope.SpaceRogue.Travelling.API
 {
 	public static class Engine
 	{
-		public static CachedGalaxy Galaxy { get; set; }
+		public static GalaxyModel Galaxy { get; set; }
 		public static List<Journey> Journeys { get; set; }
 		public static async Task Init()
 		{
 			Journeys = new List<Journey>();
-			Galaxy = new CachedGalaxy(Factory.Mediator);
+			Galaxy = new GalaxyModel(Factory.Mediator);
 			await Galaxy.Load();
 		}
 

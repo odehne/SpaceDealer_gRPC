@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents;
 using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;

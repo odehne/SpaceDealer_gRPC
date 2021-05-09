@@ -28,6 +28,7 @@ using Cope.SpaceRogue.Travelling.API.Controllers;
 using Cope.SpaceRogue.Travelling.API.Repositories;
 using Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents;
 
+
 namespace Cope.SpaceRogue.Travelling.API
 {
 	public class Startup
@@ -58,6 +59,7 @@ namespace Cope.SpaceRogue.Travelling.API
                 .AddCustomConfiguration(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddEventBus(Configuration)
+                .AddScoped<PlanetCreatedIntegrationEventHandler>()
                 .AddScoped<IShipRepository, ShipRepository>()
                 .AddScoped<IPlanetRepository, PlanetRepository>();
 

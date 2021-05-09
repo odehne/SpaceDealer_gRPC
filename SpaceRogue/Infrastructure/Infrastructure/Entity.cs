@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.InfraStructure
+namespace Cope.SpaceRogue.Infrastructure
 {
 	public abstract class Entity
 	{

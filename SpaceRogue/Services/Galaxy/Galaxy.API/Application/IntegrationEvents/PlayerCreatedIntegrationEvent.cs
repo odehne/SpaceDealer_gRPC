@@ -4,30 +4,28 @@ using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
+
 namespace Cope.SpaceRogue.Galaxy.API.Application.IntegrationEvents
 {
-
-	public class PlanetCreatedIntegrationEvent : IntegrationEvent
+	public class PlayerCreatedIntegrationEvent : IntegrationEvent
 	{
-		public string PlanetId { get; set; }
+		public string PlayerId { get; set; }
 		public string Name { get; set; }
-		public int PosX { get; set; }
-		public int PosY { get; set; }
-		public int PosZ { get; set; }
+		public string HomePlanetId { get; set; }
 	}
 
-	public class PlanetCreatedIntegrationEventHandler : IIntegrationEventHandler<PlanetCreatedIntegrationEvent>
+	public class PlayerCreatedIntegrationEventHandler : IIntegrationEventHandler<PlayerCreatedIntegrationEvent>
 	{
-		private readonly ILogger<PlanetCreatedIntegrationEventHandler> _logger;
+		private readonly ILogger<PlayerCreatedIntegrationEventHandler> _logger;
 		private readonly IPlanetRepository _planetRepository;
 
-		public PlanetCreatedIntegrationEventHandler(IPlanetRepository planetRepository, ILogger<PlanetCreatedIntegrationEventHandler> logger)
+		public PlayerCreatedIntegrationEventHandler(IPlanetRepository planetRepository, ILogger<PlayerCreatedIntegrationEventHandler> logger)
 		{
 			_planetRepository = planetRepository;
 			_logger = logger;
 		}
 
-		public async Task Handle(PlanetCreatedIntegrationEvent @event)
+		public async Task Handle(PlayerCreatedIntegrationEvent @event)
 		{
 			_logger.LogInformation("----- Handling integration event: {IntegrationEventId} at {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 			//var planet = await _planetRepository.GetItem(@event.PlanetId.ToGuid());

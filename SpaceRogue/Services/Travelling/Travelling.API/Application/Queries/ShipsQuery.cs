@@ -1,14 +1,11 @@
 ﻿using Cope.SpaceRogue.Travelling.API.Models;
-using Cope.SpaceRogue.Travelling.API;
 using Cope.SpaceRogue.Travelling.API.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Cope.SpaceRogue.InfraStructure;
+using Cope.SpaceRogue.Infrastructure;
 
 namespace Cope.SpaceRogue.Travelling.Application.Commands
 {

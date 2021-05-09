@@ -1,8 +1,6 @@
-﻿using Cope.SpaceRogue.InfraStructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cope.SpaceRogue.Infrastructure.Domain
 {
@@ -45,6 +43,7 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 		public int Hull { get; set; }
 		public int Shields { get; set; }
 		public string Name { get; set; }
+		public Guid PlayerID { get; set; }
 
 		public Ship()
 		{

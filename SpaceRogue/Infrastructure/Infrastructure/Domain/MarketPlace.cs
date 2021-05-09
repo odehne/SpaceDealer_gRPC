@@ -1,9 +1,5 @@
-﻿using Cope.SpaceRogue.Infrastructure.Model;
-using Cope.SpaceRogue.Infrastructure.Domain;
-using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
-using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Cope.SpaceRogue.Infrastructure.Domain

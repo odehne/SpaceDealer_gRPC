@@ -1,5 +1,4 @@
 ﻿using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
-using Cope.SpaceRogue.InfraStructure;
 using System;
 
 namespace Cope.SpaceRogue.Infrastructure.Domain

@@ -1,6 +1,5 @@
 ﻿using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Infrastructure.Domain.SeedWork;
-using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.ComponentModel.DataAnnotations;
 

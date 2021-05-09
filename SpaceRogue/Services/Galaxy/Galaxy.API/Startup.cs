@@ -119,7 +119,7 @@ namespace Cope.SpaceRogue.Galaxy.API
         private void ConfigureEventBus(IApplicationBuilder app)
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetCreatedIntegrationEventHandler>();
+            //eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetCreatedIntegrationEventHandler>();
             eventBus.Subscribe<ShipCreatedIntegrationEvent, ShipCreatedIntegrationEventHandler>();
         }
     }

@@ -1,4 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.API.Repositories;
+﻿using Cope.SpaceRogue.Galaxy.API.Application.IntegrationEvents;
+using Cope.SpaceRogue.Galaxy.API.Repositories;
 using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Infrastructure.Model;
 using Galaxy.API.Application.IntegrationEvents;

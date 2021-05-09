@@ -1,5 +1,4 @@
 ﻿using Cope.SpaceRogue.Infrastructure.Model;
-using Cope.SpaceRogue.InfraStructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

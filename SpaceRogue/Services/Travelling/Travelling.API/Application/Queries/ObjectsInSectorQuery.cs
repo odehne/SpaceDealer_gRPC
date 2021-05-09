@@ -1,17 +1,13 @@
-﻿using Cope.SpaceRogue.InfraStructure;
-using Cope.SpaceRogue.Travelling.API.Models;
+﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Travelling.API;
-using Cope.SpaceRogue.Travelling.API.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Traveling.API.Controllers
 {
-    public class ObjectsInSectorQuery : IRequest<ObjectsInSectorModel> 
+	public class ObjectsInSectorQuery : IRequest<ObjectsInSectorModel> 
     {
         [DataMember]
         public int PosX { get; private set; }

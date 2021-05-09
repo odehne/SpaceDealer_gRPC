@@ -10,31 +10,30 @@ using MediatR;
 
 namespace Galaxy.Creator.Application.Commands
 {
-
-	public class PlayerByNameQuery : IRequest<PlayerDto>
+	public class PlayerNameTakenQuery : IRequest<bool>
     {
         [DataMember]
         public string Name { get; private set; }
 
-        public PlayerByNameQuery(string name)
+        public PlayerNameTakenQuery(string name)
         {
             Name = name;
         }
     }
 
-    public class PPlayerByNameQueryHandler : IRequestHandler<PlayerByNameQuery, PlayerDto>
+    public class PlayerNameTakenQueryHandler : IRequestHandler<PlayerNameTakenQuery, bool>
     {
         private readonly IPlayerRepository _repository;
 
-        public PPlayerByNameQueryHandler(IPlayerRepository repository)
+        public PlayerNameTakenQueryHandler(IPlayerRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<PlayerDto> Handle(PlayerByNameQuery request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(PlayerNameTakenQuery request, CancellationToken cancellationToken)
         {
             var itm = await _repository.GetItemByName(request.Name);
-            return AutoMap.Mapper.Map<PlayerDto>(itm);
-        }
+			return itm != null;
+		}
     }
 }

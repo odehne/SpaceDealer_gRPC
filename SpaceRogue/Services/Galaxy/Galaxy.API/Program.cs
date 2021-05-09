@@ -14,6 +14,10 @@ using System.Net;
 using Cope.SpaceRogue.Galaxy.API.Proto;
 using Cope.SpaceRogue.Infrastructure.Model;
 using Cope.SpaceRogue.Infrastructure.Domain;
+using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Galaxy.API.Application.IntegrationEvents;
+using Cope.SpaceRogue.Galaxy.API.Application.IntegrationEvents;
+using System.Threading;
 
 namespace Cope.SpaceRogue.Galaxy.API
 {
@@ -31,6 +35,8 @@ namespace Cope.SpaceRogue.Galaxy.API
 		public static IProductRepository ProductRepository => (IProductRepository)ServiceProvider.GetService(typeof(IProductRepository));
 		public static IMarketPlaceRepository MarketPlaceRepository => (IMarketPlaceRepository)ServiceProvider.GetService(typeof(IMarketPlaceRepository));
 		public static ICatalogItemsRepository CatalogItemsRepository => (ICatalogItemsRepository)ServiceProvider.GetService(typeof(ICatalogItemsRepository));
+
+		public static IEventBus EventBus => (IEventBus)ServiceProvider.GetService(typeof(IEventBus));
 	}
 
 	public static class AutoMap
@@ -78,7 +84,7 @@ namespace Cope.SpaceRogue.Galaxy.API
 
 			var configuration = GetConfiguration();
 			Log.Logger = CreateSerilogLogger(configuration);
-			Log.Information("Configuring web host ({ApplicationContext})...", Program.AppName);
+			Log.Information("Configuring web host ({ApplicationContext})...", AppName);
 
 			AutoMap.Init();
 			var host = CreateHostBuilder(configuration, args);
@@ -86,7 +92,27 @@ namespace Cope.SpaceRogue.Galaxy.API
 			host.Run();
 		}
 
-		
+		//public static void PublishNewPlanetEvent()
+		//{
+		//var t = new Thread(PublishNewPlanetEvent);
+		//t.IsBackground = true;
+		//	t.Start();
+		//	var earthId = Guid.Parse("{C1F70D3B-90C9-458F-AC38-BBC05015E059}");
+		//	var ev = new PlanetCreatedIntegrationEvent
+		//	{
+		//		PlanetId = earthId.ToString(),
+		//		Name = "Erde",
+		//		PosX = 0,
+		//		PosY = 0,
+		//		PosZ = 1
+		//	};
+
+		//	for (int i = 0; i < 50; i++)
+		//	{
+		//		Thread.Sleep(30000);
+		//		Factory.EventBus.Publish(ev);
+		//	}
+		//}
 
 		public static string Namespace = typeof(Startup).Namespace;
 		public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);

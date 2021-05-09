@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Travelling.Application.Commands;
 using Cope.SpaceRogue.Travelling.API.Repositories;
 using MediatR;
@@ -10,14 +10,14 @@ using Cope.SpaceRogue.Travelling.Application.Queries;
 
 namespace Cope.SpaceRogue.Travelling.API.Models
 {
-	public class CachedGalaxy
+	public class GalaxyModel
 	{
 		public List<PlanetModel> Planets { get; set; }
 		public List<ShipModel> Ships { get; set; }
 
 		private IMediator _mediator { get; set; }
 
-		public CachedGalaxy(IMediator mediator)
+		public GalaxyModel(IMediator mediator)
 		{
 			_mediator = mediator;
 			Planets = new List<PlanetModel>();

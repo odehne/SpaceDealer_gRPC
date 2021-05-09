@@ -1,5 +1,5 @@
 ﻿
-using Cope.SpaceRogue.InfraStructure;
+using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Maintenance.API.Domain.SeedWork;
 
 namespace Cope.SpaceRogue.Maintenance.API.Domain

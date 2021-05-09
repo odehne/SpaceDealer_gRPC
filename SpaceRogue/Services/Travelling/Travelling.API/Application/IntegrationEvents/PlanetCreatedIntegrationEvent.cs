@@ -1,4 +1,4 @@
-﻿using Cope.SpaceRogue.InfraStructure;
+﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Travelling.API.Models;
 using Cope.SpaceRogue.Travelling.API.Repositories;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 {
-
-
 	public class PlanetCreatedIntegrationEvent : IntegrationEvent
 	{
 		public string PlanetId { get; set; }
@@ -34,7 +32,14 @@ namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 		{
 			_logger.LogInformation("----- Handling integration event: {IntegrationEventId} at {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 			var planet = await _planetRepository.GetItem(@event.PlanetId.ToGuid());
-			Engine.Galaxy.AddPlanet(new PlanetModel { PlanetId = planet.ID, Name = planet.Name, Sector = new Position(planet.PosX, planet.PosY, planet.PosZ) });
+			if (planet != null)
+			{
+				Engine.Galaxy.AddPlanet(new PlanetModel { PlanetId = planet.ID, Name = planet.Name, Sector = new Position(planet.PosX, planet.PosY, planet.PosZ) });
+			}
+			else
+			{
+				_logger.LogError($"Planet not found [{@event.Id}] in database.");
+			}
 		}
 	}
 
