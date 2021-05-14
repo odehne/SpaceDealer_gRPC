@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Shopping.API.Application.Commands
 {
-
 	public class SellCommand : IRequest<bool>
 	{
 		[DataMember]
@@ -79,52 +78,46 @@ namespace Cope.SpaceRogue.Shopping.API.Application.Commands
 				return false;
 			}
 
-			double price = Engine.Galaxy.GetPrice(marketPlace, request.CatalogItemId.ToGuid());
-			if (marketPlace == null)
+			var product = Engine.Galaxy.GetProduct(marketPlace, request.CatalogItemId.ToGuid());
+
+			if(product==null)
 			{
-				_logger.LogError($"Market place not found [{request.MarketPlaceId}].");
+				_logger.LogError($"Corresponding product to catalog item {request.CatalogItemId} not found.");
 				return false;
 			}
 
+			double price = Engine.Galaxy.GetDemandedProductPrice(marketPlace, request.CatalogItemId.ToGuid());
 
+			var result = await _shipRepository.UnloadCargo(ship.ID, product.ID, request.Amount);
+			if (!result)
+			{
+				_logger.LogError("Failed to load cargo.");
+			}
+			else
+			{
+				_logger.LogInformation($"{request.Amount} units loaded on {ship.Name}.");
+			}
 
-			_shipRepository.Sell()
+			var player = Engine.Galaxy.GetPlayer(ship.PlayerId);
 
-			//var transactionId = Engine.Galaxy.Sell(request.MarketPlaceId.ToGuid(), request.CatalogItemId.ToGuid(), request.Amount, request.ShipId);
-			//var theShip = Engine.Galaxy.Ships.FirstOrDefault(x => x.ShipId.Equals(request.ShipId.ToGuid()));
-			//var targetPosition = new Position(request.TargetPosX, request.TargetPosY, request.TargetPosZ);
-			//var targetPlanet = Engine.Galaxy.Planets.FirstOrDefault(x => x.Sector.Equals(targetPosition));
-			//var targetShip = Engine.Galaxy.Ships.FirstOrDefault(x => x.CurrentSector.Equals(targetPosition));
+			player.Credits = (decimal) await _playerRepsoitory.Deposit(player.ID, request.Amount * price);
+			
+			var eventMessage = new PlayerSoldProductIntegrationEvent
+			{
+				PlayerId = player.ID.ToString(),
+				AccountBalance = (double)player.Credits,
+				MarketPlaceId = marketPlace.ID.ToString()
+			};
 
-			//if (targetPlanet != null)
-			//{
-			//	_logger.LogInformation($"Travel to planet [{targetPlanet.Name}] started.");
-			//}
-			//if (targetShip != null)
-			//{
-			//	_logger.LogInformation($"Rescue missing to ship [{targetShip.Name}] started.");
-			//}
-
-			//theShip.TargetSector = targetPosition;
-
-			//var eventMessage = new JourneyStartedIntegrationEvent
-			//	{
-			//		ShipId = request.ShipId,
-			//		TargetPosX = request.TargetPosX,
-			//		TargetPosY = request.TargetPosY,
-			//		TargetPosZ = request.TargetPosZ
-			//	};
-
-			//try
-			//{
-			//	_eventBus.Publish(eventMessage);
-			//}
-			//catch (Exception ex)
-			//{
-			//	_logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
-
-			//	throw;
-			//}
+			try
+			{
+				_eventBus.Publish(eventMessage);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
+				throw;
+			}
 			return true;
 		}
 	}

@@ -13,11 +13,12 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
 		GalaxyDbContext Context { get; }
 		Task<Player> GetItem(Guid id);
 		Task<List<Player>> GetItems();
-		Task<bool> UpdateCredits(Guid id, double newValue);
+		Task<double> Deposit(Guid id, double newValue);
+        Task<double> Withdraw(Guid id, double newValue);
 
-	}
+    }
 
-	public class PlayerRepository : IPlayerRepository
+    public class PlayerRepository : IPlayerRepository
 	{
         public GalaxyDbContext Context { get; }
 
@@ -52,15 +53,40 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> UpdateCredits(Guid id, double newValue)
+        public async Task<double> Deposit(Guid id, double amount)
         {
-            var itm = await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(id));
-            if (itm != null)
+            var player = await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (player != null)
             {
-                itm.Credits = (decimal)newValue;
-                Context.SaveChanges();
+                var balance = (double)player.Credits;
+                var newBalance = balance + amount;
+                player.Credits = (decimal)newBalance;
+                await Context.SaveChangesAsync();
+                return newBalance;
             }
-            return true;
+            return 0.0;
         }
-	}
+
+        public async Task<double> Withdraw(Guid id, double amount)
+        {
+            var player = await Context.Players.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (player != null)
+            {
+                if (amount < 0)
+                    amount *= -1;
+                
+                var balance = (double)player.Credits;
+                if (balance < amount)
+                    throw new InvalidOperationException("Not enough credits.");
+
+                var newBalance = balance - amount;
+
+			    player.Credits = (decimal)newBalance;
+                Context.SaveChanges();
+                return newBalance;
+
+            }
+            return 0.0;
+        }
+    }
 }

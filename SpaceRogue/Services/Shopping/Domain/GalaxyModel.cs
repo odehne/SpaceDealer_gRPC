@@ -14,6 +14,7 @@ namespace Cope.SpaceRogue.Shopping.API.Models
 	{
 		public List<PlanetModel> Planets { get; set; }
 		public List<PlayerModel> Players { get; set; }
+		public List<ProductModel> Products { get; set; }
 
 		private IMediator _mediator { get; set; }
 
@@ -22,12 +23,14 @@ namespace Cope.SpaceRogue.Shopping.API.Models
 			_mediator = mediator;
 			Planets = new List<PlanetModel>();
 			Players = new List<PlayerModel>();
+			Products = new List<ProductModel>();
 		}
 
 		public async Task Load()
 		{
 			Planets = await _mediator.Send(new PlanetsQuery());
 			Players = await _mediator.Send(new PlayersQuery());
+			Products = await _mediator.Send(new ProductsQuery());
 		}
 
 		public IEnumerable<PlanetModel> GetPlanetsInRange(Position sector, int sensorRange)
@@ -38,18 +41,6 @@ namespace Cope.SpaceRogue.Shopping.API.Models
 		public IEnumerable<PlanetModel> GetPlanetsInSector(Position sector)
 		{
 			return Planets.Where(x => x.Sector.Equals(sector)).ToList();
-		}
-
-		public Guid Sell(Guid marketPlaceId, Guid shipId, Guid catalogItemId, double amount)
-		{
-			var transactionId = Guid.NewGuid();
-			return transactionId;
-		}
-
-		public Guid Buy(Guid marketPlaceId, Guid shipId, Guid catalogItemId, double amount)
-		{
-			var transactionId = Guid.NewGuid();
-			return transactionId;
 		}
 
 		public void AddPlanet(PlanetModel newPlanet)
@@ -92,12 +83,37 @@ namespace Cope.SpaceRogue.Shopping.API.Models
 			return Planets.FirstOrDefault(m => m.Market.ID.Equals(marketPlaceId)).Market;
 		}
 
-		internal double GetPrice(MarketPlaceModel marketPlace, Guid catalogItemId)
+		internal ProductModel GetProduct(MarketPlaceModel market, Guid catalogItemId)
+		{
+			var ci = market.ProductDemands.CatalogItems.FirstOrDefault(m => m.ID.Equals(catalogItemId));
+			if (ci == null)
+			{
+				ci = market.ProductOfferings.CatalogItems.FirstOrDefault(m => m.ID.Equals(catalogItemId));
+			}
+			return Products.FirstOrDefault(x => x.ID.Equals(ci.ProductId));
+		}
+
+
+		internal double GetDemandedProductPrice(MarketPlaceModel marketPlace, Guid catalogItemId)
 		{
 			var p = marketPlace.ProductDemands.CatalogItems.FirstOrDefault(ci => ci.ID.Equals(catalogItemId));
 			if (p != null)
 				return p.Price;
 			return 0.0;
+		}
+
+		internal double GetOfferedProductPrice(MarketPlaceModel marketPlace, Guid catalogItemId)
+		{
+			var p = marketPlace.ProductOfferings.CatalogItems.FirstOrDefault(ci => ci.ID.Equals(catalogItemId));
+			if (p == null)
+				throw new ArgumentException($"The selected product doesn't get sold on this planet.");
+
+			return p.Price;
+		}
+
+		internal PlayerModel GetPlayer(Guid playerId)
+		{
+			return Players.FirstOrDefault(p => p.ID.Equals(playerId));
 		}
 
 		public void UpdatePosition(ShipModel ship)

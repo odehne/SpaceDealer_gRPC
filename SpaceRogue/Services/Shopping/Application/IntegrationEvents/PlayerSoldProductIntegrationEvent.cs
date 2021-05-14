@@ -5,26 +5,27 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Shopping.API.Application.IntegrationEvents
 {
-	public class JourneyStartedIntegrationEvent : IntegrationEvent
+
+	public class PlayerSoldProductIntegrationEvent : IntegrationEvent
 	{
-		public string ShipId { get; set; }
-		public int TargetPosX { get; set; }
-		public int TargetPosY { get; set; }
-		public int TargetPosZ { get; set; }
+		public string PlayerId { get; set; }
+		public double AccountBalance { get; set; }
+		public string MarketPlaceId { get; set; }
+
 	}
 
-	public class JourneyStartedIntegrationEventHandler : IIntegrationEventHandler<JourneyStartedIntegrationEvent>
+	public class PlayerSoldProductIntegrationEventHandler : IIntegrationEventHandler<PlayerSoldProductIntegrationEvent>
 	{
 		private readonly IEventBus _eventBus;
-		private readonly ILogger<JourneyStartedIntegrationEventHandler> _logger;
+		private readonly ILogger<PlayerSoldProductIntegrationEventHandler> _logger;
 
-		public JourneyStartedIntegrationEventHandler(IEventBus eventBus, ILogger<JourneyStartedIntegrationEventHandler> logger)
+		public PlayerSoldProductIntegrationEventHandler(IEventBus eventBus, ILogger<PlayerSoldProductIntegrationEventHandler> logger)
 		{
 			_eventBus = eventBus;
 			_logger = logger;
 		}
 
-		public async Task Handle(JourneyStartedIntegrationEvent @event)
+		public async Task Handle(PlayerSoldProductIntegrationEvent @event)
 		{
 			_logger.LogInformation("----- Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 			_eventBus.Publish(@event);

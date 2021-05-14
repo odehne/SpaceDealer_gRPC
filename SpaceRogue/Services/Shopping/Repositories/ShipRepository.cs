@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Shopping.API.Repositories
 {
-	public interface IShipRepository
+ 
+    public interface IShipRepository
     {
         GalaxyDbContext Context { get; }
         Task<Ship> GetItem(Guid id);
@@ -50,7 +51,14 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
             if(payload==null)
                 throw new ArgumentException($"The requested product {productId} is not loaded.");
 
+            if (payload.Quantity < amount)
+                throw new ArgumentException($"There is not enough of {productId} loaded. Currently loaded {payload.Quantity} units.");
 
+            payload.Quantity -= amount;
+
+			await Context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> LoadCargo(Guid shipId, Guid productId, double amount)
@@ -59,6 +67,27 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
                                         .FirstOrDefaultAsync(x => x.ID.Equals(shipId));
             if (ship == null)
                 throw new ArgumentException($"Ship with shipId {shipId} not found.");
+
+            var product = await Context.Products.FirstOrDefaultAsync(p => p.ID.Equals(productId));
+
+            if (product == null)
+                throw new ArgumentException($"Product with productId {productId} not found.");
+
+            var payload = ship.Cargo.FirstOrDefault(x => x.Product.ID.Equals(productId));
+
+            if (payload == null)
+			{
+                payload = new Payload { ID = Guid.NewGuid(), Product = product, Quantity = amount };
+			}
+			else
+			{
+                payload.Quantity += amount;
+			}
+
+            await Context.SaveChangesAsync();
+            return true;
+
         }
+
     }
 }

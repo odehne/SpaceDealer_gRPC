@@ -110,7 +110,8 @@ namespace Cope.SpaceRogue.Shopping.API
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetCreatedIntegrationEventHandler>();
             eventBus.Subscribe<ShipArrivedIntegrationEvent, ShipArrivedIntegrationEventHandler>();
-            eventBus.Subscribe<JourneyStartedIntegrationEvent, JourneyStartedIntegrationEventHandler>();
+            eventBus.Subscribe<PlayerBoughtProductIntegrationEvent, PlayerBoughtProductIntegrationEventHandler>();
+            eventBus.Subscribe<PlayerSoldProductIntegrationEvent, PlayerSoldProductIntegrationEventHandler>();
         }
     }
 
