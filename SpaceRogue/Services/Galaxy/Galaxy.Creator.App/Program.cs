@@ -5,7 +5,6 @@ using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static Cope.SpaceRogue.Galaxy.API.Proto.MarketPlacesService;
@@ -49,7 +48,6 @@ namespace Galaxy.Creator.App
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new MarketPlacesServiceClient(channel);
 			}
-		
 		}
 	}
 

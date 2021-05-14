@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ship.API.Application.IntegrationEvents
+namespace Cope.SpaceRogue.Shopping.API.Application.IntegrationEvents
 {
 	public interface IShipInteractionIntegrationEventService
 	{

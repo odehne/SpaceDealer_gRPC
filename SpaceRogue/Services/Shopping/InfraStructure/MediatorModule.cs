@@ -3,12 +3,11 @@ using MediatR;
 using System;
 using System.Reflection;
 using Cope.SpaceRogue.Infrastructure;
-using Cope.SpaceRogue.Travelling.Application.Queries;
-using Cope.SpaceRogue.Travelling.API.Repositories;
-using Cope.SpaceRogue.Travelling.API.Application.Commands;
+using Cope.SpaceRogue.Shopping.Application.Queries;
+using Cope.SpaceRogue.Shopping.API.Repositories;
 using Cope.SpaceRogue.Infrastructure.Behaviors;
 
-namespace Cope.SpaceRogue.Travelling.API.Infrastructure
+namespace Cope.SpaceRogue.Shopping.API.Infrastructure
 {
 	public class MediatorModule : Autofac.Module
 	{
@@ -32,10 +31,10 @@ namespace Cope.SpaceRogue.Travelling.API.Infrastructure
 			builder.RegisterAssemblyTypes(typeof(PlanetsQuery).GetTypeInfo().Assembly)
 				.AsClosedTypesOf(typeof(IRequestHandler<,>));
 
-			builder.RegisterAssemblyTypes(typeof(StartJourneyCommand).GetTypeInfo().Assembly)
-				.AsClosedTypesOf(typeof(IRequestHandler<,>));
 			builder.RegisterType<PlanetRepository>().As<IPlanetRepository>().WithParameter("context", new GalaxyDbContext(ConnectionString));
+			builder.RegisterType<MarketPlaceRepository>().As<IMarketPlaceRepository>().WithParameter("context", new GalaxyDbContext(ConnectionString));
 			builder.RegisterType<ShipRepository>().As<IShipRepository>().WithParameter("context", new GalaxyDbContext(ConnectionString));
+			builder.RegisterType<PlayerRepository>().As<IPlayerRepository>().WithParameter("context", new GalaxyDbContext(ConnectionString));
 
 			builder.Register<ServiceFactory>(context =>
 			{

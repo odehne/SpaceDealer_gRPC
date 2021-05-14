@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cope.SpaceRogue.Travelling.API.Repositories
+namespace Cope.SpaceRogue.Shopping.API.Repositories
 {
     public interface IPlanetRepository
     {
@@ -30,9 +30,9 @@ namespace Cope.SpaceRogue.Travelling.API.Repositories
             return await Context.Planets
                     .Include(x => x.Market)
                     .Include(x => x.Market.ProductDemands)
-                    .ThenInclude(pd => pd.CatalogItems)
                     .Include(x => x.Market.ProductOfferings)
-                    .ThenInclude(off => off.CatalogItems)
+                    .Include(x => x.Market.ProductDemands.CatalogItems)
+                    .Include(x => x.Market.ProductOfferings.CatalogItems)
                     .ToListAsync();
         }
 
