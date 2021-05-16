@@ -1,10 +1,6 @@
-﻿using Cope.SpaceRogue.Fighting.API.Models;
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Fighting.API.Domain
+namespace Cope.SpaceRogue.Fighting.API.Models
 {
 	public enum FightStates
 	{
@@ -21,19 +17,21 @@ namespace Fighting.API.Domain
 		FightFinished
 	}
 
-	public class Fight
+	public class FightModel
 	{
+		public Guid ID { get; set; }
 		public int RoundNumber { get; set; }
 		public ShipModel Attacker { get; set; }
 		public ShipModel Defender { get; set; }
 
-		public Fight()
+		public FightModel()
 		{
-
+			ID = Guid.NewGuid();
 		}
 
-		public Fight(int roundNumber, ShipModel attacker, ShipModel defender)
+		public FightModel(int roundNumber, ShipModel attacker, ShipModel defender)
 		{
+			ID = Guid.NewGuid();
 			RoundNumber = roundNumber;
 			Attacker = attacker;
 			Defender = defender;

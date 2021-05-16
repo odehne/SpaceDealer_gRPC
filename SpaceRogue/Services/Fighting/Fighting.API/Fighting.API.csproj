@@ -9,15 +9,47 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Proto\FightService.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.4" />
+    <PackageReference Include="Google.Protobuf" Version="3.15.6" />
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.15.6" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.36.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.36.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Kubernetes" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.0.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Http" Version="7.2.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +60,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="InfraStructure\" />
+    <Folder Include="Application\IntegrationEvents\EventHandling\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Proto\FightService.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

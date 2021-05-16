@@ -1,0 +1,58 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Cope.SpaceRogue.Fighting.API.Proto";
+
+service FightService {
+  rpc GetFights (FightingEmpty) returns (FightsReply);
+  rpc GetFight (GetFightRequest) returns (FightReply);
+  rpc StartFight (StartFightRequest) returns (FightReply);
+  rpc Flee (FleeRequest) returns (FleeReply);
+  rpc Attack (AttackRequest) returns (FightReply);
+  rpc Defend (DefendRequest) returns (FightReply);
+}
+
+message FightingEmpty 
+{ 
+	
+}
+
+message FightsReply {
+	repeated FightReply Fights = 1;
+}
+
+message GetFightRequest {
+	string FightId = 1;
+}
+
+message FightReply {
+	string FightId = 1;
+	string AttackerId = 2;
+	int32 NewAttackerHull = 3;
+	int32 NewAttackerShields = 4;
+	string DefenderId = 5;
+	int32  NewDefenderHull = 6;
+	int32  NewDefenderShields = 7;
+	int32 AttackValue = 8;
+}
+
+message StartFightRequest {
+	string AttackerId = 1;
+	string DefenderId = 2;
+}
+
+message FleeRequest {
+	string FightId = 1;
+}
+
+message FleeReply {
+	bool Successful = 1;
+}
+
+message AttackRequest {
+	string FightId = 1;
+}
+
+message DefendRequest {
+	string FightId = 1;
+}
+

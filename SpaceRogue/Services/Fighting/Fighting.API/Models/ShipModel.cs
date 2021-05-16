@@ -1,13 +1,9 @@
 ﻿using Cope.SpaceRogue.Infrastructure;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Fighting.API.Models
 {
-
 	public class ShipModel
 	{
 		public Guid ShipId { get; set; }
@@ -21,6 +17,23 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 		public int ShieldsValue { get; set; }
 		public string[] FeatureNames { get; set; }
 		public Position CurrentSector { get; set; }
+
+		public static ShipModel MapTo(Ship entity)
+		{
+			return new ShipModel
+			{
+				ShipId = entity.ID,
+				Name = entity.Name,
+				CurrentSector = new Position(0, 0, 0),
+				DefenceValue = entity.GetAccumulatedDefenceValue(),
+				AttackValue = entity.GetAccumulatedAttackValue(),
+				HullValue = entity.GetAccumulatedHullValue(),
+				ShieldsValue = entity.GetAccumulatedShieldsValue(),
+				SpeedValue = entity.GetSpeedValue(),
+				SensorRangeValue = entity.GetSensorRangeValue(),
+				FeatureNames = entity.GetFeatureNames()
+			};
+		}
 	}
 
 }

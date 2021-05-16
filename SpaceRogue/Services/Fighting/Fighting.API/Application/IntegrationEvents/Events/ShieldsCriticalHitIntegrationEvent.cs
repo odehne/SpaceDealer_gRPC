@@ -7,31 +7,31 @@ using System.Threading.Tasks;
 namespace Cope.SpaceRogue.Fighting.API.Application.IntegrationEvents.Events
 {
 
-	public class ShieldsDownIntegrationEvent : IntegrationEvent
+	public class ShieldsCriticalHitIntegrationEvent : IntegrationEvent
 	{
 		public Guid FightId { get; set; }
 		public Guid AttackerId { get; set; }
 		public Guid DefenderId { get; set; }
 
-		public ShieldsDownIntegrationEvent(Guid requestId, Guid attackerId, Guid defenderId)
+		public ShieldsCriticalHitIntegrationEvent(Guid requestId, Guid attackerId, Guid defenderId)
 		{
 			FightId = requestId;
 			AttackerId = attackerId;
 			DefenderId = defenderId;
 		}
 
-		public class ShieldsDownIntegrationEventHandler : IIntegrationEventHandler<ShieldsDownIntegrationEvent>
+		public class ShieldsCriticalHitIntegrationEventHandler : IIntegrationEventHandler<ShieldsCriticalHitIntegrationEvent>
 		{
 			private readonly IEventBus _eventBus;
-			private readonly ILogger<ShieldsDownIntegrationEventHandler> _logger;
+			private readonly ILogger<ShieldsCriticalHitIntegrationEventHandler> _logger;
 
-			public ShieldsDownIntegrationEventHandler(IEventBus eventBus, ILogger<ShieldsDownIntegrationEventHandler> logger)
+			public ShieldsCriticalHitIntegrationEventHandler(IEventBus eventBus, ILogger<ShieldsCriticalHitIntegrationEventHandler> logger)
 			{
 				_eventBus = eventBus;
 				_logger = logger;
 			}
 
-			public async Task Handle(ShieldsDownIntegrationEvent @event)
+			public async Task Handle(ShieldsCriticalHitIntegrationEvent @event)
 			{
 				_logger.LogInformation("----- Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 				_eventBus.Publish(@event);

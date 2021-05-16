@@ -96,13 +96,20 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> AddDefaults()
         {
-            var sensor = new Feature("Erweiterter Sensorik", "Kann andere Schiffe und Planeten schneller erkennen.", 0, 0, 0, 0, 1);
-            var battle = new Feature("Verbesserte Laserbänke", "Angriff +1.", 1, 0, 0, 0, 0);
-            var cargo = new Feature("Vergrösserter Frachtraum", "Frachtraum vergößert um 10 Tonnen.", 0, 0, 10, 0, 0);
+            var sensor = new Feature("Erweiterter Sensorik", "Kann andere Schiffe und Planeten schneller erkennen.", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+            var battle = new Feature("Verbesserte Laserbänke", "Angriff +1.", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            var cargo = new Feature("Vergrösserter Frachtraum", "Frachtraum vergößert um 10 Tonnen.", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0);
+            var shieldsPlus1 = new Feature("Verbesserte Schutzschilde", "Schilde +1.", 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0);
+            var hullPlus1 = new Feature("Verstärkte Hülle", "Hülle +1.", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
+            var thrustersPlus1 = new Feature("Turboantrieb", "Hülle +1.", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+
             var b = false;
             b = await AddItem(sensor);
             b = await AddItem(battle);
             b = await AddItem(cargo);
+            b = await AddItem(shieldsPlus1);
+            b = await AddItem(hullPlus1);
+            b = await AddItem(thrustersPlus1);
             return b;
         }
     }

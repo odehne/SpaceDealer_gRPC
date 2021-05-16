@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ship.API.Application.Commands
+namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 {
     public class IdentifiedCommand<T, R> : IRequest<R>
        where T : IRequest<R>
