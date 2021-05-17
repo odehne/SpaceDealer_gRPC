@@ -43,11 +43,11 @@ namespace Cope.SpaceRogue.Galaxy.API
 
 		public virtual IServiceProvider ConfigureServices(IServiceCollection services)
 		{
-            //using var context = new GalaxyDbContext("c:\\temp\\SpaceRogue.db");
-            //context.Database.EnsureCreated();
+			using var context = new GalaxyDbContext(Configuration["ConnectionString"]);
+			context.Database.EnsureCreated();
 
-       
-        	services
+
+			services
                 .AddApplicationInsights(Configuration)
                 .AddGrpc(options =>
                 {

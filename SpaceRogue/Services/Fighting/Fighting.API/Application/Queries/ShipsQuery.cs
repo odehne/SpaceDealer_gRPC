@@ -9,9 +9,7 @@ using Cope.SpaceRogue.Fighting.API.Repositories;
 
 namespace Cope.SpaceRogue.Fighting.Application.Queries
 {
-
-
-	public class ShipsQuery : IRequest<List<ShipModel>> { }
+    public class ShipsQuery : IRequest<List<ShipModel>> { }
 
     public class ShipsQueryHandler : IRequestHandler<ShipsQuery, List<ShipModel>>
     {

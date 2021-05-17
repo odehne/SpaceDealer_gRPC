@@ -44,6 +44,7 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 		public async Task Load()
 		{
 			Ships = await _mediator.Send(new ShipsQuery());
+			Fights = await _mediator.Send(new FightsQuery());
 		}
 
 		

@@ -7,7 +7,7 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 	{
 		FightStarted,
 		Hit,
-		AttackMissed,
+		Missed,
 		ShipTookAHit,
 		TargetFled,
 		TargetDestroyed,
@@ -22,8 +22,8 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 	{
 		[Key]
 		public Guid ID { get; set; }
-		public Ship Attacker { get; set; }
-		public Ship Defender { get; set; }
+		public virtual Ship Attacker { get; set; }
+		public virtual Ship Defender { get; set; }
 		public FightStates State { get; set; }
 		public int RoundNumber { get; set; }
 

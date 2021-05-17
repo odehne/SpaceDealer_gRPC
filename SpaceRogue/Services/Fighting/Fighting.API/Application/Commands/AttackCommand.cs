@@ -9,45 +9,44 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 {
-
-	public class StartFightCommand : IRequest<string>
+	public class AttackCommand : IRequest<string>
 	{
 		[DataMember]
 		public string AttackerShipId { get; set; }
 		[DataMember]
 		public string DefenderShipId { get; set; }
 
-		public StartFightCommand()
+		public AttackCommand()
 		{
 
 		}
 
-		public StartFightCommand(string attackerShipId, string defenderShipId)
+		public AttackCommand(string attackerShipId, string defenderShipId)
 		{
 			AttackerShipId = attackerShipId;
 			DefenderShipId = defenderShipId;
 		}
 	}
 
-	public class StartFightCommandHandler : IRequestHandler<StartFightCommand, string>
+	public class AttackCommandHandler : IRequestHandler<AttackCommand, string>
 	{
 		private readonly IMediator _mediator;
-		private readonly ILogger<StartFightCommandHandler> _logger;
+		private readonly ILogger<AttackCommandHandler> _logger;
 		private readonly IEventBus _eventBus;
 
-		public StartFightCommandHandler(IMediator mediator, ILogger<StartFightCommandHandler> logger, IEventBus eventBus)
+		public AttackCommandHandler(IMediator mediator, ILogger<AttackCommandHandler> logger, IEventBus eventBus)
 		{
 			_mediator = mediator;
 			_eventBus = eventBus;
 			_logger = logger;
 		}
 
-		public async Task<string> Handle(StartFightCommand request, CancellationToken cancellationToken)
+		public async Task<string> Handle(AttackCommand request, CancellationToken cancellationToken)
 		{
 
 			var attacker = Engine.Galaxy.GetShip(request.AttackerShipId.ToGuid());
 			var defender = Engine.Galaxy.GetShip(request.DefenderShipId.ToGuid());
-			
+
 			if (attacker == null)
 			{
 				_logger.LogError($"Attacking ship [{request.AttackerShipId}] not found.");
@@ -61,7 +60,7 @@ namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 
 			var fight = Engine.Galaxy.AddFight(attacker, defender);
 			var eventMessage = new ShipAttackedIntegrationEvent(fight.ID.ToString(), attacker.ShipId.ToString(), defender.ShipId.ToString());
-			
+
 			try
 			{
 				_eventBus.Publish(eventMessage);

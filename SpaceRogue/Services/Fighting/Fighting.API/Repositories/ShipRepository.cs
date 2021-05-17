@@ -9,14 +9,7 @@ using System.Threading.Tasks;
 namespace Cope.SpaceRogue.Fighting.API.Repositories
 {
 
-    public interface IFightRepository
-    {
-        GalaxyDbContext Context { get; }
-        Task<Fight> GetItem(Guid id);
-        Task<List<Fight>> GetItems();
-    }
-
-    public interface IShipRepository
+	public interface IShipRepository
     {
         GalaxyDbContext Context { get; }
         Task<Ship> GetItem(Guid id);

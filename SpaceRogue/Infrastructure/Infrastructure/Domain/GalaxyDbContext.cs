@@ -27,9 +27,10 @@ namespace Cope.SpaceRogue.Infrastructure
 		public DbSet<ProductGroup> ProductGroups { get; set; }
 		public DbSet<Ship> Ships { get; set; }
 		public DbSet<Feature> Features { get; set; }
+		public DbSet<Fight> Fights { get; set; }
 
 
-		
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Planet>().HasKey(p => p.ID);
@@ -59,6 +60,11 @@ namespace Cope.SpaceRogue.Infrastructure
 
 			modelBuilder.Entity<Player>().HasKey(c => c.ID);
 			modelBuilder.Entity<Player>().HasMany(c => c.Fleet);
+
+			modelBuilder.Entity<Fight>().HasKey(c => c.ID);
+			modelBuilder.Entity<Fight>().HasOne(c => c.Attacker);
+			modelBuilder.Entity<Fight>().HasOne(c => c.Defender);
+
 
 			var groups = new ProductGroup[]
 			{

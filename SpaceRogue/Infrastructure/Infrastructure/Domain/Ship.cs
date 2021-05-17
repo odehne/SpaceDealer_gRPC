@@ -45,7 +45,7 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 		public int Shields { get; set; }
 		public string Name { get; set; }
 		public Guid PlayerID { get; set; }
-
+	
 		public Ship()
 		{
 			Features = new List<Feature>();

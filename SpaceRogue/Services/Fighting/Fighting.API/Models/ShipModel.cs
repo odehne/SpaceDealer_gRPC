@@ -17,6 +17,29 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 		public int ShieldsValue { get; set; }
 		public string[] FeatureNames { get; set; }
 		public Position CurrentSector { get; set; }
+		public ShipStates State { get; set; }
+
+		public enum ShipStates
+		{
+			OK,
+			ShieldsDestroyed,
+			ShieldsDamaged,
+			ShieldsRepaired,
+			HullDamaged,
+			HullRepaired,
+			CargoLoaded,
+			CargoUnloaded,
+			SensorRangeIncreased,
+			AttackValueIncreased,
+			AttackValueDecreased,
+			DefenceValueIncreased,
+			DefenceValueDecreased,
+			ShipSpeedIncreased,
+			FeatureAdded,
+			FeatureRemoved,
+			Overloaded,
+			Destroyed
+		}
 
 		public static ShipModel MapTo(Ship entity)
 		{

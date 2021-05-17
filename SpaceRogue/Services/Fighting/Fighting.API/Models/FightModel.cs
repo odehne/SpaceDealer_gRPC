@@ -1,21 +1,8 @@
-﻿using System;
+﻿using Infrastructure.Domain;
+using System;
 
 namespace Cope.SpaceRogue.Fighting.API.Models
 {
-	public enum FightStates
-	{
-		FightStarted,
-		Hit,
-		AttackMissed,
-		ShipTookAHit,
-		TargetFled,
-		TargetDestroyed,
-		ShipDestroyed, //no shields, not hull + final hit
-		ShieldsCritical, // one before shields destroyed
-		ShieldsDown, // shields destroyed
-		HullCritical, // one before destroyed
-		FightFinished
-	}
 
 	public class FightModel
 	{
@@ -36,6 +23,6 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 			Attacker = attacker;
 			Defender = defender;
 		}
-
-    }
+	}
 }
+
