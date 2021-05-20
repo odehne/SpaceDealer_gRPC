@@ -9,11 +9,29 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static Cope.SpaceRogue.Galaxy.API.Proto.MarketPlacesService;
 using static Cope.SpaceRogue.Galaxy.API.Proto.PlanetsService;
+using static Cope.SpaceRogue.Travelling.API.Proto.TravelService;
 
 namespace Galaxy.Creator.App
 {
 	public static class Factory
 	{
+		public static TravelServiceClient TravelApiClient
+		{
+			get
+			{
+				var serverAddress = "http://localhost:8991";
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+				{
+					// The following statement allows you to call insecure services. To be used only in development environments.
+					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+					serverAddress = "http://localhost:8991";
+				}
+
+				var channel = GrpcChannel.ForAddress(serverAddress);
+				return new TravelServiceClient(channel);
+			}
+		}
+
 		public static PlanetsServiceClient PlanetsApiClient
 		{
 			get 
@@ -22,11 +40,9 @@ namespace Galaxy.Creator.App
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
-					AppContext.SetSwitch(
-						"System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 					serverAddress = "http://localhost:8891";
 				}
-
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new PlanetsServiceClient(channel);
 			}
@@ -40,11 +56,9 @@ namespace Galaxy.Creator.App
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
-					AppContext.SetSwitch(
-						"System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 					serverAddress = "http://localhost:8891";
 				}
-
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new MarketPlacesServiceClient(channel);
 			}

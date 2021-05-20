@@ -113,7 +113,7 @@ namespace Cope.SpaceRogue.Travelling.API
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<PlanetCreatedIntegrationEvent, PlanetCreatedIntegrationEventHandler>();
             eventBus.Subscribe<ShipCreatedIntegrationEvent, ShipCreatedIntegrationEventHandler>();
-            eventBus.Subscribe<JourneyStartedIntegrationEvent, JourneyStartedIntegrationEventHandler>();
+            //eventBus.Subscribe<JourneyStartedIntegrationEvent, JourneyStartedIntegrationEventHandler>();
         }
     }
 

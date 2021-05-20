@@ -36,7 +36,8 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				Console.WriteLine("13. Produkt aktualisieren");
                 Console.WriteLine("14. Raumschiff erstellen");
 				Console.WriteLine("15. Spieler erstellen");
-				Console.WriteLine("16. Beenden");
+				Console.WriteLine("16. Raumschiff auf die Reise schicken");
+				Console.WriteLine("17. Beenden");
 
 				Console.Write("Wähle zwischen 1-16: ");
 				var selection = Console.ReadLine();
@@ -70,9 +71,45 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 					await AddNewShip();
 				if (selection == "15")
 					await AddNewPlayer();
+				if (selection == "16")
+					await StartJourny();
 				Console.WriteLine(result);
 			} while (!exitRecieved);
        }
+
+		private async Task StartJourny()
+		{
+			Console.Write("ID des Raumschiffs: ");
+			var id = Console.ReadLine();
+			var ship = await Factory.PlanetsApiClient.GetShipAsync(new GetShipRequest { Id = id });
+
+			if (ship == null)
+			{
+				Console.WriteLine("Raumschiff nicht gefunden.");
+				return;
+			}
+
+			Console.Write("ID des Zielplanetens: ");
+			var planetId = Console.ReadLine();
+
+			var planet = await Factory.PlanetsApiClient.GetPlanetAsync(new GetPlanetRequest { Id = planetId });
+
+			if (planet == null)
+			{
+				Console.WriteLine("Zielplanet nicht gefunden.");
+				return;
+			}
+
+			var journey = await Factory.TravelApiClient.StartTravelAsync(new Travelling.API.Proto.StartTravelRequest
+			{
+				ShipId = ship.Id,
+				TargetPosX = planet.PosX,
+				TargetPosY = planet.PosY,
+				TargetPosZ = planet.PosZ
+			});
+
+			Console.WriteLine(journey.Message);
+		}
 
 		private async Task AddNewPlayer()
 		{

@@ -1,7 +1,9 @@
 ﻿using Cope.SpaceRogue.Fighting.API.Models;
 using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Infrastructure.Domain;
+using Fighting.API.Domain.DomainEvents;
 using Infrastructure.Domain;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,10 +29,11 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 	{
 
 		public GalaxyDbContext Context { get; }
-
-		public FightRepository(GalaxyDbContext context)
+		public IMediator _mediator { get; }
+		public FightRepository(GalaxyDbContext context, IMediator mediator)
 		{
 			Context = context;
+			_mediator = mediator;
 		}
 
 
@@ -127,23 +130,8 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 					criticalHitBonus = 1;
 				}
 
-				if (defender.ShieldsValue > 0)
-				{
-					defender.ShieldsValue = defender.ShieldsValue - attackValue - criticalHitBonus;
-					defender.State = defender.ShieldsValue == 0 ? ShipModel.ShipStates.ShieldsDestroyed : ShipModel.ShipStates.ShieldsDamaged;
-				}
-				else
-				{
-					if (defender.HullValue > 0)
-					{
-						defender.HullValue = defender.HullValue - attackValue - criticalHitBonus;
-						defender.State = defender.HullValue < 0 ? ShipModel.ShipStates.Destroyed : ShipModel.ShipStates.HullDamaged;
-					}
-					else
-					{
-						defender.State = ShipModel.ShipStates.Destroyed;
-					}
-				}
+				var shipTookHitEvent = new ShipTookHitDomainEvent(defender, attackValue - criticalHitBonus);
+				
 
 				if (defender.State == ShipModel.ShipStates.Destroyed)
 					fight.State = FightStates.ShipDestroyed;

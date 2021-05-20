@@ -24,7 +24,15 @@ namespace Cope.SpaceRogue.Fighting.API
 	public static class Factory
 	{
 		public static AutofacServiceProvider ServiceProvider { get; set; }
-		public static IMediator Mediator => (IMediator)ServiceProvider.GetRequiredService(typeof(IMediator));
+		public static IMediator Mediator
+		{
+			get
+			{
+				if (ServiceProvider != null)
+					return (IMediator)ServiceProvider.GetRequiredService(typeof(IMediator));
+				return null;
+			}
+		}
 	}
 
 	public static class AutoMap

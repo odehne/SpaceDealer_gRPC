@@ -29,8 +29,6 @@ namespace Cope.SpaceRogue.Infrastructure
 		public DbSet<Feature> Features { get; set; }
 		public DbSet<Fight> Fights { get; set; }
 
-
-
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Planet>().HasKey(p => p.ID);

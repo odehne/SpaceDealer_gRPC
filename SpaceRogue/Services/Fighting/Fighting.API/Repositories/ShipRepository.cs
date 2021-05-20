@@ -14,6 +14,9 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
         GalaxyDbContext Context { get; }
         Task<Ship> GetItem(Guid id);
         Task<List<Ship>> GetItems();
+        Task<bool> DestroyShip(Guid id);
+        Task<bool> UpdateShieldvalue(Guid id, int newValue);
+        Task<bool> UpdateHullvalue(Guid id, int newValue);
     }
 
     public class ShipRepository : IShipRepository
@@ -50,5 +53,38 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 		{
 			throw new NotImplementedException();
 		}
+
+        public async Task<bool> UpdateShieldvalue(Guid id, int newValue)
+        {
+            var ship = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (ship != null)
+            {
+                ship.Shields = newValue;
+            }
+            var changeCount = await Context.SaveChangesAsync();
+            return changeCount > 0;
+        }
+
+        public async Task<bool> UpdateHullvalue(Guid id, int newValue)
+        {
+            var ship = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            if (ship != null)
+            {
+                ship.Hull = newValue;
+            }
+            var changeCount = await Context.SaveChangesAsync();
+            return changeCount > 0;
+        }
+
+        public async Task<bool> DestroyShip(Guid id)
+		{
+			var ship = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+			if (ship != null)
+			{
+                ship.State = Ship.ShipStates.Destroyed;
+			}
+            var changeCount = await Context.SaveChangesAsync();
+            return changeCount > 0;
+        }
 	}
 }

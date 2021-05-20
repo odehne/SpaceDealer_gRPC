@@ -26,4 +26,11 @@
     </Protobuf>
   </ItemGroup>
 
+   <ItemGroup>
+    <Protobuf Include="..\..\Travelling\Travelling.API\Proto\TravelService.proto" GrpcServices="Client">
+      <Link>Protos\TravelService.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
+
 </Project>

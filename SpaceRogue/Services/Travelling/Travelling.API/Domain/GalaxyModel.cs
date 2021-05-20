@@ -30,6 +30,12 @@ namespace Cope.SpaceRogue.Travelling.API.Models
 			Ships = await _mediator.Send(new ShipsQuery());
 		}
 
+		public ShipModel GetShip(Guid shipId)
+		{
+			return Ships.FirstOrDefault(x => x.ShipId.Equals(shipId));
+		}
+
+
 		public IEnumerable<ShipModel> GetShipsInRange(Position sector, int sensorRange)
 		{
 			return Ships.Where(x => x.CurrentSector.InSensorRange(sector, sensorRange)).ToList();

@@ -32,7 +32,10 @@ namespace Cope.SpaceRogue.Fighting.API.Infrastructure
 				.AsClosedTypesOf(typeof(IRequestHandler<,>));
 
 			builder.RegisterType<ShipRepository>().As<IShipRepository>().WithParameter("context", new GalaxyDbContext(ConnectionString));
-			builder.RegisterType<FightRepository>().As<IFightRepository>().WithParameter("context", new GalaxyDbContext(ConnectionString));
+			builder.RegisterType<FightRepository>()
+				.As<IFightRepository>()
+				.WithParameter("context", new GalaxyDbContext(ConnectionString))
+				.WithParameter("mediator", Factory.Mediator);
 
 			builder.Register<ServiceFactory>(context =>
 			{

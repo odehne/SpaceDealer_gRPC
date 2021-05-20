@@ -27,6 +27,7 @@ using Cope.SpaceRogue.Fighting.API.Infrastructure;
 using Fighting.API.Services;
 using Cope.SpaceRogue.Fighting.API.Application.IntegrationEvents.Events;
 using Cope.SpaceRogue.Fighting.API.Controllers;
+using MediatR;
 
 namespace Cope.SpaceRogue.Fighting.API
 {
@@ -41,7 +42,9 @@ namespace Cope.SpaceRogue.Fighting.API
 
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services
+
+          
+              services
                 .AddApplicationInsights(Configuration)
                 .AddGrpc(options =>
                 {
@@ -54,13 +57,18 @@ namespace Cope.SpaceRogue.Fighting.API
                 .AddCustomConfiguration(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddEventBus(Configuration)
+                .AddScoped<IMediator, Mediator>()
                 .AddScoped<IShipRepository, ShipRepository>();
 
             var container = new ContainerBuilder();
             container.Populate(services);
             container.RegisterModule(new MediatorModule(Configuration["ConnectionString"]));
+            container.RegisterModule(new ApplicationModule(Configuration["ConnectionString"]));
 
             Factory.ServiceProvider = new AutofacServiceProvider(container.Build());
+
+
+
             return Factory.ServiceProvider;
         }
 

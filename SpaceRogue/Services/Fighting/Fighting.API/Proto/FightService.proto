@@ -50,6 +50,8 @@ message FleeReply {
 
 message AttackRequest {
 	string FightId = 1;
+	string AttackerId = 2;
+	string DefenderId = 3;
 }
 
 message DefendRequest {
