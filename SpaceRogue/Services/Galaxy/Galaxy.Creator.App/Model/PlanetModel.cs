@@ -1,9 +1,5 @@
-﻿using Cope.SpaceRogue.Galaxy.Creator.App;
-using System;
+﻿using Cope.SpaceRogue.Infrastructure;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Galaxy.Creator.App.Model
 {

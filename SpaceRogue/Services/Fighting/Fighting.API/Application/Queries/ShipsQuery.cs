@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Fighting.API.Models;
 using Cope.SpaceRogue.Fighting.API.Repositories;
+using System.IO;
 
 namespace Cope.SpaceRogue.Fighting.Application.Queries
 {
@@ -22,6 +23,8 @@ namespace Cope.SpaceRogue.Fighting.Application.Queries
 
         public async Task<List<ShipModel>> Handle(ShipsQuery request, CancellationToken cancellationToken)
         {
+            var b = File.Exists(_repository.Context.ConnectionString);
+
             var itms = await _repository.GetItems();
             var model = new List<ShipModel>();
 

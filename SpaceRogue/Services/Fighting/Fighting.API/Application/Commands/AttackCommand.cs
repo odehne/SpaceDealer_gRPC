@@ -1,7 +1,10 @@
 ﻿using Cope.SpaceRogue.Fighting.API.Application.IntegrationEvents.Events;
+using Cope.SpaceRogue.Fighting.API.Models;
 using Cope.SpaceRogue.Fighting.API.Repositories;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
+using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.Serialization;
@@ -11,26 +14,7 @@ using System.Threading.Tasks;
 namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 {
 
-	public class UpdateShieldsCommandHandler : IRequestHandler<UpdateShieldsCommand, bool>
-	{
-		private readonly ILogger<AttackCommandHandler> _logger;
-		private readonly IEventBus _eventBus;
-		private readonly IShipRepository _shipRepository;
-
-		public UpdateShieldsCommandHandler(ILogger<AttackCommandHandler> logger, IEventBus eventBus, IShipRepository shipRepository)
-		{
-			_logger = logger;
-			_shipRepository = shipRepository;
-			_eventBus = eventBus;
-		}
-
-		public async Task<bool> Handle(UpdateShieldsCommand request, CancellationToken cancellationToken)
-		{
-			return await _shipRepository.UpdateShieldvalue(request.ShipId.ToGuid(), request.NewShieldValue);
-		}
-	}
-
-	public class AttackCommand : IRequest<string>
+	public class AttackCommand : IRequest<FightModel>
 	{
 		[DataMember]
 		public string FightId { get; set; }
@@ -52,20 +36,22 @@ namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 		}
 	}
 
-	public class AttackCommandHandler : IRequestHandler<AttackCommand, string>
+	public class AttackCommandHandler : IRequestHandler<AttackCommand, FightModel>
 	{
 		private readonly IMediator _mediator;
+		private readonly IFightRepository _fightRepository;
 		private readonly ILogger<AttackCommandHandler> _logger;
 		private readonly IEventBus _eventBus;
 
-		public AttackCommandHandler(IMediator mediator, ILogger<AttackCommandHandler> logger, IEventBus eventBus)
+		public AttackCommandHandler(IMediator mediator, ILogger<AttackCommandHandler> logger, IEventBus eventBus, IFightRepository fightRepository)
 		{
 			_mediator = mediator;
+			_fightRepository = fightRepository;
 			_eventBus = eventBus;
 			_logger = logger;
 		}
 
-		public async Task<string> Handle(AttackCommand request, CancellationToken cancellationToken)
+		public async Task<FightModel> Handle(AttackCommand request, CancellationToken cancellationToken)
 		{
 
 			var fight = Engine.Galaxy.GetFight(request.FightId.ToGuid());
@@ -92,22 +78,15 @@ namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 
 			if (fight != null)
 			{
+				IntegrationEvent @event;
+
+				var state = await _fightRepository.Battle(request.FightId.ToGuid(), attacker, defender);
 				
-				var eventMessage = new ShipAttackedIntegrationEvent(fight.ID.ToString(), attacker.ShipId.ToString(), defender.ShipId.ToString());
-				try
-				{
-					_eventBus.Publish(eventMessage);
-				}
-				catch (Exception ex)
-				{
-					_logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
-					throw;
-				}
-				return fight.ID.ToString();
+			
 			}
 
 			_logger.LogError("Failed to register fight.", fight.ID, Program.AppName);
-			return "";
+			return null;
 		}
 	}
 }

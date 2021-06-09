@@ -20,9 +20,8 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 		Task<bool> AddItem(Fight item);
 		Task<bool> DeleteItem(Fight item);
 		Task<Fight> UpdateItem(Fight item);
-
-		Task<FightStates> Flee(Fight fight, ShipModel defender);
-		Task<FightStates> Battle(Fight fight, ShipModel attacker, ShipModel defender);
+		Task<FightStates> Flee(Guid fightId, ShipModel defender);
+		Task<FightStates> Battle(Guid fightId, ShipModel attacker, ShipModel defender);
 	}
 
 	public class FightRepository : IFightRepository
@@ -92,8 +91,9 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 			return item;
 		}
 
-		public async Task<FightStates> Flee(Fight fight, ShipModel defender)
+		public async Task<FightStates> Flee(Guid fightId, ShipModel defender)
 		{
+			var fight = await GetItem(fightId);
 			fight = SwapDefender(fight, defender.ShipId);
 			int fleeRoll = SimpleDiceRoller.Roll(DiceType.d12, defender.SpeedValue);
 			if (fleeRoll > 6)
@@ -105,8 +105,9 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 			return fight.State;
 		}
 
-		public async Task<FightStates> Battle(Fight fight, ShipModel attacker, ShipModel defender)
+		public async Task<FightStates> Battle(Guid fightId, ShipModel attacker, ShipModel defender)
 		{
+			var fight = await GetItem(fightId);
 			fight = SwapAttacker(fight, attacker.ShipId);
 			
 			int attackValue = 1;
@@ -131,7 +132,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 				}
 
 				var shipTookHitEvent = new ShipTookHitDomainEvent(defender, attackValue - criticalHitBonus);
-				
+				await _mediator.Send(shipTookHitEvent);
 
 				if (defender.State == ShipModel.ShipStates.Destroyed)
 					fight.State = FightStates.ShipDestroyed;

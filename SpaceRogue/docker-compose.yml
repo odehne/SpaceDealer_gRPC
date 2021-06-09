@@ -1,0 +1,66 @@
+version: '3.4'
+
+services:
+  galaxy.api:
+    image: ${DOCKER_REGISTRY-}galaxyapi
+    ports:
+       - "8891:8891"
+       - "45665:45665"
+    build:
+      context: .
+      dockerfile: Services/Galaxy/Galaxy.API/Dockerfile
+    volumes:
+        - c:\db:/app/db
+    depends_on:
+        - rabbitmq
+  
+  fighting.api:
+    image: ${DOCKER_REGISTRY-}fightingapi
+    ports:
+       - "8491:8491"
+       - "46444:46444"
+    build:
+      context: .
+      dockerfile: Services/Fighting/Fighting.API/Dockerfile
+    volumes:
+        - c:\db:/app/db
+    
+  galaxy.creator.app:
+    image: ${DOCKER_REGISTRY-}galaxycreatorapp
+    build:
+      context: .
+      dockerfile: Services/Galaxy/Galaxy.Creator.App/Dockerfile
+    environment:
+        - galaxy_api_grpc_url=http://galaxy.api:8891
+    depends_on:
+        - galaxy.api
+    
+  shopping.api:
+    image: ${DOCKER_REGISTRY-}shoppingapi
+    ports:
+       - "8791:8791"
+       - "46666:46666"
+    build:
+      context: .
+      dockerfile: Services/Shopping/Shopping.API/Dockerfile
+    volumes:
+        - c:\db:/app/db
+ 
+  travelling.api:
+    image: ${DOCKER_REGISTRY-}travellingapi
+    ports:
+       - "8991:8991"
+       - "45666:45666"
+    build:
+      context: .
+      dockerfile: Services/Travelling/Travelling.API/Dockerfile
+    volumes:
+        - c:\db:/app/db
+ 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: galaxy.rabbit
+    dns: galaxy.rabbit
+        
+        
+ 

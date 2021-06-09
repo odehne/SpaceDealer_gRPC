@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Travelling.API": {
+      "commandName": "Project"
+    },
+    "Docker (1)": {
+      "commandName": "Docker"
+    }
+  }
+}

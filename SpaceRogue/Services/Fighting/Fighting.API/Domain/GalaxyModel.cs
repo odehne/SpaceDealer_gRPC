@@ -47,7 +47,6 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 			Fights = await _mediator.Send(new FightsQuery());
 		}
 
-		
 		public ShipModel GetShip(Guid shipId)
 		{
 			return Ships.FirstOrDefault(s => s.ShipId.Equals(shipId));

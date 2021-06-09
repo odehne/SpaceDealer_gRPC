@@ -9,15 +9,11 @@ namespace Cope.SpaceRogue.Fighting.API.Application.IntegrationEvents.Events
 	
 	public class ShipAttackedIntegrationEvent : IntegrationEvent
     {
-        public string FightId { get; set; }
-        public string AttackerId { get; set; }
-        public string DefenderId { get; set; }
+        public string ShipId { get; set; }
 
-        public ShipAttackedIntegrationEvent(string requestId, string attackerId, string defenderId)
+        public ShipAttackedIntegrationEvent(string shipId)
 		{
-            FightId = requestId;
-			AttackerId = attackerId;
-            DefenderId = defenderId;
+			ShipId = shipId;
 		}
 	
 		public class ShipAttackedIntegrationEventHandler : IIntegrationEventHandler<ShipAttackedIntegrationEvent>

@@ -11,25 +11,7 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 {
-	public class DestroyShipCommandHandler : IRequestHandler<DestroyShipCommand, bool>
-	{
-		private readonly ILogger<AttackCommandHandler> _logger;
-		private readonly IEventBus _eventBus;
-		private readonly IShipRepository _shipRepository;
-
-		public DestroyShipCommandHandler(ILogger<AttackCommandHandler> logger, IEventBus eventBus, IShipRepository shipRepository)
-		{
-			_logger = logger;
-			_shipRepository = shipRepository;
-			_eventBus = eventBus;
-		}
-
-		public async Task<bool> Handle(DestroyShipCommand request, CancellationToken cancellationToken)
-		{
-			return await _shipRepository.DestroyShip(request.ShipId.ToGuid());
-		}
-	}
-
+	
 	public class UpdateHullCommand : IRequest<bool>
 	{
 		[DataMember]

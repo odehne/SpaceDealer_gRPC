@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cope.SpaceRogue.Galaxy.API.Proto;
+using Cope.SpaceRogue.Infrastructure;
 using Galaxy.Creator.App;
 using Galaxy.Creator.App.Model;
 using Microsoft.Extensions.Logging;
@@ -11,69 +13,187 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 {
 	public class Menu
 	{
-       private readonly ILogger<Menu> _logger;
-	   
+		private readonly ILogger<Menu> _logger;
 
-		public async Task ShowMenu()
+		public async Task ShowPlanetMendu()
+		{
+			var exitRecieved = false;
+			do
+			{
+				Console.WriteLine("===== Planeten und Marktplätze =====");
+				Console.WriteLine();
+				Console.WriteLine("1.\tPlaneten anzeigen");
+				Console.WriteLine("2.\tProduktgruppen anzeigen");
+				Console.WriteLine("3.\tProdukte anzeigen");
+				Console.WriteLine("4.\tNeuer Planet");
+				Console.WriteLine("5.\tNeue Produktgruppe");
+				Console.WriteLine("6.\tNeues Produkt");
+				Console.WriteLine("7.\tProduktgruppe löschen");
+				Console.WriteLine("8.\tProduktgruppe löschen");
+				Console.WriteLine("9.\t Produkt löschen");
+				Console.WriteLine("10.\tProdukt aktualisieren");
+				Console.WriteLine("0.\tZurück Hauptmenü");
+				Console.Write("Wähle zwischen 0-9: ");
+				var selection = Console.ReadLine();
+
+				switch (selection)
+				{
+					case "0":
+						exitRecieved = true;
+						break;
+					case "1":
+						ListPlanets();
+						break;
+					case "2":
+						ListProductGroups();
+						break;
+					case "3":
+						ListProducts();
+						break;
+					case "4":
+						await AddNewPlanet();
+						break;
+					case "5":
+						await AddProductGroup();
+						break;
+					case "6":
+						await AddProduct();
+						break;
+					case "7":
+						await DeletePlanet();
+						break;
+					case "8":
+						await DeleteProductGroup();
+						break;
+					case "9":
+						await DeleteProduct();
+						break;
+					case "10":
+						await UpdateProduct();
+						break;
+					default:
+						Console.WriteLine("Unbekanntes Kommando.");
+						break;
+				}
+			} while (!exitRecieved);
+
+		}
+
+
+		public async Task AddItemsToDb()
+		{
+			var exitRecieved = false;
+			do
+			{
+				Console.WriteLine("===== Datenbank erweitern =====");
+				Console.WriteLine();
+				Console.WriteLine("1.\tProduktdatei laden");
+				Console.WriteLine("2.\tSpielerdatei laden");
+				Console.WriteLine("3.\tPlanetendatei laden");
+				Console.WriteLine("0.\tZurück Hauptmenü");
+				Console.Write("Wähle zwischen 0-3: ");
+				var selection = Console.ReadLine();
+
+				switch (selection)
+				{
+					case "0":
+						exitRecieved = true;
+						break;
+					case "1":
+						await AssetGenerator.LoadItemFile(AssetGenerator.AssetTypes.Products);
+						break;
+					case "2":
+						await AssetGenerator.LoadItemFile(AssetGenerator.AssetTypes.Players);
+						break;
+					case "3":
+						await AssetGenerator.LoadItemFile(AssetGenerator.AssetTypes.Planets);
+						break;
+					default:
+						Console.WriteLine("Unbekanntes Kommando.");
+						break;
+				}
+			} while (!exitRecieved);
+		}
+
+		
+		public async Task ShowShipMenu()
+		{
+			var exitRecieved = false;
+			do
+			{
+				Console.WriteLine("===== Spieler und Raumschiffe =====");
+				Console.WriteLine();
+				Console.WriteLine("1.\tSpieler anzeigen");
+				Console.WriteLine("2.\tRaumschiffe anzeigen");
+				Console.WriteLine("3.\tSpieler erstellen");
+				Console.WriteLine("4.\tRaumschiff erstellen");
+				Console.WriteLine("5.\tRaumschiff auf die Reise schicken");
+				Console.WriteLine("0.\tZurück Hauptmenü");
+				Console.Write("Wähle zwischen 0-4: ");
+				var selection = Console.ReadLine();
+
+				switch (selection)
+				{
+					case "0":
+						exitRecieved = true;
+						break;
+					case "1":
+						ListPlayers();
+						break;
+					case "2":
+						ListShips();
+						break;
+					case "3":
+						await AddNewPlayer();
+						break;
+					case "4":
+						await AddNewShip();
+						break;
+					case "5":
+						await StartJourny();
+						break;
+					default:
+						Console.WriteLine("Unbekanntes Kommando.");
+						break;
+				}
+			} while (!exitRecieved);
+		}
+
+
+	   
+	   public async Task ShowMenu()
        {
 			var exitRecieved = false;
 			do
 			{
 				var result = "";
 				Console.WriteLine("Hauptmenü");
-				Console.WriteLine("1.  Neuer Planet");
-				Console.WriteLine("2.  Neues Raumschiff Feature");
-				Console.WriteLine("3.  Neue Produktgruppe");
-				Console.WriteLine("4.  Neues Produkt");
-				Console.WriteLine("5.  Planeten anzeigen");
-				Console.WriteLine("6.  Spieler anzeigen");
-				Console.WriteLine("7.  Raumschiffe anzeigen");
-				Console.WriteLine("8.  Produkte anzeigen");
-				Console.WriteLine("9.  Produktgruppen anzeigen");
-				Console.WriteLine("10.  Planeten löschen");
-				Console.WriteLine("11.  Produktgruppe löschen");
-				Console.WriteLine("12. Produkt löschen");
-				Console.WriteLine("13. Produkt aktualisieren");
-                Console.WriteLine("14. Raumschiff erstellen");
-				Console.WriteLine("15. Spieler erstellen");
-				Console.WriteLine("16. Raumschiff auf die Reise schicken");
-				Console.WriteLine("17. Beenden");
+				Console.WriteLine("1.\tPlaneten und Marktplätze");
+				Console.WriteLine("2.\tSpieler und Raumschiffe");
+				Console.WriteLine("3.\tDatenbank erweitern");
+				Console.WriteLine("0.\tBeenden");
 
-				Console.Write("Wähle zwischen 1-16: ");
+				Console.Write("Wähle zwischen 0-2: ");
 				var selection = Console.ReadLine();
-				if(selection=="14")
-					exitRecieved=true;
-		    	if(selection=="1")
-					result = await AddNewPlanet();
-               if(selection=="3")
-					await AddProductGroup();
-			    if(selection=="4")
-					await AddProduct();
-			    if(selection=="5")
-					ListPlanets();
-				if (selection == "6")
-					ListPlayers();
-				if (selection == "7")
-					ListShips();
-				if (selection=="8")
-					ListProducts();
-				if (selection=="9")
-					ListProductGroups();
-			    if(selection=="10")
-					await DeletePlanet();
-			    if(selection=="11")
-					await DeleteProductGroup();
-			    if(selection=="12")
-					await DeleteProduct();
-			    if(selection=="13")
-					await UpdateProduct();
-				if(selection=="14")
-					await AddNewShip();
-				if (selection == "15")
-					await AddNewPlayer();
-				if (selection == "16")
-					await StartJourny();
-				Console.WriteLine(result);
+				switch (selection)
+				{
+					case "0":
+						exitRecieved = true;
+						break;
+					case "1":
+						await ShowPlanetMendu();
+						break;
+					case "2":
+						await ShowShipMenu();
+						break;
+					case "3":
+						await AddItemsToDb();
+						break;
+					default:
+						Console.WriteLine("Unbekanntes Kommando.");
+						break;
+				}
+
 			} while (!exitRecieved);
        }
 

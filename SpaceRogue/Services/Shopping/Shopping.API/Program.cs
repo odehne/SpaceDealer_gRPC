@@ -20,6 +20,7 @@ namespace Cope.SpaceRogue.Shopping.API
 
 	//Start rabbit mq
 	// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+	// docker build -f  C:\git\priv\SpaceDealer\SpaceRogue\Services\Shopping\Shopping.API\Dockerfile --force-rm -t shopping.api  --label cope.spacerogue.shopping.api .
 
 	public static class Factory
 	{

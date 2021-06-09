@@ -8,16 +8,12 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
 using System.IO;
 using System.Net;
 using Cope.SpaceRogue.Galaxy.API.Proto;
 using Cope.SpaceRogue.Infrastructure.Model;
 using Cope.SpaceRogue.Infrastructure.Domain;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
-using Galaxy.API.Application.IntegrationEvents;
-using Cope.SpaceRogue.Galaxy.API.Application.IntegrationEvents;
-using System.Threading;
 
 namespace Cope.SpaceRogue.Galaxy.API
 {
@@ -25,7 +21,10 @@ namespace Cope.SpaceRogue.Galaxy.API
 	{
 
 		//Start rabbit mq
-		// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+		// docker run --rm -it -d --hostname my-rabbit --name some-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+		// docker build -f  C:\git\priv\SpaceDealer\SpaceRogue\Services\Galaxy\Galaxy.API\Dockerfile --force-rm -t galaxy.api  --label cope.spacerogue.galaxy.api .
+		// docker run --rm -it --hostname cope.galaxy.api --name galaxy.api -p 45665:45665 -p 8891:8891 --volume c:\db:/app/db  galaxy.api:latest
+
 		public static AutofacServiceProvider ServiceProvider { get; set; }
 
 		public static IShipRepository ShipRepository => (IShipRepository)ServiceProvider.GetService(typeof(IShipRepository));
@@ -81,7 +80,6 @@ namespace Cope.SpaceRogue.Galaxy.API
 	{
 		static void Main(string[] args)
 		{
-
 			var configuration = GetConfiguration();
 			Log.Logger = CreateSerilogLogger(configuration);
 			Log.Information("Configuring web host ({ApplicationContext})...", AppName);

@@ -1,9 +1,7 @@
-﻿using Cope.SpaceRogue.Fighting.API.Application.IntegrationEvents.Events;
-using Cope.SpaceRogue.Fighting.API.Repositories;
+﻿using Cope.SpaceRogue.Fighting.API.Repositories;
 using MediatR;
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;

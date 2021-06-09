@@ -20,6 +20,8 @@ namespace Cope.SpaceRogue.Travelling.API
 
 	//Start rabbit mq
 	// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+	// docker build -f  C:\git\priv\SpaceDealer\SpaceRogue\Services\Travelling\Travelling.API\Dockerfile --force-rm -t travelling.api  --label cope.spacerogue.travelling.api .
+	// docker run --rm -it --hostname cope.travelling.api --name travelling.api -p 45666:45666 -p 8891:8891 --volume c:\db:/app/db  travelling.api:latest
 
 	public static class Factory
 	{

@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Fighting.API": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    },
+    "Docker (1)": {
+      "commandName": "Docker"
+    }
+  }
+}

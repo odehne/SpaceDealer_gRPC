@@ -20,6 +20,8 @@ namespace Cope.SpaceRogue.Fighting.API
 
 	//Start rabbit mq
 	// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+	// docker build -f  C:\git\priv\SpaceDealer\SpaceRogue\Services\Fighting\Fighting.API\Dockerfile --force-rm -t fighting.api  --label cope.spacerogue.fighting.api .
+	// docker run --rm -it --hostname cope.fighting.api --name fighting.api -p 46444:46444 -p 8491:8491 --volume c:\db:/app/db fighting.api:latest
 
 	public static class Factory
 	{

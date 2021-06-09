@@ -1,5 +1,6 @@
 ﻿using Cope.SpaceRogue.Galaxy.API.Proto;
 using Cope.SpaceRogue.Galaxy.Creator.App;
+using Cope.SpaceRogue.Infrastructure;
 using Galaxy.Creator.App.Model;
 using Grpc.Net.Client;
 using System;
@@ -15,16 +16,24 @@ namespace Galaxy.Creator.App
 {
 	public static class Factory
 	{
+		//Start rabbit mq
+		// docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+		// docker build -f  C:\git\priv\SpaceDealer\SpaceRogue\Services\Galaxy\Galaxy.Creator.App\Dockerfile --force-rm -t galaxy.creator  --label cope.spacerogue.galaxy.creator .
+		// docker run --rm -it --hostname cope.galaxy.creator -e "galaxy_api_grpc_url=http://galaxy.api:8891" --name galaxy.creator galaxy.creator:latest
+
+
 		public static TravelServiceClient TravelApiClient
 		{
 			get
 			{
-				var serverAddress = "http://localhost:8991";
+				var serverAddress = Environment.GetEnvironmentVariable("galaxy_api_grpc_url");
+				if (string.IsNullOrEmpty(serverAddress))
+					serverAddress = "http://localhost:8991";
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
 					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-					serverAddress = "http://localhost:8991";
+					serverAddress = "http://galaxy.api:8991";
 				}
 
 				var channel = GrpcChannel.ForAddress(serverAddress);
@@ -36,12 +45,14 @@ namespace Galaxy.Creator.App
 		{
 			get 
 			{
-				var serverAddress = "http://localhost:8891";
+				var serverAddress = Environment.GetEnvironmentVariable("galaxy_api_grpc_url");
+				if (string.IsNullOrEmpty(serverAddress))
+					serverAddress = "http://localhost:8991";
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
 					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-					serverAddress = "http://localhost:8891";
+					serverAddress = "http://galaxy.api:8891";
 				}
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new PlanetsServiceClient(channel);
@@ -52,12 +63,14 @@ namespace Galaxy.Creator.App
 		{
 			get 
 			{
-				var serverAddress = "http://localhost:8891";
+				var serverAddress = Environment.GetEnvironmentVariable("galaxy_api_grpc_url");
+				if (string.IsNullOrEmpty(serverAddress))
+					serverAddress = "http://localhost:8991";
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
 					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-					serverAddress = "http://localhost:8891";
+					serverAddress = "http://galaxy.api:8891";
 				}
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new MarketPlacesServiceClient(channel);
@@ -176,6 +189,11 @@ namespace Galaxy.Creator.App
 
 			Console.WriteLine("Hit any key to exit");
 			Console.ReadKey();
+		}
+
+		public static string GetAppLocation()
+		{
+			return AppDomain.CurrentDomain.BaseDirectory;
 		}
 	}
 }

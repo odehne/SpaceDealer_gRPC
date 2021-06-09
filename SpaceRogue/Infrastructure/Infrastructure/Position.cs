@@ -4,11 +4,11 @@ namespace Cope.SpaceRogue.Infrastructure
 {
 	public class Position
 	{
-		public double X { get; set; }
-		public double Y { get; set; }
-		public double Z { get; set; }
+		public int X { get; set; }
+		public int Y { get; set; }
+		public int Z { get; set; }
 
-		public Position(double x, double y, double z)
+		public Position(int x, int y, int z)
 		{
 			X = x;
 			Y = y;
@@ -24,7 +24,7 @@ namespace Cope.SpaceRogue.Infrastructure
 			var s = positionString.Split(',');
 			if (s.Length < 2)
 				throw new ArgumentException("String must have a value in the format 'x,y,z'");
-			return new Position(double.Parse(s[0]), double.Parse(s[1]), double.Parse(s[2]));
+			return new Position(int.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]));
 		}
 
 		public override string ToString()
@@ -51,7 +51,7 @@ namespace Cope.SpaceRogue.Infrastructure
 			return Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2) + Math.Pow(v.Z, 2));
 		}
 
-		public static Position Move(Position currentPosition, Position destination, double speed = 1)
+		public static Position Move(Position currentPosition, Position destination, int speed = 1)
 		{
 			return new Position(
 				CalculateNewPosition(currentPosition.X, destination.X, speed),
@@ -60,7 +60,7 @@ namespace Cope.SpaceRogue.Infrastructure
 				);
 		}
 
-		private static double CalculateNewPosition(double currentValue, double destinationValue, double speed = 1)
+		private static int CalculateNewPosition(int currentValue, int destinationValue, int speed = 1)
 		{
 			if (currentValue == destinationValue)
 				return currentValue;
@@ -86,6 +86,15 @@ namespace Cope.SpaceRogue.Infrastructure
 			return (target.X >= target.X - offset | target.X <= target.X + offset |
 					target.Y >= target.Y - offset | target.Y <= target.Y + offset |
 					target.Z >= target.Z - offset | target.Z <= target.Z + offset );
+		}
+
+		public static Position GetRandomSector()
+		{
+			var random = new Random();
+			var rx = random.Next(-500, 500);
+			var ry = random.Next(-500, 500);
+			var rz = random.Next(-500, 500);
+			return new Position(rx, ry, rz);
 		}
 	}
 }

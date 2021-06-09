@@ -1,0 +1,15 @@
+version: '3.4'
+services:
+  galaxy.api:
+
+  fighting.api:
+
+
+  galaxy.creator.app:
+
+
+  shopping.api:
+
+
+  travelling.api:
+

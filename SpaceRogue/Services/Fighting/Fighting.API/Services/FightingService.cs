@@ -13,9 +13,23 @@ namespace Fighting.API.Services
 {
 	public class FightingService : FightService.FightServiceBase
 	{
-		public override Task<FightReply> Attack(AttackRequest request, ServerCallContext context)
+		private readonly IMediator _mediator;
+		private readonly ILogger<FightingService> _logger;
+		private readonly IEventBus _eventBus;
+
+		public FightingService(IMediator mediator, ILogger<FightingService> logger, IEventBus eventBus)
 		{
-			return base.Attack(request, context);
+			_mediator = mediator;
+			_logger = logger;
+			_eventBus = eventBus;
+		}
+
+
+		public async override Task<FightReply> Attack(AttackRequest request, ServerCallContext context)
+		{
+			var attackCommand = new AttackCommand(request.FightId, request.AttackerId, request.DefenderId);
+			var fight = await _mediator.Send(attackCommand);
+			return new FightReply { FightId = fight.ID.ToString(), AttackerId = fight.Attacker.ShipId.ToString() };
 		}
 
 		public override Task<FightReply> Defend(DefendRequest request, ServerCallContext context)

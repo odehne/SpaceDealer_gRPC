@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 {
 
-	public class StartFightCommand : IRequest<string>
+	public class StartFightCommand : IRequest<bool>
 	{
 		[DataMember]
 		public string AttackerShipId { get; set; }
@@ -29,7 +29,7 @@ namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 		}
 	}
 
-	public class StartFightCommandHandler : IRequestHandler<StartFightCommand, string>
+	public class StartFightCommandHandler : IRequestHandler<StartFightCommand, bool>
 	{
 		private readonly IMediator _mediator;
 		private readonly ILogger<StartFightCommandHandler> _logger;
@@ -42,9 +42,8 @@ namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 			_logger = logger;
 		}
 
-		public async Task<string> Handle(StartFightCommand request, CancellationToken cancellationToken)
+		public async Task<bool> Handle(StartFightCommand request, CancellationToken cancellationToken)
 		{
-
 			var attacker = Engine.Galaxy.GetShip(request.AttackerShipId.ToGuid());
 			var defender = Engine.Galaxy.GetShip(request.DefenderShipId.ToGuid());
 			
@@ -60,19 +59,9 @@ namespace Cope.SpaceRogue.Fighting.API.Application.Commands
 			}
 
 			var fight = Engine.Galaxy.AddFight(attacker, defender);
-			var eventMessage = new ShipAttackedIntegrationEvent(fight.ID.ToString(), attacker.ShipId.ToString(), defender.ShipId.ToString());
-			
-			try
-			{
-				_eventBus.Publish(eventMessage);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
-
-				throw;
-			}
-			return fight.ID.ToString();
+			var attackCommand = new AttackCommand(fight.ID.ToString(), attacker.ShipId.ToString(), defender.ShipId.ToString());
+			await _mediator.Send(attackCommand);
+			return true;
 		}
 	}
 }
