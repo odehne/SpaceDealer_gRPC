@@ -32,7 +32,7 @@ namespace Cope.SpaceRogue.Fighting.Application.Queries
             {
                 model.Add(new ShipModel
                 {
-                    ShipId = itm.ID,
+                    ShipId = itm.Id,
                     Name = itm.Name,
                     CurrentSector = new Position(0, 0, 0),
                     DefenceValue = itm.GetAccumulatedDefenceValue(),

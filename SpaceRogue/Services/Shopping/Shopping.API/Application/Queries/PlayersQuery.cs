@@ -41,7 +41,7 @@ namespace Cope.SpaceRogue.Shopping.Application.Queries
 					{
                         var shipModel = new ShipModel
                         {
-                            ID = ship.ID,
+                            ID = ship.Id,
                             Name = ship.Name,
                             PlayerId = player.ID,
                             Capacity = ship.LoadedCapacity

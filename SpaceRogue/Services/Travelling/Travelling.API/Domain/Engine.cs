@@ -1,6 +1,7 @@
 ﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Travelling.API.Domain;
 using Cope.SpaceRogue.Travelling.API.Models;
+using Serilog;
 using System;
 using System.Linq;
 using System.Threading;
@@ -8,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Travelling.API
 {
-	public static class Engine
+	public class Engine
 	{
+
+		private static ILogger _logger = Log.ForContext<Engine>();
 		public static GalaxyModel Galaxy { get; set; }
 		public static Journeys Journeys { get; set; }
 		public static async Task Init()
@@ -19,9 +22,9 @@ namespace Cope.SpaceRogue.Travelling.API
 			await Galaxy.Load();
 		}
 
-		public static Journey AddJourney(Guid shipId, Position sourcePosition, Position currentPosition, Position destinationPosition, DestinationTypes destinationType, int speed = 1)
+		public static Journey AddJourney(ShipModel ship, Position sourcePosition, Position destinationPosition, DestinationTypes destinationType, int speed = 1)
 		{
-			var journey = new Journey(Guid.NewGuid(), shipId, sourcePosition, destinationPosition, currentPosition, destinationType, speed);
+			var journey = new Journey(Guid.NewGuid(), ship, sourcePosition, destinationPosition, destinationType, speed);
 			journey.Arrived += Journey_Arrived;
 			journey.Interrupted += Journey_Interrupted;
 
@@ -31,13 +34,17 @@ namespace Cope.SpaceRogue.Travelling.API
 
 		private static void Journey_Interrupted(Guid journeyId, InterruptionTypes interruptionType, string message, Position newPosition, Guid shipId)
 		{
-			Journeys.RemoveJourney(journeyId);
+			_logger.Information($"{newPosition}: Interrupted by [{interruptionType}].");
+			//Journeys.RemoveJourney(journeyId);
 		}
 
 		private static void Journey_Arrived(Guid journeyId, string message, Position newPosition, Guid shipId)
 		{
-			throw new NotImplementedException();
+			_logger.Information($"Destination reached, removing journey [{journeyId}].");
+			Galaxy.PersistShipsPosition(Galaxy.GetShip(shipId));
+			Journeys.RemoveJourney(journeyId);
 		}
+
 
 		public static void Play()
 		{

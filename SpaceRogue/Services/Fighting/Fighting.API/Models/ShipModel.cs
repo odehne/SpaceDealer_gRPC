@@ -45,7 +45,7 @@ namespace Cope.SpaceRogue.Fighting.API.Models
 		{
 			return new ShipModel
 			{
-				ShipId = entity.ID,
+				ShipId = entity.Id,
 				Name = entity.Name,
 				CurrentSector = new Position(0, 0, 0),
 				DefenceValue = entity.GetAccumulatedDefenceValue(),

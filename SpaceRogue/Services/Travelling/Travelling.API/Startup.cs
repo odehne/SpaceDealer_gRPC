@@ -229,7 +229,7 @@ namespace Cope.SpaceRogue.Travelling.API
         public static IServiceCollection AddCustomIntegrations(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddTransient<IIdentityService, IdentityService>();
+             //services.AddTransient<IIdentityService, IdentityService>();
             //services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(
             //    sp => (DbConnection c) => new IntegrationEventLogService(c));
 

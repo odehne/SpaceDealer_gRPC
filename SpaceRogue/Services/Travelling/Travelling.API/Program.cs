@@ -8,6 +8,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.IO;
@@ -27,7 +28,8 @@ namespace Cope.SpaceRogue.Travelling.API
 	{
 		public static AutofacServiceProvider ServiceProvider { get; set; }
 		public static IMediator Mediator => (IMediator)ServiceProvider.GetRequiredService(typeof(IMediator));
-	}
+
+		}
 
 	public static class AutoMap
 	{
@@ -50,6 +52,7 @@ namespace Cope.SpaceRogue.Travelling.API
 
 	public class Program
 	{
+
 		public static string Namespace = typeof(Startup).Namespace;
 		public static string AppName = Namespace.Substring(Namespace.LastIndexOf('.', Namespace.LastIndexOf('.') - 1) + 1);
 		static async Task Main(string[] args)
@@ -65,9 +68,6 @@ namespace Cope.SpaceRogue.Travelling.API
 
 			var engineThread = new Thread(Engine.Play) { IsBackground = true };
 			engineThread.Start();
-
-			//var command = new StartJourneyCommand { ShipId = Engine.Galaxy.Ships[0].ShipId.ToString(), TargetPosX = 0, TargetPosY = 10, TargetPosZ = 1 };
-			//var p = await Factory.Mediator.Send(command);
 			host.Run();
 		}
 

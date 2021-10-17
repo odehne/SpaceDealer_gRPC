@@ -147,7 +147,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 
 		private Fight SwapDefender(Fight fight, Guid newDefenderId)
 		{
-			if (!fight.Defender.ID.Equals(newDefenderId))
+			if (!fight.Defender.Id.Equals(newDefenderId))
 			{
 				var temp = fight.Attacker;
 				fight.Attacker = fight.Defender;
@@ -157,7 +157,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 		}
 		private Fight SwapAttacker(Fight fight, Guid newAttackerId)
 		{
-			if (!fight.Attacker.ID.Equals(newAttackerId))
+			if (!fight.Attacker.Id.Equals(newAttackerId))
 			{
 				var temp = fight.Attacker;
 				fight.Attacker = fight.Defender;

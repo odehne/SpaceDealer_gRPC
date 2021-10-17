@@ -29,7 +29,7 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
 
         public async Task<Ship> GetItem(Guid id)
         {
-            return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task<List<Ship>> GetItems()
@@ -41,7 +41,7 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
 		{
 			var ship = await Context.Ships
                                         .Include(x=>x.Cargo)
-                                        .FirstOrDefaultAsync(x => x.ID.Equals(shipId));
+                                        .FirstOrDefaultAsync(x => x.Id.Equals(shipId));
 
             if (ship == null)
                 throw new ArgumentException($"Ship with shipId {shipId} not found.");
@@ -64,7 +64,7 @@ namespace Cope.SpaceRogue.Shopping.API.Repositories
         public async Task<bool> LoadCargo(Guid shipId, Guid productId, double amount)
 		{
             var ship = await Context.Ships.Include(x => x.Cargo)
-                                        .FirstOrDefaultAsync(x => x.ID.Equals(shipId));
+                                        .FirstOrDefaultAsync(x => x.Id.Equals(shipId));
             if (ship == null)
                 throw new ArgumentException($"Ship with shipId {shipId} not found.");
 

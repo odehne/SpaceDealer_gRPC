@@ -1,22 +1,20 @@
 ﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Infrastructure.Domain;
-using Cope.SpaceRogue.Infrastructure.Model;
-using Infrastructure.Domain;
+using Cope.SpaceRogue.Travelling.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Travelling.API.Repositories
 {
-    public interface IShipRepository
+	public interface IShipRepository
     {
         GalaxyDbContext Context { get; }
         Task<Ship> GetItem(Guid id);
         Task<List<Ship>> GetItems();
+        Task<bool> UpdatePosition(Ship item);
     }
-
 
 	public class ShipRepository : IShipRepository
     {
@@ -29,7 +27,7 @@ namespace Cope.SpaceRogue.Travelling.API.Repositories
 
         public async Task<Ship> GetItem(Guid id)
         {
-            return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task<Ship> GetItemByName(string name)
@@ -52,5 +50,19 @@ namespace Cope.SpaceRogue.Travelling.API.Repositories
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public async Task<bool> UpdatePosition(Ship item)
+        {
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(item.Id));
+            if (itm != null)
+            {
+        		itm.CurrentPosX = item.CurrentPosX;
+                itm.CurrentPosY = item.CurrentPosY;
+                itm.CurrentPosZ = item.CurrentPosZ;
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+    }
 }

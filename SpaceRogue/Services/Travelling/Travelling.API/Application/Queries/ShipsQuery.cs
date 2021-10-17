@@ -29,7 +29,7 @@ namespace Cope.SpaceRogue.Travelling.Application.Commands
             {
                 model.Add(new ShipModel
                 {
-                    ShipId = itm.ID,
+                    ShipId = itm.Id,
                     Name = itm.Name,
                     CurrentSector = new Position(0, 0, 0),
                     TargetSector = new Position(0, 0, 0),

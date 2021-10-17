@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cope.SpaceRogue.Travelling.Application.Queries;
+using Cope.SpaceRogue.Travelling.API.Application.Commands;
 
 namespace Cope.SpaceRogue.Travelling.API.Models
 {
@@ -28,6 +29,11 @@ namespace Cope.SpaceRogue.Travelling.API.Models
 		{
 			Planets = await _mediator.Send(new PlanetsQuery());
 			Ships = await _mediator.Send(new ShipsQuery());
+		}
+
+		public async Task PersistShipsPosition(ShipModel ship)
+		{
+			await _mediator.Send(new UpdateShipsPositionCommand(ship.ShipId, ship.CurrentSector.X, ship.CurrentSector.Y, ship.CurrentSector.Z));
 		}
 
 		public ShipModel GetShip(Guid shipId)
@@ -58,7 +64,7 @@ namespace Cope.SpaceRogue.Travelling.API.Models
 
 		public void UpdateShipPosition(Guid shipId, Position newPosition)
 		{
-			var ship = Ships.FirstOrDefault(x => x.ShipId.Equals(shipId));
+			var ship = GetShip(shipId);
 			ship.CurrentSector = newPosition;
 		}
 

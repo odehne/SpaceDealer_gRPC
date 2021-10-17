@@ -30,7 +30,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 
         public async Task<Ship> GetItem(Guid id)
         {
-            return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task<Ship> GetItemByName(string name)
@@ -56,7 +56,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 
         public async Task<bool> UpdateShieldvalue(Guid id, int newValue)
         {
-            var ship = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            var ship = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
             if (ship != null)
             {
                 ship.Shields = newValue;
@@ -67,7 +67,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 
         public async Task<bool> UpdateHullvalue(Guid id, int newValue)
         {
-            var ship = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            var ship = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
             if (ship != null)
             {
                 ship.Hull = newValue;
@@ -78,7 +78,7 @@ namespace Cope.SpaceRogue.Fighting.API.Repositories
 
         public async Task<bool> DestroyShip(Guid id)
 		{
-			var ship = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+			var ship = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
 			if (ship != null)
 			{
                 ship.State = Ship.ShipStates.Destroyed;

@@ -34,7 +34,7 @@ namespace Cope.SpaceRogue.Shopping.API.Application.IntegrationEvents
 			_logger.LogInformation("----- Handling integration event: {IntegrationEventId} at {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 			var ship = await _shipRepository.GetItem(@event.ShipId.ToGuid());
 			var currentSector = new Position(@event.PosX, @event.PosY, @event.PosZ);
-			Engine.Galaxy.AddShip(new ShipModel { ID = ship.ID, Name = ship.Name, CurrentSector = currentSector });
+			Engine.Galaxy.AddShip(new ShipModel { ID = ship.Id, Name = ship.Name, CurrentSector = currentSector });
 		}
 	}
 }

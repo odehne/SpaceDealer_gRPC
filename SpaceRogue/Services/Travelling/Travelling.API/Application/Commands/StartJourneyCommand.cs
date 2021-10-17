@@ -90,7 +90,7 @@ namespace Cope.SpaceRogue.Travelling.API.Application.Commands
 
 			theShip.TargetSector = destinationPosition;
 
-			var journey = Engine.AddJourney(request.ShipId.ToGuid(), sourcePosition, destinationPosition, sourcePosition, Domain.DestinationTypes.Planet, theShip.Speed);
+			var journey = Engine.AddJourney(theShip, sourcePosition, destinationPosition, Domain.DestinationTypes.Planet, theShip.Speed);
 			var eventMessage = new JourneyStartedIntegrationEvent
 				{
 					ShipId = theShip.Name,

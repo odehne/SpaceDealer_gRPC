@@ -1,4 +1,5 @@
 ﻿using Cope.SpaceRogue.Infrastructure;
+using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Travelling.API.Models;
 using Infrastructure.Domain;
 using Serilog;
@@ -48,7 +49,7 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 		public delegate void JourneyInterrupted(Guid journeyId, InterruptionTypes interruptionType, string message, Position newPosition, Guid shipId);
 
 		public Guid Id { get; }
-		public Guid ShipId { get; }
+		public ShipModel Ship { get; }
 		public Position Source { get; set; }
 		public Position Destination { get; set; }
 		public Position CurrentPosition { get; set; }
@@ -57,17 +58,17 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 		public PlanetModel NewlyDiscoveredPlanet { get; private set; }
 		public DestinationTypes DestinationType { get; set; }
 
-		public Journey(Guid id, Guid shipId, Position source, Position destination, Position currentPosition, DestinationTypes destinationType, int speed = 1)
+		public Journey(Guid id, ShipModel ship, Position source, Position destination, DestinationTypes destinationType, int speed = 1)
 		{
 			Id = id;
-			ShipId = shipId;
+			Ship = ship;
 			Source = source;
 			Destination = destination;
-			CurrentPosition = currentPosition;
+			CurrentPosition = ship.CurrentSector;
 			Speed = speed;
 			DestinationType = destinationType;
 
-			if (currentPosition == destination)
+			if (CurrentPosition == destination)
 			{
 				Arrived?.Invoke(Id, "Arrived at destination.", CurrentPosition, Id);
 				Speed = 0;
@@ -76,23 +77,24 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 
 		public void Update()
 		{
-			Log.Information($"Updating journey of {ShipId} at {CurrentPosition}.");
+			Log.Verbose($"Updating journey of {Ship.ShipId} at {CurrentPosition}.");
 			if (Speed > 0)
 			{
 				CurrentPosition = Position.Move(CurrentPosition, Destination, Speed);
+				Engine.Galaxy.UpdateShipPosition(Ship.ShipId, CurrentPosition);
 			}
 
 			if (CurrentPosition.Equals(Destination))
 			{
 				CurrentPosition = Destination;
-				Arrived?.Invoke(Id, "Arrived at destination.", CurrentPosition, Id);
+				Arrived?.Invoke(Id, "Arrived at destination.", CurrentPosition, Ship.ShipId);
 			}
 			else
 			{
 				var interruption = CheckInterruptions();
 				if (interruption != null)
 				{
-					Interrupted?.Invoke(Id, interruption.Type, interruption.Message, CurrentPosition, Id);
+					Interrupted?.Invoke(Id, interruption.Type, interruption.Message, CurrentPosition, Ship.ShipId);
 				}
 			}
 		}

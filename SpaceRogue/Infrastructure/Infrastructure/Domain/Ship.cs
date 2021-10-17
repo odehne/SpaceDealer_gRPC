@@ -52,13 +52,16 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 
 
 		[Key]
-		public Guid ID { get; set; }
+		public Guid Id { get; set; }
 		public int Hull { get; set; }
 		public int Shields { get; set; }
 		public string Name { get; set; }
 		public Guid PlayerID { get; set; }
 		public ShipStates State { get; set; }
 		public ShipTypes ShipType { get; set; }
+		public int CurrentPosX { get; set; }
+		public int CurrentPosY { get; set; }
+		public int CurrentPosZ { get; set; }
 
 		public Ship()
 		{
@@ -68,7 +71,7 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 
         public Ship(string name, int hull, int shields, ShipTypes shipType = ShipTypes.CargoVessel)
         {
-            ID = Guid.NewGuid();
+            Id = Guid.NewGuid();
 		    Hull = hull;
             Shields = shields;
             Name = name;

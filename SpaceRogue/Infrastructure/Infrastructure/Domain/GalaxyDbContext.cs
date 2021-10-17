@@ -52,7 +52,7 @@ namespace Cope.SpaceRogue.Infrastructure
 
 			modelBuilder.Entity<Feature>().HasKey(c => c.ID);
 
-			modelBuilder.Entity<Ship>().HasKey(c => c.ID);
+			modelBuilder.Entity<Ship>().HasKey(c => c.Id);
 			modelBuilder.Entity<Ship>().HasMany(c => c.Features);
 			modelBuilder.Entity<Ship>().HasMany(c => c.Cargo);
 

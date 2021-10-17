@@ -34,7 +34,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> AddItem(Ship item)
         {
-            if (item.ID == default)
+            if (item.Id == default)
                 throw new ArgumentException("Ship must have an Id.");
 
             if (string.IsNullOrEmpty(item.Name))
@@ -55,7 +55,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> DeleteItem(Ship item)
         {
-            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(item.Id));
             if (itm != null)
             {
                 Context.Ships.Remove(itm);
@@ -66,7 +66,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<Ship> GetItem(Guid id)
         {
-            return await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            return await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task<Ship> GetItemByName(string name)
@@ -87,7 +87,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> UpdateHull(int id, int newHullValue)
         {
-            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
             if (itm != null)
             {
                 itm.Hull = newHullValue;
@@ -99,7 +99,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> UpdateShields(int id, int newShieldValue)
         {
-            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
             if (itm != null)
             {
                 itm.Shields = newShieldValue;
@@ -111,7 +111,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<bool> UpdateCargo(int id, List<Payload> cargo)
         {
-            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(id));
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(id));
             if (itm != null)
             {
                 itm.Cargo = cargo;
@@ -124,7 +124,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
 
         public async Task<Ship> UpdateItem(Ship item)
         {
-            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.ID.Equals(item.ID));
+            var itm = await Context.Ships.FirstOrDefaultAsync(x => x.Id.Equals(item.Id));
             if (itm != null)
             {
                 itm.Name = item.Name;
@@ -132,6 +132,9 @@ namespace Cope.SpaceRogue.Galaxy.API.Repositories
                 itm.Features = item.Features;
                 itm.Hull = item.Hull;
                 itm.Shields = item.Shields;
+                itm.CurrentPosX = item.CurrentPosX;
+                itm.CurrentPosY = item.CurrentPosY;
+                itm.CurrentPosZ = item.CurrentPosZ;
                 await Context.SaveChangesAsync();
             }
             return item;

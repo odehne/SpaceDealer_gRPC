@@ -47,7 +47,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		{
 			var ship = new Ship()
 			{
-				ID = request.Id.ToGuid(),
+				Id = request.Id.ToGuid(),
 				Name = request.Name,
 				Hull = request.Hull,
 				Shields = request.Shields,
@@ -58,7 +58,7 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 
 			var eventMessage = new ShipCreatedIntegrationEvent
 			{
-				ShipId = ship.ID.ToString(),
+				ShipId = ship.Id.ToString(),
 				Name = ship.Name,
 				Shields = ship.Shields,
 				Hull = ship.Hull,
