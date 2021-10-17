@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using static Cope.SpaceRogue.Infrastructure.Domain.Ship;
 
 namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 {
@@ -25,6 +26,8 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public int Shields { get; set; }
 		[DataMember]
 		public int Hull { get; set; }
+		[DataMember]
+		public ShipTypes ShipType { get; set; }
 	}
 
 	public class AddShipCommandHandler : IRequestHandler<AddShipCommand, bool>
@@ -48,7 +51,8 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 				Name = request.Name,
 				Hull = request.Hull,
 				Shields = request.Shields,
-				PlayerID = request.PlayerId.ToGuid()
+				PlayerID = request.PlayerId.ToGuid(),
+				ShipType = request.ShipType
 			};
 			var b = await _repository.AddItem(ship);
 

@@ -41,36 +41,11 @@ namespace Traveling.API.Services
 
 		public async override Task<StartTravelReply> StartTravel(StartTravelRequest request, ServerCallContext context)
 		{
-			var command = new StartJourneyCommand { ShipId = request.ShipId, 
-													TargetPosX = request.TargetPosX, 
-													TargetPosY = request.TargetPosY, 
-													TargetPosZ = request.TargetPosZ };
+			var command = new StartJourneyCommand (request.ShipId, request.CurrentPosX, request.CurrentPosY, 
+													request.CurrentPosZ, request.TargetPosX, 
+													request.TargetPosY, request.TargetPosZ);
 
 			var reply = await _mediator.Send(command);
-
-			if (reply)
-			{
-				var eventMessage = new JourneyStartedIntegrationEvent
-				{
-					ShipId = request.ShipId,
-					TargetPosX = request.TargetPosX,
-					TargetPosY = request.TargetPosY,
-					TargetPosZ = request.TargetPosZ
-				};
-
-				try
-				{
-					_eventBus.Publish(eventMessage);
-				}
-				catch (Exception ex)
-				{
-					_logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName}", eventMessage.Id, Program.AppName);
-
-					throw;
-				}
-
-			}
-
 			return new StartTravelReply { OK = reply, Message = "Journey started." };
 		}
 	}

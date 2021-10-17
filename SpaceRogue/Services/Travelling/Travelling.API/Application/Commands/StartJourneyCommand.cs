@@ -26,14 +26,27 @@ namespace Cope.SpaceRogue.Travelling.API.Application.Commands
 		[DataMember]
 		public int TargetPosZ { get; set; }
 
+		[DataMember]
+		public int CurrentPosX { get; set; }
+
+		[DataMember]
+		public int CurrentPosY { get; set; }
+
+		[DataMember]
+		public int CurrentPosZ { get; set; }
+
 		public StartJourneyCommand()
 		{
 
 		}
 
-		public StartJourneyCommand(string shipId, int targetX, int targetY, int targetZ)
+		public StartJourneyCommand(string shipId, int currentX, int currentY, int currentZ, int targetX, int targetY, int targetZ)
 		{
 			ShipId = shipId;
+			CurrentPosX = currentX;
+			CurrentPosY = currentY;
+			CurrentPosZ = currentZ;
+			   
 			TargetPosX = targetX;
 			TargetPosY = targetY;
 			TargetPosZ = targetZ;
@@ -55,33 +68,41 @@ namespace Cope.SpaceRogue.Travelling.API.Application.Commands
 		public async Task<bool> Handle(StartJourneyCommand request, CancellationToken cancellationToken)
 		{
 
+			var sourcePosition = new Position(request.CurrentPosX, request.CurrentPosY, request.CurrentPosZ);
+			var destinationPosition = new Position(request.TargetPosX, request.TargetPosY, request.TargetPosZ);
+			
 			var theShip = Engine.Galaxy.Ships.FirstOrDefault(x => x.ShipId.Equals(request.ShipId.ToGuid()));
-			var targetPosition = new Position(request.TargetPosX, request.TargetPosY, request.TargetPosZ);
-			var targetPlanet = Engine.Galaxy.Planets.FirstOrDefault(x => x.Sector.Equals(targetPosition));
-			var targetShip = Engine.Galaxy.Ships.FirstOrDefault(x => x.CurrentSector.Equals(targetPosition));
+			var targetPlanet = Engine.Galaxy.Planets.FirstOrDefault(x => x.Sector.Equals(destinationPosition));
+			var targetShip = Engine.Galaxy.Ships.FirstOrDefault(x => x.CurrentSector.Equals(destinationPosition));
+			var targetObjectName = "";
 
 			if (targetPlanet != null)
 			{
+				targetObjectName = targetPlanet.Name;
 				_logger.LogInformation($"Travel to planet [{targetPlanet.Name}] started.");
 			}
+
 			if (targetShip != null)
 			{
 				_logger.LogInformation($"Rescue missing to ship [{targetShip.Name}] started.");
+				targetObjectName = targetShip.Name;
 			}
 
-			theShip.TargetSector = targetPosition;
+			theShip.TargetSector = destinationPosition;
 
+			var journey = Engine.AddJourney(request.ShipId.ToGuid(), sourcePosition, destinationPosition, sourcePosition, Domain.DestinationTypes.Planet, theShip.Speed);
 			var eventMessage = new JourneyStartedIntegrationEvent
 				{
-					ShipId = request.ShipId,
+					ShipId = theShip.Name,
 					TargetPosX = request.TargetPosX,
 					TargetPosY = request.TargetPosY,
-					TargetPosZ = request.TargetPosZ
+					TargetPosZ = request.TargetPosZ,
+					TargetObjectName = targetPlanet.Name
 				};
 
 			try
 			{
-				_eventBus.Publish(eventMessage);
+				_eventBus.Publish(eventMessage); 
 			}
 			catch (Exception ex)
 			{

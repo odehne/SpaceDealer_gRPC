@@ -1,6 +1,7 @@
 ﻿using Cope.SpaceRogue.Infrastructure;
 using Cope.SpaceRogue.Infrastructure.Domain;
 using Cope.SpaceRogue.Infrastructure.Model;
+using Infrastructure.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace Cope.SpaceRogue.Travelling.API.Repositories
         Task<List<Ship>> GetItems();
     }
 
-    public class ShipRepository : IShipRepository
+
+	public class ShipRepository : IShipRepository
     {
         public GalaxyDbContext Context { get; }
 

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Galaxy.API.Repositories
 {
+
     public interface IShipRepository
     {
         GalaxyDbContext Context { get; }

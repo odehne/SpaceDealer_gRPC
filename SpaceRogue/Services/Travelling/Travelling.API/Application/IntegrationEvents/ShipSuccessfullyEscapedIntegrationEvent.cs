@@ -44,7 +44,7 @@ namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 			{
 				_logger.LogInformation("----- Handling integration event: {IntegrationEventId} at {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 				var targetSector = new Position(@event.CurrentPosX + 1, @event.CurrentPosY + 1, @event.CurrentPosZ +1);
-				var startJourneyCommand = new StartJourneyCommand(@event.ShipId, (int)targetSector.X, (int)targetSector.Y, (int)targetSector.Z);
+				var startJourneyCommand = new StartJourneyCommand(@event.ShipId, @event.CurrentPosX, @event.CurrentPosY, @event.CurrentPosZ, targetSector.X, targetSector.Y, targetSector.Z);
 				await _mediator.Send(startJourneyCommand);
 			}
 		}

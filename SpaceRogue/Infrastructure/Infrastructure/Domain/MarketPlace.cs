@@ -44,5 +44,8 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 				throw new InvalidEntityStateException(this, $"Postchecks failed.");
 		}
 
+
+
+
 	}
 }

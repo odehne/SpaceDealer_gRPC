@@ -17,9 +17,12 @@ message Empty
 message StartTravelRequest
 { 
 	string ShipId = 1;
-	int32 TargetPosX = 2;
-	int32 TargetPosY = 3;
-	int32 TargetPosZ = 4;
+	int32 CurrentPosX = 2;
+	int32 CurrentPosY = 3;
+	int32 CurrentPosZ = 4;
+	int32 TargetPosX = 5;
+	int32 TargetPosY = 6;
+	int32 TargetPosZ = 7;
 }
 
 message StartTravelReply {

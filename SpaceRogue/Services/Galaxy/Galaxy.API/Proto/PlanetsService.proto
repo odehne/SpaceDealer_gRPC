@@ -110,6 +110,7 @@ message GetPlayerReply {
 	repeated string ShipIds = 3;
 	double Credits = 4;
 	int32 PlayerType = 5;
+	GetPlanetReply HomePlanet = 6;
 }
 
 message GetPlayerRequest {
@@ -149,8 +150,10 @@ message GetShipReply {
 	int32 Hull = 2;
 	int32 Shields = 3;
 	string Name = 4;
-	repeated GetFeatureReply Features = 5;
-	repeated GetPayloadReply Payload = 6;
+	int32 ShipType = 5;
+	string PlayerId = 6;
+	repeated GetFeatureReply Features = 7;
+	repeated GetPayloadReply Payload = 8;
 }
 
 message AddShipRequest {
@@ -159,6 +162,7 @@ message AddShipRequest {
 	string PlayerId = 3;
 	int32 Shields = 4;
 	int32 Hull = 5;
+	int32 ShipType = 6;
 }
 
 message UpdateShipRequest {

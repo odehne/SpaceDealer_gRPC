@@ -22,18 +22,18 @@ namespace Galaxy.Creator.App
 		// docker run --rm -it --hostname cope.galaxy.creator -e "galaxy_api_grpc_url=http://galaxy.api:8891" --name galaxy.creator galaxy.creator:latest
 
 
-		public static TravelServiceClient TravelApiClient
+		public static TravelServiceClient TravellingApiClient
 		{
 			get
 			{
 				var serverAddress = Environment.GetEnvironmentVariable("galaxy_api_grpc_url");
 				if (string.IsNullOrEmpty(serverAddress))
-					serverAddress = "http://localhost:8991";
+					serverAddress = "http://localhost:50991";
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
 					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-					serverAddress = "http://galaxy.api:8991";
+					serverAddress = "http://travelling.api:50991";
 				}
 
 				var channel = GrpcChannel.ForAddress(serverAddress);
@@ -47,12 +47,12 @@ namespace Galaxy.Creator.App
 			{
 				var serverAddress = Environment.GetEnvironmentVariable("galaxy_api_grpc_url");
 				if (string.IsNullOrEmpty(serverAddress))
-					serverAddress = "http://localhost:8991";
+					serverAddress = "http://localhost:8892";
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
 					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-					serverAddress = "http://galaxy.api:8891";
+					serverAddress = "http://galaxy.api:8892";
 				}
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new PlanetsServiceClient(channel);
@@ -65,12 +65,12 @@ namespace Galaxy.Creator.App
 			{
 				var serverAddress = Environment.GetEnvironmentVariable("galaxy_api_grpc_url");
 				if (string.IsNullOrEmpty(serverAddress))
-					serverAddress = "http://localhost:8991";
+					serverAddress = "http://localhost:8892";
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 				{
 					// The following statement allows you to call insecure services. To be used only in development environments.
 					AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-					serverAddress = "http://galaxy.api:8891";
+					serverAddress = "http://galaxy.api:8892";
 				}
 				var channel = GrpcChannel.ForAddress(serverAddress);
 				return new MarketPlacesServiceClient(channel);
@@ -120,6 +120,22 @@ namespace Galaxy.Creator.App
 					Id = pg.Id,
 					Name = pg.Name
 				};
+
+				model.Products = new List<ProductModel>();
+				foreach (var p in pg.Products)
+				{
+					var product = new ProductModel
+					{
+						Id = p.Id,
+						Name = p.Name,
+						Price = p.PricePerUnit,
+						Rarity = p.Rarity,
+						Size = p.SizeInUnits,
+						PricePerUnit = p.PricePerUnit
+					};
+					model.Products.Add(product);
+				}
+
 				ProductGroups.Add(model);
 			}
 
@@ -134,7 +150,8 @@ namespace Galaxy.Creator.App
 					Name = p.Name,
 					Price = p.PricePerUnit,
 					Rarity = p.Rarity,
-					Size = p.SizeInUnits
+					Size = p.SizeInUnits,
+					PricePerUnit = p.PricePerUnit
 				};
 				Products.Add(model);
 			}
@@ -149,7 +166,8 @@ namespace Galaxy.Creator.App
 					Id = ship.Id,
 					Name = ship.Name,
 					Hull = ship.Hull,
-					Shields = ship.Shields
+					Shields = ship.Shields,
+					PlayerId = ship.PlayerId
 				};
 				foreach (var feat in ship.Features)
 				{
@@ -167,7 +185,15 @@ namespace Galaxy.Creator.App
 				{
 					Id = player.Id,
 					Name = player.Name,
-					Credits = player.Credits
+					Credits = player.Credits,
+					PlayerType = player.PlayerType,
+					HomePlanet = new PlanetModel() 
+										{ 
+											Id = player.HomePlanet.Id, 
+											Name = player.HomePlanet.Name, 
+											MarketId = player.HomePlanet.MarketPlaceId, 
+											Sector = new Position(player.HomePlanet.PosX, player.HomePlanet.PosY, player.HomePlanet.PosZ) 
+										}
 				};
 				foreach (var shipId in player.ShipIds)
 				{
@@ -176,6 +202,26 @@ namespace Galaxy.Creator.App
 				Players.Add(model);
 			}
 		}
+
+
+
+		public static double CalculatePriceDiff(double orgPrice, int percentValue)
+		{
+			var newPrice = 0.0;
+			if (percentValue == 100)
+				return orgPrice;
+
+			if (percentValue > 0)
+			{
+				newPrice = ((orgPrice * percentValue) / 100) + orgPrice;
+			}
+			else
+			{
+				newPrice = orgPrice - ((orgPrice * (percentValue * -1))) / 100;
+			}
+			return newPrice;
+		}
+
 	}
 
 	public class Program
@@ -183,7 +229,18 @@ namespace Galaxy.Creator.App
 		static async Task Main(string[] args)
 		{
 			await GalaxyModel.Load();
-						
+
+			//var ship = await Factory.PlanetsApiClient.GetShipAsync(new GetShipRequest { Id = "1fb93d11-a8f6-425d-a197-d1be696bfb02" });
+			//var planet = await Factory.PlanetsApiClient.GetPlanetAsync(new GetPlanetRequest { Id = "75e78e83-505e-4df6-9cb9-e37546627f92" });
+			//var journey = await Factory.TravellingApiClient.StartTravelAsync(new Cope.SpaceRogue.Travelling.API.Proto.StartTravelRequest
+			//{
+			//	ShipId = ship.Id,
+			//	TargetPosX = planet.PosX,
+			//	TargetPosY = planet.PosY,
+			//	TargetPosZ = planet.PosZ
+			//});
+			//Console.WriteLine(journey.Message);
+
 			var menu = new Menu();
 			await menu.ShowMenu();
 

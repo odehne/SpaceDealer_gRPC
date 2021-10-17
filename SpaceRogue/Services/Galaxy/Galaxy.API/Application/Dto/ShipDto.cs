@@ -9,6 +9,8 @@ namespace Cope.SpaceRogue.Galaxy.API.Application.Commands
 		public int Hull { get; set; }
 		public int Shields { get; set; }
 		public List<FeatureDto> Features { get; set; }
+		public int ShipType { get; set; }
+		public string PlayerID { get; set; }
 
 	}
 }

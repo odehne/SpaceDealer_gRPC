@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cope.SpaceRogue.Galaxy.API.Proto;
@@ -89,10 +87,13 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				Console.WriteLine();
 				Console.WriteLine("1.\tProduktdatei laden");
 				Console.WriteLine("2.\tSpielerdatei laden");
-				Console.WriteLine("3.\tPlanetendatei laden");
+				Console.WriteLine("3.\tShiffe und Satelliten laden");
+				Console.WriteLine("4.\tPlanetendatei laden");
 				Console.WriteLine("0.\tZurück Hauptmenü");
 				Console.Write("Wähle zwischen 0-3: ");
 				var selection = Console.ReadLine();
+
+				var generator = new AssetGenerator();
 
 				switch (selection)
 				{
@@ -100,13 +101,16 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 						exitRecieved = true;
 						break;
 					case "1":
-						await AssetGenerator.LoadItemFile(AssetGenerator.AssetTypes.Products);
+						await generator.LoadItemFile(AssetGenerator.AssetTypes.Products);
 						break;
 					case "2":
-						await AssetGenerator.LoadItemFile(AssetGenerator.AssetTypes.Players);
+						await generator.LoadItemFile(AssetGenerator.AssetTypes.Players);
 						break;
 					case "3":
-						await AssetGenerator.LoadItemFile(AssetGenerator.AssetTypes.Planets);
+						await generator.LoadItemFile(AssetGenerator.AssetTypes.Ships);
+						break;
+					case "4":
+						await generator.LoadItemFile(AssetGenerator.AssetTypes.Planets);
 						break;
 					default:
 						Console.WriteLine("Unbekanntes Kommando.");
@@ -128,8 +132,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				Console.WriteLine("3.\tSpieler erstellen");
 				Console.WriteLine("4.\tRaumschiff erstellen");
 				Console.WriteLine("5.\tRaumschiff auf die Reise schicken");
+				Console.WriteLine("6.\tAlle Raumschiffe auf die Reise schicken");
 				Console.WriteLine("0.\tZurück Hauptmenü");
-				Console.Write("Wähle zwischen 0-4: ");
+				Console.Write("Wähle zwischen 0-6: ");
 				var selection = Console.ReadLine();
 
 				switch (selection)
@@ -151,6 +156,9 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 						break;
 					case "5":
 						await StartJourny();
+						break;
+					case "6":
+						await StartMassiveJourneys();
 						break;
 					default:
 						Console.WriteLine("Unbekanntes Kommando.");
@@ -197,6 +205,38 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			} while (!exitRecieved);
        }
 
+		private async Task StartMassiveJourneys()
+		{
+			foreach (var ship in GalaxyModel.Ships)
+			{
+				PlanetModel currentPlanet = GetPlayersHomePlanet(ship.PlayerId);
+				var destination = GalaxyModel.GetRandomPlanet();
+				var journey = await Factory.TravellingApiClient.StartTravelAsync(new Travelling.API.Proto.StartTravelRequest
+				{
+					ShipId = ship.Id,
+					CurrentPosX = currentPlanet.Sector.X,
+					CurrentPosY = currentPlanet.Sector.Y,
+					CurrentPosZ = currentPlanet.Sector.Z,
+					TargetPosX = destination.Sector.X,
+					TargetPosY = destination.Sector.Y,
+					TargetPosZ = destination.Sector.Z
+				});
+			
+				if (journey.OK)
+					Console.WriteLine($"{ship} --> {destination}");
+			}
+		}
+
+		private PlanetModel GetPlayersHomePlanet(string playerId)
+		{
+			var p = GalaxyModel.Players.FirstOrDefault(x => x.Id.Equals(playerId));
+			if(p!=null)
+			{
+				return p.HomePlanet;
+			}
+			return null;
+		}
+
 		private async Task StartJourny()
 		{
 			Console.Write("ID des Raumschiffs: ");
@@ -220,7 +260,7 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 				return;
 			}
 
-			var journey = await Factory.TravelApiClient.StartTravelAsync(new Travelling.API.Proto.StartTravelRequest
+			var journey = await Factory.TravellingApiClient.StartTravelAsync(new Travelling.API.Proto.StartTravelRequest
 			{
 				ShipId = ship.Id,
 				TargetPosX = planet.PosX,
@@ -463,12 +503,12 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 
 			foreach (var product in pgDemands.Products)
 			{
-				var price = CalculatePriceDiff(product.PricePerUnit, 15);
+				var price = GalaxyModel.CalculatePriceDiff(product.PricePerUnit, 15);
 				demands.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, Price = price, Title = product.Name });
 			}
 			foreach (var product in pgOfferings.Products)
 			{
-				var price = CalculatePriceDiff(product.PricePerUnit, 15);
+				var price = GalaxyModel.CalculatePriceDiff(product.PricePerUnit, 15);
 				offerings.CatalogItems.Add(new AddCatalogItemRequest { Id = Guid.NewGuid().ToString(), ProductId = product.Id, Price = price, Title = product.Name });
 			}
 
@@ -485,25 +525,6 @@ namespace Cope.SpaceRogue.Galaxy.Creator.App
 			return $"{planetReply.Id} erstellt.";
 
 		}
-
-
-		private double CalculatePriceDiff(double orgPrice, int percentValue)
-		{
-			var newPrice = 0.0;
-			if (percentValue == 100)
-				return orgPrice;
-
-			if (percentValue > 0)
-			{
-				newPrice = ((orgPrice * percentValue) / 100) + orgPrice;
-			}
-			else
-			{
-				newPrice = orgPrice - ((orgPrice* (percentValue * -1))) / 100;
-			}
-			return newPrice;
-		}
-
 
 
 		private async Task<GetProductGroupReply> SelectProductGroup()

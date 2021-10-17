@@ -30,6 +30,18 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 			Destroyed
 		}
 
+		public enum ShipTypes
+		{
+			CargoVessel,
+			PirateShip,
+			Satelite,
+			Freighter,
+			Warship,
+			SpaceStation,
+			Drone,
+			Probe
+		}
+
 		public const int BASE_DEFENCE_VALUE = 1;
 		public const int BASE_ATTACK_VALUE = 1;
 		public const int BASE_SPEED_VALUE = 1;
@@ -46,6 +58,7 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 		public string Name { get; set; }
 		public Guid PlayerID { get; set; }
 		public ShipStates State { get; set; }
+		public ShipTypes ShipType { get; set; }
 
 		public Ship()
 		{
@@ -53,12 +66,13 @@ namespace Cope.SpaceRogue.Infrastructure.Domain
 			Cargo = new List<Payload>();
 		}
 
-        public Ship(string name, int hull, int shields)
+        public Ship(string name, int hull, int shields, ShipTypes shipType = ShipTypes.CargoVessel)
         {
             ID = Guid.NewGuid();
 		    Hull = hull;
             Shields = shields;
             Name = name;
+			ShipType = shipType;
         }
 
 		public int GetAccumulatedAttackValue()

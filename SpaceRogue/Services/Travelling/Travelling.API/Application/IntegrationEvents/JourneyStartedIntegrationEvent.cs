@@ -11,6 +11,7 @@ namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 		public int TargetPosX { get; set; }
 		public int TargetPosY { get; set; }
 		public int TargetPosZ { get; set; }
+		public string TargetObjectName { get; set; }
 	}
 
 	public class JourneyStartedIntegrationEventHandler : IIntegrationEventHandler<JourneyStartedIntegrationEvent>

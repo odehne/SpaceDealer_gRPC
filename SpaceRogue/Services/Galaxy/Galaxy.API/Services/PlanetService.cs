@@ -54,7 +54,8 @@ namespace Cope.SpaceRogue.Galaxy.API.Services
 				Name = request.Name,
 				Shields = request.Shields,
 				Hull = request.Hull,
-				PlayerId = request.PlayerId
+				PlayerId = request.PlayerId,
+				ShipType = (SpaceRogue.Infrastructure.Domain.Ship.ShipTypes)request.ShipType
 			};
 			var b = await _mediator.Send(command);
 			return new ShipOkReply { Ok = b };

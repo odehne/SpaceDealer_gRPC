@@ -1,17 +1,27 @@
 ﻿using Cope.SpaceRogue.Infrastructure;
+using Cope.SpaceRogue.Travelling.API.Models;
 using Infrastructure.Domain;
 using Serilog;
 using System;
 
 namespace Cope.SpaceRogue.Travelling.API.Domain
 {
-
-	public enum InterruptionType
+	public enum DestinationTypes
 	{
-		AttackedByPirates = 0,
-		OtherShipWantsToTrade = 1,
-		DistressSignal = 2,
-		DiscoveredNewPlanet = 3
+		Planet,
+		SpaceShip,
+		SpaceStation,
+		Astroid
+	}
+
+	public enum InterruptionTypes
+	{
+		AttackedByPirates = 1,
+		AnotherShipWantsToTrade = 2,
+		DistressCall = 3,
+		DiscoveredNewPlanet = 4,
+		DiscoveredWreck = 5,
+		DiscoveredProbe = 6
 	}
 
 	public enum JourneyStates
@@ -33,10 +43,9 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 	public class Journey
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, Position newPosition);
+		public delegate void ArrivedAtDestination(Guid journeyId, string message, Position newPosition, Guid shipId);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Position newPosition);
-
+		public delegate void JourneyInterrupted(Guid journeyId, InterruptionTypes interruptionType, string message, Position newPosition, Guid shipId);
 
 		public Guid Id { get; }
 		public Guid ShipId { get; }
@@ -45,9 +54,10 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 		public Position CurrentPosition { get; set; }
 		public int Speed { get; set; }
 		public JourneyStates State { get; set; }
-		public object NewlyDiscoveredPlanet { get; private set; }
+		public PlanetModel NewlyDiscoveredPlanet { get; private set; }
+		public DestinationTypes DestinationType { get; set; }
 
-		public Journey(Guid id, Guid shipId, Position source, Position destination, Position currentPosition, int speed = 1)
+		public Journey(Guid id, Guid shipId, Position source, Position destination, Position currentPosition, DestinationTypes destinationType, int speed = 1)
 		{
 			Id = id;
 			ShipId = shipId;
@@ -55,9 +65,13 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 			Destination = destination;
 			CurrentPosition = currentPosition;
 			Speed = speed;
+			DestinationType = destinationType;
 
 			if (currentPosition == destination)
+			{
+				Arrived?.Invoke(Id, "Arrived at destination.", CurrentPosition, Id);
 				Speed = 0;
+			}
 		}
 
 		public void Update()
@@ -71,33 +85,52 @@ namespace Cope.SpaceRogue.Travelling.API.Domain
 			if (CurrentPosition.Equals(Destination))
 			{
 				CurrentPosition = Destination;
-				Arrived?.Invoke("Arrived at destination.", CurrentPosition);
+				Arrived?.Invoke(Id, "Arrived at destination.", CurrentPosition, Id);
 			}
 			else
 			{
 				var interruption = CheckInterruptions();
 				if (interruption != null)
 				{
-					Interrupted?.Invoke(interruption.Type, interruption.Message, CurrentPosition);
+					Interrupted?.Invoke(Id, interruption.Type, interruption.Message, CurrentPosition, Id);
 				}
 			}
 		}
 
-		private Interruption CheckInterruptions()
+		private InterruptionBase CheckInterruptions()
 		{
 			var roll = SimpleDiceRoller.Roll();
 			switch (roll)
 			{
 				case 6:
-					State = JourneyStates.UnderAttack;
-					//EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector, null);
-					return new Interruption(InterruptionType.AttackedByPirates, $"Ein Piratenschiff, die [NAME] hat uns erfasst! Wir werden angegriffen!");
 				case 9:
-					State = JourneyStates.FoundNewPlanet;
-					return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt [NAME] hat uns erfasst! Wir werden angegriffen!");
 				case 3:
-					var randomShipName = "USS Gauntlet";
-					return new Interruption(InterruptionType.DistressSignal, $"Wir haben einen Notruf von der {randomShipName} erhalten.");
+					return GetRandomDiscovery();
+			}
+
+			return null;
+		}
+
+		private InterruptionBase GetRandomDiscovery()
+		{
+			var randomDiscovery = SimpleDiceRoller.Roll(DiceType.d6);
+			var randomShipName = "USS Gauntlet";
+			var interruptionType = (InterruptionTypes)randomDiscovery;
+
+			switch (interruptionType)
+			{
+				case InterruptionTypes.AttackedByPirates:
+					return new AttackedByPiratesInterruption($"Wir werden vom Piratenshiff {randomShipName} angegriffen.");
+				case InterruptionTypes.DiscoveredNewPlanet:
+					return new DiscoveredNewPlanetInterruption( $"Wir haben einen Notruf von der {randomShipName} erhalten.");
+				case InterruptionTypes.DiscoveredProbe:
+					return new DiscoveredProbeInterruption($"Wir haben einen Notruf von der {randomShipName} erhalten.");
+				case InterruptionTypes.DiscoveredWreck:
+					return new DiscoveredWreckInterruption( $"Wir haben einen Notruf von der {randomShipName} erhalten.");
+				case InterruptionTypes.DistressCall:
+					return new DistresscallInterruption( $"Wir haben einen Notruf von der {randomShipName} erhalten.");
+				case InterruptionTypes.AnotherShipWantsToTrade:
+					return new AnotherShipWantsToTradeInterruption($"Wir haben einen Notruf von der {randomShipName} erhalten.");
 			}
 
 			return null;

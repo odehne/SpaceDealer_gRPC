@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\GalaxyRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Proto\MarketPlacesService.proto" />
     <None Remove="Proto\PlanetsService.proto" />
     <None Remove="Proto\PlayersService.proto" />

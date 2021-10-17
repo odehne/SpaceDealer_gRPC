@@ -24,7 +24,7 @@ namespace Cope.SpaceRogue.Fighting.API
 
 		private static void Update()
 		{
-			//TODO: Add shopping updates here
+			//TODO: Add fighting updates here
 		}
 	}
 }
