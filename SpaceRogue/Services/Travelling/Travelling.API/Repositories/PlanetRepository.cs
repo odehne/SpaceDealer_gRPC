@@ -14,6 +14,8 @@ namespace Cope.SpaceRogue.Travelling.API.Repositories
         GalaxyDbContext Context { get; }
         Task<Planet> GetItem(Guid id);
         Task<List<Planet>> GetItems();
+        Task<Planet> GetPlanetByPosition(int posX, int posY, int pos);
+
     }
 
     public class PlanetRepository : IPlanetRepository
@@ -43,5 +45,11 @@ namespace Cope.SpaceRogue.Travelling.API.Repositories
 					.FirstOrDefaultAsync(x => x.ID.Equals(id));
         }
 
-	}
+        public async Task<Planet> GetPlanetByPosition(int posX, int posY, int posZ)
+        {
+            return await Context.Planets
+                   .Include(x => x.Market)
+                   .FirstOrDefaultAsync(x => x.PosX == posX & x.PosY == posY & x.PosZ == posZ);
+        }
+    }
 }

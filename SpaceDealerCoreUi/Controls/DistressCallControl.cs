@@ -7,16 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SpaceDealerService;
 
 namespace SpaceDealerCoreUi.Controls
 {
 	public partial class DistressCallControl : UserControl
 	{
-		public void SetMessage(string imagePath, string headline, string subHeadline)
+		private Coordinates _position { get; set; }
+		public void SetMessage(string imagePath, string headline, string subHeadline, Coordinates position)
 		{
 			this.pictureBox1.Load(imagePath);
 			lblHeadline.Text = headline;
 			lblSubHeadline.Text = subHeadline;
+			_position = position;
 		}
 
 		public DistressCallControl()
@@ -28,5 +31,21 @@ namespace SpaceDealerCoreUi.Controls
 		{
 
 		}
-	}
+
+        private async void btnHelp_Click(object sender, EventArgs e)
+        {
+			//BattleReply result = await GameProxy.BattleAttack(Program.CurrentPlayer.Name, Program.CurrentShip.ShipName);
+			//lblSubHeadline.Text += result.Message + "\n";
+			var result = await GameProxy.CruiseToLocation(Program.CurrentPlayer.Name, Program.CurrentShip.ShipName, _position);
+			if (result == true)
+			{
+				
+			}
+		}
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

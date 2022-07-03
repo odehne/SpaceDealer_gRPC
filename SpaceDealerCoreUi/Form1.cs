@@ -148,7 +148,7 @@ namespace SpaceDealerCoreUi
 		public async void LoadPlayer()
 		{
 			var frm = new frmPlayerName();
-			frm.SetPlayerName("");
+			frm.SetPlayerName("Thrawn");
 			frm.ShowDialog();
 			var name = frm.GetPlayerName();
 			Program.CurrentPlayer = await GameProxy.GetPlayer(name);
@@ -199,7 +199,7 @@ namespace SpaceDealerCoreUi
 			ClearMessagePanel();
 			var position = ship.Cruise.CurrentSector.ToPosition();
 			var mc1 = new DistressCallControl();
-			mc1.SetMessage(Program.PeopleAssets.GetRandomAsset().Path, $"Roter Alarm!", $"Wir machen deinen Mini-Frachter fertig! Du hast keine Chance gegen uns. Gib lieber gleich auf oder wir zermalmen dich!\nPosition: {position}.");
+			mc1.SetMessage(Program.PeopleAssets.GetRandomAsset().Path, $"Roter Alarm!", $"Wir machen deinen Mini-Frachter fertig! Du hast keine Chance gegen uns. Gib lieber gleich auf oder wir zermalmen dich!\nPosition: {position}.", ship.Cruise.CurrentSector);
 			fp1.Controls.Add(mc1);
 		}
 

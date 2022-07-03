@@ -33,6 +33,23 @@ namespace SpaceDealerService
 			return Task.FromResult(new CruiseReply { OnItsWay = true });
 		}
 
+		public override Task<CruiseReply> CruiseToLocation(CruiseToCoordinatesRequest request, ServerCallContext context)
+		{
+			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			if (player == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+			var ship = player.Fleet.GetShipByName(request.ShipName);
+			if (ship == null)
+			{
+				return Task.FromResult(new CruiseReply { OnItsWay = false });
+			}
+		 
+			ship.StartCruiseToLocation(ship.Cruise.CurrentSector, new SpaceDealerModels.Units.DbCoordinates(request.Position.X, request.Position.Y, request.Position.Z));
+			return Task.FromResult(new CruiseReply { OnItsWay = true });
+		}
+
 		public override Task<CruiseReply> ContinueCruise(CruiseRequest request, ServerCallContext context)
 		{
 			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
@@ -131,8 +148,13 @@ namespace SpaceDealerService
 
 			if (player == null)
 			{
-				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy.GetFirstFivePlanets());
+				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy.GetFirstFivePlanets(), Program.TheGame.Galaxy, Program.TheGame.ActiveSectors);
 				player.PicturePath = request.PicturePath;
+            }
+            else
+            {
+				player.Galaxy = Program.TheGame.Galaxy;
+				player.ActiveSectors = Program.TheGame.ActiveSectors;
 			}
 
 			g.FleetCommanders.AddPlayer(player);

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class Planets : List<DbPlanet>
+    public class Planets : List<DbPlanet>
 	{
 
 		public Planets GetFirstFivePlanets()

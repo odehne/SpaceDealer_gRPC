@@ -61,6 +61,13 @@ namespace SpaceDealerModels.Units
 			Cruise.Interrupted += Cruise_Interrupted;
 		}
 
+		public void StartCruiseToLocation(DbCoordinates currentPosition, DbCoordinates newPosition)
+		{
+			Cruise = new DbJourney(currentPosition, newPosition, this);
+			Cruise.Arrived += Cruise_Arrived;
+			Cruise.Interrupted += Cruise_Interrupted;
+		}
+
 		private void Cruise_Interrupted(InterruptionType interruptionType, string message, DbCoordinates newPosition)
 		{
 			Interrupted?.Invoke(interruptionType, message, this, newPosition); ;
@@ -121,6 +128,9 @@ namespace SpaceDealerModels.Units
 
 		public BattleResult Attack()
 		{
+			if(Cruise.EnemyBattleShip==null)
+				return new BattleResult { Message = "Schiff ist entkommen." };
+
 			var result = Battle(true, Cruise.EnemyBattleShip);
 			if (result.CriticalHit)
 			{

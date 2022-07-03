@@ -7,6 +7,7 @@ namespace SpaceDealerModels.Units
 {
 	public abstract class PirateShip
 	{
+		public string Id { get; set; } 
 		public DbFeatures Features { get; set; }
 		public string Name { get; set; }
 		public DbCoordinates Sector { get; set; }
@@ -37,12 +38,13 @@ namespace SpaceDealerModels.Units
 			}
 			return result;
 		}
-	}
+    }
 
 	public class SimplePirateShip : PirateShip
 	{
 		public SimplePirateShip(string name, DbCoordinates sector, DbFeatures featureSet)
 		{
+			Id = Guid.NewGuid().ToString();
 			if (featureSet == null)
 			{
 				Features = new DbFeatures();
@@ -80,6 +82,7 @@ namespace SpaceDealerModels.Units
 
 		public CruiserPirateShip(string name, DbCoordinates sector, DbFeatures featureSet)
 		{
+			Id = Guid.NewGuid().ToString();
 			if (featureSet == null)
 			{
 				Features = new DbFeatures();
@@ -114,6 +117,7 @@ namespace SpaceDealerModels.Units
 
 		public HeavyCruiserPirateShip(string name, DbCoordinates sector, DbFeatures featureSet)
 		{
+			Id = Guid.NewGuid().ToString();
 			if (featureSet == null)
 			{
 				Features = new DbFeatures();

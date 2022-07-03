@@ -1,12 +1,14 @@
 ﻿using SpaceDealer;
 using SpaceDealerModels.Units;
 using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 
 namespace SpaceDealerService.Repos
 {
-	public class DiscoveredPlanetsRepository
+
+    public class DiscoveredPlanetsRepository
 	{
 		public SqlPersistor Parent { get; set; }
 

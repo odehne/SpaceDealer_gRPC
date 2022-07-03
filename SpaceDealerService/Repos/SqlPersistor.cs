@@ -4,7 +4,6 @@ using System;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 
 namespace SpaceDealerService.Repos
 {
@@ -25,7 +24,7 @@ namespace SpaceDealerService.Repos
         public FeaturesRepository FeaturesRepo { get; set; }
         public MarketRepository MarketRepo { get; set; }
         public SQLiteConnection Connection { get; set; }
-
+        public SectorRepository SectorRepo { get; set; }
         public SqlPersistor(ILogger logger, string dbPath)
         {
             Logger = logger;
@@ -40,7 +39,7 @@ namespace SpaceDealerService.Repos
             DiscoveredPlanetsRepo = new DiscoveredPlanetsRepository(this);
             MarketRepo = new MarketRepository(this);
             FeaturesRepo = new FeaturesRepository(this);
-
+            SectorRepo = new SectorRepository(this);
 
             if (!File.Exists(DbPath))
                 CreateDatabase();
@@ -95,19 +94,7 @@ namespace SpaceDealerService.Repos
             {
                 foreach (var player in players)
                 {
-                    PlayersRepo.Save(player);
-                    foreach (var ship in player.Fleet)
-                    {
-                        ShipsRepo.Save(ship);
-                    }
-
-                    if (player.Galaxy != null)
-                    {
-                        foreach (var planet in player.Galaxy)
-                        {
-                            DiscoveredPlanetsRepo.SaveDiscoveredPlanet(player.Id, planet.Id);
-                        }
-                    }
+                    SavePlayer(player);
                 }
             }
             catch (Exception e)
@@ -117,6 +104,23 @@ namespace SpaceDealerService.Repos
             }
          
             return true;
+        }
+
+        public void SavePlayer(DbPlayer player)
+        {
+            PlayersRepo.Save(player);
+            foreach (var ship in player.Fleet)
+            {
+                ShipsRepo.Save(ship);
+            }
+
+            if (player.DiscoveredPlanets != null)
+            {
+                foreach (var planet in player.DiscoveredPlanets)
+                {
+                    DiscoveredPlanetsRepo.SaveDiscoveredPlanet(player.Id, planet.Id);
+                }
+            }
         }
 
         public void CreateDatabase()

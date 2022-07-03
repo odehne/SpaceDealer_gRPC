@@ -11,6 +11,8 @@ namespace SpaceDealer
 	{
 		public Players FleetCommanders { get; set; }
 		public Planets Galaxy { get; set; }
+		public Sectors ActiveSectors { get; set; }
+
 		public ILogger Logger { get; set; }
 
 		public GameEngine(ILogger logger, Planets galaxy, Players fleetCommanders)
@@ -31,7 +33,9 @@ namespace SpaceDealer
 		{
 			if (interruptionType == Enums.InterruptionType.DiscoveredNewPlanet)
 			{
-				Program.Persistor.SaveGalaxy(player.Galaxy);
+				var discoveredPlanet = Galaxy.GetPlanetInSector(newPosition);
+				player.DiscoveredPlanets.AddPlanet(discoveredPlanet);
+				Program.Persistor.SaveGalaxy(Galaxy);
 			}
 			Logger.Log($"{player.Name}::{ship.Name} interruped at {newPosition} by {interruptionType}", TraceEventType.Information);
 		}

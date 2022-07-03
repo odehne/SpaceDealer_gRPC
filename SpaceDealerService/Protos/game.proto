@@ -17,6 +17,7 @@ service Game {
   rpc GetShip (ShipRequest) returns (ShipReply);
   rpc GetUpdates (PlayerRequest) returns (UpdateReply);
   rpc StartCruise (CruiseRequest) returns (CruiseReply);
+  rpc CruiseToLocation (CruiseToCoordinatesRequest) returns (CruiseReply);
   rpc ContinueCruise (CruiseRequest) returns (CruiseReply);
   rpc GetPlanets (EmptyRequest) returns (PlanetsReply);
 }
@@ -119,6 +120,12 @@ message CruiseRequest {
     string playerName = 1;
     string shipName = 2;
     string destinationPlanetName = 3;
+}
+
+message CruiseToCoordinatesRequest {
+    string playerName = 1;
+    string shipName = 2;
+    Coordinates position = 3;
 }
 
 message CruiseReply {

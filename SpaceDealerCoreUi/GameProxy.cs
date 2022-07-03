@@ -116,6 +116,15 @@ namespace SpaceDealerCoreUi
 			return cruiseStarted.OnItsWay;
 		}
 
+		public static async Task<bool> CruiseToLocation(string playerName, string shipName, Coordinates newPosition)
+		{
+			using var channel = GrpcChannel.ForAddress(ServiceURL);
+			var client = new Game.GameClient(channel);
+			var cruiseStarted = await client.CruiseToLocationAsync(new CruiseToCoordinatesRequest { PlayerName = playerName, ShipName = shipName, Position = newPosition });
+			return cruiseStarted.OnItsWay;
+		}
+
+
 		public static async Task<bool> ContinueTravel(string playerName, string shipName, string planetName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);

@@ -1,23 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using SpaceDealer;
 using System.Threading;
-using SpaceDealerModels.Repositories;
 using SpaceDealerService.Repos;
 
 namespace SpaceDealerService
 {
-	public class Program
+    public class Program
 	{
 		public static SpaceDealerGame TheGame { get; set; }
 		public static Logger TheLogger {get; set;}
-
 		public static SqlPersistor Persistor { get; set; } 
 	
 	

@@ -80,9 +80,9 @@ namespace SpaceDealerService
 				Destination = ConvertToPlanet(uJourny.Destination)
 			};
 
-			if (uJourny.NewlyDiscoveredPlanet != null)
+			if (uJourny.DiscoveredPlanet != null)
 			{
-				ret.NewPlanetDiscovered = ConvertToPlanet(uJourny.NewlyDiscoveredPlanet);
+				ret.NewPlanetDiscovered = ConvertToPlanet(uJourny.DiscoveredPlanet);
 			}
 
 			if (uJourny.EnemyBattleShip != null)

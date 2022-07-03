@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SpaceDealerService;
 
 namespace SpaceDealerCoreUi.Controls
 {
@@ -28,5 +29,19 @@ namespace SpaceDealerCoreUi.Controls
 		{
 
 		}
-	}
+
+        private async void btnAttack_Click(object sender, EventArgs e)
+        {
+			BattleReply result = await GameProxy.BattleAttack(Program.CurrentPlayer.Name, Program.CurrentShip.ShipName);
+
+			lblSubHeadline.Text += result.Message + "\n";
+
+			//if (result.Message )
+			//{
+			//	var msg = new TravellingControl();
+			//	msg.SetMessage(Program.AnimationAssets[0].Path, "Neuer Kurs", $"Neuer Kurs nach {destination.ToPlanetPosition()} liegt an, sir!");
+			//	fp1.Controls.Add(msg);
+			//}
+		}
+    }
 }

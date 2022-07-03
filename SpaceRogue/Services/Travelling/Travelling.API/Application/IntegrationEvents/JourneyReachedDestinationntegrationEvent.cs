@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 {
-
-    public class JourneyStartedIntegrationEvent : IntegrationEvent
+    public class JourneyReachedDestinationntegrationEvent : IntegrationEvent
 	{
 		public string ShipId { get; set; }
 		public int TargetPosX { get; set; }
@@ -15,18 +14,18 @@ namespace Cope.SpaceRogue.Travelling.API.Application.IntegrationEvents
 		public string TargetObjectName { get; set; }
 	}
 
-	public class JourneyStartedIntegrationEventHandler : IIntegrationEventHandler<JourneyStartedIntegrationEvent>
+	public class JourneyReachedDestinationntegrationEventEventHandler : IIntegrationEventHandler<JourneyReachedDestinationntegrationEvent>
 	{
 		private readonly IEventBus _eventBus;
-		private readonly ILogger<JourneyStartedIntegrationEventHandler> _logger;
+		private readonly ILogger<JourneyReachedDestinationntegrationEventEventHandler> _logger;
 
-		public JourneyStartedIntegrationEventHandler(IEventBus eventBus, ILogger<JourneyStartedIntegrationEventHandler> logger)
+		public JourneyReachedDestinationntegrationEventEventHandler(IEventBus eventBus, ILogger<JourneyReachedDestinationntegrationEventEventHandler> logger)
 		{
 			_eventBus = eventBus;
 			_logger = logger;
 		}
 
-		public async Task Handle(JourneyStartedIntegrationEvent @event)
+		public async Task Handle(JourneyReachedDestinationntegrationEvent @event)
 		{
 			_logger.LogInformation("----- Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})", @event.Id, Program.AppName, @event);
 			_eventBus.Publish(@event);

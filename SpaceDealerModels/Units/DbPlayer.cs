@@ -27,26 +27,34 @@ namespace SpaceDealerModels.Units
 		public double Credits { get; set; }
 		[JsonProperty("homePlanet")]
 		public DbPlanet HomePlanet { get; set; }
-		[JsonProperty("galaxy")]
+		[JsonProperty("discoveredPlanets")]
+		public Planets DiscoveredPlanets { get; set; }
+		[Newtonsoft.Json.JsonIgnore]
 		public Planets Galaxy { get; set; }
+		[Newtonsoft.Json.JsonIgnore]
+		public Sectors ActiveSectors { get; set; }
 
 		public DbPlayer()
 		{
 
 		}
 
-		public DbPlayer(string name, DbPlanet homeplanet, Planets planets) : base(name)
-		{
-			UpdateQueue = new Queue();
-			Galaxy = planets;
+		public DbPlayer(string name, DbPlanet homeplanet, Planets discoveredPlanets, Planets galaxy, Sectors activeSectors) : base(name)
+        {
+            UpdateQueue = new Queue();
+            DiscoveredPlanets = discoveredPlanets;
+			ActiveSectors = activeSectors;
 			HomePlanet = homeplanet;
-			Credits = 10000;
-			Fleet = new Ships(this);
-			Fleet.Interrupted += Fleet_Interrupted;
-			Fleet.Arrived += Fleet_Arrived;
-		}
+            Credits = 10000;
+            Fleet = new Ships(this);
+            Fleet.Interrupted += Fleet_Interrupted;
+            Fleet.Arrived += Fleet_Arrived;
+            DiscoveredPlanets = discoveredPlanets;
+            Galaxy = galaxy;
+			ActiveSectors = activeSectors;
+        }
 
-		private void Fleet_Arrived(string message, DbCoordinates newPosition, DbShip ship)
+        private void Fleet_Arrived(string message, DbCoordinates newPosition, DbShip ship)
 		{
 			UpdateQueue.Enqueue(new UpdateInfo(ship, UpdateStates.ArrivedOnTarget));
 			Arrived?.Invoke(message, newPosition, ship, this);

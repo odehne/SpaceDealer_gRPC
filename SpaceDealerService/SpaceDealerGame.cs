@@ -11,6 +11,7 @@ namespace SpaceDealer
 	public class SpaceDealerGame : ISpaceDealerGame
 	{
 		public Planets Galaxy { get; set; }
+		public Sectors ActiveSectors { get; set; }
 		public Players FleetCommanders { get; set; }
 		public ILogger Logger { get; set; }
 		public SpaceDealerGame(ILogger logger)
@@ -36,6 +37,8 @@ namespace SpaceDealer
 
 		public void Init()
 		{
+			ActiveSectors = Program.Persistor.SectorRepo.GetAll();
+
 			foreach (var p in Program.Persistor.PlanetsRepo.GetAll())
 			{
 				Galaxy.AddPlanet(p);
@@ -46,6 +49,7 @@ namespace SpaceDealer
 				FleetCommanders.AddPlayer(p);
 			}
 
+	
 			//AddPlanets(100);
 			//AddFleetCommanders(100);
 		}

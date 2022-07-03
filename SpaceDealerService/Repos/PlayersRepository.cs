@@ -30,49 +30,49 @@ namespace SpaceDealerService.Repos
 			return paths;
 		}
 
-		public void AddFleetCommanders(Planets theGalaxy, int amount = 100)
-		{
-			var lst = new Players();
-			var fleetCommanderNames = new string[]
-				{
-					"Stery Gonzal",
-					"Raymy Reson",
-					"Jeffry Watson",
-					"Johny Whelley",
-					"Kenne Barner",
-					"Danio Parking",
-					"Raymy Ander",
-					"Jery Clery",
-					"Jamy Ganes",
-					"Phardy Hillee",
-					"Justeph Hughy",
-					"Tine Coopet",
-					"Rege Belley",
-					"Wardy Rodra",
-					"Johnne Pera",
-					"Aadan Jenkell",
-					"Randy Hernes",
-					"Justev Finels",
-					"Peteph Sonett",
-					"Grence Bennels"
-				};
+		//public void AddFleetCommanders(Planets theGalaxy, int amount = 100)
+		//{
+		//	var lst = new Players();
+		//	var fleetCommanderNames = new string[]
+		//		{
+		//			"Stery Gonzal",
+		//			"Raymy Reson",
+		//			"Jeffry Watson",
+		//			"Johny Whelley",
+		//			"Kenne Barner",
+		//			"Danio Parking",
+		//			"Raymy Ander",
+		//			"Jery Clery",
+		//			"Jamy Ganes",
+		//			"Phardy Hillee",
+		//			"Justeph Hughy",
+		//			"Tine Coopet",
+		//			"Rege Belley",
+		//			"Wardy Rodra",
+		//			"Johnne Pera",
+		//			"Aadan Jenkell",
+		//			"Randy Hernes",
+		//			"Justev Finels",
+		//			"Peteph Sonett",
+		//			"Grence Bennels"
+		//		};
 
-			foreach (var fcn in fleetCommanderNames)
-			{
-				var planet = theGalaxy.GetRandomPlanet();
-				var player = new DbPlayer(fcn, planet, theGalaxy);
-				var ship = new DbShip($"{player}s Raumschiff", player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }))
-				{
-					CargoSize = 30,
-					Parent = player.Fleet,
-					PlayerId = player.Id,
-					PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
-				};
-				player.PlayerType = SpaceDealer.Enums.PlayerTypes.NPC;
-				player.Fleet.AddShip(ship);
-				lst.Add(player);
-			}
-		}
+		//	foreach (var fcn in fleetCommanderNames)
+		//	{
+		//		var planet = theGalaxy.GetRandomPlanet();
+		//		var player = new DbPlayer(fcn, planet, theGalaxy, theGalaxy);
+		//		var ship = new DbShip($"{player}s Raumschiff", player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }))
+		//		{
+		//			CargoSize = 30,
+		//			Parent = player.Fleet,
+		//			PlayerId = player.Id,
+		//			PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
+		//		};
+		//		player.PlayerType = SpaceDealer.Enums.PlayerTypes.NPC;
+		//		player.Fleet.AddShip(ship);
+		//		lst.Add(player);
+		//	}
+		//}
 
 
 		public override List<DbPlayer> GetAll()
@@ -155,10 +155,15 @@ namespace SpaceDealerService.Repos
 						var pPlayerType = (SpaceDealer.Enums.PlayerTypes)reader.GetInt32(3);
 						var pPicturePath = reader.GetString(4);
 						var pHomePlanet = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(5));
-						var galaxy = new Planets();
-						galaxy.AddRange(Parent.PlanetsRepo.GetAll());
+				
+						//TODO: Add discovered planets 
+						var discoveredPlanets = Program.Persistor.DiscoveredPlanetsRepo.GetDiscoveredPlanets(pId);
+						foreach (var dp in discoveredPlanets)
+						{
+							player.DiscoveredPlanets.AddPlanet(dp);
+						}
 
-						player = new DbPlayer(pName, pHomePlanet, galaxy)
+						player = new DbPlayer(pName, pHomePlanet, discoveredPlanets, Program.TheGame.Galaxy, Program.TheGame.ActiveSectors)
 						{
 							Id = pId,
 							Credits = pCredits,
@@ -171,6 +176,9 @@ namespace SpaceDealerService.Repos
 						{
 							player.Fleet.AddShip(item);
 						}
+
+					
+
 					}
 					reader.Close();
 					//Parent.CloseConnection(connection);
