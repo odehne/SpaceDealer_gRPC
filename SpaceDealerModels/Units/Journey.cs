@@ -1,16 +1,16 @@
 ﻿using Newtonsoft.Json;
 using SpaceDealer.Enums;
 using SpaceDealerModels.Repositories;
-using System;
+using SpaceDealerModels.Extensions;
 
 namespace SpaceDealerModels.Units
 {
-	public class DbJourney
+	public class Journey
 	{
 		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition);
+		public delegate void ArrivedAtDestination(string message, Coordinates newPosition);
 		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbCoordinates newPosition);
+		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Coordinates newPosition);
 
 		[JsonIgnore]
 		public DbShip Parent { get; set; }
@@ -19,30 +19,20 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("detination")]
 		public DbPlanet Destination { get; set; }
 		[JsonProperty("currentSector")]
-		public DbCoordinates CurrentSector { get; set; }
-		[JsonProperty("destinationCoordinates")]
-		public DbCoordinates DestinationCoordinates { get; set; }
-		[JsonProperty("state")]
+		public Coordinates CurrentSector { get; set; }
+		[JsonProperty("stte")]
 		JourneyState State { get; set; }
 		[JsonProperty("enemyBattleShip")]
 		public PirateShip EnemyBattleShip { get; set; }
 		[JsonProperty("newlyDisoveredPlanet")]
-		public DbPlanet DiscoveredPlanet { get; set; }
+		public DbPlanet NewlyDiscoveredPlanet { get; set; }
 		
-		public DbJourney()
+		public Journey()
 		{
 
 		}
 
-		public DbJourney(DbCoordinates currentPosition, DbCoordinates newPosition, DbShip parent)
-		{
-			Parent = parent;
-			DestinationCoordinates = newPosition;
-			CurrentSector = currentPosition;
-			State = JourneyState.Travelling;
-		}
-
-		public DbJourney(DbPlanet departure, DbPlanet destination, DbCoordinates position, DbShip parent)
+		public Journey(DbPlanet departure, DbPlanet destination, Coordinates position, DbShip parent)
 		{
 			Parent = parent;
 			Departure = departure;
@@ -51,13 +41,7 @@ namespace SpaceDealerModels.Units
 			State = JourneyState.Travelling;
 		}
 
-		public double CurrentDistanceToDestination 
-		{ 
-			get
-			{
-				return DbCoordinates.GetDistanceLength(CurrentSector, Destination.Sector);
-			}
-		} // in parsec 3.26 Light years
+		public double CurrentDistanceToDestination =>  Coordinates.GetDistanceLength(CurrentSector, Destination.Sector.ToDCoordinates());
 		
 		public void Update()
 		{
@@ -66,11 +50,11 @@ namespace SpaceDealerModels.Units
 				if (!CurrentSector.Equals(Destination.Sector))
 				{
 					State = JourneyState.Travelling;
-					CurrentSector = DbCoordinates.Move(CurrentSector, Destination.Sector);
+					CurrentSector = Coordinates.Move(CurrentSector, Destination.Sector.ToDCoordinates());
 				}
 				if (CurrentSector.Equals(Destination.Sector))
 				{
-					CurrentSector = Destination.Sector;
+					CurrentSector = Destination.Sector.ToDCoordinates();
 					Departure = Destination;
 					State = JourneyState.Arrived;
 					Arrived?.Invoke("Arrived at destination.", CurrentSector);
@@ -90,7 +74,7 @@ namespace SpaceDealerModels.Units
 		{
 			if(State!=JourneyState.Travelling)
 			{
-				if(CurrentSector!=Destination.Sector)
+				if(CurrentSector!=Destination.Sector.ToDCoordinates())
 				{
 					State = JourneyState.Travelling;
 					return true;
@@ -106,19 +90,15 @@ namespace SpaceDealerModels.Units
 			{
 				case 6:
 					State = JourneyState.InBattle;
-					EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector, null);
-					Parent.Parent.Parent.ActiveSectors.AddShip(CurrentSector, EnemyBattleShip.Id);
+					EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector.ToDCoordinates(), null);
 					return new Interruption(InterruptionType.AttackedByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
 				case 9:
 					State = JourneyState.NewPlanetInRange;
-					DiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector);
-					Parent.Parent.Parent.DiscoveredPlanets.Add(DiscoveredPlanet);
-					Parent.Parent.Parent.Galaxy.Add(DiscoveredPlanet);
-					Parent.Parent.Parent.ActiveSectors.AddPlanet(CurrentSector, DiscoveredPlanet.Id);
-					return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {DiscoveredPlanet.Name} hat uns erfasst! Wir werden angegriffen!");
+					NewlyDiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector.ToDCoordinates());
+					Parent.Parent.Parent.Galaxy.Add(NewlyDiscoveredPlanet);
+					return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {NewlyDiscoveredPlanet.Name} hat uns erfasst! Wir werden angegriffen!");
 				case 3:
 					var randomShipName = "USS Gauntlet";
-
 					return new Interruption(InterruptionType.DistressSignal, $"Wir haben einen Notruf von der {randomShipName} erhalten.");
 			}
 

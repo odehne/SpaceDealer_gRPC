@@ -23,7 +23,10 @@ namespace SpaceDealerService
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();
 
-			var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
+           
+
+
+            var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
 			var engineThread = new Thread(engine.Play) { IsBackground = false };
 			engineThread.Start();
 

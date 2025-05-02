@@ -1,6 +1,7 @@
 ﻿using SpaceDealer;
 using SpaceDealerModels;
 using SpaceDealerModels.Units;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -12,8 +13,10 @@ namespace SpaceDealerService.Repos
 	{
 
 		public SqlPersistor Parent { get; set; }
+        private static Random _random = new Random();
 
-		public GeneratedProductsRepository(SqlPersistor parent)
+
+        public GeneratedProductsRepository(SqlPersistor parent)
 		{
 			Parent = parent;
 		}
@@ -97,16 +100,18 @@ namespace SpaceDealerService.Repos
 			{
 				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					command.CommandText = $"INSERT OR REPLACE INTO GeneratedProducts (PlanetId, ProductId, Interest) VALUES (@planetId, @productId, @interest);";
+					var interest = GetRandomInterest();
+                    command.CommandText = $"INSERT OR REPLACE INTO GeneratedProducts (PlanetId, ProductId, Interest) VALUES (@planetId, @productId, @interest);";
 					command.Parameters.AddWithValue("@planetId", planetId);
 					command.Parameters.AddWithValue("@productId", productId);
-					command.Parameters.AddWithValue("@interest", -10.0);
+					command.Parameters.AddWithValue("@interest", interest);
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Generated product {productId} saved.", TraceEventType.Information);
+						Parent.Logger.Log($"Generated product {productId} with interest {interest}% saved.", TraceEventType.Information);
 					}
-					catch (System.Exception e)
+
+                    catch (Exception e)
 					{
 						Parent.Logger.Log($"Failed to save generated product {e.Message}", TraceEventType.Error);
 					}
@@ -117,5 +122,11 @@ namespace SpaceDealerService.Repos
 				Parent.Logger.Log($"Failed to save GeneratedProducts for planet Id [{planetId},{productId}] {e.Message}", TraceEventType.Error);
 			}
 		}
-	}
+
+		public static double GetRandomInterest()
+        {
+			var interest = _random.Next(-10, 10);
+            return interest;
+        }
+    }
 }

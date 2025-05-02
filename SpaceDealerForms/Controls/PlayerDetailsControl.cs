@@ -30,7 +30,7 @@ namespace SpaceDealerForms.Controls
 			{
 				var cargo = new CargoControl();
 				cargo.Init(product);
-				shipFp2.Controls.Add(cargo);
+				//shipFp2.Controls.Add(cargo);
 			}
 
 			var shields = new ShipFeatureControl();

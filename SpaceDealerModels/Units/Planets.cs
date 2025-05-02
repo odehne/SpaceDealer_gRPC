@@ -53,7 +53,16 @@ namespace SpaceDealerModels.Units
 			return ret.TrimEnd('\n');
 		}
 
-		public DbPlanet GetRandomPlanet()
+        public Planets GetRandomPlanets(int howMany)
+        {
+            var randomPlanets = new Planets();
+            for (int i = 0; i < howMany; i++)
+                randomPlanets.Add(GetRandomPlanet());
+
+			return randomPlanets;
+        }
+
+        public DbPlanet GetRandomPlanet()
 		{
 			Random random = new Random();
 			var i = random.Next(0, this.Count-1);

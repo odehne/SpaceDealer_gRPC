@@ -144,17 +144,17 @@ namespace SpaceDealerService.Repos
 			{
 				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath) VALUES (@id, @name, @weight, @pricePerTon, @amountGeneratedPerRound, @picturePath);";
+					command.CommandText = $"INSERT OR REPLACE INTO Products (Id, Name, Weight, PricePerTon, AmountGeneratedPerRound) VALUES (@id, @name, @weight, @pricePerTon, @amountGeneratedPerRound);";
 					command.Parameters.AddWithValue("@id", item.Id);
 					command.Parameters.AddWithValue("@name", item.Name);
 					command.Parameters.AddWithValue("@weight", item.Weight);
 					command.Parameters.AddWithValue("@PricePerTon", item.PricePerTon);
 					command.Parameters.AddWithValue("@amountGeneratedPerRound", item.AmountGeneratedPerRound);
-					command.Parameters.AddWithValue("@picturePath", item.PicturePath);
+					//command.Parameters.AddWithValue("@picturePath", item.PicturePath);
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Prouct {item.Name} saved.", TraceEventType.Information);
+						Parent.Logger.Log($"Product {item.Name} saved.", TraceEventType.Information);
 					}
 					catch (System.Exception e)
 					{
