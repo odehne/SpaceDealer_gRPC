@@ -7,7 +7,14 @@ namespace SpaceDealerModels.Units
 	{
 		public DbProductInStock GetProductByName(string name)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(name));
+
+            foreach (var p in this)
+            {
+                if (!string.IsNullOrEmpty(p.Name) && p.Name.Equals(name))
+                    return p;
+            }
+
+			return null;
 		}
 
 		public DbProductsInStock()

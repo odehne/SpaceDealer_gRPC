@@ -1,4 +1,5 @@
-﻿using SpaceDealerModels.Units;
+﻿using SpaceDealerModels;
+using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -114,11 +115,7 @@ namespace SpaceDealerService.Repos
 				
 						//TODO: Add discovered planets 
 						var discoveredPlanets = Program.Persistor.DiscoveredPlanetsRepo.GetDiscoveredPlanets(pId);
-						foreach (var dp in discoveredPlanets)
-						{
-							player.DiscoveredPlanets.AddPlanet(dp);
-						}
-
+						
 						player = new DbPlayer(pName, pHomePlanet, discoveredPlanets, Program.TheGame.Galaxy, Program.TheGame.ActiveSectors)
 						{
 							Id = pId,
@@ -126,8 +123,13 @@ namespace SpaceDealerService.Repos
 							PlayerType = pPlayerType,
 							PicturePath = pPicturePath
 						};
-						
-						var playersShips = Program.Persistor.ShipsRepo.GetAll(player.Id);
+
+                        //foreach (var dp in discoveredPlanets)
+                        //{
+                        //    player.DiscoveredPlanets.AddPlanet(dp);
+                        //}
+
+                        var playersShips = Program.Persistor.ShipsRepo.GetAll(player.Id);
 						foreach (var item in playersShips)
 						{
 							player.Fleet.AddShip(item);

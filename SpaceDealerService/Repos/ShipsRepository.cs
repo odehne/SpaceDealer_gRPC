@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using SpaceDealer;
+using SpaceDealerModels;
 using SpaceDealerModels.Units;
 
 namespace SpaceDealerService.Repos
@@ -21,8 +22,14 @@ namespace SpaceDealerService.Repos
 
 			if (ship.Cruise == null)
 			{
-				var earth = Program.Persistor.PlanetsRepo.GetItem("Erde", "");
-				ship.Cruise = new DbJourney() { CurrentSector = earth.Sector, Destination = earth, Departure = earth, Parent = ship };
+				var shipOwner = Program.TheGame.FleetCommanders.GetPlayerById(ship.PlayerId);
+                var sourcePlanet = shipOwner.HomePlanet;
+                var destinationPlanet = shipOwner.DiscoveredPlanets.GetRandomPlanet();
+                while (sourcePlanet.Id == destinationPlanet.Id)
+                {
+                    destinationPlanet = Program.TheGame.Galaxy.GetRandomPlanet();
+                }
+                ship.Cruise = new DbJourney() { CurrentSector = sourcePlanet.Sector, Destination = destinationPlanet, Departure = sourcePlanet, Parent = ship };
 			}
 
 			try
@@ -61,8 +68,15 @@ namespace SpaceDealerService.Repos
 				{
 					if (ft != null)
 					{
-						Parent.FeaturesRepo.Save(ft);
-						Parent.FeaturesRepo.SaveShipFeature(ship.Id, ft.Id);
+						var featureId = Parent.FeaturesRepo.GetItemId(ft.Name);
+                        if(string.IsNullOrEmpty(featureId))
+						{
+                            Parent.FeaturesRepo.Save(ft);
+                            featureId = ft.Id;
+                        }
+
+                        Parent.Logger.Log($"Saving ship feature {ft.Name}.", TraceEventType.Information);
+                        Parent.FeaturesRepo.SaveShipFeature(ship.Id, featureId);
 					}
 				}
 				Parent.Logger.Log($"Ship {ship.Name} saved.", TraceEventType.Information);
@@ -113,7 +127,7 @@ namespace SpaceDealerService.Repos
 		public override DbShip GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
-			Parent.Logger.Log($"Loading ship with {name}, {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading ship with {name}, {id}.", TraceEventType.Information);
 
 			var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState," +
 						" Journey_Source, Journey_Destination, Current_SectorX," +
@@ -180,7 +194,7 @@ namespace SpaceDealerService.Repos
 
 		public override List<DbShip> GetAll(string id)
 		{
-			Parent.Logger.Log($"Loading all ships of player {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading all ships of player {id}.", TraceEventType.Information);
 			var ids = new List<string>();
 			var lst = new Ships();
 

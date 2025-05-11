@@ -18,8 +18,8 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("cargoSize")]
 		public double CargoSize { get; set; } // in tons
 		[JsonProperty("currentLoad")]
-		public DbProductsInStock CurrentLoad { get; set; }
-		[JsonProperty("features")]
+		public DbProductsInStock CurrentLoad { get; set; } // in tons
+        [JsonProperty("features")]
 		public DbFeatures Features {get; set;}
 		[JsonIgnore]
 		public Ships Parent { get; set; }
@@ -41,18 +41,21 @@ namespace SpaceDealerModels.Units
 		public DbShip()
 		{
 			Features = new DbFeatures();
-		}
+            CurrentLoad = new DbProductsInStock();
+        }
 
-		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet) : base(name)
+		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet, Ships fleet) : base(name)
 		{
 			State = ShipState.Idle;
 			Shields = 2;
 			Hull = 3;
 			Features = featureSet;
 			CurrentLoad = new DbProductsInStock();
-			CurrentPlanet = homeplanet;
-			//Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
-		}
+			Parent = fleet;
+			CurrentPlanet = Parent.Parent.Galaxy.GetPlanetById(homeplanet.Id);
+
+            //Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
+        }
 
 		public void StartCruise(DbPlanet source, DbPlanet destination)
 		{
@@ -75,8 +78,8 @@ namespace SpaceDealerModels.Units
 
 		private void Cruise_Arrived(string message, DbCoordinates newPosition)
 		{
-			CurrentPlanet = Cruise.Destination;
-			Arrived?.Invoke(message, newPosition, this);
+			CurrentPlanet = Parent.Parent.Galaxy.GetPlanetById(Cruise.Destination.Id); 
+            Arrived?.Invoke(message, newPosition, this);
 		}
 
 		public override int GetHashCode()
@@ -86,7 +89,7 @@ namespace SpaceDealerModels.Units
 
 		public Result Load(DbProductsInStock productsToLoad)
 		{
-			if (State != ShipState.Idle)
+			if (State != ShipState.Idle && State != ShipState.Trading)
 			{
 				return new Result(ResultState.Failed, "Das Schiff kann momentan nicht beladen werden.");
 			}

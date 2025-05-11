@@ -32,20 +32,18 @@ namespace SpaceDealerService
 
 			foreach (var needed in ui.ProductsNeeded)
 			{
-				ret.ProductsNeeded.Add(ConvertToProductInStock(needed));
-			}
+                if (!string.IsNullOrEmpty(needed.Name))
+                    ret.ProductsNeeded.Add(ConvertToProductInStock(needed));
+				else
+                    Console.WriteLine($"Needed product {needed.Id} in industry has no name!!!");
+            }
 			foreach (var generated in ui.GeneratedProducts)
 			{
 				if (!string.IsNullOrEmpty(generated.Name))
-				{
 					ret.GeneratedProducts.Add(ConvertToProductInStock(generated));
-				}
 				else
-				{
-					Console.WriteLine("Industry has no name!!!");
-				}
-				
-			}
+			        Console.WriteLine($"Generated product {generated.Id} in industry has no name!!!");
+            }
 
 			return ret;
 		}

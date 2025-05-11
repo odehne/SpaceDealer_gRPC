@@ -8,15 +8,7 @@ namespace SpaceDealerModels.Units
     public class Planets : List<DbPlanet>
 	{
 
-		public Planets GetFirstFivePlanets()
-		{
-			var ret = new Planets();
-			for (int i = 0; i < 4; i++)
-			{
-				ret.AddPlanet(this[i]);
-			}
-			return ret;
-		}
+		
 
 		public DbPlanet GetPlanetByName(string planetName)
 		{
@@ -26,8 +18,12 @@ namespace SpaceDealerModels.Units
 		{
 			return this.FirstOrDefault(x => x.Sector.X == coordinates.X & x.Sector.Y == coordinates.Y & x.Sector.Z == coordinates.Z);
 		}
+        public DbPlanet GetPlanetById(string id)
+        {
+            return this.FirstOrDefault(x => x.Id == id);
+        }
 
-		public Planets GetAllPlanets(DbPlanet excludeThisPlanet)
+        public Planets GetAllPlanets(DbPlanet excludeThisPlanet)
 		{
 			var planets = new Planets();
 			planets.AddRange(this.Where(x => !x.Name.Equals(excludeThisPlanet.Name, System.StringComparison.InvariantCultureIgnoreCase)));
@@ -36,9 +32,6 @@ namespace SpaceDealerModels.Units
 
 		public DbPlanet AddPlanet(DbPlanet newPlanet)
 		{
-			var p = GetPlanetByName(newPlanet.Name);
-			if (p != null)
-				return p;
 			Add(newPlanet);
 			return newPlanet;
 		}

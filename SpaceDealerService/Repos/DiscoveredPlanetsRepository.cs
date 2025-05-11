@@ -21,7 +21,7 @@ namespace SpaceDealerService.Repos
 		{
 			var lst = new Planets();
 
-			Parent.Logger.Log($"Loading discovered planets.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading discovered planets.", TraceEventType.Information);
 			var query = "SELECT PlanetId FROM DiscoveredPlanets WHERE PlayerId= @playerId;";
 			try
 			{
@@ -34,7 +34,7 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var planetId = reader.GetString(0);
-						var planet = Parent.PlanetsRepo.GetItem("", planetId);
+						var planet = Program.Persistor.PlanetsRepo.GetItem("", planetId);
 						lst.AddPlanet(planet);
 					}
 				}
@@ -50,7 +50,7 @@ namespace SpaceDealerService.Repos
 
 		public void SaveDiscoveredPlanet(string playerId, string planetId)
 		{
-			Parent.Logger.Log($"Saving discovered planets.", TraceEventType.Information);
+			//Parent.Logger.Log($"Saving discovered planets.", TraceEventType.Information);
 		
 			if(!PlayerHasDiscoveredPlanet(playerId, planetId))
 			{

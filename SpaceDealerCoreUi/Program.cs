@@ -21,6 +21,8 @@ namespace SpaceDealerCoreUi
 		public static Assets SpaceShipAssets { get; set; }
 		public static Assets AnimationAssets { get; set; }
 
+
+
 		/// <summary>
 		///  The main entry point for the application.
 		/// </summary>

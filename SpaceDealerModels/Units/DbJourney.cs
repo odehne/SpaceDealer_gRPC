@@ -61,7 +61,15 @@ namespace SpaceDealerModels.Units
 		
 		public void Update()
 		{
-			if (State == JourneyState.Travelling)
+
+			if(State == JourneyState.NewPlanetInRange)
+			{
+                Console.WriteLine($"[RADIO] {Parent.Name} reported planet in range: {DiscoveredPlanet.Name} at {CurrentSector.ToString()}");
+                State = JourneyState.Travelling;
+            }
+				
+
+            if (State == JourneyState.Travelling)
 			{
 				if (!CurrentSector.Equals(Destination.Sector))
 				{
@@ -101,26 +109,34 @@ namespace SpaceDealerModels.Units
 
 		private Interruption CheckInterruptions()
 		{
-			var roll = SimpleDiceRoller.Roll();
-			switch(roll)
-			{
-				case 6:
-					State = JourneyState.InBattle;
-					EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector, null);
-					Parent.Parent.Parent.ActiveSectors.AddShip(CurrentSector, EnemyBattleShip.Id);
-					return new Interruption(InterruptionType.AttackedByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
-				case 9:
-					State = JourneyState.NewPlanetInRange;
-					DiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector);
-					Parent.Parent.Parent.DiscoveredPlanets.Add(DiscoveredPlanet);
-					Parent.Parent.Parent.Galaxy.Add(DiscoveredPlanet);
-					Parent.Parent.Parent.ActiveSectors.AddPlanet(CurrentSector, DiscoveredPlanet.Id);
-					return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {DiscoveredPlanet.Name} hat uns erfasst! Wir werden angegriffen!");
-				case 3:
-					var randomShipName = "USS Gauntlet";
+			var roll = SimpleDiceRoller.Roll(DiceType.d20);
 
-					return new Interruption(InterruptionType.DistressSignal, $"Wir haben einen Notruf von der {randomShipName} erhalten.");
-			}
+			if(roll % 5 == 0)
+			{
+                roll = SimpleDiceRoller.Roll(DiceType.d100);
+
+                switch (roll)
+                {
+                    case 23:
+                        State = JourneyState.InBattle;
+                        EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector, null);
+                        Parent.Parent.Parent.ActiveSectors.AddShip(CurrentSector, EnemyBattleShip.Id);
+                        return new Interruption(InterruptionType.AttackedByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
+                    case 9:
+                        State = JourneyState.NewPlanetInRange;
+                        DiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector);
+                        Parent.Parent.Parent.DiscoveredPlanets.Add(DiscoveredPlanet);
+                        Parent.Parent.Parent.Galaxy.Add(DiscoveredPlanet);
+                        Parent.Parent.Parent.ActiveSectors.AddPlanet(CurrentSector, DiscoveredPlanet.Id);
+                        return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {DiscoveredPlanet.Name} hat uns erfasst! Wir werden angegriffen!");
+                    case 3:
+                        var randomShipName = "USS Gauntlet";
+
+                        return new Interruption(InterruptionType.DistressSignal, $"Wir haben einen Notruf von der {randomShipName} erhalten.");
+                }
+            }
+
+		
 
 			return null;
 		}

@@ -18,10 +18,23 @@ namespace SpaceDealerModels.Units
 			if (p != null)
 				return p;
 
-			Add(player);
+			if(player.HomePlanet==null)
+            {
+                player.HomePlanet = player.Galaxy.GetRandomPlanet();
+            }
+
+            Add(player);
 			player.Arrived += Player_Arrived;
 			player.Interrupted += Player_Interrupted;
-			return player;
+
+            foreach (var ship in player.Fleet)
+            {
+				if (ship.CurrentPlanet == null)
+					ship.CurrentPlanet = player.HomePlanet;
+                ship.StartCruise(ship.CurrentPlanet, ship.Cruise.Destination);
+            }
+
+            return player;
 		}
 
 		private void Player_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition)
@@ -34,7 +47,12 @@ namespace SpaceDealerModels.Units
 			Arrived?.Invoke(message, newPosition, ship, player);
 		}
 
-		public DbPlayer GetPlayerByName(string name)
+        public DbPlayer GetPlayerById(string id)
+        {
+            return this.FirstOrDefault(x => x.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        public DbPlayer GetPlayerByName(string name)
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 		}

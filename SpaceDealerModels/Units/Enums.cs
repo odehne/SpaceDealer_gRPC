@@ -19,8 +19,11 @@
 	{
 		Idle = 0,
 		InJourney = 1,
-		UnderConstruction = 2
-	}
+		UnderConstruction = 2,
+        Trading = 3,
+        Attacked = 4,
+        Sunken = 5,
+    }
 
 	public enum UpdateStates
 	{

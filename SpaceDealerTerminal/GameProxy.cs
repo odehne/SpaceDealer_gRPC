@@ -6,7 +6,7 @@ using Google.Protobuf.Collections;
 using Grpc.Net.Client;
 using SpaceDealerService;
 
-namespace SpaceDealerCoreUi
+namespace SpaceDealerTerminal
 {
 	public class GameProxy
 	{

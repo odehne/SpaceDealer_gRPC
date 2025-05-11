@@ -2,8 +2,13 @@
 using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace SpaceDealerModels.Repositories
 {
@@ -12,9 +17,7 @@ namespace SpaceDealerModels.Repositories
 		public static List<string> ShipNames { get; set; }
 		public static List<string> PlanetNames { get; set; }
         public static List<string> FleetCommanders { get; set; }
-
-
-        public static DbFeatures Features { get; set; }
+		public static DbFeatures Features { get; set; }
 		public static List<DbIndustry> IndustryLibrary { get; set; }
 
 		public static DbProductsInStock ProductLibrary { get; set; }
@@ -192,18 +195,50 @@ namespace SpaceDealerModels.Repositories
 				"SSE Starhunter",
 				"SC Apollo",
 				"CS Malta",
-				"Enterprise"
-			};
+				"Enterprise",
+				"Stellar Voyager",
+				"Nebula Nomad",
+				"Galactic Trader",
+				"Cosmic Explorer",
+				"Starbound Merchant",
+				"Celestial Navigator",
+				"Astro Pioneer",
+				"Quantum Cruiser",
+				"Interstellar Hauler",
+				"Solar Seeker",
+				"Lunar Ranger",
+				"Eclipse Runner",
+				"Meteor Marauder",
+				"Orbit Raider",
+				"Comet Carrier",
+				"Planet Hopper",
+				"Galaxy Drifter",
+				"Spacefarer",
+				"Asteroid Adventurer",
+				"Warp Wanderer",
+				"Photon Freighter",
+				"Dark Matter Dealer",
+				"Gravity Grappler",
+				"Starship Trader",
+				"Void Voyager",
+            };
 		}
 
 		public static string GetRandomShipName()
 		{
 			Random random = new Random();
-			var i = random.Next(0, PlanetNames.Count -1);
-			return PlanetNames[i];
+			var i = random.Next(0, ShipNames.Count -1);
+			return ShipNames[i];
 		}
 
-		public static string GetRandomNumber(int minN, int maxN)
+        public static string GetRandomFleetCommanderName()
+        {
+            Random random = new Random();
+            var i = random.Next(0, FleetCommanders.Count - 1);
+            return FleetCommanders[i];
+        }
+
+        public static string GetRandomNumber(int minN, int maxN)
 		{
 			Random random = new Random();
 			var i = random.Next(minN, maxN);

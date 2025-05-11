@@ -46,6 +46,8 @@ namespace SpaceDealerModels.Units
 			SpeedBonus = speedBonus;
 		}
 
+
+
 		public override string ToString()
 		{
 			return base.ToString();
