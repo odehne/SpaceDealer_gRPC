@@ -1,14 +1,7 @@
-﻿using SpaceDealer.Enums;
-using SpaceDealerModels.Units;
+﻿using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 
 namespace SpaceDealerModels.Repositories
 {
@@ -25,13 +18,13 @@ namespace SpaceDealerModels.Repositories
 
 		public static void Init()
 		{
-			NewSpaceShipNames();
+            NewProductLibary();
+            NewIndustryLibrary();
+            NewSpaceShipNames();
 			NewPlanetNames();
-			NewProductLibary();
-			NewIndustryLibrary();
 			LoadFeatures();
 			NewPilotNames();
-            //NewPlanetLibrary();
+			
         }
 
 		public static void LoadFeatures()

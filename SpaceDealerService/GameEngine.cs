@@ -1,5 +1,9 @@
-﻿using SpaceDealerModels.Units;
+﻿using SpaceDealerModels;
+using SpaceDealerModels.Repositories;
+using SpaceDealerModels.Units;
+using SpaceDealerService;
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Threading;
 
@@ -34,6 +38,7 @@ namespace SpaceDealer
 			{
 				var discoveredPlanet = Galaxy.GetPlanetInSector(newPosition);
 				player.DiscoveredPlanets.AddPlanet(discoveredPlanet);
+				//Program.Persistor.SaveGalaxy(Galaxy);
 			}
 			Console.WriteLine($"[INFO] {player.Name}::{ship.Name} at {newPosition}: {message}");
 		}
@@ -43,22 +48,20 @@ namespace SpaceDealer
 			do
 			{
 				Update();
-				Thread.Sleep(120);
+				Thread.Sleep(1000);
 			} while (true);
 		}
 
 		public void Update()
 		{
-            for (int i = 0; i < Galaxy.Count; i++)
+			foreach (var planet in Galaxy)
 			{
-                DbPlanet planet = Galaxy[i];
-                planet.Update();
+				planet.Update();
 			//	Logger.Log(planet.ToString(), TraceEventType.Verbose);
 			}
-            for (int i = 0; i < FleetCommanders.Count; i++)
+			foreach (var commander in FleetCommanders)
 			{
-                DbPlayer commander = FleetCommanders[i];
-                if (commander!=null)	
+				if(commander!=null)	
 					commander.Update();
 			//	Logger.Log(commander.ToString(), TraceEventType.Verbose);
 			}

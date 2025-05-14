@@ -18,19 +18,12 @@ namespace SpaceDealerModels.Units
 			if (p != null)
 				return p;
 
-			if(player.HomePlanet==null)
-            {
-                player.HomePlanet = player.Galaxy.GetRandomPlanet();
-            }
-
-            Add(player);
+			Add(player);
 			player.Arrived += Player_Arrived;
 			player.Interrupted += Player_Interrupted;
 
             foreach (var ship in player.Fleet)
             {
-				if (ship.CurrentPlanet == null)
-					ship.CurrentPlanet = player.HomePlanet;
                 ship.StartCruise(ship.CurrentPlanet, ship.Cruise.Destination);
             }
 

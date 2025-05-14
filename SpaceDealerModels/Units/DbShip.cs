@@ -44,14 +44,14 @@ namespace SpaceDealerModels.Units
             CurrentLoad = new DbProductsInStock();
         }
 
-		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet, Ships fleet) : base(name)
+		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet, Ships parent) : base(name)
 		{
 			State = ShipState.Idle;
 			Shields = 2;
 			Hull = 3;
 			Features = featureSet;
-			CurrentLoad = new DbProductsInStock();
-			Parent = fleet;
+            Parent = parent;
+            CurrentLoad = new DbProductsInStock();
 			CurrentPlanet = Parent.Parent.Galaxy.GetPlanetById(homeplanet.Id);
 
             //Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);

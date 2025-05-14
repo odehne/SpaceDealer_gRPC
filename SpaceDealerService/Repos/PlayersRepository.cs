@@ -124,10 +124,10 @@ namespace SpaceDealerService.Repos
 							PicturePath = pPicturePath
 						};
 
-                        //foreach (var dp in discoveredPlanets)
-                        //{
-                        //    player.DiscoveredPlanets.AddPlanet(dp);
-                        //}
+                        foreach (var dp in discoveredPlanets)
+                        {
+                            player.DiscoveredPlanets.AddPlanet(dp);
+                        }
 
                         var playersShips = Program.Persistor.ShipsRepo.GetAll(player.Id);
 						foreach (var item in playersShips)

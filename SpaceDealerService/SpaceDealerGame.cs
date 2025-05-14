@@ -3,6 +3,7 @@ using SpaceDealerModels;
 using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using SpaceDealerService;
+using SpaceDealerService.Repos;
 using System;
 using System.Diagnostics;
 using System.Numerics;
@@ -19,12 +20,15 @@ namespace SpaceDealer
 		public Sectors ActiveSectors { get; set; }
 		public Players FleetCommanders { get; set; }
 		public ILogger Logger { get; set; }
+        
         public SpaceDealerGame(ILogger logger)
         {
             Logger = logger;
             Galaxy = new Planets();
             FleetCommanders = new Players();
             Repository.Init();
+
+
         }
 
         public void AddPlanets(int amount = 1000)
@@ -82,11 +86,9 @@ namespace SpaceDealer
             Logger.Log($"Planets loaded: " + Galaxy.Count, TraceEventType.Information);
             Logger.Log($"Fleetcommanders loaded: " + FleetCommanders.Count, TraceEventType.Information);
 
-            //AddPlanets(12);
-            //AddFleetCommanders(3);
+            AddPlanets(10);
+            AddFleetCommanders(5);
 
-            //Program.Persistor.SaveGalaxy(Program.TheGame.Galaxy);
-            //Program.Persistor.SavePlayers(Program.TheGame.FleetCommanders);
         }
 
 

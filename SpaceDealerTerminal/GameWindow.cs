@@ -43,21 +43,21 @@ namespace SpaceDealerTerminal
                 Width = Dim.Fill(),
                 Height = 1
             };
-            var creditsLabel = new Label("Credits: 1000")
+            var creditsLabel = new Label("Credits: " + Program.CurrentPlayer.Credits)
             {
                 X = 1,
                 Y = 2,
-                Width = Dim.Fill(),
+                Width = Dim.Fill(), 
                 Height = 1
             };
-            var cargoLabel = new Label("Cargo: 0/100")
+            var cargoLabel = new Label("Cargo: " + Program.CurrentShip.CargoLoad.CalculateSize() + "t")
             {
                 X = 1,
                 Y = 3,
                 Width = Dim.Fill(),
                 Height = 1
             };
-            var shipLabel2 = new Label("Aktuelle Position: " + Program.CurrentShip.ShipName)
+            var shipLabel2 = new Label("Aktuelle Position: " + Program.CurrentShip.Cruise.CurrentSector.ToString())
             {
                 X = 1,
                 Y = 4,

@@ -8,7 +8,15 @@ namespace SpaceDealerModels.Units
     public class Planets : List<DbPlanet>
 	{
 
-		
+		public Planets GetFirstFivePlanets()
+		{
+			var ret = new Planets();
+			for (int i = 0; i < 4; i++)
+			{
+				ret.AddPlanet(this[i]);
+			}
+			return ret;
+		}
 
 		public DbPlanet GetPlanetByName(string planetName)
 		{
@@ -32,6 +40,9 @@ namespace SpaceDealerModels.Units
 
 		public DbPlanet AddPlanet(DbPlanet newPlanet)
 		{
+			var p = GetPlanetByName(newPlanet.Name);
+			if (p != null)
+				return p;
 			Add(newPlanet);
 			return newPlanet;
 		}

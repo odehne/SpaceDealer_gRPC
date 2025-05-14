@@ -21,14 +21,12 @@ namespace SpaceDealerModels.Units
 
 		public void AddGeneratedProduct(DbProductInStock product)
 		{
-			if(product != null && !string.IsNullOrEmpty(product.Name))
-	            GeneratedProducts.Add(product);
+			GeneratedProducts.Add(product);
 		}
 
 		public void AddNeededProduct(DbProductInStock product)
 		{
-            if (product != null && !string.IsNullOrEmpty(product.Name))
-                ProductsNeeded.Add(product);
+			ProductsNeeded.Add(product);
 		}
 
 		public override string ToString()
@@ -39,10 +37,9 @@ namespace SpaceDealerModels.Units
 		public override void Update()
 		{
 			base.Update();
-            for (int i = 0; i < GeneratedProducts.Count; i++)
+			foreach(var p in GeneratedProducts)
 			{
-                DbProductInStock p = GeneratedProducts[i];
-                p.Amount += p.AmountGeneratedPerRound;
+				p.Amount += p.AmountGeneratedPerRound;
 			}
 		}
 

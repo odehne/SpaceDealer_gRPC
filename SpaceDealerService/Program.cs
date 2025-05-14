@@ -5,6 +5,7 @@ using System.Diagnostics;
 using SpaceDealer;
 using System.Threading;
 using SpaceDealerService.Repos;
+using SpaceDealerModels.Repositories;
 
 namespace SpaceDealerService
 {
@@ -23,7 +24,26 @@ namespace SpaceDealerService
 			TheGame = new SpaceDealerGame(TheLogger);
 			TheGame.Init();
 
-			var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
+            var productRepo = new ProductsRepository(Persistor);
+			foreach(var product in Repository.ProductLibrary)
+			{
+				var p = productRepo.GetItem(product.Name, null);
+                if ( p == null)
+				{
+					TheLogger.Log($"Adding product {product.Name} to database.", TraceEventType.Information);
+					productRepo.Save(product);
+				}
+				else
+				{
+					product.Id = p.Id;
+                }
+            }
+
+            Persistor.SaveGalaxy(Program.TheGame.Galaxy);
+            Persistor.SavePlayers(Program.TheGame.FleetCommanders);
+
+
+            var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
 			var engineThread = new Thread(engine.Play) { IsBackground = false };
 			engineThread.Start();
 

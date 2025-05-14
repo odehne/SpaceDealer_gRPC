@@ -235,10 +235,9 @@ namespace SpaceDealerModels.Units
         public override void Update()
 		{
 			base.Update();
-            for (int i = 0; i < Fleet.Count; i++)
+			foreach(var ship in Fleet)
 			{
-                DbShip ship = Fleet[i];
-                if (ship.State != ShipState.Sunken)
+				if(ship.State != ShipState.Sunken)
                     ship.Update();
 			}
 		}

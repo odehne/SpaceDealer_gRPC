@@ -94,19 +94,22 @@ namespace SpaceDealerService.Repos
 						p.Weight = reader.GetDouble(2);
 						p.PricePerTon = reader.GetDouble(3);
 						p.AmountGeneratedPerRound = reader.GetDouble(4);
-						p.PicturePath = reader.GetString(5);
+						if(!reader.IsDBNull(5)) p.PicturePath = reader.GetString(5);
 					}
 				}
-				reader.Close();
-				//Parent.CloseConnection(connection);
-
+				else
+				{
+                    Parent.Logger.Log($"Product with name {name} or id {id} not found.", TraceEventType.Information);
+                    p = null;
+                }
+                reader.Close();
 			}
 			catch (System.Exception e)
 			{
 				Parent.Logger.Log($"Failed to get product for player Id [{id}] {e.Message}", TraceEventType.Error);
 			}
 
-			return p;
+            return p;
 		}
 
 		public override string GetItemId(string name)
@@ -148,18 +151,11 @@ namespace SpaceDealerService.Repos
 					command.Parameters.AddWithValue("@id", item.Id);
 					command.Parameters.AddWithValue("@name", item.Name);
 					command.Parameters.AddWithValue("@weight", item.Weight);
-					command.Parameters.AddWithValue("@PricePerTon", item.PricePerTon);
+					command.Parameters.AddWithValue("@pricePerTon", item.PricePerTon);
 					command.Parameters.AddWithValue("@amountGeneratedPerRound", item.AmountGeneratedPerRound);
 					//command.Parameters.AddWithValue("@picturePath", item.PicturePath);
-					try
-					{
-						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Product {item.Name} saved.", TraceEventType.Information);
-					}
-					catch (System.Exception e)
-					{
-						Parent.Logger.Log($"Failed to add product {e.Message}", TraceEventType.Error);
-					}
+					command.ExecuteNonQuery();
+					Parent.Logger.Log($"Product {item.Name} saved.", TraceEventType.Information);
 				}
 			}
 			catch (System.Exception e)

@@ -34,9 +34,12 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var planetId = reader.GetString(0);
-						var planet = Program.Persistor.PlanetsRepo.GetItem("", planetId);
-						lst.AddPlanet(planet);
-					}
+						var planet = Parent.PlanetsRepo.GetItem("", planetId);
+						if(planet!=null)
+							lst.AddPlanet(planet);
+						else
+                            Parent.Logger.Log($"Discovered planet {planetId} not found.", TraceEventType.Error);
+                    }
 				}
 				reader.Close();
 			}
