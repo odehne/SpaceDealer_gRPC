@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using SpaceDealerModels;
 using SpaceDealerModels.Repositories;
 
 namespace SpaceDealerService
@@ -143,12 +144,11 @@ namespace SpaceDealerService
 
 		public override Task<PlayerReply> AddPlayer(AddPlayerRequest request, ServerCallContext context)
 		{
-			var g = Program.TheGame;
 			var player = Program.Persistor.PlayersRepo.GetItem(request.PlayerName, null);
 
 			if (player == null)
 			{
-				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, g.Galaxy.GetPlanetByName("erde"), g.Galaxy.GetFirstFivePlanets(), Program.TheGame.Galaxy, Program.TheGame.ActiveSectors);
+				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, Program.TheGame.Galaxy.GetPlanetByName("erde"), Program.TheGame.Galaxy.GetFirstFivePlanets(), Program.TheGame.Galaxy, Program.TheGame.ActiveSectors);
 				player.PicturePath = request.PicturePath;
             }
             else
@@ -157,17 +157,16 @@ namespace SpaceDealerService
 				player.ActiveSectors = Program.TheGame.ActiveSectors;
 			}
 
-			g.FleetCommanders.AddPlayer(player);
+            Program.TheGame.FleetCommanders.AddPlayer(player);
 
-			Program.Persistor.SavePlayers(g.FleetCommanders);
+			Program.Persistor.SavePlayers(Program.TheGame.FleetCommanders);
 			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(player) });
 
 		}
 
 		public override Task<ShipReply> AddShip(ShipRequest request, ServerCallContext context)
 		{
-			var g = Program.TheGame;
-			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
 			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" })) { CargoSize = 30, Parent = p.Fleet };
 			s.PlayerId = p.Id;
 			s.PicturePath = ".\\Spaceships\\MediumFrighter.jpg";
@@ -177,8 +176,7 @@ namespace SpaceDealerService
 
 		public override Task<PlayerReply> GetPlayer(PlayerRequest request, ServerCallContext context)
 		{
-			var g = Program.TheGame;
-			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
 			if(p==null)
 				return Task.FromResult(new PlayerReply { Player = null });
 			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(p) });
@@ -186,8 +184,7 @@ namespace SpaceDealerService
 
 		public override Task<ShipReply> GetShip(ShipRequest request, ServerCallContext context)
 		{
-			var g = Program.TheGame;
-			var p = g.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
 			if (p == null)
 				return Task.FromResult(new ShipReply { Ship = null });
 

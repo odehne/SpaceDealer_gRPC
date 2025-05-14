@@ -73,14 +73,22 @@ namespace SpaceDealerService.Repos
 
                 foreach (var np in planet.Industry.ProductsNeeded)
                 {
+                    var prod = ProductRepo.GetItem(np.Name, null);
+                    var npId = np.Id;
+                    if (prod != null)
+                        npId = prod.Id;
                     ProductRepo.Save(np);
-                    NeededProductsRepo.SaveNeededProduct(planet.Id, np.Id);
+                    NeededProductsRepo.SaveNeededProduct(planet.Id, npId);
                 }
                 
                 foreach (var np in planet.Industry.GeneratedProducts)
                 {
+                    var prod = ProductRepo.GetItem(np.Name, null);
+                    var npId = np.Id;
+                    if (prod != null)
+                        npId = prod.Id;
                     ProductRepo.Save(np);
-                    GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, np.Id);
+                    GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, npId);
                 }
 
                 MarketRepo.SaveMarket(planet.Id, planet.Market);

@@ -1,5 +1,4 @@
-﻿using SpaceDealer;
-using SpaceDealerModels.Repositories;
+﻿using SpaceDealerModels;
 using SpaceDealerModels.Units;
 using System;
 using System.Collections.Generic;
@@ -30,49 +29,7 @@ namespace SpaceDealerService.Repos
 			return paths;
 		}
 
-		//public void AddFleetCommanders(Planets theGalaxy, int amount = 100)
-		//{
-		//	var lst = new Players();
-		//	var fleetCommanderNames = new string[]
-		//		{
-		//			"Stery Gonzal",
-		//			"Raymy Reson",
-		//			"Jeffry Watson",
-		//			"Johny Whelley",
-		//			"Kenne Barner",
-		//			"Danio Parking",
-		//			"Raymy Ander",
-		//			"Jery Clery",
-		//			"Jamy Ganes",
-		//			"Phardy Hillee",
-		//			"Justeph Hughy",
-		//			"Tine Coopet",
-		//			"Rege Belley",
-		//			"Wardy Rodra",
-		//			"Johnne Pera",
-		//			"Aadan Jenkell",
-		//			"Randy Hernes",
-		//			"Justev Finels",
-		//			"Peteph Sonett",
-		//			"Grence Bennels"
-		//		};
-
-		//	foreach (var fcn in fleetCommanderNames)
-		//	{
-		//		var planet = theGalaxy.GetRandomPlanet();
-		//		var player = new DbPlayer(fcn, planet, theGalaxy, theGalaxy);
-		//		var ship = new DbShip($"{player}s Raumschiff", player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }))
-		//		{
-		//			CargoSize = 30,
-		//			Parent = player.Fleet,
-		//			PlayerId = player.Id,
-		//			PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
-		//		};
-		//		player.PlayerType = SpaceDealer.Enums.PlayerTypes.NPC;
-		//		player.Fleet.AddShip(ship);
-		//		lst.Add(player);
-		//	}
-		//}
+		
 
 
 		public override List<DbPlayer> GetAll()
@@ -158,11 +115,7 @@ namespace SpaceDealerService.Repos
 				
 						//TODO: Add discovered planets 
 						var discoveredPlanets = Program.Persistor.DiscoveredPlanetsRepo.GetDiscoveredPlanets(pId);
-						foreach (var dp in discoveredPlanets)
-						{
-							player.DiscoveredPlanets.AddPlanet(dp);
-						}
-
+						
 						player = new DbPlayer(pName, pHomePlanet, discoveredPlanets, Program.TheGame.Galaxy, Program.TheGame.ActiveSectors)
 						{
 							Id = pId,
@@ -170,8 +123,13 @@ namespace SpaceDealerService.Repos
 							PlayerType = pPlayerType,
 							PicturePath = pPicturePath
 						};
-						
-						var playersShips = Program.Persistor.ShipsRepo.GetAll(player.Id);
+
+                        foreach (var dp in discoveredPlanets)
+                        {
+                            player.DiscoveredPlanets.AddPlanet(dp);
+                        }
+
+                        var playersShips = Program.Persistor.ShipsRepo.GetAll(player.Id);
 						foreach (var item in playersShips)
 						{
 							player.Fleet.AddShip(item);

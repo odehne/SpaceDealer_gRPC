@@ -1,6 +1,8 @@
-﻿using SpaceDealerModels.Repositories;
+﻿using SpaceDealerModels;
+using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using SpaceDealerService;
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Threading;
@@ -9,9 +11,10 @@ namespace SpaceDealer
 {
 	public class GameEngine
 	{
-		public Players FleetCommanders { get; set; }
-		public Planets Galaxy { get; set; }
-		public Sectors ActiveSectors { get; set; }
+
+        public Players FleetCommanders { get; set; }
+        public Planets Galaxy { get; set; }
+        public Sectors ActiveSectors { get; set; }
 
 		public ILogger Logger { get; set; }
 
@@ -19,9 +22,9 @@ namespace SpaceDealer
 		{
 			Logger = logger;
 			Galaxy = galaxy;
-			FleetCommanders = fleetCommanders;
-			FleetCommanders.Interrupted += FleetCommanders_Interrupted;
-			FleetCommanders.Arrived += FleetCommanders_Arrived;
+            FleetCommanders = fleetCommanders;
+            FleetCommanders.Interrupted += FleetCommanders_Interrupted;
+            FleetCommanders.Arrived += FleetCommanders_Arrived;
 		}
 
 		private void FleetCommanders_Arrived(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player)
@@ -35,9 +38,9 @@ namespace SpaceDealer
 			{
 				var discoveredPlanet = Galaxy.GetPlanetInSector(newPosition);
 				player.DiscoveredPlanets.AddPlanet(discoveredPlanet);
-				Program.Persistor.SaveGalaxy(Galaxy);
+				//Program.Persistor.SaveGalaxy(Galaxy);
 			}
-			Logger.Log($"{player.Name}::{ship.Name} interruped at {newPosition} by {interruptionType}", TraceEventType.Information);
+			Console.WriteLine($"[INFO] {player.Name}::{ship.Name} at {newPosition}: {message}");
 		}
 
 		public void Play()

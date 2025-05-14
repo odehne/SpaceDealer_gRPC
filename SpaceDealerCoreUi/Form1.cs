@@ -1,8 +1,8 @@
 ﻿using SpaceDealerCoreUi.Controls;
-using SpaceDealerService;
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using SpaceDealerService;
 
 namespace SpaceDealerCoreUi
 {

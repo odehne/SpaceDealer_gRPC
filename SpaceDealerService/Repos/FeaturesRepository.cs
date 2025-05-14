@@ -53,7 +53,7 @@ namespace SpaceDealerService.Repos
 
 		public override List<DbFeature> GetAll(string id)
 		{
-			Parent.Logger.Log($"Loading all features for ship {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading all features for ship {id}.", TraceEventType.Information);
 			var lst = new DbFeatures();
 
 			var query = "SELECT FeatureId FROM ShipFeatures WHERE ShipId = @shipId";
@@ -135,8 +135,12 @@ namespace SpaceDealerService.Repos
 
 		public override string GetItemId(string name)
 		{
-			throw new NotImplementedException();
-		}
+			var feature = GetItem(name, null);
+            if (feature != null)
+                return feature.Id;
+            else
+                return null;
+        }
 
 		public override void Save(DbFeature item)
 		{

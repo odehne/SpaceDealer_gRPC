@@ -10,7 +10,7 @@ namespace SpaceDealerCoreUi
 {
 	public class GameProxy
 	{
-		public const string ServiceURL = "https://localhost:5001";
+		public const string ServiceURL = "http://localhost:30666";
 
 		public static async Task<bool> PlayerNameTaken(string playerName)
 		{

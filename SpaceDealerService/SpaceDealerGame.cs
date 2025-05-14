@@ -1,9 +1,14 @@
-﻿using SpaceDealerModels.Repositories;
+﻿using Google.Protobuf.WellKnownTypes;
+using SpaceDealerModels;
+using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using SpaceDealerService;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
+using System.Numerics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 namespace SpaceDealer
 {
@@ -14,48 +19,79 @@ namespace SpaceDealer
 		public Sectors ActiveSectors { get; set; }
 		public Players FleetCommanders { get; set; }
 		public ILogger Logger { get; set; }
-		public SpaceDealerGame(ILogger logger)
-		{
-			Logger = logger;
-			Galaxy = new Planets();
-			FleetCommanders = new Players();
-			Repository.Init();
-		}
+        public SpaceDealerGame(ILogger logger)
+        {
+            Logger = logger;
+            Galaxy = new Planets();
+            FleetCommanders = new Players();
+            Repository.Init();
+        }
 
-		public void AddPlanets(int amount = 100)
+        public void AddPlanets(int amount = 1000)
 		{
-			for (int i = 0; i < amount - 1; i++)
+			for (int i = 0; i < amount; i++)
 			{
-				var randomPlanet = Repository.GetRandomPlanet(DbCoordinates.GerRandomCoordniates());
+				var randomPlanet = Repository.GenerateRandomPlanet(DbCoordinates.GenerateRandomCoordniates());
 				randomPlanet.Name = $"{randomPlanet.Name}-{i}";
 				randomPlanet.PicturePath = ".\\Planets\\image_part_" + Repository.GetRandomNumber(1, 36) + ".jpg";
 				Galaxy.AddPlanet(randomPlanet);
 			}
 		}
 
-		
+        public void AddFleetCommanders(int amount = 100)
+        {
+           if(FleetCommanders == null)
+                FleetCommanders = new Players();
 
-		public void Init()
+            for(int i = 0; i < amount; i++)
+            {
+                var planet = Galaxy.GetRandomPlanet();
+                var discoveredPlanets = Galaxy.GetRandomPlanets(5);
+                var fcn = Repository.GetRandomFleetCommanderName();
+                var player = new DbPlayer(fcn, planet, discoveredPlanets, Galaxy, Program.TheGame.ActiveSectors);
+				var shipName = Repository.GetRandomShipName();
+                var ship = new DbShip(shipName, player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }))
+                {
+                    CargoSize = 30,
+                    Parent = player.Fleet,
+                    PlayerId = player.Id,
+                    PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
+                };
+                player.PlayerType = Enums.PlayerTypes.NPC;
+                player.Fleet.AddShip(ship);
+                FleetCommanders.Add(player);
+            }
+
+		}
+
+
+        public void Init()
 		{
 			ActiveSectors = Program.Persistor.SectorRepo.GetAll();
 
-			foreach (var p in Program.Persistor.PlanetsRepo.GetAll())
+            foreach (var p in Program.Persistor.PlanetsRepo.GetAll())
 			{
-				Galaxy.AddPlanet(p);
+                Galaxy.AddPlanet(p);
 			}
 
 			foreach (var p in Program.Persistor.PlayersRepo.GetAll())
 			{
-				FleetCommanders.AddPlayer(p);
-			}
+				p.Galaxy = Galaxy;
+                FleetCommanders.AddPlayer(p);
+            }
 
-	
-			//AddPlanets(100);
-			//AddFleetCommanders(100);
-		}
+            Logger.Log($"Planets loaded: " + Galaxy.Count, TraceEventType.Information);
+            Logger.Log($"Fleetcommanders loaded: " + FleetCommanders.Count, TraceEventType.Information);
+
+            //AddPlanets(500);
+            //AddFleetCommanders(500);
+
+            //Program.Persistor.SaveGalaxy(Program.TheGame.Galaxy);
+            //Program.Persistor.SavePlayers(Program.TheGame.FleetCommanders);
+        }
 
 
-		private void Ship_Arrived(string message, Coordinates newPosition, DbShip ship)
+        private void Ship_Arrived(string message, SpaceDealerModels.Units.Coordinates newPosition, DbShip ship)
 		{
 			ship.Cruise.Departure = ship.Cruise.Destination;
 		}

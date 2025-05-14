@@ -26,8 +26,12 @@ namespace SpaceDealerModels.Units
 		{
 			return this.FirstOrDefault(x => x.Sector.X == coordinates.X & x.Sector.Y == coordinates.Y & x.Sector.Z == coordinates.Z);
 		}
+        public DbPlanet GetPlanetById(string id)
+        {
+            return this.FirstOrDefault(x => x.Id == id);
+        }
 
-		public Planets GetAllPlanets(DbPlanet excludeThisPlanet)
+        public Planets GetAllPlanets(DbPlanet excludeThisPlanet)
 		{
 			var planets = new Planets();
 			planets.AddRange(this.Where(x => !x.Name.Equals(excludeThisPlanet.Name, System.StringComparison.InvariantCultureIgnoreCase)));
@@ -53,7 +57,16 @@ namespace SpaceDealerModels.Units
 			return ret.TrimEnd('\n');
 		}
 
-		public DbPlanet GetRandomPlanet()
+        public Planets GetRandomPlanets(int howMany)
+        {
+            var randomPlanets = new Planets();
+            for (int i = 0; i < howMany; i++)
+                randomPlanets.Add(GetRandomPlanet());
+
+			return randomPlanets;
+        }
+
+        public DbPlanet GetRandomPlanet()
 		{
 			Random random = new Random();
 			var i = random.Next(0, this.Count-1);

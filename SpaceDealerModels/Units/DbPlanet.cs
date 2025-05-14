@@ -32,7 +32,7 @@ namespace SpaceDealerModels.Units
 		public override void Update()
 		{
 			base.Update();
-			Market.Update();
+			//Market.Update();
 			Industry.Update();
 		}
 		public override string ToString()
