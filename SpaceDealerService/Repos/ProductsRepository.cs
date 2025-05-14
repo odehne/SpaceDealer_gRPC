@@ -154,8 +154,20 @@ namespace SpaceDealerService.Repos
 					command.Parameters.AddWithValue("@pricePerTon", item.PricePerTon);
 					command.Parameters.AddWithValue("@amountGeneratedPerRound", item.AmountGeneratedPerRound);
 					//command.Parameters.AddWithValue("@picturePath", item.PicturePath);
+<<<<<<< HEAD
 					command.ExecuteNonQuery();
 					Parent.Logger.Log($"Product {item.Name} saved.", TraceEventType.Information);
+=======
+					try
+					{
+						command.ExecuteNonQuery();
+						Parent.Logger.Log($"Product {item.Name} saved.", TraceEventType.Information);
+					}
+					catch (System.Exception e)
+					{
+						Parent.Logger.Log($"Failed to add product {e.Message}", TraceEventType.Error);
+					}
+>>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
 				}
 			}
 			catch (System.Exception e)

@@ -20,17 +20,25 @@ namespace SpaceDealer
 		public Sectors ActiveSectors { get; set; }
 		public Players FleetCommanders { get; set; }
 		public ILogger Logger { get; set; }
+<<<<<<< HEAD
         
+=======
+>>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
         public SpaceDealerGame(ILogger logger)
         {
             Logger = logger;
             Galaxy = new Planets();
             FleetCommanders = new Players();
             Repository.Init();
+<<<<<<< HEAD
 
 
         }
 
+=======
+        }
+
+>>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
         public void AddPlanets(int amount = 1000)
 		{
 			for (int i = 0; i < amount; i++)
@@ -54,9 +62,16 @@ namespace SpaceDealer
                 var fcn = Repository.GetRandomFleetCommanderName();
                 var player = new DbPlayer(fcn, planet, discoveredPlanets, Galaxy, Program.TheGame.ActiveSectors);
 				var shipName = Repository.GetRandomShipName();
+<<<<<<< HEAD
                 var ship = new DbShip(shipName, player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet)
                 {
                     CargoSize = 30,
+=======
+                var ship = new DbShip(shipName, player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }))
+                {
+                    CargoSize = 30,
+                    Parent = player.Fleet,
+>>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
                     PlayerId = player.Id,
                     PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
                 };
@@ -86,9 +101,17 @@ namespace SpaceDealer
             Logger.Log($"Planets loaded: " + Galaxy.Count, TraceEventType.Information);
             Logger.Log($"Fleetcommanders loaded: " + FleetCommanders.Count, TraceEventType.Information);
 
+<<<<<<< HEAD
             AddPlanets(10);
             AddFleetCommanders(5);
 
+=======
+            //AddPlanets(500);
+            //AddFleetCommanders(500);
+
+            //Program.Persistor.SaveGalaxy(Program.TheGame.Galaxy);
+            //Program.Persistor.SavePlayers(Program.TheGame.FleetCommanders);
+>>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
         }
 
 
