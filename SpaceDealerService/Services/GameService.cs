@@ -148,12 +148,8 @@ namespace SpaceDealerService
 
 			if (player == null)
 			{
-<<<<<<< HEAD
 				var homePlanet = Program.TheGame.Galaxy.GetRandomPlanet();
                 player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, homePlanet, Program.TheGame.Galaxy.GetFirstFivePlanets(), Program.TheGame.Galaxy, Program.TheGame.ActiveSectors);
-=======
-				player = new SpaceDealerModels.Units.DbPlayer(request.PlayerName, Program.TheGame.Galaxy.GetPlanetByName("erde"), Program.TheGame.Galaxy.GetFirstFivePlanets(), Program.TheGame.Galaxy, Program.TheGame.ActiveSectors);
->>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
 				player.PicturePath = request.PicturePath;
             }
             else
@@ -172,13 +168,9 @@ namespace SpaceDealerService
 		public override Task<ShipReply> AddShip(ShipRequest request, ServerCallContext context)
 		{
 			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
-<<<<<<< HEAD
 			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, 
 														p.HomePlanet, 
 														Repository.GetFeatureSet(new string[] { "SignalRange+1" }), p.Fleet) { CargoSize = 30 };
-=======
-			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, p.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" })) { CargoSize = 30, Parent = p.Fleet };
->>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
 			s.PlayerId = p.Id;
 			s.PicturePath = ".\\Spaceships\\MediumFrighter.jpg";
 			p.Fleet.AddShip(s);

@@ -50,12 +50,8 @@ namespace SpaceDealerModels.Units
 			Shields = 2;
 			Hull = 3;
 			Features = featureSet;
-<<<<<<< HEAD
             Parent = parent;
             CurrentLoad = new DbProductsInStock();
-=======
-			CurrentLoad = new DbProductsInStock();
->>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
 			CurrentPlanet = Parent.Parent.Galaxy.GetPlanetById(homeplanet.Id);
 
             //Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);

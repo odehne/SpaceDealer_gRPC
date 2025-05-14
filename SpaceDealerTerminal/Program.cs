@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿using SpaceDealerService;
+using SpaceDealerService;
 using SpaceDealerTerminal;
 using Terminal.Gui;
 
@@ -134,74 +133,3 @@ namespace SpaceDealerTerminal
     }
 }
 
-//Application.Init();
-
-//try
-//{
-//    var exampleWindow = new ExampleWindow
-//    {
-//        // Set the size of the window
-//        Width = Dim.Fill(),
-//        Height = Dim.Fill()
-//    };
-//    Application.Run(exampleWindow);
-//}
-//finally
-//{
-//    Application.Shutdown();
-//    // To see this output on the screen it must be done after shutdown,
-//    // which restores the previous screen.
-//    Console.WriteLine($@"Username: {ExampleWindow.UserName}");
-//}
-=======
-﻿
-using Terminal.Gui;
-
-var win = new Window()
-{
-    Width = Dim.Fill(),
-    Height = Dim.Fill()
-};
-
-Application.Init();
-
-Application.Top.Add(win);
-//var button = new Button
-//{
-//    Text = "Hello"
-//};
-//win.Add(button);
-
-
-var frame1 = new FrameView("Frame 1")
-{
-    Width = Dim.Percent(50),
-    Height = Dim.Fill(),
-};
-
-var frame2 = new FrameView("Frame 2")
-{
-    X = Pos.Right(frame1),
-    Width = Dim.Percent(50),
-    Height = Dim.Fill(),
-};
-
-var lbl1 = new Label("Frame contents 1")
-{
-    Height =1,
-    Width = 20,
-};
-
-var lbl2= new Label("Frame contents 2")
-{
-    Height = 1,
-    Width = 20,
-};
-
-frame1.Add(lbl1);
-frame2.Add(lbl2);
-
-win.Add(frame1, frame2);
-
-Application.Run();
->>>>>>> dbd57fff9c962da63d94361fc58baa3c51357c6a
