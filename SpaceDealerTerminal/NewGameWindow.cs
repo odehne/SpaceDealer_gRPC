@@ -72,8 +72,8 @@ namespace SpaceDealerTerminal
             }
 
             Program.CurrentPlayer = await GameProxy.AddPlayer(CommanderName, ShipName);
-            var ship = GameProxy.AddShip(CommanderName, ShipName).Result;
-            var result = GameProxy.SaveGame(CommanderName).Result;
+            var ship = await GameProxy.AddShip(CommanderName, ShipName);
+            var result = await GameProxy.SaveGame(CommanderName);
             Program.CurrentPlayer.Ships.Add(ship);
             Program.CurrentShip = ship;
 

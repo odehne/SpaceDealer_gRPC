@@ -18,8 +18,7 @@ namespace SpaceDealerService
 				AmountGeneratedPerRound = uPis.AmountGeneratedPerRound,
 				PricePerTon = uPis.PricePerTon,
 				TotalPrice = uPis.GetTotalPrice(),
-				TotalWeight = uPis.GetTotalWeight(),
-				PicturePath = uPis.PicturePath
+				TotalWeight = uPis.GetTotalWeight()
 			};
 		}
 

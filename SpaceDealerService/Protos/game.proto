@@ -166,7 +166,6 @@ message ProductInStock {
     double PricePerTon = 5;
     double TotalWeight = 6;
     double TotalPrice = 7;
-    string PicturePath = 8;
 }
 
 message Ship {

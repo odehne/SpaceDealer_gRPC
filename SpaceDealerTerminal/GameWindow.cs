@@ -57,7 +57,7 @@ namespace SpaceDealerTerminal
                 Width = Dim.Fill(),
                 Height = 1
             };
-            var shipLabel2 = new Label("Aktuelle Position: " + Program.CurrentShip.Cruise.CurrentSector.ToString())
+            var shipLabel2 = new Label("Position: " + OutputHelper.GetCurrentShipPosition(Program.CurrentShip))
             {
                 X = 1,
                 Y = 4,
@@ -65,6 +65,10 @@ namespace SpaceDealerTerminal
                 Height = 1
             };
             playerFrame.Add(playerLabel);
+            playerFrame.Add(shipLabel);
+            playerFrame.Add(creditsLabel);
+            playerFrame.Add(cargoLabel);
+            playerFrame.Add(shipLabel2);
             Add(playerFrame);
         }
     }
