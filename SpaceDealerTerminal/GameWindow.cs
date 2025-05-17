@@ -9,17 +9,17 @@ namespace SpaceDealerTerminal
 
         public GameWindow()
         {
-            var menu = new MenuBar(new MenuBarItem[]
-            {
-                new MenuBarItem("_File", new MenuItem[]
-                {
+            var menu = new MenuBar(
+            [
+                new MenuBarItem("_File",
+                [
                     new MenuItem("_Quit", "Quit game", () => { Application.RequestStop(); })
-                }),
-                new MenuBarItem("_Help", new MenuItem[]
-                {
+                ]),
+                new MenuBarItem("_Help",
+                [
                     new MenuItem("_About", "Show about dialog", () => { MessageBox.Query("About", "Space Dealer Terminal App", "Ok"); })
-                })
-            });
+                ])
+            ]);
             Add(menu);
 
             var playerFrame = new FrameView()
@@ -27,8 +27,17 @@ namespace SpaceDealerTerminal
                 X = 0,
                 Y = 0,
                 Width = Dim.Percent(50),
-                Height = Dim.Fill()
+                Height = Dim.Percent(25),
             };
+
+            var shipFrame = new FrameView()
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Percent(50),
+                Height = Dim.Percent(75),
+            };
+
             var playerLabel = new Label("Commander: " + Program.CurrentPlayer.Name)
             {
                 X = 1,
@@ -69,6 +78,9 @@ namespace SpaceDealerTerminal
             playerFrame.Add(creditsLabel);
             playerFrame.Add(cargoLabel);
             playerFrame.Add(shipLabel2);
+            
+            
+            
             Add(playerFrame);
         }
     }

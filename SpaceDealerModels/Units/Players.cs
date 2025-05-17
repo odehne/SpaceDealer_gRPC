@@ -14,7 +14,7 @@ namespace SpaceDealerModels.Units
 
 		public DbPlayer AddPlayer(DbPlayer player)
 		{
-			var p = GetPlayerByName(player.Name);
+			var p = GetPlayerById(player.Id);
 			if (p != null)
 				return p;
 
@@ -47,8 +47,14 @@ namespace SpaceDealerModels.Units
 
         public DbPlayer GetPlayerByName(string name)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-		}
+			var p = this.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+			if (p != null)
+			{
+				p.Fleet.Clear();
+                return p;
+            }
+            return null;
+        }
 
 		public override string ToString()
 		{

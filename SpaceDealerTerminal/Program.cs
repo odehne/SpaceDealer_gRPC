@@ -32,23 +32,29 @@ namespace SpaceDealerTerminal
                 Height = Dim.Fill()
             };
 
-            var menu = new MenuBar(new MenuBarItem[]
-            {
-                new MenuBarItem("_File", new MenuItem[]
-                {
+            var menu = new MenuBar(
+            [
+                new MenuBarItem("_File",
+                [
                     new MenuItem("_New", "New game", () => 
                     { 
                         var ngw = new NewGameWindow();
                         Application.Run(ngw);
                        
                     }),
+                    new MenuItem("_Load", "Load game", () =>
+                    {
+                        var ngw = new LoadGameWindow();
+                        Application.Run(ngw);
+
+                    }),
                     new MenuItem("_Quit", "Quit game", () => { Application.RequestStop(); })
-                }),
-                new MenuBarItem("_Help", new MenuItem[]
-                {
+                ]),
+                new MenuBarItem("_Help",
+                [
                     new MenuItem("_About", "Show about dialog", () => { MessageBox.Query("About", "Space Dealer Terminal App", "Ok"); })
-                })
-            });
+                ])
+            ]);
 
             mainWindow.Add(menu);
             Application.Run(mainWindow);

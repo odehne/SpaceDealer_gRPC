@@ -42,7 +42,6 @@ namespace SpaceDealerService
             Persistor.SaveGalaxy(Program.TheGame.Galaxy);
             Persistor.SavePlayers(Program.TheGame.FleetCommanders);
 
-
             var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
 			var engineThread = new Thread(engine.Play) { IsBackground = false };
 			engineThread.Start();

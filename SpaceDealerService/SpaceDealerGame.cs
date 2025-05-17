@@ -86,9 +86,7 @@ namespace SpaceDealer
 
             AddPlanets(10);
             AddFleetCommanders(5);
-
         }
-
 
         private void Ship_Arrived(string message, SpaceDealerModels.Units.Coordinates newPosition, DbShip ship)
 		{

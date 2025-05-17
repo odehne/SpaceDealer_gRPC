@@ -159,7 +159,7 @@ namespace SpaceDealerService
 			return ret;
 		}
 
-		internal static Player ConvertToPlayer(SpaceDealerModels.Units.DbPlayer uP)
+		internal static Player ConvertToPlayer(DbPlayer uP)
 		{
 			var player = new Player
 			{
@@ -168,6 +168,9 @@ namespace SpaceDealerService
 				HomePlanet = uP.HomePlanet.Name,
 				PicturePath = uP.PicturePath
 			};
+
+
+
 			foreach (var sh in uP.Fleet)
 			{
 				player.Ships.Add(ConvertToShip(sh));
