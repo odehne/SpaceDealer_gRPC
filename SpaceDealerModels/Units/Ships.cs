@@ -28,7 +28,12 @@ namespace SpaceDealerModels.Units
 		{
 			return this.FirstOrDefault(x => x.Name.Equals(name));
 		}
-		public DbShip GetShipInSector(DbCoordinates coordinates)
+
+        public DbShip GetShipById(string id)
+        {
+            return this.FirstOrDefault(x => x.Id.Equals(id));
+        }
+        public DbShip GetShipInSector(DbCoordinates coordinates)
 		{
 			return this.FirstOrDefault(x => x.Cruise.CurrentSector.X == coordinates.X & 
 											x.Cruise.CurrentSector.Y == coordinates.Y & 

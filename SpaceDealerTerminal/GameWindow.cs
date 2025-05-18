@@ -24,64 +24,97 @@ namespace SpaceDealerTerminal
 
             var playerFrame = new FrameView()
             {
-                X = 0,
-                Y = 0,
+                Text = "Commander",
                 Width = Dim.Percent(50),
                 Height = Dim.Percent(25),
             };
 
             var shipFrame = new FrameView()
             {
-                X = 0,
-                Y = 0,
+                Text = "Schiff",
+                Y = Pos.Bottom(playerFrame),
                 Width = Dim.Percent(50),
                 Height = Dim.Percent(75),
             };
 
-            var playerLabel = new Label("Commander: " + Program.CurrentPlayer.Name)
+            var actionFrame = new FrameView()
             {
-                X = 1,
-                Y = 0,
-                Width = Dim.Fill(),
-                Height = 1
+                Text = "Aktionen",
+                X = Pos.Right(playerFrame),
+                Width = Dim.Percent(50),
+                Height = Dim.Fill(),
             };
-            var shipLabel = new Label("Schiff: " + Program.CurrentShip.ShipName)
+
+            Add(playerFrame);
+            Add(shipFrame);
+            Add(actionFrame);
+
+            var playerLabel = new Label("Name: " + Program.CurrentPlayer.Name)
             {
                 X = 1,
                 Y = 1,
                 Width = Dim.Fill(),
                 Height = 1
             };
-            var creditsLabel = new Label("Credits: " + Program.CurrentPlayer.Credits)
+            var hpLabel = new Label("HeimatPlanet: " + Program.CurrentPlayer.HomePlanet)
             {
                 X = 1,
                 Y = 2,
-                Width = Dim.Fill(), 
+                Width = Dim.Fill(),
                 Height = 1
             };
-            var cargoLabel = new Label("Cargo: " + Program.CurrentShip.CargoLoad.CalculateSize() + "t")
+            var creditsLabel = new Label("Credits: " + Program.CurrentPlayer.Credits)
             {
                 X = 1,
                 Y = 3,
                 Width = Dim.Fill(),
                 Height = 1
             };
-            var shipLabel2 = new Label("Position: " + OutputHelper.GetCurrentShipPosition(Program.CurrentShip))
+            var fleetSizeLabel = new Label("Anzahl Schiffe: " + Program.CurrentPlayer.Ships.Count)
             {
                 X = 1,
                 Y = 4,
                 Width = Dim.Fill(),
                 Height = 1
             };
+
+            var shipLabel = new Label("Name: " + Program.CurrentShip.ShipName)
+            {
+                X = 1,
+                Y = 1,
+                Width = Dim.Fill(),
+                Height = 1
+            };
+            
+            var cargoLabel = new Label("Cargo: " + Program.CurrentShip.CargoLoad.CalculateSize() + "t")
+            {
+                X = 1,
+                Y = 2,
+                Width = Dim.Fill(),
+                Height = 1
+            };
+
+            var shipLabel2 = new Label("Position: " + OutputHelper.GetCurrentShipPosition(Program.CurrentShip))
+            {
+                X = 1,
+                Y = 3,
+                Width = Dim.Fill(),
+                Height = 1
+            };
+            
             playerFrame.Add(playerLabel);
-            playerFrame.Add(shipLabel);
+            playerFrame.Add(hpLabel);
             playerFrame.Add(creditsLabel);
-            playerFrame.Add(cargoLabel);
-            playerFrame.Add(shipLabel2);
+            playerFrame.Add(fleetSizeLabel);
+
+
+            shipFrame.Add(shipLabel);
+            shipFrame.Add(cargoLabel);
+            shipFrame.Add(shipLabel2);
             
             
             
-            Add(playerFrame);
+           
         }
     }
 }

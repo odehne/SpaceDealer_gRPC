@@ -16,7 +16,7 @@ namespace SpaceDealerTerminal
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.GetPlayerAsync(new PlayerRequest { PlayerName = playerName });
+			var reply = await client.GetPlayerByNameAsync(new PlayerByNameRequest { PlayerName = playerName });
 			if (reply.Player != null)
 			{
 				return true;
@@ -28,7 +28,7 @@ namespace SpaceDealerTerminal
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.AddPlayerAsync(new AddPlayerRequest { PlayerName = playerName, PicturePath =picPath  });
+			var reply = await client.AddPlayerAsync(new AddPlayerRequest { PlayerName = playerName, PicturePath = picPath  });
 			if (reply.Player != null)
 			{
 				return reply.Player;
@@ -36,41 +36,41 @@ namespace SpaceDealerTerminal
 			return null;
 		}
 
-		public static async Task<RepeatedField<UpdateInfo>> GetUpdates(string playerName)
+		public static async Task<RepeatedField<UpdateInfo>> GetUpdates(string playerId)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.GetUpdatesAsync(new PlayerRequest { PlayerName = playerName });
+			var reply = await client.GetUpdatesAsync(new PlayerRequest { PlayerId = playerId });
 			return reply.UpdateInfos;
 		}
-		public static async Task<SaveGameReply> SaveGame(string playerName)
+		public static async Task<SaveGameReply> SaveGame(string playerId)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.SaveGameAsync(new PlayerRequest { PlayerName = playerName });
+			var reply = await client.SaveGameAsync(new PlayerRequest { PlayerId = playerId });
 			return reply;
 		}
 
 
 
-		public static async Task<BattleReply> BattleAttack(string playerName, string shipName)
+		public static async Task<BattleReply> BattleAttack(string playerId, string shipId)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			return await client.BattleAttackAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+			return await client.BattleAttackAsync(new ShipRequest { PlayerId = playerId, ShipId = shipId });
 		}
-		public static async Task<BattleReply> BattleDefend(string playerName, string shipName)
-		{
+		public static async Task<BattleReply> BattleDefend(string playerId, string shipId)
+        {
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			return await client.BattleDefendAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+			return await client.BattleDefendAsync(new ShipRequest { PlayerId = playerId, ShipId = shipId });
 		}
 
-		public static async Task<Ship> AddShip(string playerName, string shipName)
+		public static async Task<Ship> AddShip(string playerId, string shipName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.AddShipAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+			var reply = await client.AddShipAsync(new AddShipRequest { PlayerId = playerId, ShipName = shipName });
 			if (reply.Ship != null)
 			{
 				return reply.Ship;
@@ -78,25 +78,25 @@ namespace SpaceDealerTerminal
 			return null;
 		}
 
-		public static async Task<RepeatedField<Ship>> GetAllShips(string playerName)
+		public static async Task<RepeatedField<Ship>> GetAllShips(string playerId)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.GetShipsAsync(new ShipsRequest { PlayerName = playerName });
+			var reply = await client.GetShipsAsync(new ShipsRequest { PlayerId = playerId });
 			return reply.Ships;
 		}
 
-		public static async Task<Ship> GetShip(string playerName, string shipName)
-		{
+		public static async Task<Ship> GetShip(string playerId, string shipId)
+        {
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.GetShipAsync(new ShipRequest { PlayerName = playerName, ShipName = shipName });
+			var reply = await client.GetShipAsync(new ShipRequest {PlayerId = playerId, ShipId = shipId });
 			return reply.Ship;
 		}
 
-		public static async Task<bool> ShipNameTaken(string playerName, string shipName)
+		public static async Task<bool> ShipNameTaken(string playerId, string shipName)
 		{
-			var ships = await GetAllShips(playerName);
+			var ships = await GetAllShips(playerId);
 			if (ships != null)
 			{
 				foreach (var ship in ships)
@@ -108,40 +108,48 @@ namespace SpaceDealerTerminal
 			return false;
 		}
 
-		public static async Task<bool> StartCruise(string playerName, string shipName, string planetName)
+		public static async Task<bool> StartCruise(string playerId, string shipId, string planetName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var cruiseStarted = await client.StartCruiseAsync(new CruiseRequest { DestinationPlanetName = planetName, PlayerName = playerName, ShipName = shipName });
+			var cruiseStarted = await client.StartCruiseAsync(new CruiseRequest { DestinationPlanetName = planetName, PlayerId = playerId, ShipId = shipId });
 			return cruiseStarted.OnItsWay;
 		}
 
-		public static async Task<bool> CruiseToLocation(string playerName, string shipName, Coordinates newPosition)
+		public static async Task<bool> CruiseToLocation(string playerId, string shipId, Coordinates newPosition)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var cruiseStarted = await client.CruiseToLocationAsync(new CruiseToCoordinatesRequest { PlayerName = playerName, ShipName = shipName, Position = newPosition });
+			var cruiseStarted = await client.CruiseToLocationAsync(new CruiseToCoordinatesRequest { PlayerId = playerId , ShipId = shipId, Position = newPosition });
 			return cruiseStarted.OnItsWay;
 		}
 
 
-		public static async Task<bool> ContinueTravel(string playerName, string shipName, string planetName)
+		public static async Task<bool> ContinueTravel(string playerId, string shipId, string planetName)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var cruiseStarted = await client.ContinueCruiseAsync(new CruiseRequest { DestinationPlanetName = planetName, PlayerName = playerName, ShipName = shipName });
+			var cruiseStarted = await client.ContinueCruiseAsync(new CruiseRequest { DestinationPlanetName = planetName, PlayerId = playerId, ShipId = shipId });
 			return cruiseStarted.OnItsWay;
 		}
 
-		public static async Task<Player> GetPlayer(string playerName)
+		public static async Task<Player> GetPlayer(string playerId)
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);
-			var reply = await client.GetPlayerAsync(new PlayerRequest { PlayerName = playerName });
+			var reply = await client.GetPlayerAsync(new PlayerRequest { PlayerId = playerId });
 			return reply.Player;
 		}
 
-		public static async Task<RepeatedField<Planet>> GetAllPlanets()
+        public static async Task<Player> GetPlayerByName(string playerName)
+        {
+            using var channel = GrpcChannel.ForAddress(ServiceURL);
+            var client = new Game.GameClient(channel);
+            var reply = await client.GetPlayerByNameAsync(new PlayerByNameRequest { PlayerName = playerName});
+            return reply.Player;
+        }
+
+        public static async Task<RepeatedField<Planet>> GetAllPlanets()
 		{
 			using var channel = GrpcChannel.ForAddress(ServiceURL);
 			var client = new Game.GameClient(channel);

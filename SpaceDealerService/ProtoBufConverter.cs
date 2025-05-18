@@ -49,9 +49,9 @@ namespace SpaceDealerService
 			return ret;
 		}
 
-		public static Coordinates ConvertToCoordinates(SpaceDealerModels.Units.DbCoordinates uCoords)
+		public static Coordinates ConvertToCoordinates(DbCoordinates uCords)
 		{
-			return new Coordinates { X = uCoords.X, Y = uCoords.Y, Z = uCoords.Z };
+			return new Coordinates { X = uCords.X, Y = uCords.Y, Z = uCords.Z };
 		}
 
 	
@@ -69,24 +69,24 @@ namespace SpaceDealerService
 			
 		}
 
-		public static Journey ConvertToJourney(SpaceDealerModels.Units.DbJourney uJourny)
+		public static Journey ConvertToJourney(SpaceDealerModels.Units.DbJourney uJourney)
 		{
 			var ret = new Journey
 			{
-				CurrentDistance = uJourny.CurrentDistanceToDestination,
-				CurrentSector = ConvertToCoordinates(uJourny.CurrentSector),
-				Departure = ConvertToPlanet(uJourny.Departure),
-				Destination = ConvertToPlanet(uJourny.Destination)
+				CurrentDistance = uJourney.CurrentDistanceToDestination,
+				CurrentSector = ConvertToCoordinates(uJourney.CurrentSector),
+				Departure = ConvertToPlanet(uJourney.Departure),
+				Destination = ConvertToPlanet(uJourney.Destination)
 			};
 
-			if (uJourny.DiscoveredPlanet != null)
+			if (uJourney.DiscoveredPlanet != null)
 			{
-				ret.NewPlanetDiscovered = ConvertToPlanet(uJourny.DiscoveredPlanet);
+				ret.NewPlanetDiscovered = ConvertToPlanet(uJourney.DiscoveredPlanet);
 			}
 
-			if (uJourny.EnemyBattleShip != null)
+			if (uJourney.EnemyBattleShip != null)
 			{
-				ret.EnemyBattleShip = ConvertToPirateShip(uJourny.EnemyBattleShip);
+				ret.EnemyBattleShip = ConvertToPirateShip(uJourney.EnemyBattleShip);
 			}
 
 			return ret;
@@ -131,6 +131,7 @@ namespace SpaceDealerService
 			var ret = new Ship
 			{
 				ShipName = uShip.Name,
+				ShipId = uShip.Id,
 				CargoSize = uShip.CargoSize,
 				Shields = uShip.Shields,
 				Hull = uShip.Hull,
@@ -164,6 +165,7 @@ namespace SpaceDealerService
 			var player = new Player
 			{
 				Name = uP.Name,
+				PlayerId = uP.Id,
 				Credits = uP.Credits,
 				HomePlanet = uP.HomePlanet.Name,
 				PicturePath = uP.PicturePath

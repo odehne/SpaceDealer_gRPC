@@ -64,16 +64,16 @@ namespace SpaceDealerTerminal
                 return;
             }
 
-            var shipNameExists = await GameProxy.ShipNameTaken(CommanderName, ShipName);
-            if (shipNameExists == true)
-            {
-                MessageBox.ErrorQuery("Neues Spiel", "Der Name des Schiffs ist schon vergeben.", "Ok");
-                return;
-            }
+            //var shipNameExists = await GameProxy.ShipNameTaken(Program.CurrentPlayer.PlayerId, ShipName);
+            //if (shipNameExists == true)
+            //{
+            //    MessageBox.ErrorQuery("Neues Spiel", "Der Name des Schiffs ist schon vergeben.", "Ok");
+            //    return;
+            //}
 
             Program.CurrentPlayer = await GameProxy.AddPlayer(CommanderName, ShipName);
-            var ship = await GameProxy.AddShip(CommanderName, ShipName);
-            var result = await GameProxy.SaveGame(CommanderName);
+            var ship = await GameProxy.AddShip(Program.CurrentPlayer.PlayerId, ShipName);
+            var result = await GameProxy.SaveGame(Program.CurrentPlayer.PlayerId);
             Program.CurrentPlayer.Ships.Add(ship);
             Program.CurrentShip = ship;
 

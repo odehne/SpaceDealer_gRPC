@@ -14,13 +14,13 @@ namespace SpaceDealerService
 	{
 		public override Task<CruiseReply> StartCruise(CruiseRequest request, ServerCallContext context)
 		{
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			if (player == null)
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
 			}
-			var ship = player.Fleet.GetShipByName(request.ShipName);
-			if (ship == null)
+			var ship = player.Fleet.GetShipById(request.ShipId);
+            if (ship == null)
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
 			}
@@ -36,12 +36,12 @@ namespace SpaceDealerService
 
 		public override Task<CruiseReply> CruiseToLocation(CruiseToCoordinatesRequest request, ServerCallContext context)
 		{
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			if (player == null)
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
 			}
-			var ship = player.Fleet.GetShipByName(request.ShipName);
+			var ship = player.Fleet.GetShipById(request.ShipId);
 			if (ship == null)
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
@@ -53,12 +53,12 @@ namespace SpaceDealerService
 
 		public override Task<CruiseReply> ContinueCruise(CruiseRequest request, ServerCallContext context)
 		{
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			if (player == null)
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
 			}
-			var ship = player.Fleet.GetShipByName(request.ShipName);
+			var ship = player.Fleet.GetShipById(request.ShipId);
 			if (ship == null)
 			{
 				return Task.FromResult(new CruiseReply { OnItsWay = false });
@@ -75,7 +75,7 @@ namespace SpaceDealerService
 
 		public override Task<SaveGameReply> SaveGame(PlayerRequest request, ServerCallContext context)
 		{
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			var jset = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
 			var ret = Program.Persistor.SavePlayers(Program.TheGame.FleetCommanders);
 			return Task.FromResult(new SaveGameReply { GameSaved = ret });
@@ -84,7 +84,7 @@ namespace SpaceDealerService
 		public override Task<UpdateReply> GetUpdates(PlayerRequest request, ServerCallContext context)
 		{
 			var reply = new UpdateReply();
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 
 			if (player.UpdateQueue != null)
 			{
@@ -100,8 +100,8 @@ namespace SpaceDealerService
 
 		public override Task<BattleReply> BattleAttack(ShipRequest request, ServerCallContext context)
 		{
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var ship = player.Fleet.GetShipByName(request.ShipName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
+			var ship = player.Fleet.GetShipById(request.ShipId);
 			var result = ship.Attack();
 			if (result.Defeaded == true)
 				player.Credits += result.Treasure;
@@ -111,8 +111,8 @@ namespace SpaceDealerService
 
 		public override Task<BattleReply> BattleDefend(ShipRequest request, ServerCallContext context)
 		{
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
-			var ship = player.Fleet.GetShipByName(request.ShipName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
+			var ship = player.Fleet.GetShipById(request.ShipId);
 			var result = ship.Defend();
 			var reply = ProtoBufConverter.ConvertToBattleReply(result);
 			return Task.FromResult(reply);
@@ -121,7 +121,7 @@ namespace SpaceDealerService
 		public override Task<ShipsReply> GetShips(ShipsRequest request, ServerCallContext context)
 		{
 			var ships = new ShipsReply();
-			var player = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var player = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			if (player == null)
 				return Task.FromResult(new ShipsReply(ships));
 
@@ -165,9 +165,9 @@ namespace SpaceDealerService
 
 		}
 
-		public override Task<ShipReply> AddShip(ShipRequest request, ServerCallContext context)
+		public override Task<ShipReply> AddShip(AddShipRequest request, ServerCallContext context)
 		{
-			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var p = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			var s = new SpaceDealerModels.Units.DbShip(request.ShipName, 
 														p.HomePlanet, 
 														Repository.GetFeatureSet(new string[] { "SignalRange+1" }), p.Fleet) { CargoSize = 30 };
@@ -179,19 +179,27 @@ namespace SpaceDealerService
 
 		public override Task<PlayerReply> GetPlayer(PlayerRequest request, ServerCallContext context)
 		{
-			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var p = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			if(p==null)
 				return Task.FromResult(new PlayerReply { Player = null });
 			return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(p) });
 		}
 
-		public override Task<ShipReply> GetShip(ShipRequest request, ServerCallContext context)
+        public override Task<PlayerReply> GetPlayerByName(PlayerByNameRequest request, ServerCallContext context)
+        {
+            var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+            if (p == null)
+                return Task.FromResult(new PlayerReply { Player = null });
+            return Task.FromResult(new PlayerReply { Player = ProtoBufConverter.ConvertToPlayer(p) });
+        }
+
+        public override Task<ShipReply> GetShip(ShipRequest request, ServerCallContext context)
 		{
-			var p = Program.TheGame.FleetCommanders.GetPlayerByName(request.PlayerName);
+			var p = Program.TheGame.FleetCommanders.GetPlayerById(request.PlayerId);
 			if (p == null)
 				return Task.FromResult(new ShipReply { Ship = null });
 
-			var ship = p.Fleet.GetShipByName(request.ShipName);
+			var ship = p.Fleet.GetShipById(request.ShipId);
 
 			return Task.FromResult(new ShipReply { Ship = ProtoBufConverter.ConvertToShip(ship) }); 
 		}

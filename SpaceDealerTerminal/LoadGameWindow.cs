@@ -41,7 +41,7 @@ namespace SpaceDealerTerminal
         {
             CommanderName = commanderNameText.Text.ToString();
           
-            var player = await GameProxy.GetPlayer(CommanderName);
+            var player = await GameProxy.GetPlayerByName(CommanderName);
             if (player == null)
             {
                 MessageBox.ErrorQuery("Spiel laden", $"Spieler [{CommanderName}] nicht gefunden.", "Ok");

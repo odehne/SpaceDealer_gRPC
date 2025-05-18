@@ -66,7 +66,7 @@ namespace SpaceDealerTerminal
             {
                 if (Program.CurrentPlayer != null)
                 {
-                    var updates = GameProxy.GetUpdates(Program.CurrentPlayer.Name).Result;
+                    var updates = GameProxy.GetUpdates(Program.CurrentPlayer.PlayerId).Result;
                     if (updates != null)
                     {
                         foreach (var u in updates)

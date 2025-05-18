@@ -11,9 +11,10 @@ service Game {
   rpc BattleAttack (ShipRequest) returns (BattleReply);
   rpc AddPlayer (AddPlayerRequest) returns (PlayerReply);
   rpc GetPlayer (PlayerRequest) returns (PlayerReply);
+  rpc GetPlayerByName (PlayerByNameRequest) returns (PlayerReply);
   rpc GetPlayers (EmptyRequest) returns (PlayersReply);
   rpc GetShips (ShipsRequest) returns (ShipsReply);
-  rpc AddShip (ShipRequest) returns (ShipReply);
+  rpc AddShip (AddShipRequest) returns (ShipReply);
   rpc GetShip (ShipRequest) returns (ShipReply);
   rpc GetUpdates (PlayerRequest) returns (UpdateReply);
   rpc StartCruise (CruiseRequest) returns (CruiseReply);
@@ -47,6 +48,7 @@ message Player {
     double Credits = 3;
     string HomePlanet = 4;
     string PicturePath = 5;
+    string playerId = 6;
 }
 
 message PlayersReply {
@@ -90,6 +92,10 @@ message AddPlayerRequest {
 }
 
 message PlayerRequest {
+    string playerId = 1;
+}
+
+message PlayerByNameRequest {
     string playerName = 1;
 }
 
@@ -108,8 +114,13 @@ message Journey {
 }
 
 message ShipRequest {
-   string playerName = 1;
-   string shipName = 2;
+   string playerId = 1;
+   string shipId = 2;
+}
+
+message AddShipRequest {
+   string playerId = 1;
+   string shipName  = 2; 
 }
 
 message ShipReply {
@@ -117,14 +128,14 @@ message ShipReply {
 }
 
 message CruiseRequest {
-    string playerName = 1;
-    string shipName = 2;
+    string playerId = 1;
+    string shipId = 2;
     string destinationPlanetName = 3;
 }
 
 message CruiseToCoordinatesRequest {
-    string playerName = 1;
-    string shipName = 2;
+    string playerId = 1;
+    string shipId = 2;
     Coordinates position = 3;
 }
 
@@ -178,6 +189,7 @@ message Ship {
    int32 Hull = 7;
    Planet CurrentPlanet = 8;
    string PicturePath = 9;
+   string shipId = 10;
 }
 
 message PirateShip {
@@ -196,7 +208,7 @@ message PlanetsReply {
 }
 
 message ShipsRequest {
-   string PlayerName = 1;
+   string PlayerId = 1;
 }
 message ShipsReply {
     repeated Ship Ships = 1;

@@ -48,12 +48,7 @@ namespace SpaceDealerModels.Units
         public DbPlayer GetPlayerByName(string name)
 		{
 			var p = this.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-			if (p != null)
-			{
-				p.Fleet.Clear();
-                return p;
-            }
-            return null;
+			return p;
         }
 
 		public override string ToString()
