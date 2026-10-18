@@ -3,8 +3,10 @@
     "SpaceDealerService": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "scalar/v1",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "STORAGEROOT": "c:\\temp\\"
       },
       "applicationUrl": "https://localhost:58078;http://localhost:58079"
     }

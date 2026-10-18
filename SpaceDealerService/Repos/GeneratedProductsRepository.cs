@@ -1,8 +1,6 @@
-﻿using SpaceDealer;
-using SpaceDealerModels;
+﻿using SpaceDealerModels;
 using SpaceDealerModels.Units;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 
@@ -40,13 +38,20 @@ namespace SpaceDealerService.Repos
 						var productId = reader.GetString(0);
 						var interest = reader.GetDouble(1);
 						var product = Parent.ProductRepo.GetItem(null, productId);
-						product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
-						lst.AddProduct(product);
+						if (product != null)
+						{
+							product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
+							lst.AddProduct(product);
+						}
+						else
+						{
+                            Parent.Logger.Log($"Failed to get generated product with id [{productId}] for planet Id [{planetId}]", TraceEventType.Warning);
+                        }
 					}
 				}
 				reader.Close();
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
 				Parent.Logger.Log($"Failed to get generated products for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
 			}

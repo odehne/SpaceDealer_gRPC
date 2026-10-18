@@ -32,10 +32,12 @@ namespace SpaceDealerService.Repos
 						planet.Name = reader.GetString(1);
 						planet.PicturePath = reader.GetString(2);
 						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
-						planet.Industry = new DbIndustry($"{planet.Id}.industry");
-						planet.Industry.ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id);
-						planet.Industry.GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
-						planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
+                        planet.Industry = new DbIndustry($"{planet.Id}.industry")
+                        {
+                            ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id),
+                            GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id)
+                        };
+                        planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
 						lst.Add(planet);
 					}
 				}
@@ -85,15 +87,19 @@ namespace SpaceDealerService.Repos
 				{
 					while (reader.Read())
 					{
-						var planet = new DbPlanet();
-						planet.Id = reader.GetString(0);
-						planet.Name = reader.GetString(1);
-						planet.PicturePath = reader.GetString(2);
-						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
-						planet.Industry = new DbIndustry($"{planet.Id}.industry");
-						planet.Industry.GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id);
-						planet.Industry.ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id);
-						planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
+                        var planet = new DbPlanet
+                        {
+                            Id = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            PicturePath = reader.GetString(2),
+                            Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5))
+                        };
+                        planet.Industry = new DbIndustry($"{planet.Id}.industry")
+                        {
+                            GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id),
+                            ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id)
+                        };
+                        planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
 						return planet;
 					}
 				}

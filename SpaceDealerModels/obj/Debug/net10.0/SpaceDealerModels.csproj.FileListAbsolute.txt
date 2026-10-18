@@ -1,0 +1,14 @@
+C:\Git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\net10.0\SpaceDealerModels.deps.json
+C:\Git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\net10.0\SpaceDealerModels.dll
+C:\Git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\net10.0\SpaceDealerModels.pdb
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.csproj.AssemblyReference.cache
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.AssemblyInfoInputs.cache
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.AssemblyInfo.cs
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.csproj.CoreCompileInputs.cache
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.sourcelink.json
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.dll
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\refint\SpaceDealerModels.dll
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.pdb
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\ref\SpaceDealerModels.dll
+C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDea.9CA0CB28.Up2Date

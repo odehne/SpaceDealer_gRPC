@@ -1,0 +1,12 @@
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\net7.0\SpaceDealerModels.deps.json
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\net7.0\SpaceDealerModels.dll
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\net7.0\SpaceDealerModels.pdb
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.csproj.AssemblyReference.cache
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.GeneratedMSBuildEditorConfig.editorconfig
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.AssemblyInfoInputs.cache
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.AssemblyInfo.cs
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.csproj.CoreCompileInputs.cache
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.dll
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\refint\SpaceDealerModels.dll
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\SpaceDealerModels.pdb
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net7.0\ref\SpaceDealerModels.dll

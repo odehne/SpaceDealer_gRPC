@@ -1,0 +1,710 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "net10.0",
+    "targetDisplayName": ".NETCoreApp,Version=v10.0"
+  },
+  "analysisStartTime": "2026-10-14T12:58:11.3147924Z",
+  "analysisEndTime": "2026-10-14T12:58:13.1880957Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 2,
+      "issues": 3,
+      "incidents": 23,
+      "effort": 23
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 2,
+        "Optional": 0,
+        "Potential": 21,
+        "Information": 0
+      },
+      "category": {
+        "NuGet": 2,
+        "Project": 2,
+        "Api": 19
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "SpaceDealerModels\\SpaceDealerModels.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 21,
+      "properties": {
+        "appName": "SpaceDealerModels",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net8.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "isTestProject": false,
+        "numberOfFiles": 35,
+        "numberOfCodeFiles": 35,
+        "linesTotal": 2744,
+        "linesOfCode": 2744,
+        "totalApiScanned": 2422,
+        "minLinesOfCodeToChange": 19,
+        "maxLinesOfCodeToChange": 19
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "5dab9d9d-f5b3-4281-a1e0-bcbe425de3d2",
+          "ruleId": "NuGet.0002",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4",
+              "protected": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\SpaceDealerModels.csproj",
+            "snippet": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4",
+            "protectedSnippet": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4",
+            "label": "Newtonsoft.Json 13.0.3",
+            "properties": {
+              "PackageId": "Newtonsoft.Json",
+              "PackageVersion": "13.0.3",
+              "PackageNewVersion": "13.0.4",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "027b688a-344a-4c6a-81d2-d41c0378e760",
+          "ruleId": "Project.0002",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net8.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net8.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\SpaceDealerModels.csproj",
+            "snippet": "Current target framework: net8.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net8.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net8.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        },
+        {
+          "incidentId": "f41d2476-30c1-4b1a-8dd3-3f1cc0d60b98",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "public static async Task\u003CDbFeature\u003E ReadRecord(SqlDataReader reader)",
+              "protected": "T:System.Data.SqlClient.SqlDataReader"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "public static async Task\u003CDbFeature\u003E ReadRecord(SqlDataReader reader)",
+            "protectedSnippet": "T:System.Data.SqlClient.SqlDataReader",
+            "label": "T:System.Data.SqlClient.SqlDataReader",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 51,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "f2eece5a-f501-4cb9-b118-176145e32269",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 88,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "f9df7a5b-a535-4484-ba4b-8299b9de054c",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetGuid(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetGuid(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetGuid(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 88,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "4b7d2606-86ca-419f-badb-532a85d0b25f",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 85,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "3b975919-4b16-4e4d-93e6-d493ce58b638",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetSqlXml(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetSqlXml(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetSqlXml(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 85,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "6955cda2-9395-472d-bf8c-e6c696ad1467",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 82,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "ec723be2-62f9-4974-a338-4f80d4de2229",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetDateTime(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetDateTime(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetDateTime(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 82,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "5ac5ec89-eecf-47b2-9a0e-735f539b54b3",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 79,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "efbfd0c3-c55b-4e9d-b283-63c2f7df7ef9",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetBoolean(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetBoolean(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetBoolean(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 79,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "54ed0476-41f6-4082-bdce-7075873a895a",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 76,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "3ae2e918-81f1-4357-940b-f63d013ce7a7",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetInt64(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetInt64(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetInt64(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 76,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "7c1f96cc-0769-422c-b338-0fbe6ecf66c8",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 73,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "236b95c6-f195-4396-936f-b825e086b361",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetInt32(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetInt32(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetInt32(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 73,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "598619e4-821a-4581-a9b3-d2ceb3c4728e",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 70,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "b1f13491-f3bf-40fc-af86-f95fe18010ee",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetSqlMoney(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetSqlMoney(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetSqlMoney(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 70,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "c6f7b1cb-1c2e-4e02-80d1-99fce16d0efd",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 67,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "ee35505a-a70c-4549-bad4-4c7e4d9f2318",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetString(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetString(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetString(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 67,
+            "column": 32
+          }
+        },
+        {
+          "incidentId": "d0e19faf-6900-4033-af51-e069f344245f",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))\r\n                    {\r\n                        var fieldType = GetDbFieldTypeOrDefault(prop, \u0022DbFieldType\u0022);\r\n\r\n                        switch (fieldType)\r\n                        {\r\n                            case \u0022string\u0022:\r\n                                prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022money\u0022:\r\n                                prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int32\u0022:\r\n                                prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int64\u0022:\r\n                                prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022bool\u0022:\r\n                                prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022datetime\u0022:\r\n                                prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022xml\u0022:\r\n                                prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));\r\n                                break;\r\n                            case \u0022guid\u0022:\r\n                                prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                        }\r\n                    }",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))\r\n                    {\r\n                        var fieldType = GetDbFieldTypeOrDefault(prop, \u0022DbFieldType\u0022);\r\n\r\n                        switch (fieldType)\r\n                        {\r\n                            case \u0022string\u0022:\r\n                                prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022money\u0022:\r\n                                prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int32\u0022:\r\n                                prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int64\u0022:\r\n                                prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022bool\u0022:\r\n                                prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022datetime\u0022:\r\n                                prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022xml\u0022:\r\n                                prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));\r\n                                break;\r\n                            case \u0022guid\u0022:\r\n                                prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                        }\r\n                    }",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.GetOrdinal(System.String)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 60,
+            "column": 20
+          }
+        },
+        {
+          "incidentId": "f371242a-463e-435c-97cb-75d4c4a7a156",
+          "ruleId": "Api.0002",
+          "description": "API is available in package System.Data.SqlClient, 4.8.6. Add package reference to System.Data.SqlClient, 4.8.6",
+          "projectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))\r\n                    {\r\n                        var fieldType = GetDbFieldTypeOrDefault(prop, \u0022DbFieldType\u0022);\r\n\r\n                        switch (fieldType)\r\n                        {\r\n                            case \u0022string\u0022:\r\n                                prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022money\u0022:\r\n                                prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int32\u0022:\r\n                                prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int64\u0022:\r\n                                prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022bool\u0022:\r\n                                prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022datetime\u0022:\r\n                                prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022xml\u0022:\r\n                                prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));\r\n                                break;\r\n                            case \u0022guid\u0022:\r\n                                prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                        }\r\n                    }",
+              "protected": "M:System.Data.SqlClient.SqlDataReader.IsDBNull(System.Int32)"
+            },
+            "kind": "File",
+            "path": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+            "snippet": "if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))\r\n                    {\r\n                        var fieldType = GetDbFieldTypeOrDefault(prop, \u0022DbFieldType\u0022);\r\n\r\n                        switch (fieldType)\r\n                        {\r\n                            case \u0022string\u0022:\r\n                                prop.SetValue(model, reader.GetString(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022money\u0022:\r\n                                prop.SetValue(model, (decimal)reader.GetSqlMoney(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int32\u0022:\r\n                                prop.SetValue(model, reader.GetInt32(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022int64\u0022:\r\n                                prop.SetValue(model, reader.GetInt64(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022bool\u0022:\r\n                                prop.SetValue(model, reader.GetBoolean(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022datetime\u0022:\r\n                                prop.SetValue(model, reader.GetDateTime(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                            case \u0022xml\u0022:\r\n                                prop.SetValue(model, XElement.Parse(reader.GetSqlXml(reader.GetOrdinal(prop.Name)).Value));\r\n                                break;\r\n                            case \u0022guid\u0022:\r\n                                prop.SetValue(model, reader.GetGuid(reader.GetOrdinal(prop.Name)));\r\n                                break;\r\n                        }\r\n                    }",
+            "protectedSnippet": "M:System.Data.SqlClient.SqlDataReader.IsDBNull(System.Int32)",
+            "label": "M:System.Data.SqlClient.SqlDataReader.IsDBNull(System.Int32)",
+            "properties": {
+              "PackageId": "System.Data.SqlClient",
+              "PackageNewVersion": "4.8.6",
+              "CharCount": "3541"
+            },
+            "line": 60,
+            "column": 20
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "SpaceDealerService\\SpaceDealerService.csproj",
+      "startingProject": true,
+      "issues": 2,
+      "storyPoints": 2,
+      "properties": {
+        "appName": "SpaceDealerService",
+        "projectKind": "AspNetCore",
+        "frameworks": [
+          "net8.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "isTestProject": false,
+        "numberOfFiles": 27,
+        "numberOfCodeFiles": 22,
+        "linesTotal": 4824,
+        "linesOfCode": 2686,
+        "totalApiScanned": 8203,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "8df52f1c-aa30-48df-8cb0-7cfc827315e8",
+          "ruleId": "NuGet.0002",
+          "projectPath": "SpaceDealerService\\SpaceDealerService.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4",
+              "protected": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4"
+            },
+            "kind": "File",
+            "path": "SpaceDealerService\\SpaceDealerService.csproj",
+            "snippet": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4",
+            "protectedSnippet": "Newtonsoft.Json, 13.0.3\n\nRecommendation:\n\nRemove Newtonsoft.Json, and replace with new package Newtonsoft.Json 13.0.4",
+            "label": "Newtonsoft.Json 13.0.3",
+            "properties": {
+              "PackageId": "Newtonsoft.Json",
+              "PackageVersion": "13.0.3",
+              "PackageNewVersion": "13.0.4",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "9424b6a8-0607-4669-9290-f3687797c726",
+          "ruleId": "Project.0002",
+          "projectPath": "SpaceDealerService\\SpaceDealerService.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net8.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net8.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "SpaceDealerService\\SpaceDealerService.csproj",
+            "snippet": "Current target framework: net8.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net8.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net8.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    }
+  ],
+  "rules": {
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "isFeature": false,
+      "description": "NuGet package upgrade is recommended for selected target framework.\n\nStandard .NET packages are recommended to have versions matching version of .NET that project targets.\n\nSome other packages also are known to work better for selected target frameworks.",
+      "label": "NuGet package upgrade is recommended",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    },
+    "Project.0002": {
+      "id": "Project.0002",
+      "isFeature": false,
+      "description": "Project\u0027s target framework(s) needs to be changed to the new target framework that you selected for this upgrade.\n\nDuring upgrade target framework will be adjusted to corresponding platform when applicable. In some cases project would result in multiple target frameworks after the upgrade if it was using features that now have their own platforms in modern .NET frameworks (windows, iOS, Android etc).",
+      "label": "Project\u0027s target framework(s) needs to be changed",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Overview of porting from .NET Framework to .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET project SDKs",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0002": {
+      "id": "Api.0002",
+      "isFeature": false,
+      "description": "API is source incompatible for selected .NET version: requires code changes to compile successfully when targeting a new version, such as removing obsolete APIs or changing method signatures.",
+      "label": "Source incompatible for selected .NET version",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}

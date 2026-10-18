@@ -1,0 +1,982 @@
+{
+  "packageGovernance": {
+    "totalDistinctPackages": 27,
+    "totalVersionDriftInstances": 0,
+    "targetFramework": "net10.0",
+    "packages": [
+      {
+        "name": "Google.Protobuf",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "3.27.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "3.27.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.AspNetCore",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.AspNetCore.Server",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.AspNetCore.Server.ClientFactory",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.Core.Api",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.Net.Client",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.Net.ClientFactory",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.Net.Common",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Grpc.Tools",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "2.66.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "2.66.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.DependencyInjection",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.DependencyInjection.Abstractions",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.Http",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.Logging",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.Logging.Abstractions",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.Options",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Microsoft.Extensions.Primitives",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Newtonsoft.Json",
+        "totalProjectCount": 2,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "13.0.4",
+        "isCompatible": true,
+        "description": "NuGet package upgrade is recommended",
+        "versions": [
+          {
+            "version": "13.0.3",
+            "projects": [
+              "SpaceDealerModels",
+              "SpaceDealerService"
+            ],
+            "isRecommended": false
+          }
+        ],
+        "upgrade": {
+          "newVersion": "13.0.4"
+        }
+      },
+      {
+        "name": "runtime.native.System.Data.SqlClient.sni",
+        "totalProjectCount": 2,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "4.4.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "4.4.0",
+            "projects": [
+              "SpaceDealerModels",
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni",
+        "totalProjectCount": 2,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "4.4.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "4.4.0",
+            "projects": [
+              "SpaceDealerModels",
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "runtime.win-x64.runtime.native.System.Data.SqlClient.sni",
+        "totalProjectCount": 2,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "4.4.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "4.4.0",
+            "projects": [
+              "SpaceDealerModels",
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "runtime.win-x86.runtime.native.System.Data.SqlClient.sni",
+        "totalProjectCount": 2,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "4.4.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "4.4.0",
+            "projects": [
+              "SpaceDealerModels",
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "SQLite",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "3.13.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "3.13.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "Stub.System.Data.SQLite.Core.NetStandard",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "1.0.119",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "1.0.119",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "System.Data.SqlClient",
+        "totalProjectCount": 2,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "4.9.1",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "4.9.1",
+            "projects": [
+              "SpaceDealerModels",
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "System.Data.SQLite.Core",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "1.0.119",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "1.0.119",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "System.Diagnostics.DiagnosticSource",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      },
+      {
+        "name": "System.Runtime.CompilerServices.Unsafe",
+        "totalProjectCount": 1,
+        "distinctVersionCount": 1,
+        "recommendedVersion": "6.0.0",
+        "isCompatible": true,
+        "description": "",
+        "versions": [
+          {
+            "version": "6.0.0",
+            "projects": [
+              "SpaceDealerService"
+            ],
+            "isRecommended": true
+          }
+        ]
+      }
+    ]
+  },
+  "projects": [
+    {
+      "name": "SpaceDealerModels",
+      "path": "SpaceDealerModels\\SpaceDealerModels.csproj",
+      "isSdk": true,
+      "currentFrameworks": [
+        "net8.0"
+      ],
+      "targetFramework": "net10.0",
+      "dependencies": {
+        "packages": [
+          {
+            "name": "Newtonsoft.Json",
+            "version": "13.0.3",
+            "isTransitive": false,
+            "isGlobal": false,
+            "isImplicit": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerModels\\SpaceDealerModels.csproj"
+              }
+            ],
+            "description": "NuGet package upgrade is recommended",
+            "compatibility": "valid",
+            "recommendedVersion": "13.0.4",
+            "upgrade": {
+              "newVersion": "13.0.4"
+            }
+          },
+          {
+            "name": "runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni \u003E runtime.win-arm64.runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "runtime.win-x64.runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni \u003E runtime.win-x64.runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "runtime.win-x86.runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni \u003E runtime.win-x86.runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "System.Data.SqlClient",
+            "version": "4.9.1",
+            "isTransitive": false,
+            "isGlobal": false,
+            "isImplicit": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerModels\\SpaceDealerModels.csproj"
+              }
+            ],
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": ""
+          }
+        ],
+        "assemblies": [],
+        "projectReferences": [],
+        "frameworkReferences": []
+      },
+      "imports": [
+        {
+          "path": "SpaceDealerModels\\SpaceDealerModels.csproj.user",
+          "isLocal": true
+        }
+      ]
+    },
+    {
+      "name": "SpaceDealerService",
+      "path": "SpaceDealerService\\SpaceDealerService.csproj",
+      "isSdk": true,
+      "currentFrameworks": [
+        "net8.0"
+      ],
+      "targetFramework": "net10.0",
+      "dependencies": {
+        "packages": [
+          {
+            "name": "Google.Protobuf",
+            "version": "3.27.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Google.Protobuf"
+            ]
+          },
+          {
+            "name": "Grpc.AspNetCore",
+            "version": "2.66.0",
+            "isTransitive": false,
+            "isGlobal": false,
+            "isImplicit": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerService\\SpaceDealerService.csproj"
+              }
+            ],
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": ""
+          },
+          {
+            "name": "Grpc.AspNetCore.Server",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.AspNetCore.Server"
+            ]
+          },
+          {
+            "name": "Grpc.AspNetCore.Server.ClientFactory",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory"
+            ]
+          },
+          {
+            "name": "Grpc.Core.Api",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.AspNetCore.Server \u003E Grpc.Net.Common \u003E Grpc.Core.Api"
+            ]
+          },
+          {
+            "name": "Grpc.Net.Client",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Grpc.Net.Client"
+            ]
+          },
+          {
+            "name": "Grpc.Net.ClientFactory",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory"
+            ]
+          },
+          {
+            "name": "Grpc.Net.Common",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.AspNetCore.Server \u003E Grpc.Net.Common"
+            ]
+          },
+          {
+            "name": "Grpc.Tools",
+            "version": "2.66.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.Tools"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.DependencyInjection",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.Logging \u003E Microsoft.Extensions.DependencyInjection"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.DependencyInjection.Abstractions",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.DependencyInjection.Abstractions"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.Http",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.Logging",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.Logging"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.Logging.Abstractions",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Grpc.Net.Client \u003E Microsoft.Extensions.Logging.Abstractions"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.Options",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.Options"
+            ]
+          },
+          {
+            "name": "Microsoft.Extensions.Primitives",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.Options \u003E Microsoft.Extensions.Primitives"
+            ]
+          },
+          {
+            "name": "Newtonsoft.Json",
+            "version": "13.0.3",
+            "isTransitive": false,
+            "isGlobal": false,
+            "isImplicit": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerService\\SpaceDealerService.csproj"
+              }
+            ],
+            "description": "NuGet package upgrade is recommended",
+            "compatibility": "valid",
+            "recommendedVersion": "13.0.4",
+            "upgrade": {
+              "newVersion": "13.0.4"
+            }
+          },
+          {
+            "name": "runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "SpaceDealerModels \u003E System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "SpaceDealerModels \u003E System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni \u003E runtime.win-arm64.runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "runtime.win-x64.runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "SpaceDealerModels \u003E System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni \u003E runtime.win-x64.runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "runtime.win-x86.runtime.native.System.Data.SqlClient.sni",
+            "version": "4.4.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "SpaceDealerModels \u003E System.Data.SqlClient \u003E runtime.native.System.Data.SqlClient.sni \u003E runtime.win-x86.runtime.native.System.Data.SqlClient.sni"
+            ]
+          },
+          {
+            "name": "SQLite",
+            "version": "3.13.0",
+            "isTransitive": false,
+            "isGlobal": false,
+            "isImplicit": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerService\\SpaceDealerService.csproj"
+              }
+            ],
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": ""
+          },
+          {
+            "name": "Stub.System.Data.SQLite.Core.NetStandard",
+            "version": "1.0.119",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "System.Data.SQLite.Core \u003E Stub.System.Data.SQLite.Core.NetStandard"
+            ]
+          },
+          {
+            "name": "System.Data.SqlClient",
+            "version": "4.9.1",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "SpaceDealerModels \u003E System.Data.SqlClient"
+            ]
+          },
+          {
+            "name": "System.Data.SQLite.Core",
+            "version": "1.0.119",
+            "isTransitive": false,
+            "isGlobal": false,
+            "isImplicit": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerService\\SpaceDealerService.csproj"
+              }
+            ],
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": ""
+          },
+          {
+            "name": "System.Diagnostics.DiagnosticSource",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.Logging \u003E System.Diagnostics.DiagnosticSource"
+            ]
+          },
+          {
+            "name": "System.Runtime.CompilerServices.Unsafe",
+            "version": "6.0.0",
+            "isTransitive": true,
+            "isGlobal": false,
+            "isImplicit": false,
+            "description": "",
+            "compatibility": "valid",
+            "recommendedVersion": "",
+            "transitiveChain": [
+              "Grpc.AspNetCore \u003E Grpc.AspNetCore.Server.ClientFactory \u003E Grpc.Net.ClientFactory \u003E Microsoft.Extensions.Http \u003E Microsoft.Extensions.Logging \u003E Microsoft.Extensions.DependencyInjection \u003E System.Runtime.CompilerServices.Unsafe"
+            ]
+          }
+        ],
+        "assemblies": [],
+        "projectReferences": [
+          {
+            "name": "SpaceDealerModels",
+            "isTransitive": false,
+            "definedIn": [
+              {
+                "path": "SpaceDealerService\\SpaceDealerService.csproj"
+              }
+            ],
+            "referencedProjectPath": "SpaceDealerModels\\SpaceDealerModels.csproj",
+            "compatibility": "valid"
+          }
+        ],
+        "frameworkReferences": []
+      },
+      "imports": [
+        {
+          "path": "SpaceDealerService\\SpaceDealerService.csproj.user",
+          "isLocal": true
+        }
+      ]
+    }
+  ]
+}

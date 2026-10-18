@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SpaceDealer.Enums;
+using SpaceDealerModels.Attributes;
 using System;
 using System.Collections;
 using System.Globalization;
@@ -20,7 +21,7 @@ namespace SpaceDealerModels.Units
 		[JsonProperty("playerType")]
 		public PlayerTypes PlayerType { get; set; }
 		[JsonProperty("currentPlanet")]
-		public DbPlanet CurrentPlanet { get; set; }
+        public DbPlanet CurrentPlanet { get; set; }
 		[JsonProperty("fleet")]
 		public Ships Fleet { get; set; }
 		[JsonProperty("credits")]
@@ -41,11 +42,16 @@ namespace SpaceDealerModels.Units
 
         public string GetPrintableMoney(double value)
         {
-
             CultureInfo culture = new CultureInfo("de-DE");
             string formattedValue = value.ToString("N2", culture);
             return formattedValue;
+        }
 
+        public string GetPrintableDouble(double value)
+        {
+            CultureInfo culture = new CultureInfo("de-DE");
+            string formattedValue = Math.Round(value).ToString("N2", culture);
+            return formattedValue;
         }
 
         public DbPlayer(string name, DbPlanet homeplanet, Planets discoveredPlanets, Planets galaxy, Sectors activeSectors) : base(name)
@@ -172,20 +178,20 @@ namespace SpaceDealerModels.Units
                                     {
                                         Credits += (product.GetTotalPrice() * load.Amount);
                                         ship.CurrentLoad.Remove(load);
-                                        Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {load.Amount}t von {load.Name} für " + GetPrintableMoney(product.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
+                                        Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Amount)}t von {load.Name} für " + GetPrintableMoney(product.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
                                     }
                                     else
                                     {
                                         Credits += (load.GetTotalPrice() * load.Amount);
                                         ship.CurrentLoad.Remove(load);
-                                        Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {load.Amount}t von {load.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
+                                        Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Amount)}t von {load.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
                                     }
                                 }
                                 else
                                 {
                                     Credits += (load.GetTotalPrice() * load.Amount);
                                     ship.CurrentLoad.Remove(load);
-                                    Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {load.Amount}t von {load.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
+                                    Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Amount)}t von {load.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
                                 }
                             }
                         }
@@ -214,7 +220,7 @@ namespace SpaceDealerModels.Units
                                 ship.CurrentLoad.Add(product);
 								ship.CurrentLoad.Last().Amount = amount;
                                 Credits -= (product.GetTotalPrice() * amount);
-                                Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {amount}t von {product.Name} für " + GetPrintableMoney(product.GetTotalPrice() * amount) + " credits auf " + ship.CurrentPlanet.Name + " gekauft. Kontostand: " + GetPrintableMoney(Credits));
+                                Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(amount)}t von {product.Name} für " + GetPrintableMoney(product.GetTotalPrice() * amount) + " credits auf " + ship.CurrentPlanet.Name + " gekauft. Kontostand: " + GetPrintableMoney(Credits));
                             }
                         }
                     }
@@ -239,6 +245,9 @@ namespace SpaceDealerModels.Units
 			{
 				if(ship.State != ShipState.Sunken)
                     ship.Update();
+
+                if (ship.State == ShipState.InJourney)
+                    ship.ScanSpace();
 			}
 		}
 

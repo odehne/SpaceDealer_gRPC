@@ -6,7 +6,8 @@ using System.Globalization;
 
 namespace SpaceDealerModels.Units
 {
-	public class DbShip : BaseUnit
+
+    public class DbShip : BaseUnit
 	{
 		public event ArrivedAtDestination Arrived;
 		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
@@ -127,6 +128,16 @@ namespace SpaceDealerModels.Units
 			//Evaluate current position
 			if (Cruise!=null)
 				Cruise.Update();
+		}
+
+		public ScanResult ScanSpace()
+		{
+			var result = new ScanResult();
+
+			var feat = Features.GetFeatureByName("");
+
+
+			return result;
 		}
 
 		public BattleResult Attack()

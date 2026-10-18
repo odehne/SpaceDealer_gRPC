@@ -295,9 +295,10 @@ namespace SpaceDealerModels.Repositories
 				farming.AddGeneratedProduct(Repository.GetProductByName("Bacon"));
 				farming.AddNeededProduct(Repository.GetProductByName("Gitarren"));
 				farming.AddNeededProduct(Repository.GetProductByName("Fische"));
-				farming.AddNeededProduct(Repository.GetProductByName("Bohrmaschinen"));
+            farming.AddNeededProduct(Repository.GetProductByName("Weizen"));
+            farming.AddNeededProduct(Repository.GetProductByName("Bohrmaschinen"));
 			IndustryLibrary.Add(farming);
-			var fishing = new DbIndustry("Fishfang");
+			var fishing = new DbIndustry("Fischfang");
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Schalentiere"));
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Calmare"));
 				fishing.AddGeneratedProduct(Repository.GetProductByName("Fische"));

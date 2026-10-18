@@ -37,8 +37,16 @@ namespace SpaceDealerService.Repos
 						var productId = reader.GetString(0);
 						var interest = reader.GetDouble(1);
 						var product = Parent.ProductRepo.GetItem(null, productId);
-						product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
-						lst.AddProduct(product);
+
+						if (product != null)
+						{
+							product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
+							lst.AddProduct(product);
+						}
+						else
+						{
+                            Parent.Logger.Log($"Product [{productId}] not found.", TraceEventType.Warning);
+                        }
 					}
 				}
 				reader.Close();

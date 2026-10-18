@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
@@ -21,6 +23,16 @@ namespace SpaceDealerModels.Units
 		{
 
 		}
+
+		public DbProductInStock GetRandomProduct()
+		{
+			if(this.Count == 0) return null;
+
+            var random = new Random();
+			int index = random.Next(this.Count);
+
+			return this[index];
+        }
 
 		public override string ToString()
 		{

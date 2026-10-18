@@ -91,7 +91,7 @@ namespace SpaceDealerService.Repos
                     GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, npId);
                 }
 
-                MarketRepo.SaveMarket(planet.Id, planet.Market);
+                //MarketRepo.SaveMarket(planet.Id, planet.Market);
             }
             return true;
         }

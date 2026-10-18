@@ -1,0 +1,10 @@
+C:\git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\netcoreapp3.1\SpaceDealerModels.deps.json
+C:\git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\netcoreapp3.1\SpaceDealerModels.dll
+C:\git\priv\SpaceDealer\SpaceDealerModels\bin\Debug\netcoreapp3.1\SpaceDealerModels.pdb
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.AssemblyInfoInputs.cache
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.AssemblyInfo.cs
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.dll
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.pdb
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.csproj.CoreCompileInputs.cache
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.csproj.AssemblyReference.cache
+C:\git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\netcoreapp3.1\SpaceDealerModels.GeneratedMSBuildEditorConfig.editorconfig

@@ -1,0 +1,781 @@
+{
+  "playerType": 0,
+  "currentPlanet": null,
+  "fleet": [
+    {
+      "cruise": null,
+      "cargoSize": 30.0,
+      "CargoSize": null,
+      "currentLoad": [],
+      "features": [
+        null
+      ],
+      "state": 0,
+      "shields": 2,
+      "hull": 3,
+      "rangeBonus": 0,
+      "attackBonus": 0,
+      "defenceBonus": 0,
+      "currentPlanet": {
+        "sector": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "market": {
+          "Id": "2b426970-baf6-4b0a-9e3f-dc73c0f0c05a",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Berlin",
+          "Properties": []
+        },
+        "industries": {
+          "generatedProducts": [
+            {
+              "amount": 3.0000000000000004,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.2,
+              "pricePerTon": 0.18,
+              "Id": "22d13bc3-9457-4f9a-be95-a9a82fcbc1b5",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Kuh-Milch",
+              "Properties": []
+            },
+            {
+              "amount": 3.0000000000000004,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.2,
+              "pricePerTon": 0.16,
+              "Id": "a3005a9e-89ee-432f-9c33-72760ccebc61",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Mais",
+              "Properties": []
+            },
+            {
+              "amount": 1.5000000000000002,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.1,
+              "pricePerTon": 3.75,
+              "Id": "559605ca-14e7-457b-addb-ee611a22debd",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Rindfleisch",
+              "Properties": []
+            },
+            {
+              "amount": 1.5000000000000002,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.1,
+              "pricePerTon": 0.24,
+              "Id": "e3041f83-ed41-49df-9194-ade3053bc409",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Reis",
+              "Properties": []
+            },
+            {
+              "amount": 1.5000000000000002,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.1,
+              "pricePerTon": 0.37,
+              "Id": "820cc4a2-7b08-41f2-a495-e295569872b3",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Soya",
+              "Properties": []
+            },
+            {
+              "amount": 1.5000000000000002,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.1,
+              "pricePerTon": 1.9,
+              "Id": "fc51d062-3ea7-469c-8447-f76f244b8355",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Orangensaft",
+              "Properties": []
+            },
+            {
+              "amount": 1.5000000000000002,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 0.1,
+              "pricePerTon": 2.8,
+              "Id": "bb280f75-d2d7-4dd4-80a1-d5f0fd377a1d",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Bacon",
+              "Properties": []
+            }
+          ],
+          "productsNeeded": [
+            {
+              "amount": 2.0,
+              "weight": 0.05,
+              "amountGeneratedPerRound": 0.2,
+              "pricePerTon": 87.4,
+              "Id": "5b62dac7-4022-46aa-8e02-9f45c146bfa0",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Gitarren",
+              "Properties": []
+            },
+            {
+              "amount": 10.0,
+              "weight": 1.0,
+              "amountGeneratedPerRound": 1.0,
+              "pricePerTon": 5.75,
+              "Id": "13934eb1-5210-42fc-98b7-edf6752b497b",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Fische",
+              "Properties": []
+            },
+            {
+              "amount": 1.0,
+              "weight": 0.05,
+              "amountGeneratedPerRound": 0.1,
+              "pricePerTon": 87.5,
+              "Id": "f9f49679-404e-4cdf-ab2e-16f5b9de7a54",
+              "CargoSize": null,
+              "PicturePath": "",
+              "PlayerId": null,
+              "Name": "Bohrmaschinen",
+              "Properties": []
+            }
+          ],
+          "Id": "2c9feee5-8104-477f-88e4-ee2c51b0382e",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Landwirtschaft",
+          "Properties": []
+        },
+        "Id": "ab66b024-3e5b-4190-98bf-4dfd5fa71165",
+        "CargoSize": null,
+        "PicturePath": ".\\Planets\\earth.jpg",
+        "PlayerId": null,
+        "Name": "Erde",
+        "Properties": []
+      },
+      "Id": "8a18ee77-9db6-4b93-acc0-48530186a558",
+      "PicturePath": ".\\Spaceships\\MediumFrighter.jpg",
+      "PlayerId": null,
+      "Name": "zuz",
+      "Properties": []
+    }
+  ],
+  "credits": 10000.0,
+  "homePlanet": {
+    "sector": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "market": {
+      "Id": "2b426970-baf6-4b0a-9e3f-dc73c0f0c05a",
+      "CargoSize": null,
+      "PicturePath": "",
+      "PlayerId": null,
+      "Name": "Berlin",
+      "Properties": []
+    },
+    "industries": {
+      "generatedProducts": [
+        {
+          "amount": 3.0000000000000004,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.2,
+          "pricePerTon": 0.18,
+          "Id": "22d13bc3-9457-4f9a-be95-a9a82fcbc1b5",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Kuh-Milch",
+          "Properties": []
+        },
+        {
+          "amount": 3.0000000000000004,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.2,
+          "pricePerTon": 0.16,
+          "Id": "a3005a9e-89ee-432f-9c33-72760ccebc61",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Mais",
+          "Properties": []
+        },
+        {
+          "amount": 1.5000000000000002,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.1,
+          "pricePerTon": 3.75,
+          "Id": "559605ca-14e7-457b-addb-ee611a22debd",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Rindfleisch",
+          "Properties": []
+        },
+        {
+          "amount": 1.5000000000000002,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.1,
+          "pricePerTon": 0.24,
+          "Id": "e3041f83-ed41-49df-9194-ade3053bc409",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Reis",
+          "Properties": []
+        },
+        {
+          "amount": 1.5000000000000002,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.1,
+          "pricePerTon": 0.37,
+          "Id": "820cc4a2-7b08-41f2-a495-e295569872b3",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Soya",
+          "Properties": []
+        },
+        {
+          "amount": 1.5000000000000002,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.1,
+          "pricePerTon": 1.9,
+          "Id": "fc51d062-3ea7-469c-8447-f76f244b8355",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Orangensaft",
+          "Properties": []
+        },
+        {
+          "amount": 1.5000000000000002,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 0.1,
+          "pricePerTon": 2.8,
+          "Id": "bb280f75-d2d7-4dd4-80a1-d5f0fd377a1d",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Bacon",
+          "Properties": []
+        }
+      ],
+      "productsNeeded": [
+        {
+          "amount": 2.0,
+          "weight": 0.05,
+          "amountGeneratedPerRound": 0.2,
+          "pricePerTon": 87.4,
+          "Id": "5b62dac7-4022-46aa-8e02-9f45c146bfa0",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Gitarren",
+          "Properties": []
+        },
+        {
+          "amount": 10.0,
+          "weight": 1.0,
+          "amountGeneratedPerRound": 1.0,
+          "pricePerTon": 5.75,
+          "Id": "13934eb1-5210-42fc-98b7-edf6752b497b",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Fische",
+          "Properties": []
+        },
+        {
+          "amount": 1.0,
+          "weight": 0.05,
+          "amountGeneratedPerRound": 0.1,
+          "pricePerTon": 87.5,
+          "Id": "f9f49679-404e-4cdf-ab2e-16f5b9de7a54",
+          "CargoSize": null,
+          "PicturePath": "",
+          "PlayerId": null,
+          "Name": "Bohrmaschinen",
+          "Properties": []
+        }
+      ],
+      "Id": "2c9feee5-8104-477f-88e4-ee2c51b0382e",
+      "CargoSize": null,
+      "PicturePath": "",
+      "PlayerId": null,
+      "Name": "Landwirtschaft",
+      "Properties": []
+    },
+    "Id": "ab66b024-3e5b-4190-98bf-4dfd5fa71165",
+    "CargoSize": null,
+    "PicturePath": ".\\Planets\\earth.jpg",
+    "PlayerId": null,
+    "Name": "Erde",
+    "Properties": []
+  },
+  "galaxy": [
+    {
+      "sector": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "market": {
+        "Id": "2b426970-baf6-4b0a-9e3f-dc73c0f0c05a",
+        "CargoSize": null,
+        "PicturePath": "",
+        "PlayerId": null,
+        "Name": "Berlin",
+        "Properties": []
+      },
+      "industries": {
+        "generatedProducts": [
+          {
+            "amount": 3.0000000000000004,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 0.18,
+            "Id": "22d13bc3-9457-4f9a-be95-a9a82fcbc1b5",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Kuh-Milch",
+            "Properties": []
+          },
+          {
+            "amount": 3.0000000000000004,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 0.16,
+            "Id": "a3005a9e-89ee-432f-9c33-72760ccebc61",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Mais",
+            "Properties": []
+          },
+          {
+            "amount": 1.5000000000000002,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 3.75,
+            "Id": "559605ca-14e7-457b-addb-ee611a22debd",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Rindfleisch",
+            "Properties": []
+          },
+          {
+            "amount": 1.5000000000000002,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 0.24,
+            "Id": "e3041f83-ed41-49df-9194-ade3053bc409",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Reis",
+            "Properties": []
+          },
+          {
+            "amount": 1.5000000000000002,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 0.37,
+            "Id": "820cc4a2-7b08-41f2-a495-e295569872b3",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Soya",
+            "Properties": []
+          },
+          {
+            "amount": 1.5000000000000002,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 1.9,
+            "Id": "fc51d062-3ea7-469c-8447-f76f244b8355",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Orangensaft",
+            "Properties": []
+          },
+          {
+            "amount": 1.5000000000000002,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 2.8,
+            "Id": "bb280f75-d2d7-4dd4-80a1-d5f0fd377a1d",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Bacon",
+            "Properties": []
+          }
+        ],
+        "productsNeeded": [
+          {
+            "amount": 2.0,
+            "weight": 0.05,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 87.4,
+            "Id": "5b62dac7-4022-46aa-8e02-9f45c146bfa0",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Gitarren",
+            "Properties": []
+          },
+          {
+            "amount": 10.0,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 1.0,
+            "pricePerTon": 5.75,
+            "Id": "13934eb1-5210-42fc-98b7-edf6752b497b",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Fische",
+            "Properties": []
+          },
+          {
+            "amount": 1.0,
+            "weight": 0.05,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 87.5,
+            "Id": "f9f49679-404e-4cdf-ab2e-16f5b9de7a54",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Bohrmaschinen",
+            "Properties": []
+          }
+        ],
+        "Id": "2c9feee5-8104-477f-88e4-ee2c51b0382e",
+        "CargoSize": null,
+        "PicturePath": "",
+        "PlayerId": null,
+        "Name": "Landwirtschaft",
+        "Properties": []
+      },
+      "Id": "ab66b024-3e5b-4190-98bf-4dfd5fa71165",
+      "CargoSize": null,
+      "PicturePath": ".\\Planets\\earth.jpg",
+      "PlayerId": null,
+      "Name": "Erde",
+      "Properties": []
+    },
+    {
+      "sector": {
+        "x": 1.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "market": {
+        "Id": "af63c32d-7a21-49a7-808d-60587f0755b3",
+        "CargoSize": null,
+        "PicturePath": "",
+        "PlayerId": null,
+        "Name": "Mondbasis Aplha 1",
+        "Properties": []
+      },
+      "industries": {
+        "generatedProducts": [
+          {
+            "amount": 2.0000000000000004,
+            "weight": 50.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 13000000.0,
+            "Id": "75b4c145-e272-4ea0-9db8-86e279f147ef",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Kleines Raumschiff Kapazität (30t)",
+            "Properties": []
+          },
+          {
+            "amount": 1.0000000000000002,
+            "weight": 100.0,
+            "amountGeneratedPerRound": 0.05,
+            "pricePerTon": 17000000.0,
+            "Id": "a6488e90-6348-4d48-bff2-ee6b2da77640",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Mittleres Raumschiff Kapazität (60t)",
+            "Properties": []
+          },
+          {
+            "amount": 0.4000000000000001,
+            "weight": 150.0,
+            "amountGeneratedPerRound": 0.02,
+            "pricePerTon": 23000000.0,
+            "Id": "b47ebc6f-30ec-4f3f-8446-826e46b9bb7f",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Kreuzer (100t) +Bewaffnung",
+            "Properties": []
+          },
+          {
+            "amount": 4.000000000000001,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 7.99,
+            "Id": "982b7948-0316-45ee-9072-83c01ffe5e6b",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Sensor-Einheit",
+            "Properties": []
+          },
+          {
+            "amount": 4.000000000000001,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 79.96,
+            "Id": "898164c3-b726-4356-aa82-f06d1f9cec2f",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Board-Kanone",
+            "Properties": []
+          },
+          {
+            "amount": 2.0000000000000004,
+            "weight": 50.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 13000000.0,
+            "Id": "75b4c145-e272-4ea0-9db8-86e279f147ef",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Kleines Raumschiff Kapazität (30t)",
+            "Properties": []
+          },
+          {
+            "amount": 1.0000000000000002,
+            "weight": 100.0,
+            "amountGeneratedPerRound": 0.05,
+            "pricePerTon": 17000000.0,
+            "Id": "a6488e90-6348-4d48-bff2-ee6b2da77640",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Mittleres Raumschiff Kapazität (60t)",
+            "Properties": []
+          },
+          {
+            "amount": 0.4000000000000001,
+            "weight": 150.0,
+            "amountGeneratedPerRound": 0.02,
+            "pricePerTon": 23000000.0,
+            "Id": "b47ebc6f-30ec-4f3f-8446-826e46b9bb7f",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Kreuzer (100t) +Bewaffnung",
+            "Properties": []
+          },
+          {
+            "amount": 4.000000000000001,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 7.99,
+            "Id": "982b7948-0316-45ee-9072-83c01ffe5e6b",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Sensor-Einheit",
+            "Properties": []
+          },
+          {
+            "amount": 4.000000000000001,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 79.96,
+            "Id": "898164c3-b726-4356-aa82-f06d1f9cec2f",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Board-Kanone",
+            "Properties": []
+          }
+        ],
+        "productsNeeded": [
+          {
+            "amount": 4.000000000000001,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 79.96,
+            "Id": "898164c3-b726-4356-aa82-f06d1f9cec2f",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Board-Kanone",
+            "Properties": []
+          }
+        ],
+        "Id": "355b43d6-424c-446a-a560-096e275ead6a",
+        "CargoSize": null,
+        "PicturePath": "",
+        "PlayerId": null,
+        "Name": "Raumschiff Fabrik",
+        "Properties": []
+      },
+      "Id": "94190c1a-4029-444a-9011-fb653bdde338",
+      "CargoSize": null,
+      "PicturePath": ".\\Planets\\moon.jpg",
+      "PlayerId": null,
+      "Name": "Erden-Mond",
+      "Properties": [
+        {
+          "Key": "Beschreibung",
+          "Value": "Kreist um den Planeten Erde. Besitzt keine eigene Athmossphäre."
+        }
+      ]
+    },
+    {
+      "sector": {
+        "x": 10.0,
+        "y": 7.0,
+        "z": 1.0
+      },
+      "market": {
+        "Id": "c4944bfe-f50f-4203-a48e-b0d6026b2590",
+        "CargoSize": null,
+        "PicturePath": "",
+        "PlayerId": null,
+        "Name": "Moseisley",
+        "Properties": []
+      },
+      "industries": {
+        "generatedProducts": [
+          {
+            "amount": 1.0999999999999999,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 2.0,
+            "Id": "45eb4ba0-9e6f-4583-9569-e07dc053083b",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Tie-Fighter Flügel",
+            "Properties": []
+          },
+          {
+            "amount": 2.9999999999999996,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.3,
+            "pricePerTon": 17.45,
+            "Id": "39253625-1dcb-4818-b26a-291b2e86d5b0",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Wasser Evaporatoren",
+            "Properties": []
+          },
+          {
+            "amount": 2.9999999999999996,
+            "weight": 700.0,
+            "amountGeneratedPerRound": 0.3,
+            "pricePerTon": 450000000.0,
+            "Id": "702c1a90-b29e-430c-a7c1-224cc55ae577",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Sternen-Zerstörer Triebwerke",
+            "Properties": []
+          },
+          {
+            "amount": 0.11000000000000001,
+            "weight": 0.1,
+            "amountGeneratedPerRound": 0.001,
+            "pricePerTon": 450000.0,
+            "Id": "f39f5b3a-1dcc-44ac-b14f-583062b05a47",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Cyberkristalle",
+            "Properties": []
+          }
+        ],
+        "productsNeeded": [
+          {
+            "amount": 3.0000000000000004,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 0.18,
+            "Id": "22d13bc3-9457-4f9a-be95-a9a82fcbc1b5",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Kuh-Milch",
+            "Properties": []
+          },
+          {
+            "amount": 1.5000000000000002,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.1,
+            "pricePerTon": 0.24,
+            "Id": "e3041f83-ed41-49df-9194-ade3053bc409",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Reis",
+            "Properties": []
+          },
+          {
+            "amount": 1.0,
+            "weight": 1.0,
+            "amountGeneratedPerRound": 0.2,
+            "pricePerTon": 0.54,
+            "Id": "6219dac6-aa66-4aa7-bdff-3599263801c7",
+            "CargoSize": null,
+            "PicturePath": "",
+            "PlayerId": null,
+            "Name": "Wasser",
+            "Properties": []
+          }
+        ],
+        "Id": "14838f1b-9924-4476-85a4-e8f7ace9d4dc",
+        "CargoSize": null,
+        "PicturePath": "",
+        "PlayerId": null,
+        "Name": "Weltraumschrott Sammler",
+        "Properties": []
+      },
+      "Id": "5fb2e0ae-e62e-4750-852e-8c445af5d16d",
+      "CargoSize": null,
+      "PicturePath": ".\\Planets\\tatooine.jpg",
+      "PlayerId": null,
+      "Name": "Tatooine",
+      "Properties": []
+    }
+  ],
+  "Id": "93bd588b-6104-4c0d-a5f2-858991447ed9",
+  "CargoSize": null,
+  "PicturePath": ".\\people\\Abyssin.png",
+  "PlayerId": null,
+  "Name": "uzgu",
+  "Properties": []
+}

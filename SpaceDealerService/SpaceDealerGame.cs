@@ -1,27 +1,23 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using SpaceDealerModels;
-using SpaceDealerModels.Repositories;
+﻿using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using SpaceDealerService;
-using SpaceDealerService.Repos;
+using SpaceDealerService.API.Abstractions;
 using System;
 using System.Diagnostics;
-using System.Numerics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 
 namespace SpaceDealer
 {
-
-	public class SpaceDealerGame : ISpaceDealerGame
+    public class SpaceDealerGame : ISpaceDealerGame
 	{
+
+        public string GameUID { get; set; }
 		public Planets Galaxy { get; set; }
 		public Sectors ActiveSectors { get; set; }
 		public Players FleetCommanders { get; set; }
 		public ILogger Logger { get; set; }
         public SpaceDealerGame(ILogger logger)
         {
+            GameUID = Guid.NewGuid().ToString();
             Logger = logger;
             Galaxy = new Planets();
             FleetCommanders = new Players();
@@ -84,8 +80,13 @@ namespace SpaceDealer
             Logger.Log($"Planets loaded: " + Galaxy.Count, TraceEventType.Information);
             Logger.Log($"Fleetcommanders loaded: " + FleetCommanders.Count, TraceEventType.Information);
 
-            AddPlanets(10);
-            AddFleetCommanders(5);
+            foreach (var p in Program.Persistor.ProductRepo.GetAll())
+            {
+                Program.Persistor.ProductRepo.Save(p);
+            }
+
+            //AddPlanets(10);
+            //AddFleetCommanders(5);
 
         }
 

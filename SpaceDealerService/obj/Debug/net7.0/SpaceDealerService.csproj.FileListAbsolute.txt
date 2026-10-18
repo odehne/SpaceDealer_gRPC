@@ -1,0 +1,2 @@
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerService\obj\Debug\net7.0\SpaceDealerService.csproj.AssemblyReference.cache
+\\cope\oliver\git\priv\SpaceDealer\SpaceDealerService\obj\Debug\net7.0\SpaceDealerService.GeneratedMSBuildEditorConfig.editorconfig

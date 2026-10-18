@@ -1,0 +1,279 @@
+{
+  "reportConfigHash": "b1955c5c",
+  "createdAtUtc": "2026-10-14T12:58:13.5188074Z",
+  "entries": [
+    {
+      "packageName": "Newtonsoft.Json",
+      "packageVersion": "13.0.3",
+      "insightsName": "Newtonsoft.Json",
+      "insightsCurrentVersion": "13.0.3",
+      "insightsNewVersion": "13.0.4",
+      "insightsDescription": "NuGet package upgrade is recommended",
+      "insightsIsCompatible": true,
+      "insightsProjects": [
+        "SpaceDealerModels\\SpaceDealerModels.csproj",
+        "SpaceDealerService\\SpaceDealerService.csproj"
+      ]
+    },
+    {
+      "packageName": "runtime.native.System.Data.SqlClient.sni",
+      "packageVersion": "4.4.0",
+      "insightsName": "runtime.native.System.Data.SqlClient.sni",
+      "insightsCurrentVersion": "4.4.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni",
+      "packageVersion": "4.4.0",
+      "insightsName": "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni",
+      "insightsCurrentVersion": "4.4.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "runtime.win-x64.runtime.native.System.Data.SqlClient.sni",
+      "packageVersion": "4.4.0",
+      "insightsName": "runtime.win-x64.runtime.native.System.Data.SqlClient.sni",
+      "insightsCurrentVersion": "4.4.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "runtime.win-x86.runtime.native.System.Data.SqlClient.sni",
+      "packageVersion": "4.4.0",
+      "insightsName": "runtime.win-x86.runtime.native.System.Data.SqlClient.sni",
+      "insightsCurrentVersion": "4.4.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "System.Data.SqlClient",
+      "packageVersion": "4.9.1",
+      "insightsName": "System.Data.SqlClient",
+      "insightsCurrentVersion": "4.9.1",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Google.Protobuf",
+      "packageVersion": "3.27.0",
+      "insightsName": "Google.Protobuf",
+      "insightsCurrentVersion": "3.27.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.AspNetCore",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.AspNetCore",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.AspNetCore.Server",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.AspNetCore.Server",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.AspNetCore.Server.ClientFactory",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.AspNetCore.Server.ClientFactory",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.Core.Api",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.Core.Api",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.Net.Client",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.Net.Client",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.Net.ClientFactory",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.Net.ClientFactory",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.Net.Common",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.Net.Common",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Grpc.Tools",
+      "packageVersion": "2.66.0",
+      "insightsName": "Grpc.Tools",
+      "insightsCurrentVersion": "2.66.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.DependencyInjection",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.DependencyInjection",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.DependencyInjection.Abstractions",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.DependencyInjection.Abstractions",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.Http",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.Http",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.Logging",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.Logging",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.Logging.Abstractions",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.Logging.Abstractions",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.Options",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.Options",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Microsoft.Extensions.Primitives",
+      "packageVersion": "6.0.0",
+      "insightsName": "Microsoft.Extensions.Primitives",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "SQLite",
+      "packageVersion": "3.13.0",
+      "insightsName": "SQLite",
+      "insightsCurrentVersion": "3.13.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "Stub.System.Data.SQLite.Core.NetStandard",
+      "packageVersion": "1.0.119",
+      "insightsName": "Stub.System.Data.SQLite.Core.NetStandard",
+      "insightsCurrentVersion": "1.0.119",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "System.Data.SQLite.Core",
+      "packageVersion": "1.0.119",
+      "insightsName": "System.Data.SQLite.Core",
+      "insightsCurrentVersion": "1.0.119",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "System.Diagnostics.DiagnosticSource",
+      "packageVersion": "6.0.0",
+      "insightsName": "System.Diagnostics.DiagnosticSource",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    },
+    {
+      "packageName": "System.Runtime.CompilerServices.Unsafe",
+      "packageVersion": "6.0.0",
+      "insightsName": "System.Runtime.CompilerServices.Unsafe",
+      "insightsCurrentVersion": "6.0.0",
+      "insightsNewVersion": "",
+      "insightsDescription": "",
+      "insightsIsCompatible": true,
+      "insightsProjects": []
+    }
+  ]
+}
