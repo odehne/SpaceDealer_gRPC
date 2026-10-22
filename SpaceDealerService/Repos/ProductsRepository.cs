@@ -1,5 +1,6 @@
 ﻿using SpaceDealer;
 using SpaceDealerModels.Units;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -13,11 +14,11 @@ namespace SpaceDealerService.Repos
 		{
 		}
 
-		public override List<DbProductInStock> GetAll()
+		public override ConcurrentDictionary<string, DbProductInStock> GetAll()
 		{
-			var lst = new List<DbProductInStock>();
+			var lst = new ConcurrentDictionary<string, DbProductInStock>();
 
-			Parent.Logger.Log($"Loading all products.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Loading all products.");
 
 			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products;";
 			try
@@ -29,14 +30,16 @@ namespace SpaceDealerService.Repos
 				{
 					while (reader.Read())
 					{
-						var p = new DbProductInStock();
-						p.Id = reader.GetString(0);
-						p.Name = reader.GetString(1);
-						p.Weight = reader.GetDouble(2);
-						p.PricePerTon = reader.GetDouble(3);
-						p.AmountGeneratedPerRound = reader.GetDouble(4);
-						p.PicturePath = reader.GetString(5);
-						lst.Add(p);
+                        var p = new DbProductInStock
+                        {
+                            Id = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            Weight = reader.GetDouble(2),
+                            PricePerTon = reader.GetDouble(3),
+                            AmountGeneratedPerRound = reader.GetDouble(4),
+                            PicturePath = !(reader.IsDBNull(5)) ? reader.GetString(5) : null
+                        };
+                        lst.TryAdd(p.Id, p);
 					}
 				}
 				reader.Close();
@@ -45,13 +48,13 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get product {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get product {e.Message}");
 			}
 
 			return lst;
 		}
 
-		public override List<DbProductInStock> GetAll(string id)
+		public override ConcurrentDictionary<string, DbProductInStock> GetAll(string id)
 		{
 			throw new System.NotImplementedException();
 		}
@@ -59,7 +62,7 @@ namespace SpaceDealerService.Repos
 		public override DbProductInStock GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
-			//Parent.Logger.Log($"Loading product with {name} or {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading product with {name} or {id}.");
 
 			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE ";
 			if (!string.IsNullOrEmpty(name))
@@ -99,14 +102,14 @@ namespace SpaceDealerService.Repos
 				}
 				else
 				{
-                    Parent.Logger.Log($"Product with name {name} or id {id} not found.", TraceEventType.Information);
+                    Parent.Logger.Warning($"Product with name {name} or id {id} not found.");
                     p = null;
                 }
                 reader.Close();
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get product for player Id [{id}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get product for player Id [{id}] {e.Message}");
 			}
 
             return p;
@@ -115,7 +118,7 @@ namespace SpaceDealerService.Repos
 		public override string GetItemId(string name)
 		{
 			var p = new DbFeature();
-			//Parent.Logger.Log($"Loading product with name {name}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading product with name {name}.");
 			var query = "SELECT Id FROM Products WHERE Name = @name;";
 			try
 			{
@@ -131,7 +134,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get product {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get product {e.Message}");
 			}
 			return null;
 		}
@@ -141,7 +144,7 @@ namespace SpaceDealerService.Repos
 			var id = GetItemId(item.Name);
 			if (id != null)
 				return;
-			Parent.Logger.Log($"Saving product {item.Name}.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving product {item.Name}.");
 
 			try
 			{
@@ -157,17 +160,17 @@ namespace SpaceDealerService.Repos
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Product {item.Name} saved.", TraceEventType.Information);
+						Parent.Logger.Information($"Product {item.Name} saved.");
 					}
 					catch (System.Exception e)
 					{
-						Parent.Logger.Log($"Failed to add product {e.Message}", TraceEventType.Error);
+						Parent.Logger.Error($"Failed to add product {e.Message}");
 					}
 				}
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to add product Id {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to add product Id {e.Message}");
 
 			}
 		}

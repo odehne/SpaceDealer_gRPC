@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using SpaceDealer.Enums;
 using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Extensions;
+using System.Xml.Serialization;
 
 namespace SpaceDealerModels.Units
 {
@@ -12,19 +13,20 @@ namespace SpaceDealerModels.Units
 		public event JourneyInterrupted Interrupted;
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, Coordinates newPosition);
 
+		[XmlIgnore]
 		[JsonIgnore]
 		public DbShip Parent { get; set; }
-		[JsonProperty("departure")]
+		[JsonPropertyName("departure")]
 		public DbPlanet Departure { get; set; }
-		[JsonProperty("detination")]
+		[JsonPropertyName("detination")]
 		public DbPlanet Destination { get; set; }
-		[JsonProperty("currentSector")]
+		[JsonPropertyName("currentSector")]
 		public Coordinates CurrentSector { get; set; }
-		[JsonProperty("stte")]
+		[JsonPropertyName("stte")]
 		JourneyState State { get; set; }
-		[JsonProperty("enemyBattleShip")]
+		[JsonPropertyName("enemyBattleShip")]
 		public PirateShip EnemyBattleShip { get; set; }
-		[JsonProperty("newlyDisoveredPlanet")]
+		[JsonPropertyName("newlyDisoveredPlanet")]
 		public DbPlanet NewlyDiscoveredPlanet { get; set; }
 		
 		public Journey()
@@ -92,11 +94,11 @@ namespace SpaceDealerModels.Units
 					State = JourneyState.InBattle;
 					EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector.ToDCoordinates(), null);
 					return new Interruption(InterruptionType.AttackedByPirates, $"Ein Piratenschiff, die {EnemyBattleShip.Name} hat uns erfasst! Wir werden angegriffen!");
-				case 9:
-					State = JourneyState.NewPlanetInRange;
-					NewlyDiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector.ToDCoordinates());
-					Parent.Parent.Parent.Galaxy.Add(NewlyDiscoveredPlanet);
-					return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {NewlyDiscoveredPlanet.Name} hat uns erfasst! Wir werden angegriffen!");
+				//case 9:
+				//	State = JourneyState.NewPlanetInRange;
+				//	NewlyDiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector.ToDCoordinates());
+				//	Parent.Parent.Parent.Galaxy.Add(NewlyDiscoveredPlanet);
+				//	return new Interruption(InterruptionType.DiscoveredNewPlanet, $"Wir haben einen neuen Planeten entdeckt {NewlyDiscoveredPlanet.Name} hat uns erfasst! Wir werden angegriffen!");
 				case 3:
 					var randomShipName = "USS Gauntlet";
 					return new Interruption(InterruptionType.DistressSignal, $"Wir haben einen Notruf von der {randomShipName} erhalten.");

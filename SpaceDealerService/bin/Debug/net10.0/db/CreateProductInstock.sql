@@ -1,1 +1,0 @@
-﻿CREATE TABLE "Fleets" ("PlayerId" INTEGER NOT NULL, "ShipId" INTEGER NOT NULL);

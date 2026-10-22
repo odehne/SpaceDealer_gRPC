@@ -1,53 +1,155 @@
-﻿using SpaceDealerModels.Repositories;
+﻿using Serilog;
+using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using SpaceDealerService;
 using SpaceDealerService.API.Abstractions;
+using SpaceDealerService.Repos;
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Threading;
 
 namespace SpaceDealer
 {
     public class SpaceDealerGame : ISpaceDealerGame
-	{
+    {
 
-        public string GameUID { get; set; }
-		public Planets Galaxy { get; set; }
-		public Sectors ActiveSectors { get; set; }
-		public Players FleetCommanders { get; set; }
-		public ILogger Logger { get; set; }
-        public SpaceDealerGame(ILogger logger)
+        public Game Game { get; set; }
+        private SqlPersistor _persistor { get; set; }
+        public Planets Galaxy { get { return Game.Galaxy; } }
+        public Players FleetCommanders { get { return Game.FleetCommanders; } }
+        public Sectors ActiveSectors { get { return Game.KnownUniverse; } }
+        public string GameId { get { return Game.GameId; } }
+
+
+        public ILogger Logger { get; set; }
+        public SpaceDealerGame(ILogger logger, SqlPersistor persistor)
         {
-            GameUID = Guid.NewGuid().ToString();
+            Game = new Game();
             Logger = logger;
-            Galaxy = new Planets();
-            FleetCommanders = new Players();
+            _persistor = persistor;
+
             Repository.Init();
-        }
+
+       }
 
         public void AddPlanets(int amount = 1000)
-		{
-			for (int i = 0; i < amount; i++)
-			{
-				var randomPlanet = Repository.GenerateRandomPlanet(DbCoordinates.GenerateRandomCoordniates());
-				randomPlanet.Name = $"{randomPlanet.Name}-{i}";
-				randomPlanet.PicturePath = ".\\Planets\\image_part_" + Repository.GetRandomNumber(1, 36) + ".jpg";
-				Galaxy.AddPlanet(randomPlanet);
-			}
-		}
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                var randomPlanet = Repository.GenerateRandomPlanet(DbCoordinates.GenerateRandomCoordniates());
+                randomPlanet.Name = $"{randomPlanet.Name}-{i}";
+                randomPlanet.PicturePath = ".\\Planets\\image_part_" + Repository.GetRandomNumber(1, 36) + ".jpg";
+                Game.Galaxy.AddPlanet(randomPlanet);
+            }
+        }
+
+        public void Init()
+        {
+            Game.KnownUniverse = _persistor.SectorRepo.GetAll();
+
+            foreach (var planet in _persistor.PlanetsRepo.GetAll().Values)
+            {
+                Game.Galaxy.AddPlanet(planet);
+                Game.KnownUniverse.AddPlanet(planet.Sector, planet.Id);
+            }
+
+            foreach (var player in _persistor.PlayersRepo.GetAll().Values)
+            {
+                player.Galaxy = Game.Galaxy;
+                var ships = _persistor.ShipsRepo.GetAllShipsByPlayer(player);
+                player.Fleet = new Ships(player);
+                foreach (var ship in ships.Values)
+                {
+                    if(ship!= null)
+                        player.Fleet.AddShip(ship);
+                    else
+                        Logger.Warning($"Ship is null for player {player.Id}");
+                }
+                Game.FleetCommanders.TryAdd(player.Id, player);
+            }
+
+            Logger.Verbose($"Planets loaded: " + Game.Galaxy.Count);
+            Logger.Verbose($"Fleetcommanders loaded: " + Game.FleetCommanders.Count);
+        }
+
+        public string StartNewGame()
+        {
+            Game = new Game();
+            Init();
+            return Game.GameId;
+        }
+
+        public void ResetDatabase()
+        {
+            _persistor.ResetDatabase();
+            AddPlanets();
+            AddFleetCommanders();
+            Init();
+            SaveGameState();
+        }
+
+        public void SavePlayers()
+        {
+            _persistor.SavePlayers(Game.FleetCommanders);
+        }
+
+        public void SaveGalaxy()
+        {
+            _persistor.SaveGalaxy(Game.Galaxy);
+        }
+
+        public void Play()
+        {
+            do
+            {
+                Game.Update();
+                Thread.Sleep(1000);
+            } while (true);
+        }
+
+
+        public bool SaveGameState()
+        {
+            try
+            {
+                _persistor.SavePlayers(Game.FleetCommanders);
+                _persistor.SaveGalaxy(Game.Galaxy);
+                _persistor.SaveSectors(Game.KnownUniverse);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Failed to save game state: {ex.Message}");
+                return false;
+            }
+        }
+
+        internal object GetGameStats()
+        {
+            var stats = new
+            {
+                GameUID = Game.GameId,
+                PlanetsCount = Game.Galaxy.Count,
+                FleetCommandersCount = Game.FleetCommanders.Count,
+                ActiveSectorsCount = Game.KnownUniverse.Count
+            };
+            return stats;
+        }
 
         public void AddFleetCommanders(int amount = 100)
         {
-           if(FleetCommanders == null)
-                FleetCommanders = new Players();
+            if (Game.FleetCommanders == null)
+                Game.FleetCommanders = new Players();
 
-            for(int i = 0; i < amount; i++)
+            for (int i = 0; i < amount; i++)
             {
-                var planet = Galaxy.GetRandomPlanet();
-                var discoveredPlanets = Galaxy.GetRandomPlanets(5);
+                var planet = Game.Galaxy.GetRandomPlanet();
+                var discoveredPlanets = Game.Galaxy.GetRandomPlanets(5);
                 var fcn = Repository.GetRandomFleetCommanderName();
-                var player = new DbPlayer(fcn, planet, discoveredPlanets, Galaxy, Program.TheGame.ActiveSectors);
-				var shipName = Repository.GetRandomShipName();
-                var ship = new DbShip(shipName, player.HomePlanet, Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet)
+                var player = new DbPlayer(fcn, planet, discoveredPlanets, Game);
+                var shipName = Repository.GetRandomShipName();
+                var ship = new DbShip(shipName, player, Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet)
                 {
                     CargoSize = 30,
                     Parent = player.Fleet,
@@ -56,58 +158,59 @@ namespace SpaceDealer
                 };
                 player.PlayerType = Enums.PlayerTypes.NPC;
                 player.Fleet.AddShip(ship);
-                FleetCommanders.Add(player);
+                Game.FleetCommanders.TryAdd(player.Id, player);
             }
-
-		}
-
-
-        public void Init()
-		{
-			ActiveSectors = Program.Persistor.SectorRepo.GetAll();
-
-            foreach (var p in Program.Persistor.PlanetsRepo.GetAll())
-			{
-                Galaxy.AddPlanet(p);
-			}
-
-			foreach (var p in Program.Persistor.PlayersRepo.GetAll())
-			{
-				p.Galaxy = Galaxy;
-                FleetCommanders.AddPlayer(p);
-            }
-
-            Logger.Log($"Planets loaded: " + Galaxy.Count, TraceEventType.Information);
-            Logger.Log($"Fleetcommanders loaded: " + FleetCommanders.Count, TraceEventType.Information);
-
-            foreach (var p in Program.Persistor.ProductRepo.GetAll())
-            {
-                Program.Persistor.ProductRepo.Save(p);
-            }
-
-            //AddPlanets(10);
-            //AddFleetCommanders(5);
 
         }
 
+        public DbPlayer GetPlayerByName(string name)
+        {
+            return _persistor.PlayersRepo.GetItem(name, null);
+        }
 
-        private void Ship_Arrived(string message, SpaceDealerModels.Units.Coordinates newPosition, DbShip ship)
-		{
-			ship.Cruise.Departure = ship.Cruise.Destination;
-		}
+        public DbPlayer GetPlayerById(string id)
+        {
+            return _persistor.PlayersRepo.GetItem(null, id);
+        }
 
-		public Planets ScanPlanetsInNearbySectors(DbShip ship, double range = 1)
-		{
-			throw new NotImplementedException();
-			// xxx
-			// x+x
-			// xxx
-		}
+        public DbPlanet GetPlanetById(string id)
+        {
+            return _persistor.PlanetsRepo.GetItem(null, id);
+        }
 
-		public Ships ScanShipsInNearbySectors(DbShip ship, double range = 1)
-		{
-			throw new NotImplementedException();
-		}
+        public Planets GetDiscoveredPlanetsByPlayerId(string playerId)
+        {
+            return _persistor.DiscoveredPlanetsRepo.GetDiscoveredPlanets(playerId);
+        }
 
-	}
+        public Ships GetAllShipsByPlayer(DbPlayer player)
+        {
+            return _persistor.ShipsRepo.GetAllShipsByPlayer(player);
+        }
+
+        public ConcurrentDictionary<string, DbFeature> GetAllFeaturesByShipId(string shipId)
+        {
+            return _persistor.FeaturesRepo.GetAll(shipId);
+        }
+
+        public DbPlanet GetPlanetByName(string name)
+        {
+            return _persistor.PlanetsRepo.GetItem(name, null);
+        }
+
+        public void SavePlanet(DbPlanet planet)
+        {
+            _persistor.PlanetsRepo.Save(planet);
+        }
+
+        public void SavePlayer(DbPlayer player)
+        {
+            _persistor.PlayersRepo.Save(player);
+        }
+
+        internal void LoadGame(string gameUID)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

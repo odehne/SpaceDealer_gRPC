@@ -11,4 +11,7 @@ C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.dl
 C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\refint\SpaceDealerModels.dll
 C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDealerModels.pdb
 C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\ref\SpaceDealerModels.dll
+C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-436b-b41d-c5385bdba9fc\scratchpad\out2\SpaceDealerModels.deps.json
+C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-436b-b41d-c5385bdba9fc\scratchpad\out2\SpaceDealerModels.dll
+C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-436b-b41d-c5385bdba9fc\scratchpad\out2\SpaceDealerModels.pdb
 C:\Git\priv\SpaceDealer\SpaceDealerModels\obj\Debug\net10.0\SpaceDea.9CA0CB28.Up2Date

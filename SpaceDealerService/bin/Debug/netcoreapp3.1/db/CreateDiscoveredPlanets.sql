@@ -1,1 +1,0 @@
-﻿CREATE TABLE "DiscoveredPlanets" ("PlayerId" TEXT NOT NULL, "PlanetId" TEXT NOT NULL);

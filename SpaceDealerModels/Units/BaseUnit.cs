@@ -7,7 +7,7 @@ namespace SpaceDealerModels.Units
 	public abstract class BaseUnit : IUnit
 	{
 		public string Id { get; set; }
-		public string CargoSize { get; set; }
+		public double CargoSize { get; set; }
 		public string PicturePath { get; set; }
 		public string PlayerId { get; set; }
 		public string Name { get; set; }

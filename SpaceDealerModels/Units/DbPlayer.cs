@@ -1,41 +1,51 @@
-﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using SpaceDealer.Enums;
 using SpaceDealerModels.Attributes;
 using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
+using System.Xml.Serialization;
+using Serilog;
 
 namespace SpaceDealerModels.Units
 {
 
 	public class DbPlayer : BaseUnit
 	{
-		[Newtonsoft.Json.JsonIgnore]
+		[XmlIgnore]
 		public Queue UpdateQueue { get; set; }
-        public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player);
-		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition);
-
-		[JsonProperty("playerType")]
+     
+		[JsonPropertyName("playerType")]
 		public PlayerTypes PlayerType { get; set; }
-		[JsonProperty("currentPlanet")]
+		
+        [JsonPropertyName("currentPlanet")]
         public DbPlanet CurrentPlanet { get; set; }
-		[JsonProperty("fleet")]
+		
+        [XmlIgnore]
 		public Ships Fleet { get; set; }
-		[JsonProperty("credits")]
-		public double Credits { get; set; }
-		[JsonProperty("homePlanet")]
-		public DbPlanet HomePlanet { get; set; }
-		[JsonProperty("discoveredPlanets")]
-		public Planets DiscoveredPlanets { get; set; }
-		[Newtonsoft.Json.JsonIgnore]
-		public Planets Galaxy { get; set; }
-		[Newtonsoft.Json.JsonIgnore]
-		public Sectors ActiveSectors { get; set; }
 
-		public DbPlayer()
+		[JsonPropertyName("credits")]
+		
+        public double Credits { get; set; }
+		[JsonPropertyName("homePlanet")]
+		public DbPlanet HomePlanet { get; set; }
+
+		[JsonPropertyName("discoveredPlanets")]
+		public Planets DiscoveredPlanets { get; set; }
+
+		[XmlIgnore]
+		[JsonIgnore]
+		public Planets Galaxy { get; set; }
+		[XmlIgnore]
+		[JsonIgnore]
+		public Sectors ActiveSectors { get; set; }
+        
+        [XmlIgnore]
+        [JsonIgnore]
+        public Game Parent { get; set; }
+
+        public DbPlayer()
 		{
 
 		}
@@ -54,22 +64,29 @@ namespace SpaceDealerModels.Units
             return formattedValue;
         }
 
-        public DbPlayer(string name, DbPlanet homeplanet, Planets discoveredPlanets, Planets galaxy, Sectors activeSectors) : base(name)
+        public DbPlayer(string name, DbPlanet homeplanet, Planets discoveredPlanets, Game game) : base(name)
         {
+            Parent = game;
             UpdateQueue = new Queue();
             DiscoveredPlanets = discoveredPlanets;
-			ActiveSectors = activeSectors;
 			HomePlanet = homeplanet;
             Credits = 10000;
             Fleet = new Ships(this);
-            Fleet.Interrupted += Fleet_Interrupted;
-            Fleet.Arrived += Fleet_Arrived;
             DiscoveredPlanets = discoveredPlanets;
-            Galaxy = galaxy;
-			ActiveSectors = activeSectors;
+            Galaxy = Parent.Galaxy;
+			ActiveSectors = Parent.KnownUniverse;
         }
 
-        private void Fleet_Arrived(string message, DbCoordinates newPosition, DbShip ship)
+        public void HandleAreaScanned(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Planets scannedPlanets, Ships scannedShips)
+        {
+            // do something with the scanned planets and ships
+            // for example, add the scanned planets to the player's discovered planets
+            foreach (var planet in scannedPlanets.Values)
+            {
+                DiscoveredPlanets.TryAdd(planet.Id, planet);
+            }
+        }
+        public void HandleArrival(string message, DbCoordinates newPosition, DbShip ship)
 		{
 			UpdateQueue.Enqueue(new UpdateInfo(ship, UpdateStates.ArrivedOnTarget));
 
@@ -81,11 +98,15 @@ namespace SpaceDealerModels.Units
 				ship.State = ShipState.InJourney;
                 ship.StartCruise(ship.CurrentPlanet, GetRandomDiscoveredPlanet());
             }
-
-            Arrived?.Invoke(message, newPosition, ship, this);
+            else
+            {
+                // if the player is real, we can just log the arrival
+                Log.Information($"[ARRIVAL] {Name}::{ship.Name} ist auf {ship.CurrentPlanet.Name} angekommen.");
+            }
+        //    Arrived?.Invoke(message, newPosition, ship, this);
 		}
 
-		private void Fleet_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition)
+		public void HandleInterruption(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition)
 		{
 			switch (interruptionType)
 			{
@@ -113,7 +134,7 @@ namespace SpaceDealerModels.Units
 					break;
 			}
 
-            Interrupted?.Invoke(interruptionType, message, ship, this, newPosition);
+            //Interrupted?.Invoke(interruptionType, message, ship, this, newPosition);
 		}
 
         private void SimulateBattle(DbShip ship)
@@ -155,7 +176,7 @@ namespace SpaceDealerModels.Units
 		{
 
           
-            foreach (var ship in Fleet)
+            foreach (var ship in Fleet.Values)
             {
 
 
@@ -163,35 +184,35 @@ namespace SpaceDealerModels.Units
                 {
                    
                     var industry = ship.CurrentPlanet.Industry;
-					if(ship.CurrentLoad != null && ship.CurrentLoad.Any())
+					if(ship.CargoBay != null && ship.CargoBay.Any())
 					{
                         // sell our stuff
-						for (int i = 0; i < ship.CurrentLoad.Count; i++)
+						for (int i = 0; i < ship.CargoBay.Count; i++)
                         {
-                            var load = ship.CurrentLoad[i];
-                            if (load != null && load.Amount > 0)
+                            var load = ship.CargoBay[i];
+                            if (load != null && load.Quantity > 0)
                             {
                                 if (industry.ProductsNeeded != null && industry.ProductsNeeded.Any())
                                 {                                     // sell it
-                                    var product = industry.ProductsNeeded.GetProductByName(load.Name);
+                                    var product = industry.ProductsNeeded.GetByName(load.Product.Name);
                                     if (product != null)
                                     {
-                                        Credits += (product.GetTotalPrice() * load.Amount);
-                                        ship.CurrentLoad.Remove(load);
-                                        Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Amount)}t von {load.Name} für " + GetPrintableMoney(product.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
+                                        Credits += (product.GetTotalPrice() * load.Quantity);
+                                        ship.CargoBay.Remove(load);
+                                        Log.Information($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Quantity)}t von {load.Product.Name} für " + GetPrintableMoney(product.GetTotalPrice() * load.Quantity) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
                                     }
                                     else
                                     {
-                                        Credits += (load.GetTotalPrice() * load.Amount);
-                                        ship.CurrentLoad.Remove(load);
-                                        Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Amount)}t von {load.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
+                                        Credits += (load.GetTotalPrice() * load.Quantity);
+                                        ship.CargoBay.Remove(load);
+                                        Log.Information($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Quantity)}t von {load.Product.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Quantity ) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
                                     }
                                 }
                                 else
                                 {
-                                    Credits += (load.GetTotalPrice() * load.Amount);
-                                    ship.CurrentLoad.Remove(load);
-                                    Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Amount)}t von {load.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Amount) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
+                                    Credits += (load.GetTotalPrice() * load.Quantity);
+                                    ship.CargoBay.Remove(load);
+                                    Log.Information($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(load.Quantity)}t von {load.Product.Name} für " + GetPrintableMoney(load.GetTotalPrice() * load.Quantity) + " credits an " + ship.CurrentPlanet.Name + " verkauft. Kontostand: " + GetPrintableMoney(Credits));
                                 }
                             }
                         }
@@ -203,24 +224,27 @@ namespace SpaceDealerModels.Units
                         if (product != null)
                         {
                             // how much can we load?
-                            var amount = (int)(ship.CargoSize - ship.CurrentLoad.GetTotalWeight());
+                            var quantity = (int)(ship.CargoSize - ship.CargoBay.TotalQuantity);
 
-							if(amount > product.Amount)
-                                amount = (int)product.Amount;
+							if(quantity > product.Amount)
+                                quantity = (int)product.Amount;
 
                             // how much can we afford?
-                            var cost = product.GetTotalPrice() * amount;
+                            var cost = product.GetTotalPrice() * quantity;
 
                             if (cost > Credits)
-                                amount = (int)Math.Floor(Credits / product.GetTotalPrice());
+                            {
+                                Log.Warning($"[TRADE] {Name}::{ship.Name} kann sich nicht genug von {product.Name} leisten. Verfügbares Geld: {GetPrintableMoney(Credits)}, benötigter Betrag: {GetPrintableMoney(cost)}");
+                                quantity = (int)Math.Floor(Credits / product.GetTotalPrice());
+                            }
+                                
 
                             // load it
-                            if (amount > 0)
+                            if (quantity > 0)
                             {
-                                ship.CurrentLoad.Add(product);
-								ship.CurrentLoad.Last().Amount = amount;
-                                Credits -= (product.GetTotalPrice() * amount);
-                                Console.WriteLine($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(amount)}t von {product.Name} für " + GetPrintableMoney(product.GetTotalPrice() * amount) + " credits auf " + ship.CurrentPlanet.Name + " gekauft. Kontostand: " + GetPrintableMoney(Credits));
+                                ship.CargoBay.AddCargo(ship, product, quantity);
+                                Credits -= (product.GetTotalPrice() * quantity);
+                                Log.Information($"[TRADE] {Name}::{ship.Name} hat {GetPrintableDouble(quantity)}t von {product.Name} für " + GetPrintableMoney(product.GetTotalPrice() * quantity) + " credits auf " + ship.CurrentPlanet.Name + " gekauft. Kontostand: " + GetPrintableMoney(Credits));
                             }
                         }
                     }
@@ -235,13 +259,13 @@ namespace SpaceDealerModels.Units
 
             Random random = new Random();
             var i = random.Next(0, DiscoveredPlanets.Count - 1);
-            return DiscoveredPlanets[i];
+            return DiscoveredPlanets.Values.ElementAt(i);
         }
 
         public override void Update()
 		{
 			base.Update();
-			foreach(var ship in Fleet)
+			foreach(var ship in Fleet.Values)
 			{
 				if(ship.State != ShipState.Sunken)
                     ship.Update();
@@ -260,5 +284,7 @@ namespace SpaceDealerModels.Units
 		{
 			return $"Name: {Name}\tCredits: {Credits}\tSchiffe: {Fleet.ToString()}";
 		}
-	}
+
+       
+    }
 }

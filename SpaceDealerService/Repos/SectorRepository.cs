@@ -17,7 +17,7 @@ namespace SpaceDealerService.Repos
 		public Sectors GetAll()
         {
 			var sectors = new Sectors();
-			Parent.Logger.Log($"Loading discovered sectors.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Loading discovered sectors.");
 			var query = "SELECT X,Y,Z,ShipIds,PlanetIds,PlayerIds FROM Sectors;";
 			try
 			{
@@ -45,17 +45,17 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get all discovered sectors {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get all discovered sectors {e.Message}");
 			}
 			return sectors;
 		}
 
 		public void SaveSectors(Sectors sectors)
 		{
-			Parent.Logger.Log($"Saving discovered sectors.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving discovered sectors.");
 			if (sectors.Any())
 			{
-                foreach (var sector in sectors)
+                foreach (var sector in sectors.Values)
                 {
 					SaveSector(sector);
 				}
@@ -64,7 +64,7 @@ namespace SpaceDealerService.Repos
 
 		public bool SaveSector(Sector sector)
 		{
-			Parent.Logger.Log($"Saving discovered sector.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving discovered sector.");
 			using var command = new SQLiteCommand(Parent.Connection);
 			command.CommandText = $"INSERT OR REPLACE INTO Sectors (X,Y,Z,ShipIds,PlanetIds,PlayerIds) VALUES (@X, @Y, @Z,@ShipIds,@PlanetIds,@PlayerIds);";
 			command.Parameters.AddWithValue("@X", sector.Position.X);
@@ -76,12 +76,12 @@ namespace SpaceDealerService.Repos
 			try
 			{
 				command.ExecuteNonQuery();
-				Parent.Logger.Log($"Sector {sector} saved.", TraceEventType.Information);
+				Parent.Logger.Verbose($"Sector {sector} saved.");
 				return true;
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"ailed to save sector {sector} - {e}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to save sector {sector} - {e.Message}");
 			}
 			return false;
 		}

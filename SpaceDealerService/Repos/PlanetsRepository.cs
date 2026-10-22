@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using SpaceDealer;
@@ -12,10 +13,10 @@ namespace SpaceDealerService.Repos
 		{
 		}
 
-		public override List<DbPlanet> GetAll()
+		public override ConcurrentDictionary<string, DbPlanet> GetAll()
 		{
-			Parent.Logger.Log($"Loading planets.", TraceEventType.Information);
-			var lst = new List<DbPlanet>();
+			Parent.Logger.Verbose($"Loading planets.");
+			var lst = new ConcurrentDictionary<string, DbPlanet>();
 			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets;";
 			try
 			{
@@ -27,18 +28,20 @@ namespace SpaceDealerService.Repos
 				{
 					while (reader.Read())
 					{
-						var planet = new DbPlanet();
-						planet.Id = reader.GetString(0);
-						planet.Name = reader.GetString(1);
-						planet.PicturePath = reader.GetString(2);
-						planet.Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5));
+                        var planet = new DbPlanet
+                        {
+                            Id = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            PicturePath = reader.GetString(2),
+                            Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5))
+                        };
                         planet.Industry = new DbIndustry($"{planet.Id}.industry")
                         {
                             ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id),
                             GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id)
                         };
-                        planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
-						lst.Add(planet);
+                        //planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
+						lst.TryAdd(planet.Id, planet);
 					}
 				}
 				reader.Close();
@@ -47,13 +50,13 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to read planet {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to read planet {e.Message}");
 			}
 
 			return lst;
 		}
 
-		public override List<DbPlanet> GetAll(string id)
+		public override ConcurrentDictionary<string, DbPlanet> GetAll(string id)
 		{
 			throw new System.NotImplementedException();
 		}
@@ -61,7 +64,7 @@ namespace SpaceDealerService.Repos
 		public override DbPlanet GetItem(string name, string id)
 		{
 			var parameter = new SQLiteParameter();
-			//Parent.Logger.Log($"Loading planet {name}, {id}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading planet {name}, {id}.");
 
 			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE ";
 			if (!string.IsNullOrEmpty(name))
@@ -99,7 +102,7 @@ namespace SpaceDealerService.Repos
                             GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id),
                             ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id)
                         };
-                        planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
+                       //planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
 						return planet;
 					}
 				}
@@ -107,7 +110,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to read planet {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to read planet {e.Message}");
 			}
 
 			return null;
@@ -115,7 +118,7 @@ namespace SpaceDealerService.Repos
 
 		public override string GetItemId(string name)
 		{
-			Parent.Logger.Log($"Loading planet with name {name}.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Loading planet with name {name}.");
 			var query = "SELECT Id FROM Planets WHERE Name = @name;";
 			try
 			{
@@ -130,14 +133,14 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get planet Id {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get planet Id {e.Message}");
 				return null;
 			}
 		}
 
 		public override void Save(DbPlanet item)
 		{
-			Parent.Logger.Log($"Saving planet with name {item.Name}.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving planet with name {item.Name}.");
 			var id = GetItemId(item.Name);
 			if (id != null)
 				return;
@@ -156,18 +159,17 @@ namespace SpaceDealerService.Repos
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Planet {item.Name} saved.", TraceEventType.Information);
+						Parent.Logger.Information($"Planet {item.Name} saved.");
 					}
 					catch (System.Exception e)
 					{
-						Parent.Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
+						Parent.Logger.Error($"Failed to add planet {e.Message}");
 					}
 				}
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to add planet {e.Message}", TraceEventType.Error);
-
+				Parent.Logger.Error($"Failed to add planet {e.Message}");
 			}
 		}
 	}

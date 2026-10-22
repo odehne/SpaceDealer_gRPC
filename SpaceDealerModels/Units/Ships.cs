@@ -1,18 +1,22 @@
-﻿using SpaceDealer.Enums;
-using System.Collections.Generic;
+using SpaceDealer.Enums;
+using System;
+using System.Collections.Concurrent;
 using System.Linq;
-using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace SpaceDealerModels.Units
 {
-	public class Ships : List<DbShip>
+	public class Ships : ConcurrentDictionary<string, DbShip>
 	{
 		public event ArrivedAtDestination Arrived;
 		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
 		public event JourneyInterrupted Interrupted;
 		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
+        public event AreaScanned Scanned;
+        public delegate void AreaScanned(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Planets scannedPlanets, Ships scannedShips);
 
-		[JsonIgnore]
+        [XmlIgnore]
+		[System.Text.Json.Serialization.JsonIgnore]
 		public DbPlayer Parent { get; set; }
 
 		public Ships()
@@ -26,19 +30,14 @@ namespace SpaceDealerModels.Units
 
 		public DbShip GetShipByName(string name)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(name));
-		}
+			var ship = Values.FirstOrDefault(x => x.Name == name);
+            return ship;
+        }
         public DbShip GetShipById(string uid)
         {
-            return this.FirstOrDefault(x => x.Id.Equals(uid));
-        }
+            return TryGetValue(uid, out var ship) ? ship : null;
 
-        public DbShip GetShipInSector(DbCoordinates coordinates)
-		{
-			return this.FirstOrDefault(x => x.Cruise.CurrentSector.X == coordinates.X & 
-											x.Cruise.CurrentSector.Y == coordinates.Y & 
-											x.Cruise.CurrentSector.Z == coordinates.Z);
-		}
+        }
 
 		public bool AddShip(DbShip newShip)
 		{
@@ -46,21 +45,12 @@ namespace SpaceDealerModels.Units
 			if (p == null)
 			{
 				newShip.Parent = this;
-				Add(newShip);
-				newShip.Interrupted += NewShip_Interrupted;
-				newShip.Arrived += NewShip_Arrived;
+				TryAdd(newShip.Id, newShip);
+                newShip.CurrentPlanet = Parent.HomePlanet;
+				var destination = Parent.GetRandomDiscoveredPlanet();
+                newShip.Cruise = new DbJourney(newShip.CurrentPlanet, destination, newShip.CurrentPlanet.Sector, newShip);
 			}
 			return false;
-		}
-
-		private void NewShip_Arrived(string message, DbCoordinates newPosition, DbShip ship)
-		{
-			Arrived?.Invoke(message, newPosition, ship);
-		}
-
-		private void NewShip_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition)
-		{
-			Interrupted?.Invoke(interruptionType, message, ship, newPosition);
 		}
 
 		public override string ToString()
@@ -72,5 +62,7 @@ namespace SpaceDealerModels.Units
 			}
 			return ret.TrimEnd('\n');
 		}
-	}
+
+       
+    }
 }

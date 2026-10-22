@@ -9,7 +9,6 @@ using SpaceDealerModels.Repositories;
 using SpaceDealerService.Extensions;
 using SpaceDealerService.Repos;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -20,8 +19,6 @@ namespace SpaceDealerService
     public class Program
 	{
 		public static SpaceDealerGame TheGame { get; set; }
-		public static Logger TheLogger {get; set;}
-		public static SqlPersistor Persistor { get; set; } 
 	
 	
 		public static void Main(string[] args)
@@ -37,8 +34,6 @@ namespace SpaceDealerService
                            .AddEnvironmentVariables();
 
             var builder = WebApplication.CreateBuilder(args);
-
-
             var config = configBuilder.Build();
 
             var cs = new AppSettings();
@@ -49,8 +44,15 @@ namespace SpaceDealerService
 
             // Controllers + JWT Authentication
             builder.Services.AddControllers()
-                .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); })
-                .AddXmlSerializerFormatters();
+                .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy => policy
+                    .WithOrigins("http://localhost:5144", "https://localhost:7008")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
 
             builder.Services.AddOpenApi(options =>
             {
@@ -91,22 +93,23 @@ namespace SpaceDealerService
                 .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
             });
             app.UseRouting();
+            app.UseCors();
             app.MapControllers();
 
 
-            TheLogger = new Logger(TraceEventType.Verbose);
-			Persistor = new SqlPersistor(TheLogger, $"{GetAppLocation()}db\\spacedealer.db");
+            var appPath = Path.Combine(GetAppLocation(), "db");
+            var persistor = new SqlPersistor(Log.Logger, Path.Combine(appPath, "spacedealer.db"));
 
-            TheGame = new SpaceDealerGame(TheLogger);
+            TheGame = new SpaceDealerGame(Log.Logger, persistor);
             TheGame.Init();
 
-            var productRepo = new ProductsRepository(Persistor);
+            var productRepo = new ProductsRepository(persistor);
             foreach (var product in Repository.ProductLibrary)
             {
                 var p = productRepo.GetItem(product.Name, null);
                 if (p == null)
                 {
-                    TheLogger.Log($"Adding product {product.Name} to database.", TraceEventType.Information);
+                    Log.Logger.Information($"Adding product {product.Name} to database.");
                     productRepo.Save(product);
                 }
                 else
@@ -115,7 +118,7 @@ namespace SpaceDealerService
                 }
             }
 
-            foreach (var planet in TheGame.Galaxy)
+            foreach (var planet in TheGame.Galaxy.Values)
             {
                 if (planet.Industry.ProductsNeeded.Count <= 0)
                 {
@@ -129,18 +132,21 @@ namespace SpaceDealerService
                 }
             }
 
+            Log.Logger.Information("Starting Space Dealer service...");
 
-            Persistor.SaveGalaxy(TheGame.Galaxy);
-            Persistor.SavePlayers(TheGame.FleetCommanders);
-
-            var engine = new GameEngine(TheLogger, TheGame.Galaxy, TheGame.FleetCommanders);
-			var engineThread = new Thread(engine.Play) { IsBackground = false };
-			engineThread.Start();
-
-            //CreateHostBuilder(args).Build().Run();
+            var engineThread = new Thread(TheGame.Play) { IsBackground = false };
+   		    engineThread.Start();
 
             app.MapGet("/", () => Results.Ok("API is running"));
             app.MapMethods("/", new[] { "HEAD" }, () => Results.Ok());
+
+
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseCors("CorsPolicy");
+            app.UseCors("AllowSubdomains");
+            app.UseRouting();
+            app.UseAuthorization();
             app.Run();
         }
 

@@ -1,53 +1,51 @@
 ﻿using SpaceDealer.Enums;
+using SpaceDealerModels.Repositories;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class Players : List<DbPlayer>
+	public class Players : ConcurrentDictionary<string, DbPlayer>
 	{
-		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player);
-		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition);
-
-		public DbPlayer AddPlayer(DbPlayer player)
+	    public DbPlayer AddPlayer(DbPlayer player)
 		{
 			var p = GetPlayerByName(player.Name);
 			if (p != null)
 				return p;
 
-			Add(player);
-			player.Arrived += Player_Arrived;
-			player.Interrupted += Player_Interrupted;
+			var firstShip = new DbShip(player.Name + "'s Ship", player, Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet);
+			player.Fleet.AddShip(firstShip);
 
-            foreach (var ship in player.Fleet)
-            {
-                ship.StartCruise(ship.CurrentPlanet, ship.Cruise.Destination);
+            if (TryAdd(player.Id, player))
+			{
+				foreach (var ship in player.Fleet.Values)
+				{
+					ship.StartCruise(ship.CurrentPlanet, player.GetRandomDiscoveredPlanet());
+				}
+			}
+			else
+			{
+                throw new Exception($"Player with id {player.Id} already exists.");
             }
-
             return player;
-		}
-
-		private void Player_Interrupted(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, DbCoordinates newPosition)
-		{
-			Interrupted?.Invoke(interruptionType, message, ship, player, newPosition);
-		}
-
-		private void Player_Arrived(string message, DbCoordinates newPosition, DbShip ship, DbPlayer player)
-		{
-			Arrived?.Invoke(message, newPosition, ship, player);
 		}
 
         public DbPlayer GetPlayerById(string id)
         {
-            return this.FirstOrDefault(x => x.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+			var gotValue = TryGetValue(id, out var player);
+
+			if(!gotValue)
+				throw new Exception($"Player with id {id} not found.");
+
+			return player;
         }
 
         public DbPlayer GetPlayerByName(string name)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+			var player = Values.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return player;
 		}
 
 		public override string ToString()

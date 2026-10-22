@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -8,12 +8,18 @@ namespace SpaceDealerModels.Units
 	public class DbIndustry : BaseUnit
 	{
 
-		[JsonProperty("generatedProducts")]
+		[JsonPropertyName("generatedProducts")]
 		public DbProductsInStock GeneratedProducts { get; set; }
-		[JsonProperty("productsNeeded")]
+		[JsonPropertyName("productsNeeded")]
 		public DbProductsInStock ProductsNeeded { get; set; }
 
-		public DbIndustry(string name) : base(name)
+        public DbIndustry() : base()
+		{
+			GeneratedProducts = new DbProductsInStock();
+			ProductsNeeded = new DbProductsInStock();
+		}
+
+        public DbIndustry(string name) : base(name)
 		{
 			GeneratedProducts = new DbProductsInStock();
 			ProductsNeeded = new DbProductsInStock();
@@ -34,7 +40,33 @@ namespace SpaceDealerModels.Units
 			return base.ToString();
 		}
 
-		public override void Update()
+		public bool HasEnoughProducts(DbProductsInStock products)
+        {
+            foreach (var product in products)
+            {
+                var neededProduct = ProductsNeeded.GetById(product.Id);
+                if (neededProduct == null || product.Amount < neededProduct.Amount)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void DeductItem(string productId, int quantity)
+        {
+            var product = GeneratedProducts.GetById(productId);
+            if (product != null)
+            {
+                product.Amount -= quantity;
+                if (product.Amount < 0)
+                {
+				    product.Amount = 0;
+				}
+            }
+        }
+
+        public override void Update()
 		{
 			base.Update();
 			foreach(var p in GeneratedProducts)

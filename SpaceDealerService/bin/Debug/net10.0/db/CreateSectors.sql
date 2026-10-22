@@ -1,0 +1,8 @@
+CREATE TABLE "Sectors" (
+	"X"	INTEGER NOT NULL,
+	"Y"	INTEGER NOT NULL,
+	"Z"	INTEGER NOT NULL,
+	"ShipIds"	TEXT,
+	"PlanetIds"	TEXT,
+	"PlayerIds"	TEXT
+)

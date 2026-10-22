@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System.Collections.Generic;
 
 namespace SpaceDealerModels.Units
@@ -7,13 +7,13 @@ namespace SpaceDealerModels.Units
 
 	public class DbProductInStock : BaseUnit
 	{
-		[JsonProperty("amount")]
+		[JsonPropertyName("amount")]
 		public double Amount { get; set; }
-		[JsonProperty("weight")]
+		[JsonPropertyName("weight")]
 		public double Weight { get; set; } // in tons
-		[JsonProperty("amountGeneratedPerRound")]
+		[JsonPropertyName("amountGeneratedPerRound")]
 		public double AmountGeneratedPerRound { get; set; } // Für gold sehr wenig, für Reis sehr viel
-		[JsonProperty("pricePerTon")]
+		[JsonPropertyName("pricePerTon")]
 		public double PricePerTon { get; set; }
 
 		public DbProductInStock()

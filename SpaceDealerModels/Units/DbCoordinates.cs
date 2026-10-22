@@ -1,15 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 
 namespace SpaceDealerModels.Units
 {
 	public class DbCoordinates 
 	{
-		[JsonProperty("x")]
+		[JsonPropertyName("x")]
 		public double X { get; set; }
-		[JsonProperty("y")]
+		[JsonPropertyName("y")]
 		public double Y { get; set; }
-		[JsonProperty("z")]
+		[JsonPropertyName("z")]
 		public double Z { get; set; }
 
 		public DbCoordinates()

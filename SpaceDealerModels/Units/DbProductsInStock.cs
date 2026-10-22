@@ -7,7 +7,7 @@ namespace SpaceDealerModels.Units
 {
 	public class DbProductsInStock : List<DbProductInStock>
 	{
-		public DbProductInStock GetProductByName(string name)
+		public DbProductInStock GetByName(string name)
 		{
 
             foreach (var p in this)
@@ -19,7 +19,19 @@ namespace SpaceDealerModels.Units
 			return null;
 		}
 
-		public DbProductsInStock()
+        public DbProductInStock GetById(string id)
+        {
+
+            foreach (var p in this)
+            {
+                if (!string.IsNullOrEmpty(p.Id) && p.Id.Equals(id))
+                    return p;
+            }
+
+            return null;
+        }
+
+        public DbProductsInStock()
 		{
 
 		}
@@ -60,9 +72,11 @@ namespace SpaceDealerModels.Units
 
 		public DbProductInStock AddProduct(string name, double perRound, double totalAtStart, double weight, double suggestedRetailPrice)
 		{
-			var pis = new DbProductInStock(name, perRound, totalAtStart, weight, suggestedRetailPrice);
-			pis.PicturePath = "";
-			Add(pis);
+            var pis = new DbProductInStock(name, perRound, totalAtStart, weight, suggestedRetailPrice)
+            {
+                PicturePath = ""
+            };
+            Add(pis);
 			return pis;
 		}
 

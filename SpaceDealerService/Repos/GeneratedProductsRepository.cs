@@ -22,7 +22,7 @@ namespace SpaceDealerService.Repos
 		public DbProductsInStock GetGeneratedProducts(string planetId)
 		{
 			var lst = new DbProductsInStock();
-			//Parent.Logger.Log($"Loading generated products for planet {planetId}.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Loading generated products for planet {planetId}.");
 
 			var query = "SELECT ProductId, Interest FROM GeneratedProducts WHERE PlanetId = @planetId;";
 			try
@@ -45,7 +45,7 @@ namespace SpaceDealerService.Repos
 						}
 						else
 						{
-                            Parent.Logger.Log($"Failed to get generated product with id [{productId}] for planet Id [{planetId}]", TraceEventType.Warning);
+                            Parent.Logger.Warning($"Failed to get generated product with id [{productId}] for planet Id [{planetId}]");
                         }
 					}
 				}
@@ -53,7 +53,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (Exception e)
 			{
-				Parent.Logger.Log($"Failed to get generated products for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get generated products for planet Id [{planetId}] {e.Message}");
 			}
 
 			return lst;
@@ -61,7 +61,7 @@ namespace SpaceDealerService.Repos
 
 		public DbProductInStock GetProductInStock(string planetId, string productId)
 		{
-			//Parent.Logger.Log($"Loading products in stock for planet {planetId}.", TraceEventType.Information);
+			//Parent.Logger.Log($"Loading products in stock for planet {planetId}.");
 
 			var query = "SELECT Interest FROM GeneratedProducts WHERE PlanetId = @planetId AND ProductId = @productId;";
 			try
@@ -88,7 +88,7 @@ namespace SpaceDealerService.Repos
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to get NeededProducts for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get NeededProducts for planet Id [{planetId}] {e.Message}", TraceEventType.Error);
 			}
 
 			return null;
@@ -96,7 +96,7 @@ namespace SpaceDealerService.Repos
 
 		public void SaveGeneratedProduct(string planetId, string productId)
 		{
-			Parent.Logger.Log($"Saving generated product for planet {planetId}.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving generated product for planet {planetId}.");
 			var p = GetProductInStock(planetId, productId);
 			if (p != null)
 				return;
@@ -113,18 +113,18 @@ namespace SpaceDealerService.Repos
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Generated product {productId} with interest {interest}% saved.", TraceEventType.Information);
+						Parent.Logger.Information($"Generated product {productId} with interest {interest}% saved.");
 					}
 
                     catch (Exception e)
 					{
-						Parent.Logger.Log($"Failed to save generated product {e.Message}", TraceEventType.Error);
+						Parent.Logger.Error($"Failed to save generated product {e.Message}");
 					}
 				}
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to save GeneratedProducts for planet Id [{planetId},{productId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to save GeneratedProducts for planet Id [{planetId},{productId}] {e.Message}");
 			}
 		}
 

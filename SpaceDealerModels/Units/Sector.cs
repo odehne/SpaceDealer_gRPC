@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +7,10 @@ namespace SpaceDealerModels.Units
 {
     public class Sector
     {
-		[JsonProperty("position")]
-		public DbCoordinates Position { get; set; }
-		[JsonProperty("shipIds")]
+        private readonly object _lock = new object();
+        public DbCoordinates Position { get; set; }
 		public List<string> ShipIds { get; set; }
-		[JsonProperty("planetIds")]
 		public List<string> PlanetIds { get; set; }
-		[JsonProperty("playerIds")]
 		public List<string> PlayerIds { get; set; }
 
         public Sector(DbCoordinates position)
@@ -103,23 +100,62 @@ namespace SpaceDealerModels.Units
             }
         }
 
+        public void RemovePlayer(string playerId)
+        {
+            lock (_lock)
+            {
+                var id = PlayerIds.FirstOrDefault(p => p.Equals(playerId));
+                if (id != null)
+                    PlayerIds.Remove(id);
+            }
+        }
+
+        public void RemovePlanet(string planetId)
+        {
+            lock (_lock)
+            {
+                var id = PlanetIds.FirstOrDefault(p => p.Equals(planetId));
+                if (id != null)
+                    PlanetIds.Remove(id);
+            }
+        }
+
+        public void RemoveShip(string shipId)
+        {
+            lock (_lock)
+            {
+                var id = ShipIds.FirstOrDefault(p => p.Equals(shipId));
+                if (id != null)
+                    ShipIds.Remove(id);
+            }
+        }
+
         public void AddPlayer(string playerId)
         {
-            var id = PlayerIds.FirstOrDefault(p => p.Equals(playerId));
-            if(id == null)
-                PlayerIds.Add(playerId);
+            lock (_lock)
+            {
+                var id = PlayerIds.FirstOrDefault(p => p.Equals(playerId));
+                if (id == null)
+                    PlayerIds.Add(playerId);
+            }
         }
         public void AddPlanet(string planetId)
         {
-            var id = PlanetIds.FirstOrDefault(p => p.Equals(planetId));
-            if (id == null)
-                PlanetIds.Add(planetId);
+            lock (_lock)
+            {
+                var id = PlanetIds.FirstOrDefault(p => p.Equals(planetId));
+                if (id == null)
+                    PlanetIds.Add(planetId);
+            }
         }
         public void AddShip(string shipId)
         {
-            var id = ShipIds.FirstOrDefault(p => p.Equals(shipId));
-            if (id == null)
-                ShipIds.Add(shipId);
+            lock(_lock)
+            {
+                var id = ShipIds.FirstOrDefault(p => p.Equals(shipId));
+                if (id == null)
+                    ShipIds.Add(shipId);
+            };
         }
     }
 }

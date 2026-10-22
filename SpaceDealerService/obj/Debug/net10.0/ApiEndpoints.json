@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "SpaceDealerService.Program\u002B\u003C\u003Ec",
-    "Method": "\u003CMain\u003Eb__12_4",
+    "Method": "\u003CMain\u003Eb__4_5",
     "RelativePath": "",
     "HttpMethod": "GET",
     "IsController": false,
@@ -17,7 +17,7 @@
   },
   {
     "ContainingType": "SpaceDealerService.Program\u002B\u003C\u003Ec",
-    "Method": "\u003CMain\u003Eb__12_5",
+    "Method": "\u003CMain\u003Eb__4_6",
     "RelativePath": "",
     "HttpMethod": "HEAD",
     "IsController": false,
@@ -32,9 +32,201 @@
     ]
   },
   {
+    "ContainingType": "SpaceDealerService.API.GameController",
+    "Method": "LoadGame",
+    "RelativePath": "game/game/load",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gameUID",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.GameController",
+    "Method": "NewGame",
+    "RelativePath": "game/game/new",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.GameController",
+    "Method": "ResetDatabase",
+    "RelativePath": "game/game/reset",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.GameController",
+    "Method": "SaveGame",
+    "RelativePath": "game/game/save",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gameUID",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.GameController",
+    "Method": "GetGameStats",
+    "RelativePath": "game/game/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gameUID",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.GameStatistics",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.PlanetsController",
+    "Method": "GetAll",
+    "RelativePath": "planets",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.Planets",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.PlanetsController",
+    "Method": "GetPlanet",
+    "RelativePath": "planets/{planetUID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planetUID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.DbPlanet",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.PlanetsController",
+    "Method": "GetAll",
+    "RelativePath": "planets/discovered/{playerUID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.Planets",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.PlayersController",
+    "Method": "GetAll",
+    "RelativePath": "players",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.DbPlayer",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "GetPlayer",
-    "RelativePath": "{playerUID}",
+    "RelativePath": "players/{playerUID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -58,7 +250,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "GetAllShips",
-    "RelativePath": "{playerUID}/ships",
+    "RelativePath": "players/{playerUID}/ships",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -81,104 +273,8 @@
   },
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
-    "Method": "GetUpdates",
-    "RelativePath": "{playerUID}/updates",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "playerUID",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "SpaceDealerModels.Units.UpdateInfo",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "SpaceDealerService.API.GameController",
-    "Method": "GetallPlanets",
-    "RelativePath": "game/{gameUID}/planets",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "gameUID",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "SpaceDealerModels.Units.Planets",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "SpaceDealerService.API.GameController",
-    "Method": "GetallPlayers",
-    "RelativePath": "game/{gameUID}/players",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "gameUID",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "SpaceDealerModels.Units.Players",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "SpaceDealerService.API.GameController",
-    "Method": "SaveGame",
-    "RelativePath": "game/save",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "playerName",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Boolean",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "GetShip",
-    "RelativePath": "player/{playerUID}/ships/{shipUID}",
+    "RelativePath": "players/{playerUID}/ships/{shipUID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -207,7 +303,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "BattleAttack",
-    "RelativePath": "player/{playerUID}/ships/{shipUID}/attack",
+    "RelativePath": "players/{playerUID}/ships/{shipUID}/attack",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -236,7 +332,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "BattleDefend",
-    "RelativePath": "player/{playerUID}/ships/{shipUID}/defend",
+    "RelativePath": "players/{playerUID}/ships/{shipUID}/defend",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -265,7 +361,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "ContinueTravel",
-    "RelativePath": "player/{playerUID}/ships/{shipUID}/travel/continue",
+    "RelativePath": "players/{playerUID}/ships/{shipUID}/travel/continue",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -299,7 +395,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "StartCruise",
-    "RelativePath": "player/{playerUID}/ships/{shipUID}/travel/to",
+    "RelativePath": "players/{playerUID}/ships/{shipUID}/travel/to",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -338,7 +434,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "StartCruise",
-    "RelativePath": "player/{playerUID}/ships/{shipUID}/travel/to",
+    "RelativePath": "players/{playerUID}/ships/{shipUID}/travel/to",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -377,7 +473,7 @@
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "NewShip",
-    "RelativePath": "player/{playerUID}/ships/new",
+    "RelativePath": "players/{playerUID}/ships/new",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -405,8 +501,32 @@
   },
   {
     "ContainingType": "SpaceDealerService.API.PlayersController",
+    "Method": "GetUpdates",
+    "RelativePath": "players/{playerUID}/updates",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.UpdateInfo",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.PlayersController",
     "Method": "NewPlayer",
-    "RelativePath": "player/new",
+    "RelativePath": "players/new",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -420,6 +540,201 @@
     "ReturnTypes": [
       {
         "Type": "SpaceDealerModels.Units.DbPlayer",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.TradingController",
+    "Method": "BuyProducts",
+    "RelativePath": "trading/trading/{playerUID}/{shipUID}/{planetUID}/{productUID}/buy",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "shipUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "planetUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "productUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "quantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Double",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.TradingController",
+    "Method": "SellProducts",
+    "RelativePath": "trading/trading/{playerUID}/{shipUID}/{planetUID}/{productUID}/sell",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "shipUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "planetUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "productUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "quantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Double",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.TradingController",
+    "Method": "GetNeededProducts",
+    "RelativePath": "trading/trading/{playerUID}/{shipUID}/{planetUID}/needs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "shipUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "planetUID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.DbIndustry",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.TradingController",
+    "Method": "GetProducedProducts",
+    "RelativePath": "trading/trading/{playerUID}/{shipUID}/{planetUID}/produced",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "shipUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "planetUID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.DbIndustry",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SpaceDealerService.API.TradingController",
+    "Method": "BrowseBestPrice",
+    "RelativePath": "trading/trading/{playerUID}/{shipUID}/browse",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "shipUID",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "productUID",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "tradeType",
+        "Type": "SpaceDealerService.API.TradingController\u002BTradeType",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SpaceDealerModels.Units.DbPlanet",
         "MediaTypes": [
           "application/json"
         ],

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace SpaceDealerService.Repos
 {
@@ -11,9 +12,9 @@ namespace SpaceDealerService.Repos
 			Parent = parent;
 		}
 
-		public abstract List<T> GetAll();
+		public abstract ConcurrentDictionary<string, T> GetAll();
 
-		public abstract List<T> GetAll(string id);
+		public abstract ConcurrentDictionary<string, T> GetAll(string id);
 
 		public abstract T GetItem(string name, string id);
 

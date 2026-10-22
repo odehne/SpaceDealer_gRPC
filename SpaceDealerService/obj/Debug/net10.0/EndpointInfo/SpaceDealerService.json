@@ -35,7 +35,7 @@
         }
       }
     },
-    "/game/{gameUID}/planets": {
+    "/game/game/load": {
       "get": {
         "tags": [
           "Game"
@@ -43,8 +43,7 @@
         "parameters": [
           {
             "name": "gameUID",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -56,10 +55,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DbPlanet"
-                  }
+                  "type": "string"
                 }
               }
             }
@@ -67,7 +63,7 @@
         }
       }
     },
-    "/game/{gameUID}/players": {
+    "/game/game/stats": {
       "get": {
         "tags": [
           "Game"
@@ -75,8 +71,7 @@
         "parameters": [
           {
             "name": "gameUID",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -88,10 +83,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DbPlayer"
-                  }
+                  "$ref": "#/components/schemas/GameStatistics"
                 }
               }
             }
@@ -99,14 +91,33 @@
         }
       }
     },
-    "/game/save": {
+    "/game/game/new": {
       "post": {
         "tags": [
           "Game"
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game/game/save": {
+      "put": {
+        "tags": [
+          "Game"
+        ],
         "parameters": [
           {
-            "name": "playerName",
+            "name": "gameUID",
             "in": "query",
             "schema": {
               "type": "string"
@@ -127,7 +138,128 @@
         }
       }
     },
-    "/{playerUID}": {
+    "/game/game/reset": {
+      "put": {
+        "tags": [
+          "Game"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/planets": {
+      "get": {
+        "tags": [
+          "Planets"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DbPlanet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/planets/{planetUID}": {
+      "get": {
+        "tags": [
+          "Planets"
+        ],
+        "parameters": [
+          {
+            "name": "planetUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbPlanet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/planets/discovered/{playerUID}": {
+      "get": {
+        "tags": [
+          "Planets"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/DbPlanet"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players": {
+      "get": {
+        "tags": [
+          "Players"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbPlayer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{playerUID}": {
       "get": {
         "tags": [
           "Players"
@@ -156,7 +288,7 @@
         }
       }
     },
-    "/{playerUID}/updates": {
+    "/players/{playerUID}/updates": {
       "get": {
         "tags": [
           "Players"
@@ -185,7 +317,7 @@
         }
       }
     },
-    "/{playerUID}/ships": {
+    "/players/{playerUID}/ships": {
       "get": {
         "tags": [
           "Players"
@@ -206,8 +338,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
+                  "type": "object",
+                  "additionalProperties": {
                     "$ref": "#/components/schemas/DbShip"
                   }
                 }
@@ -217,7 +349,7 @@
         }
       }
     },
-    "/player/{playerUID}/ships/{shipUID}": {
+    "/players/{playerUID}/ships/{shipUID}": {
       "get": {
         "tags": [
           "Players"
@@ -254,7 +386,7 @@
         }
       }
     },
-    "/player/new": {
+    "/players/new": {
       "post": {
         "tags": [
           "Players"
@@ -282,7 +414,7 @@
         }
       }
     },
-    "/player/{playerUID}/ships/new": {
+    "/players/{playerUID}/ships/new": {
       "post": {
         "tags": [
           "Players"
@@ -318,7 +450,7 @@
         }
       }
     },
-    "/player/{playerUID}/ships/{shipUID}/attack": {
+    "/players/{playerUID}/ships/{shipUID}/attack": {
       "post": {
         "tags": [
           "Players"
@@ -355,7 +487,7 @@
         }
       }
     },
-    "/player/{playerUID}/ships/{shipUID}/defend": {
+    "/players/{playerUID}/ships/{shipUID}/defend": {
       "post": {
         "tags": [
           "Players"
@@ -392,7 +524,7 @@
         }
       }
     },
-    "/player/{playerUID}/ships/{shipUID}/travel/to": {
+    "/players/{playerUID}/ships/{shipUID}/travel/to": {
       "post": {
         "tags": [
           "Players"
@@ -436,21 +568,6 @@
               }
             },
             "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "text/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "application/*+xml": {
               "schema": {
                 "$ref": "#/components/schemas/DbCoordinates"
               }
@@ -516,21 +633,6 @@
               "schema": {
                 "$ref": "#/components/schemas/DbCoordinates"
               }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "text/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "application/*+xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
             }
           }
         },
@@ -548,7 +650,7 @@
         }
       }
     },
-    "/player/{playerUID}/ships/{shipUID}/travel/continue": {
+    "/players/{playerUID}/ships/{shipUID}/travel/continue": {
       "put": {
         "tags": [
           "Players"
@@ -587,21 +689,6 @@
               "schema": {
                 "$ref": "#/components/schemas/DbCoordinates"
               }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "text/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
-            },
-            "application/*+xml": {
-              "schema": {
-                "$ref": "#/components/schemas/DbCoordinates"
-              }
             }
           },
           "required": true
@@ -613,6 +700,287 @@
               "application/json": {
                 "schema": {
                   "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/trading/{playerUID}/{shipUID}/{planetUID}/needs": {
+      "get": {
+        "tags": [
+          "Trading"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "planetUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbIndustry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/trading/{playerUID}/{shipUID}/{planetUID}/{productUID}/sell": {
+      "get": {
+        "tags": [
+          "Trading"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "planetUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+                  "type": [
+                    "number",
+                    "string"
+                  ],
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/trading/{playerUID}/{shipUID}/{planetUID}/{productUID}/buy": {
+      "get": {
+        "tags": [
+          "Trading"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "planetUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+                  "type": [
+                    "number",
+                    "string"
+                  ],
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/trading/{playerUID}/{shipUID}/browse": {
+      "get": {
+        "tags": [
+          "Trading"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productUID",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tradeType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TradeType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbPlanet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/trading/{playerUID}/{shipUID}/{planetUID}/produced": {
+      "get": {
+        "tags": [
+          "Trading"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "planetUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbIndustry"
                 }
               }
             }
@@ -656,6 +1024,75 @@
           },
           "defeaded": {
             "type": "boolean"
+          }
+        }
+      },
+      "DbCargo": {
+        "type": "object",
+        "properties": {
+          "shipId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "productId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "quantity": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "product": {
+            "$ref": "#/components/schemas/DbProductInStock"
+          },
+          "id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "picturePath": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "playerId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "properties": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/KeyValuePairOfstringAndstring"
+            }
           }
         }
       },
@@ -744,9 +1181,6 @@
         }
       },
       "DbIndustry": {
-        "required": [
-          "name"
-        ],
         "type": "object",
         "properties": {
           "generatedProducts": {
@@ -774,10 +1208,12 @@
             ]
           },
           "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
             "type": [
-              "null",
+              "number",
               "string"
-            ]
+            ],
+            "format": "double"
           },
           "picturePath": {
             "type": [
@@ -811,13 +1247,10 @@
       "DbJourney": {
         "type": "object",
         "properties": {
-          "parent": {
-            "$ref": "#/components/schemas/DbShip"
-          },
           "departure": {
             "$ref": "#/components/schemas/DbPlanet"
           },
-          "destination": {
+          "detination": {
             "$ref": "#/components/schemas/DbPlanet"
           },
           "currentSector": {
@@ -829,7 +1262,7 @@
           "enemyBattleShip": {
             "$ref": "#/components/schemas/PirateShip"
           },
-          "discoveredPlanet": {
+          "newlyDisoveredPlanet": {
             "$ref": "#/components/schemas/DbPlanet"
           },
           "currentDistanceToDestination": {
@@ -842,63 +1275,13 @@
           }
         }
       },
-      "DbMarket": {
-        "type": "object",
-        "properties": {
-          "parent": {
-            "$ref": "#/components/schemas/DbPlanet"
-          },
-          "id": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "cargoSize": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "picturePath": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "playerId": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "name": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "properties": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/KeyValuePairOfstringAndstring"
-            }
-          }
-        }
-      },
       "DbPlanet": {
         "type": "object",
         "properties": {
           "sector": {
             "$ref": "#/components/schemas/DbCoordinates"
           },
-          "market": {
-            "$ref": "#/components/schemas/DbMarket"
-          },
-          "industry": {
+          "industries": {
             "$ref": "#/components/schemas/DbIndustry"
           },
           "id": {
@@ -908,10 +1291,12 @@
             ]
           },
           "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
             "type": [
-              "null",
+              "number",
               "string"
-            ]
+            ],
+            "format": "double"
           },
           "picturePath": {
             "type": [
@@ -960,9 +1345,9 @@
           "fleet": {
             "type": [
               "null",
-              "array"
+              "object"
             ],
-            "items": {
+            "additionalProperties": {
               "$ref": "#/components/schemas/DbShip"
             }
           },
@@ -980,28 +1365,10 @@
           "discoveredPlanets": {
             "type": [
               "null",
-              "array"
+              "object"
             ],
-            "items": {
+            "additionalProperties": {
               "$ref": "#/components/schemas/DbPlanet"
-            }
-          },
-          "galaxy": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/DbPlanet"
-            }
-          },
-          "activeSectors": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/Sector"
             }
           },
           "id": {
@@ -1011,10 +1378,12 @@
             ]
           },
           "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
             "type": [
-              "null",
+              "number",
               "string"
-            ]
+            ],
+            "format": "double"
           },
           "picturePath": {
             "type": [
@@ -1087,10 +1456,12 @@
             ]
           },
           "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
             "type": [
-              "null",
+              "number",
               "string"
-            ]
+            ],
+            "format": "double"
           },
           "picturePath": {
             "type": [
@@ -1122,26 +1493,21 @@
         }
       },
       "DbShip": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
           "cruise": {
             "$ref": "#/components/schemas/DbJourney"
           },
-          "cargoSize": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
-            "type": [
-              "number",
-              "string"
-            ],
-            "format": "double"
-          },
-          "currentLoad": {
+          "cargo": {
             "type": [
               "null",
               "array"
             ],
             "items": {
-              "$ref": "#/components/schemas/DbProductInStock"
+              "$ref": "#/components/schemas/DbCargo"
             }
           },
           "features": {
@@ -1151,15 +1517,6 @@
             ],
             "items": {
               "$ref": "#/components/schemas/DbFeature"
-            }
-          },
-          "parent": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/DbShip"
             }
           },
           "state": {
@@ -1214,6 +1571,14 @@
               "string"
             ]
           },
+          "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
           "picturePath": {
             "type": [
               "null",
@@ -1240,6 +1605,83 @@
             "items": {
               "$ref": "#/components/schemas/KeyValuePairOfstringAndstring"
             }
+          }
+        }
+      },
+      "GameStatistics": {
+        "type": "object",
+        "properties": {
+          "totalPlayers": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalShips": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalPlanets": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalBattles": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalBattlesWon": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalBattlesLost": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalBattlesDraw": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalCriticalHits": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalTreasureCollected": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           }
         }
       },
@@ -1326,42 +1768,10 @@
       "PlayerTypes": {
         "type": "integer"
       },
-      "Sector": {
-        "type": "object",
-        "properties": {
-          "position": {
-            "$ref": "#/components/schemas/DbCoordinates"
-          },
-          "shipIds": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "type": "string"
-            }
-          },
-          "planetIds": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "type": "string"
-            }
-          },
-          "playerIds": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
       "ShipState": {
+        "type": "integer"
+      },
+      "TradeType": {
         "type": "integer"
       },
       "UpdateInfo": {
@@ -1385,7 +1795,13 @@
       "name": "Game"
     },
     {
+      "name": "Planets"
+    },
+    {
       "name": "Players"
+    },
+    {
+      "name": "Trading"
     }
   ]
 }

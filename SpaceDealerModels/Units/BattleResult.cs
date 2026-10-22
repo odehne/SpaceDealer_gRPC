@@ -1,6 +1,8 @@
 ﻿namespace SpaceDealerModels.Units
 {
-	public class BattleResult
+
+
+    public class BattleResult
 	{
 		public string Message { get; set; }
 		public int Value { get; set; }

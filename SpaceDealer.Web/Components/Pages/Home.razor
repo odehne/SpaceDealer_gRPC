@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using System.Globalization
 
 <PageTitle>SpaceDealer — Galaxieübersicht</PageTitle>
 
@@ -10,43 +9,25 @@
             <span>SPACE<span class="brand-light">DEALER</span></span>
         </a>
 
-        <nav class="main-menu" aria-label="Hauptmenü">
-            <details class="file-menu">
-                <summary>Datei</summary>
-                <div class="menu-popover">
-                    <button @onclick="StartNewGame">Neues Spiel</button>
-                    <button @onclick="ShowSaveNotice">Spielstand laden <span>Demnächst</span></button>
-                </div>
-            </details>
-            <button class="menu-link" @onclick="StartNewGame">Neues Spiel</button>
-            <button class="menu-link exit-link" @onclick="ExitGame">Beenden</button>
-        </nav>
+        @if (Player is not null)
+        {
+            <nav class="main-menu" aria-label="Hauptmenü">
+                <details class="file-menu">
+                    <summary>Datei</summary>
+                    <div class="menu-popover">
+                        <button @onclick="SaveGameAsync">Spiel speichern</button>
+                        <button @onclick="LogoutAsync">Kapitän wechseln</button>
+                    </div>
+                </details>
+                <button class="menu-link" @onclick="SaveGameAsync">Speichern</button>
+                <button class="menu-link exit-link" @onclick="LogoutAsync">Abmelden</button>
+            </nav>
+        }
 
-        <div class="connection-state"><span class="pulse"></span> DEMO-MODUS</div>
+        <div class="connection-state">
+            <span class="pulse @(Connected ? "" : "is-offline")"></span> @(Connected ? "VERBUNDEN" : "KEINE VERBINDUNG")
+        </div>
     </header>
-
-    <section class="player-bar" aria-label="Spielerübersicht">
-        <div class="player-identity">
-            <div class="avatar">MK</div>
-            <div>
-                <span class="eyebrow">KAPITÄN</span>
-                <strong>@PlayerName</strong>
-            </div>
-        </div>
-        <div class="player-stat">
-            <span class="eyebrow">KONTOSTAND</span>
-            <strong class="money">@FormatCredits(Credits) <small>CR</small></strong>
-        </div>
-        <div class="player-stat">
-            <span class="eyebrow">EINKOMMEN / RUNDE</span>
-            <strong>@FormatCredits(Income) <small>CR</small></strong>
-        </div>
-        <div class="player-stat">
-            <span class="eyebrow">FLOTTE</span>
-            <strong>@Ships.Count <small>SCHIFFE</small></strong>
-        </div>
-        <button class="round-button notification-button" title="Nachrichten" @onclick="ShowMessages">♧<i></i></button>
-    </section>
 
     @if (!string.IsNullOrWhiteSpace(ToastMessage))
     {
@@ -56,352 +37,406 @@
         </div>
     }
 
-    <main class="dashboard">
-        <section class="left-column">
-            <article class="panel map-panel">
-                <div class="panel-heading map-heading">
-                    <div>
-                        <span class="eyebrow">SEKTOR 07 · OUTER RIM</span>
-                        <h1>Galaxieübersicht</h1>
-                    </div>
-                    <div class="travel-status"><span class="status-dot"></span>@(IsTravelling ? "IM TRANSIT" : "AM ZIELORT")</div>
-                </div>
-
-                <div class="map-frame">
-                    <svg class="galaxy-map" viewBox="0 0 760 390" role="img" aria-label="Sternenkarte mit Route von Nova Prime nach Haven">
-                        <defs>
-                            <radialGradient id="map-glow">
-                                <stop offset="0" stop-color="#223e67" stop-opacity=".4" />
-                                <stop offset="1" stop-color="#0a1220" stop-opacity="0" />
-                            </radialGradient>
-                            <filter id="planet-glow">
-                                <feGaussianBlur stdDeviation="6" result="blur" />
-                                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-                            </filter>
-                        </defs>
-                        <rect width="760" height="390" fill="url(#map-glow)" />
-                        <g class="star-field">
-                            <circle cx="42" cy="68" r="1" /><circle cx="91" cy="300" r="1.3" /><circle cx="140" cy="117" r="1" />
-                            <circle cx="183" cy="46" r="1.2" /><circle cx="210" cy="334" r=".8" /><circle cx="255" cy="102" r="1" />
-                            <circle cx="301" cy="275" r=".9" /><circle cx="346" cy="61" r="1.4" /><circle cx="405" cy="334" r="1" />
-                            <circle cx="454" cy="71" r=".8" /><circle cx="506" cy="285" r="1.1" /><circle cx="550" cy="46" r="1" />
-                            <circle cx="612" cy="314" r="1.2" /><circle cx="664" cy="93" r=".9" /><circle cx="717" cy="240" r="1.2" />
-                            <circle cx="118" cy="205" r=".8" /><circle cx="317" cy="158" r=".8" /><circle cx="580" cy="170" r="1.2" />
-                        </g>
-                        <path class="route-line" d="M145 258 C250 225 330 270 430 193 S555 131 633 104" />
-                        <path class="route-progress" d="M145 258 C250 225 330 270 376 224" />
-                        <circle class="scan-ring" cx="376" cy="224" r="75" />
-
-                        <g class="planet planet-origin" transform="translate(145 258)">
-                            <circle class="planet-aura" r="23" />
-                            <circle class="planet-core" r="8" />
-                            <text x="0" y="38" text-anchor="middle">NOVA PRIME</text>
-                            <text class="planet-subtitle" x="0" y="53" text-anchor="middle">STARTWELT</text>
-                        </g>
-                        <g class="planet planet-target" transform="translate(633 104)">
-                            <circle class="planet-aura" r="23" />
-                            <circle class="planet-core" r="8" />
-                            <text x="0" y="38" text-anchor="middle">HAVEN</text>
-                            <text class="planet-subtitle" x="0" y="53" text-anchor="middle">ZIELWELT</text>
-                        </g>
-                        <g class="planet planet-minor" transform="translate(344 114)">
-                            <circle class="planet-core" r="4" />
-                            <text x="0" y="22" text-anchor="middle">KEPLER-186</text>
-                        </g>
-                        <g class="ship-marker" transform="translate(@(IsTravelling ? 376 : 633) @(IsTravelling ? 224 : 104))">
-                            <circle class="ship-aura" r="16" />
-                            <path d="M0 -9 L7 7 L0 4 L-7 7 Z" />
-                        </g>
-                        <g class="map-coordinates">
-                            <text x="18" y="25">KARTENRASTER · 1:250 LY</text>
-                            <text x="742" y="25" text-anchor="end">X: 248 · Y: 091</text>
-                        </g>
-                    </svg>
-                    <div class="map-legend">
-                        <span><i class="legend-ship"></i> Dein Schiff</span>
-                        <span><i class="legend-route"></i> Flugroute</span>
-                        <span><i class="legend-scan"></i> Scanradius</span>
-                    </div>
-                </div>
-
-                <div class="journey-strip">
-                    <div class="journey-end">
-                        <span class="eyebrow">VON</span>
-                        <strong>Nova Prime</strong>
-                    </div>
-                    <div class="journey-progress">
-                        <div class="journey-caption"><span>@(IsTravelling ? "Reise läuft" : "Ziel erreicht")</span><span>@(IsTravelling ? "68%" : "100%")</span></div>
-                        <div class="progress-track"><div class="progress-fill" style="width: @(IsTravelling ? "68%" : "100%")"></div></div>
-                        <span class="journey-meta">@(IsTravelling ? "Ankunft in 2 Runden · 4.2 LY" : "Haven · Handelszone")</span>
-                    </div>
-                    <div class="journey-end journey-destination">
-                        <span class="eyebrow">NACH</span>
-                        <strong>Haven</strong>
-                    </div>
-                </div>
-                @if (IsTravelling)
+    @if (Restoring)
+    {
+        <p class="loading-note">Verbindung zum Raumhafen wird aufgebaut …</p>
+    }
+    else if (Player is null)
+    {
+        <main class="login-wrap">
+            <article class="panel login-card">
+                <span class="eyebrow">NEUER AUFTRAG</span>
+                <h1>Willkommen, Händler</h1>
+                <p class="login-hint">Gib deinen Kapitänsnamen ein. Existiert er bereits, setzt du dein Spiel fort — sonst erhältst du ein neues Schiff und 10.000 Credits.</p>
+                <form @onsubmit="() => LoginAsync(LoginName)">
+                    <input class="text-input" placeholder="Kapitänsname" maxlength="40" autofocus
+                           @bind="LoginName" @bind:event="oninput" />
+                    <button class="trade-button login-button" type="submit" disabled="@Busy">@(Busy ? "LÄDT …" : "STARTEN")</button>
+                </form>
+                @if (LoginError is not null)
                 {
-                    <button class="text-action arrive-action" @onclick="ArriveAtDestination">Demo: Ankunft simulieren <span>→</span></button>
+                    <p class="form-error">@LoginError</p>
                 }
             </article>
+        </main>
+    }
+    else
+    {
+        var ship = SelectedShip;
+        var cruise = ship?.Cruise;
 
-            @if (IsTravelling)
-            {
-                <article class="panel events-panel">
-                    <div class="panel-heading compact-heading">
-                        <div>
-                            <span class="eyebrow">LIVE-FEED</span>
-                            <h2>Vorfälle im Sektor</h2>
-                        </div>
-                        <span class="event-count">2 MELDUNGEN</span>
-                    </div>
-                    <div class="event-list">
-                        <div class="event-item">
-                            <span class="event-icon distress">!</span>
-                            <div><strong>Notruf empfangen</strong><p>Frachter „Morgenstern“ · 12 LY entfernt</p></div>
-                            <span class="event-time">JETZT</span>
-                        </div>
-                        <div class="event-item">
-                            <span class="event-icon pirate">⌁</span>
-                            <div><strong>Unbekanntes Schiff entdeckt</strong><p>Schwach signiert · Scan erforderlich</p></div>
-                            <span class="event-time">VOR 4 MIN.</span>
-                        </div>
-                    </div>
-                    <p class="demo-note">Scan-Erkennung ist noch nicht mit dem Backend verbunden.</p>
-                </article>
-            }
-            else
-            {
-                <article class="panel market-panel">
-                    <div class="panel-heading compact-heading">
-                        <div>
-                            <span class="eyebrow">HANDELSSTATION · HAVEN</span>
-                            <h2>Markt &amp; Ladung</h2>
-                        </div>
-                        <span class="market-badge">MARKT GEÖFFNET</span>
-                    </div>
-                    <div class="market-table-wrap">
-                        <table class="market-table">
-                            <thead><tr><th>WARE</th><th>ANGEBOT</th><th>KAUF</th><th>BEDARF</th><th>VERKAUF</th><th></th></tr></thead>
-                            <tbody>
-                                @foreach (var good in Goods)
-                                {
-                                    <tr>
-                                        <td><span class="good-icon">@good.Icon</span>@good.Name</td>
-                                        <td>@good.Stock t</td>
-                                        <td class="price">@FormatCredits(good.BuyPrice) CR</td>
-                                        <td>@good.Demand t</td>
-                                        <td class="price">@FormatCredits(good.SellPrice) CR</td>
-                                        <td>
-                                            <div class="trade-actions">
-                                                <button class="trade-button" title="@good.Name kaufen" @onclick="() => Buy(good)">KAUFEN</button>
-                                                <button class="sell-button" title="@good.Name verkaufen" disabled="@(!HasCargo(good.Name))" @onclick="() => Sell(good)">VERKAUFEN</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="cargo-summary">
-                        <span class="eyebrow">DEINE LADUNG</span>
-                        @foreach (var cargo in Cargo)
-                        {
-                            <span class="cargo-chip">@cargo.Key <b>@cargo.Value t</b></span>
-                        }
-                        <span class="cargo-capacity">@Cargo.Values.Sum() / @SelectedShip.Capacity t belegt</span>
-                    </div>
-                </article>
-            }
+        <section class="player-bar" aria-label="Spielerübersicht">
+            <div class="player-identity">
+                <div class="avatar">@Initials(Player.Name)</div>
+                <div>
+                    <span class="eyebrow">KAPITÄN</span>
+                    <strong>@Player.Name</strong>
+                </div>
+            </div>
+            <div class="player-stat">
+                <span class="eyebrow">KONTOSTAND</span>
+                <strong class="money">@FormatCredits(Player.Credits) <small>CR</small></strong>
+            </div>
+            <div class="player-stat">
+                <span class="eyebrow">HEIMATWELT</span>
+                <strong>@(Player.HomePlanet?.Name ?? "—")</strong>
+            </div>
+            <div class="player-stat">
+                <span class="eyebrow">FLOTTE</span>
+                <strong>@Player.Fleet.Count <small>SCHIFFE</small></strong>
+            </div>
+            <button class="round-button notification-button" title="Logbuch" @onclick="() => ShowLog = !ShowLog">♧<i></i></button>
         </section>
 
-        <aside class="right-column">
-            <article class="panel ship-panel">
-                <div class="panel-heading compact-heading">
-                    <div>
-                        <span class="eyebrow">FLOTTENÜBERSICHT</span>
-                        <h2>Dein Schiff</h2>
+        <main class="dashboard">
+            <section class="left-column">
+                <article class="panel map-panel">
+                    <div class="panel-heading map-heading">
+                        <div>
+                            <span class="eyebrow">@(cruise is null ? "KEIN SCHIFF" : $"SEKTOR {cruise.CurrentSector.X:0} · {cruise.CurrentSector.Y:0} · {cruise.CurrentSector.Z:0}")</span>
+                            <h1>Galaxieübersicht</h1>
+                        </div>
+                        <div class="travel-status"><span class="status-dot"></span>@(IsTravelling ? "IM TRANSIT" : "AM ZIELORT")</div>
                     </div>
-                    <button class="round-button" title="Schiff wechseln" @onclick="SwitchShip">↔</button>
-                </div>
-                <div class="ship-visual">
-                    <div class="ship-orbit orbit-one"></div><div class="ship-orbit orbit-two"></div>
-                    <div class="ship-art">✦</div>
-                    <span class="ship-class">@SelectedShip.Type</span>
-                </div>
-                <div class="ship-name-row"><div><span class="eyebrow">AKTIVES SCHIFF</span><h3>@SelectedShip.Name</h3></div><span class="ship-level">MK II</span></div>
-                <div class="detail-list">
-                    <div><span>Position</span><strong>@(IsTravelling ? "Zwischen Nova Prime & Haven" : "Haven · Dock 04")</strong></div>
-                    <div><span>Schiffsklasse</span><strong>@SelectedShip.Class</strong></div>
-                    <div><span>Laderaum</span><strong>@Cargo.Values.Sum() / @SelectedShip.Capacity t</strong></div>
-                    <div><span>Rumpfzustand</span><strong class="condition"><i></i> 92%</strong></div>
-                </div>
-                <div class="features">
-                    <span class="eyebrow">AUSSTATTUNG</span>
-                    <div class="feature-list"><span>◈ Leichter Frachtraum</span><span>⌖ Impulsantrieb</span><span>◉ Kurzstreckenscanner</span></div>
-                </div>
-            </article>
 
-            <article class="panel combat-panel">
-                <div class="panel-heading compact-heading">
-                    <div><span class="eyebrow">TAKTIKMODUL</span><h2>Kampfstatus</h2></div>
-                    <button class="toggle-button @(CombatMode ? "is-on" : "")" aria-pressed="@CombatMode" @onclick="ToggleCombat">
-                        <span></span>@(CombatMode ? "AKTIV" : "BEREIT")
-                    </button>
-                </div>
-                @if (CombatMode)
-                {
-                    <div class="combat-active">
-                        <div class="combat-alert"><span>!</span><div><strong>Kontakt voraus</strong><small>Piratenschiff · 3.4 LY</small></div></div>
-                        <div class="combat-stats"><div><span>DEIN SCHADEN</span><b>24 <small>DMG</small></b></div><div><span>TREFFERQUOTE</span><b>78<small>%</small></b></div></div>
-                        <button class="combat-action" @onclick="FireWeapons">⚡  SIMULIEREN</button>
+                    <div class="map-frame">
+                        <svg class="galaxy-map" viewBox="0 0 760 390" role="img" aria-label="Sternenkarte der bekannten Planeten">
+                            <defs>
+                                <radialGradient id="map-glow">
+                                    <stop offset="0" stop-color="#223e67" stop-opacity=".4" />
+                                    <stop offset="1" stop-color="#0a1220" stop-opacity="0" />
+                                </radialGradient>
+                            </defs>
+                            <rect width="760" height="390" fill="url(#map-glow)" />
+
+                            @if (cruise is not null && IsTravelling && cruise.Departure is not null && cruise.Destination is not null)
+                            {
+                                <path class="route-line" d="M@(Svg(MapX(cruise.Departure.Sector))) @(Svg(MapY(cruise.Departure.Sector))) L@(Svg(MapX(cruise.Destination.Sector))) @(Svg(MapY(cruise.Destination.Sector)))" />
+                                <path class="route-progress" d="M@(Svg(MapX(cruise.Departure.Sector))) @(Svg(MapY(cruise.Departure.Sector))) L@(Svg(MapX(cruise.CurrentSector))) @(Svg(MapY(cruise.CurrentSector)))" />
+                            }
+
+                            @foreach (var planet in Player.DiscoveredPlanets.Values)
+                            {
+                                var isTarget = IsTravelling && planet.Id == cruise?.Destination?.Id;
+                                var isOrigin = planet.Id == (IsTravelling ? cruise?.Departure?.Id : DockedPlanet?.Id);
+                                var role = isTarget ? "planet-target" : isOrigin ? "planet-origin" : "planet-minor";
+                                <g class="planet @role @(planet.Id == InspectedPlanetId ? "planet-inspected" : "")" transform="translate(@Svg(MapX(planet.Sector)) @Svg(MapY(planet.Sector)))" @onclick="() => InspectPlanet(planet.Id)">
+                                    <circle class="planet-hit" r="14" />
+                                    @if (isTarget || isOrigin)
+                                    {
+                                        <g>
+                                            <circle class="planet-aura" r="23" />
+                                            <circle class="planet-core" r="8" />
+                                            <text x="0" y="38" text-anchor="middle">@planet.Name.ToUpperInvariant()</text>
+                                            <text class="planet-subtitle" x="0" y="53" text-anchor="middle">@(isTarget ? "ZIELWELT" : planet.Id == Player.HomePlanet?.Id ? "HEIMATWELT" : IsTravelling ? "START" : "STANDORT")</text>
+                                        </g>
+                                    }
+                                    else
+                                    {
+                                        <g>
+                                            <circle class="planet-core" r="4" />
+                                            <text x="0" y="22" text-anchor="middle">@planet.Name.ToUpperInvariant()</text>
+                                        </g>
+                                    }
+                                </g>
+                            }
+
+                            @if (cruise is not null)
+                            {
+                                <g class="ship-marker" transform="translate(@Svg(MapX(cruise.CurrentSector)) @Svg(MapY(cruise.CurrentSector)))">
+                                    <circle class="ship-aura" r="16" />
+                                    <path d="M0 -9 L7 7 L0 4 L-7 7 Z" />
+                                </g>
+                            }
+                            <g class="map-coordinates">
+                                <text x="18" y="25">BEKANNTE PLANETEN · @Player.DiscoveredPlanets.Count</text>
+                                @if (cruise is not null)
+                                {
+                                    <g>
+                                        <text x="742" y="25" text-anchor="end">X: @cruise.CurrentSector.X.ToString("000") · Y: @cruise.CurrentSector.Y.ToString("000")</text>
+                                    </g>
+                                }
+                            </g>
+                        </svg>
+                        <div class="map-legend">
+                            <span><i class="legend-ship"></i> Dein Schiff</span>
+                            <span><i class="legend-route"></i> Flugroute</span>
+                        </div>
                     </div>
-                }
-                else
+
+                    @if (cruise is not null)
+                    {
+                        var progress = (JourneyProgress() * 100).ToString("0", System.Globalization.CultureInfo.InvariantCulture);
+                        <div class="journey-strip">
+                            <div class="journey-end">
+                                <span class="eyebrow">@(IsTravelling ? "VON" : "STANDORT")</span>
+                                <strong>@(IsTravelling ? cruise.Departure?.Name : DockedPlanet?.Name)</strong>
+                            </div>
+                            <div class="journey-progress">
+                                <div class="journey-caption"><span>@(IsTravelling ? "Reise läuft" : "Ziel erreicht")</span><span>@progress%</span></div>
+                                <div class="progress-track"><div class="progress-fill" style="width: @progress%"></div></div>
+                                <span class="journey-meta">@(IsTravelling ? $"Noch {cruise.CurrentDistanceToDestination:0.#} Sektoren" : "Handelszone")</span>
+                            </div>
+                            <div class="journey-end journey-destination">
+                                <span class="eyebrow">NACH</span>
+                                <strong>@(IsTravelling ? cruise.Destination?.Name : "—")</strong>
+                            </div>
+                        </div>
+
+                        @if (!IsTravelling)
+                        {
+                            <div class="travel-controls">
+                                <span class="eyebrow">NÄCHSTES REISEZIEL</span>
+                                <select class="text-input" @bind="SelectedDestinationId">
+                                    @foreach (var planet in Destinations)
+                                    {
+                                        <option value="@planet.Id">@planet.Name</option>
+                                    }
+                                </select>
+                                <button class="trade-button" disabled="@(SelectedDestinationId is null)" @onclick="StartTravelAsync">REISE STARTEN →</button>
+                            </div>
+                        }
+                    }
+                </article>
+
+                @if (IsTravelling || ShowLog)
                 {
-                    <p class="combat-idle">Keine Gefahren erkannt. Taktiksysteme sind einsatzbereit.</p>
+                    <article class="panel events-panel">
+                        <div class="panel-heading compact-heading">
+                            <div>
+                                <span class="eyebrow">LOGBUCH</span>
+                                <h2>Vorfälle im Sektor</h2>
+                            </div>
+                            <span class="event-count">@LogEntries.Count MELDUNGEN</span>
+                        </div>
+                        <div class="event-list">
+                            @foreach (var entry in LogEntries.Take(8))
+                            {
+                                <div class="event-item">
+                                    <span class="event-icon">·</span>
+                                    <div><strong>@entry.Message</strong></div>
+                                    <span class="event-time">@entry.Time.ToString("HH:mm:ss")</span>
+                                </div>
+                            }
+                        </div>
+                    </article>
                 }
-            </article>
 
-            <article class="panel quick-actions">
-                <span class="eyebrow">SCHNELLZUGRIFF</span>
-                <button @onclick="ShowMessages"><span>▤</span> Logbuch <b>3</b></button>
-                <button @onclick="ShowScanNotice"><span>⌖</span> Sensoren <span class="action-arrow">→</span></button>
-            </article>
-        </aside>
-    </main>
+                @if (InspectedPlanet is { } inspected)
+                {
+                    <article class="panel planet-panel">
+                        <div class="panel-heading compact-heading">
+                            <div>
+                                <span class="eyebrow">PLANETENDATEN · SEKTOR @inspected.Sector.X.ToString("000") / @inspected.Sector.Y.ToString("000")</span>
+                                <h2>@inspected.Name</h2>
+                            </div>
+                            <button class="round-button" title="Schließen" @onclick="() => InspectPlanet(null)">×</button>
+                        </div>
+                        @if (inspected.Industry is null)
+                        {
+                            <div class="buyer-empty">Keine Industrie bekannt.</div>
+                        }
+                        else
+                        {
+                            <div class="planet-lists">
+                                <div>
+                                    <span class="eyebrow">PRODUZIERT (ZUM KAUF)</span>
+                                    <table class="market-table">
+                                        <thead><tr><th>WARE</th><th>VORRAT</th><th>PREIS/T</th></tr></thead>
+                                        <tbody>
+                                            @foreach (var p in inspected.Industry.GeneratedProducts.OrderBy(p => p.Name))
+                                            {
+                                                <tr><td>@p.Name</td><td>@FormatAmount(p.Amount) t</td><td class="price">@FormatCredits(p.PricePerTon) CR</td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                    <span class="eyebrow">BENÖTIGT (ZUM VERKAUF)</span>
+                                    <table class="market-table">
+                                        <thead><tr><th>WARE</th><th>BEDARF</th><th>PREIS/T</th></tr></thead>
+                                        <tbody>
+                                            @foreach (var p in inspected.Industry.ProductsNeeded.OrderBy(p => p.Name))
+                                            {
+                                                <tr><td>@p.Name</td><td>@FormatAmount(p.Amount) t</td><td class="price">@FormatCredits(p.PricePerTon) CR</td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="trade-button" disabled="@(IsTravelling || inspected.Id == DockedPlanet?.Id)" @onclick="() => SelectDestination(inspected.Id)">ZIEL WÄHLEN</button>
+                        }
+                    </article>
+                }
 
-    <footer class="bottom-bar">
-        <div class="universe-stats">
-            <div><span class="footer-icon">✧</span><span><b>248</b><small>PLANETEN</small></span></div>
-            <div><span class="footer-icon">⌁</span><span><b>36</b><small>SCHIFFE</small></span></div>
-            <div><span class="footer-icon">◎</span><span><b>SEKTOR 07</b><small>OUTER RIM</small></span></div>
-        </div>
-        <div class="leaderboard">
-            <span class="eyebrow">TOP-HÄNDLER</span>
-            <div class="leader"><b class="rank">01</b><span>Vex Orion</span><strong>84.2k <small>CR</small></strong></div>
-            <div class="leader"><b class="rank">02</b><span>Nova Chen</span><strong>72.8k <small>CR</small></strong></div>
-            <div class="leader current-leader"><b class="rank">03</b><span>@PlayerName <small>(DU)</small></span><strong>@FormatCredits(Credits / 1000)k <small>CR</small></strong></div>
-            <button class="leaderboard-more" title="Rangliste">•••</button>
-        </div>
-        <div class="build-label">BUILD 0.1.0 <span>·</span> DEMO</div>
-    </footer>
+                @if (!IsTravelling && DockedPlanet is not null && ship is not null)
+                {
+                    <article class="panel market-panel">
+                        <div class="panel-heading compact-heading">
+                            <div>
+                                <span class="eyebrow">HANDELSSTATION · @DockedPlanet.Name.ToUpperInvariant()</span>
+                                <h2>Markt &amp; Ladung</h2>
+                            </div>
+                            <label class="quantity-field">
+                                <span class="eyebrow">MENGE (T)</span>
+                                <input class="text-input qty-input" type="number" min="1" step="1" @bind="Quantity" />
+                            </label>
+                        </div>
+                        <div class="market-table-wrap">
+                            <table class="market-table">
+                                <thead><tr><th>WARE</th><th>ANGEBOT</th><th>KAUF</th><th>BEDARF</th><th>VERKAUF</th><th></th></tr></thead>
+                                <tbody>
+                                    @foreach (var good in MarketRows())
+                                    {
+                                        <tr>
+                                            <td><span class="good-icon">◈</span>@good.Name</td>
+                                            <td>@(good.Stock is { } stock ? $"{FormatAmount(stock)} t" : "—")</td>
+                                            <td class="price">@(good.Stock is null ? "—" : $"{FormatCredits(good.BuyPrice)} CR")</td>
+                                            <td>@(good.Demand is { } demand ? $"{FormatAmount(demand)} t" : "—")</td>
+                                            <td class="price">@(good.Demand is null ? "—" : $"{FormatCredits(good.SellPrice)} CR")</td>
+                                            <td>
+                                                <div class="trade-actions">
+                                                    <button class="trade-button" title="@good.Name kaufen" disabled="@(good.Stock is null)" @onclick="() => BuyAsync(good)">KAUFEN</button>
+                                                    <button class="sell-button" title="@good.Name verkaufen" disabled="@(good.Demand is null || CargoOf(good.ProductId) <= 0)" @onclick="() => SellAsync(good)">VERKAUFEN</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cargo-summary">
+                            <span class="eyebrow">DEINE LADUNG</span>
+                            @foreach (var cargo in ship.Cargo)
+                            {
+                                <span class="cargo-chip">@(cargo.Product?.Name ?? cargo.Name) <b>@FormatAmount(cargo.Quantity) t</b></span>
+                            }
+                            <span class="cargo-capacity">@FormatAmount(ship.CargoUsed) / @FormatAmount(ship.CargoSize) t belegt</span>
+                        </div>
+                    </article>
+                }
+
+                @if (ship is not null && ship.Cargo.Any(c => c.Quantity > 0))
+                {
+                    <article class="panel buyers-panel">
+                        <div class="panel-heading compact-heading">
+                            <div>
+                                <span class="eyebrow">ABNEHMER · BEKANNTE PLANETEN</span>
+                                <h2>Wer will meine Ladung?</h2>
+                            </div>
+                        </div>
+                        @foreach (var cargo in ship.Cargo.Where(c => c.Quantity > 0))
+                        {
+                            <div class="buyer-group">
+                                <div class="buyer-title">
+                                    <strong>@(cargo.Product?.Name ?? cargo.Name)</strong>
+                                    <span class="cargo-capacity">@FormatAmount(cargo.Quantity) t geladen</span>
+                                    <button class="trade-button" @onclick="() => FindBuyerAsync(cargo.ProductId)">ABNEHMER SUCHEN</button>
+                                </div>
+                                @if (BestBuyers.TryGetValue(cargo.ProductId, out var buyer))
+                                {
+                                    @if (buyer is null)
+                                    {
+                                        <div class="buyer-empty">Kein bekannter Planet hat Bedarf. Erkunde weitere Sektoren.</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="buyer-result">
+                                            <span><strong>@buyer.Planet.Name</strong> · Bedarf @FormatAmount(buyer.Demand) t · <span class="price">@FormatCredits(buyer.PricePerTon) CR/t</span>@(buyer.Distance is { } d ? $" · Distanz {d:0.#}" : "")</span>
+                                            <button class="trade-button" disabled="@IsTravelling" @onclick="() => SelectDestination(buyer.Planet.Id)">ZIEL WÄHLEN</button>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    </article>
+                }
+            </section>
+
+            <aside class="right-column">
+                @if (ship is not null)
+                {
+                    <article class="panel ship-panel">
+                        <div class="panel-heading compact-heading">
+                            <div>
+                                <span class="eyebrow">FLOTTENÜBERSICHT</span>
+                                <h2>Dein Schiff</h2>
+                            </div>
+                            <button class="round-button" title="Schiff wechseln" disabled="@(Player.Fleet.Count < 2)" @onclick="SwitchShip">↔</button>
+                        </div>
+                        <div class="ship-visual">
+                            <div class="ship-orbit orbit-one"></div><div class="ship-orbit orbit-two"></div>
+                            <div class="ship-art">✦</div>
+                            <span class="ship-class">@ship.State.ToUpperInvariant()</span>
+                        </div>
+                        <div class="ship-name-row"><div><span class="eyebrow">AKTIVES SCHIFF</span><h3>@ship.Name</h3></div></div>
+                        <div class="detail-list">
+                            <div><span>Position</span><strong>@(IsTravelling ? $"Zwischen {cruise?.Departure?.Name} & {cruise?.Destination?.Name}" : DockedPlanet?.Name)</strong></div>
+                            <div><span>Laderaum</span><strong>@FormatAmount(ship.CargoUsed) / @FormatAmount(ship.CargoSize) t</strong></div>
+                            <div><span>Rumpf</span><strong class="condition"><i></i> @ship.Hull</strong></div>
+                            <div><span>Schilde</span><strong>@ship.Shields</strong></div>
+                        </div>
+                        <div class="features">
+                            <span class="eyebrow">AUSSTATTUNG</span>
+                            <div class="feature-list">
+                                @foreach (var feature in ship.Features)
+                                {
+                                    <span title="@feature.Description">◈ @feature.Name</span>
+                                }
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel combat-panel">
+                        <div class="panel-heading compact-heading">
+                            <div><span class="eyebrow">TAKTIKMODUL</span><h2>Kampfstatus</h2></div>
+                            <span class="toggle-button @(Enemy is null ? "" : "is-on")"><span></span>@(Enemy is null ? "BEREIT" : "ALARM")</span>
+                        </div>
+                        @if (Enemy is { } enemy)
+                        {
+                            <div class="combat-active">
+                                <div class="combat-alert"><span>!</span><div><strong>@enemy.Name</strong><small>Schilde @enemy.Shields · Rumpf @enemy.Hull</small></div></div>
+                                <div class="combat-stats"><div><span>DEINE SCHILDE</span><b>@ship.Shields</b></div><div><span>DEIN RUMPF</span><b>@ship.Hull</b></div></div>
+                                <div class="trade-actions">
+                                    <button class="combat-action" @onclick="() => BattleAsync(true)">⚡ ANGRIFF</button>
+                                    <button class="combat-action" @onclick="() => BattleAsync(false)">◈ VERTEIDIGEN</button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="combat-idle">Keine Gefahren erkannt. Taktiksysteme sind einsatzbereit.</p>
+                        }
+                    </article>
+                }
+
+                <article class="panel quick-actions">
+                    <span class="eyebrow">SCHNELLZUGRIFF</span>
+                    <button @onclick="() => ShowLog = !ShowLog"><span>▤</span> Logbuch <b>@LogEntries.Count</b></button>
+                    <div class="new-ship-form">
+                        <input class="text-input" placeholder="Name des neuen Schiffs" maxlength="40" @bind="NewShipName" @bind:event="oninput" />
+                        <button class="trade-button" @onclick="NewShipAsync">NEUES SCHIFF</button>
+                    </div>
+                </article>
+            </aside>
+        </main>
+
+        <footer class="bottom-bar">
+            <div class="universe-stats">
+                <div><span class="footer-icon">✧</span><span><b>@PlanetCount</b><small>PLANETEN</small></span></div>
+                <div><span class="footer-icon">⌁</span><span><b>@ShipCount</b><small>SCHIFFE</small></span></div>
+                <div><span class="footer-icon">◎</span><span><b>@Leaders.Count</b><small>HÄNDLER</small></span></div>
+            </div>
+            <div class="leaderboard">
+                <span class="eyebrow">TOP-HÄNDLER</span>
+                @for (var i = 0; i < Leaders.Count; i++)
+                {
+                    var leader = Leaders[i];
+                    if (i >= 3 && !leader.IsYou) continue;
+                    <div class="leader @(leader.IsYou ? "current-leader" : "")"><b class="rank">@((i + 1).ToString("00"))</b><span>@leader.Name@(leader.IsYou ? " (DU)" : "")</span><strong>@FormatCredits(leader.Credits) <small>CR</small></strong></div>
+                }
+            </div>
+            <div class="build-label">BUILD 0.1.0 <span>·</span> LIVE</div>
+        </footer>
+    }
 </div>
-
-@code {
-    private static readonly CultureInfo GermanCulture = CultureInfo.GetCultureInfo("de-DE");
-
-    private string PlayerName = "Mira Keller";
-    private decimal Credits = 12500;
-    private decimal Income = 840;
-    private bool IsTravelling = true;
-    private bool CombatMode;
-    private bool IsSecondShip;
-    private string? ToastMessage;
-
-    private readonly List<ShipInfo> Ships =
-    [
-        new("Wayfarer", "Leichter Frachter", "Kestrel-Klasse", 80),
-        new("Longhaul", "Handelsschiff", "Mule-Klasse", 140)
-    ];
-
-    private readonly List<GoodInfo> Goods =
-    [
-        new("Erz", "⬡", 46, 180, 24, 155),
-        new("Wasser", "◌", 120, 32, 8, 24),
-        new("Mikrochips", "▦", 18, 420, 36, 355)
-    ];
-
-    private readonly Dictionary<string, int> Cargo = new()
-    {
-        ["Treibstoff"] = 12,
-        ["Ersatzteile"] = 4
-    };
-
-    private ShipInfo SelectedShip => Ships[IsSecondShip ? 1 : 0];
-
-    private static string FormatCredits(decimal value) => value.ToString("N0", GermanCulture);
-    private bool HasCargo(string goodName) => Cargo.GetValueOrDefault(goodName) > 0;
-
-    private void StartNewGame()
-    {
-        PlayerName = "Mira Keller";
-        Credits = 12500;
-        Income = 840;
-        IsTravelling = true;
-        CombatMode = false;
-        IsSecondShip = false;
-        Cargo.Clear();
-        Cargo["Treibstoff"] = 12;
-        Cargo["Ersatzteile"] = 4;
-        ToastMessage = "Neues Demospiel gestartet.";
-    }
-
-    private void ArriveAtDestination()
-    {
-        IsTravelling = false;
-        ToastMessage = "Du bist in Haven angekommen. Der lokale Demo-Markt ist geöffnet.";
-    }
-
-    private void Buy(GoodInfo good)
-    {
-        if (Credits < good.BuyPrice)
-        {
-            ToastMessage = "Nicht genügend Credits für diesen Handel.";
-            return;
-        }
-
-        if (Cargo.Values.Sum() >= SelectedShip.Capacity)
-        {
-            ToastMessage = "Der Laderaum ist voll.";
-            return;
-        }
-
-        Credits -= good.BuyPrice;
-        Cargo[good.Name] = Cargo.GetValueOrDefault(good.Name) + 1;
-        ToastMessage = $"{good.Name} gekauft. Die Demo-Handelsdaten werden nicht gespeichert.";
-    }
-
-    private void Sell(GoodInfo good)
-    {
-        if (!HasCargo(good.Name))
-        {
-            ToastMessage = $"Keine Ladung von {good.Name} zum Verkaufen vorhanden.";
-            return;
-        }
-
-        var remaining = Cargo[good.Name] - 1;
-        if (remaining == 0)
-        {
-            Cargo.Remove(good.Name);
-        }
-        else
-        {
-            Cargo[good.Name] = remaining;
-        }
-
-        Credits += good.SellPrice;
-        ToastMessage = $"{good.Name} verkauft. Die Demo-Handelsdaten werden nicht gespeichert.";
-    }
-
-    private void SwitchShip()
-    {
-        IsSecondShip = !IsSecondShip;
-        ToastMessage = $"Aktives Schiff: {SelectedShip.Name}.";
-    }
-
-    private void ToggleCombat()
-    {
-        CombatMode = !CombatMode;
-        ToastMessage = CombatMode ? "Taktiksystem aktiviert (Demo)." : "Taktiksystem deaktiviert.";
-    }
-
-    private void FireWeapons() => ToastMessage = "Waffenübung abgeschlossen. Kein Schaden im Demomodus.";
-    private void ShowMessages() => ToastMessage = "Das Logbuch enthält 3 neue Meldungen (Demodaten).";
-    private void ShowScanNotice() => ToastMessage = "Die Scannerreichweite ist noch nicht implementiert.";
-    private void ShowSaveNotice() => ToastMessage = "Spielstände sind noch nicht verfügbar.";
-    private void ExitGame() => ToastMessage = "Du kannst diesen Browser-Tab jetzt schließen.";
-
-    private sealed record ShipInfo(string Name, string Type, string Class, int Capacity);
-    private sealed record GoodInfo(string Name, string Icon, int Stock, decimal BuyPrice, int Demand, decimal SellPrice);
-}

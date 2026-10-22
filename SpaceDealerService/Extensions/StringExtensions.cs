@@ -33,7 +33,7 @@ namespace SpaceDealerService.Extensions
 
         public static T FromJson<T>(this string value)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value);
+            return System.Text.Json.JsonSerializer.Deserialize<T>(value);
         }
 
         /// <summary>

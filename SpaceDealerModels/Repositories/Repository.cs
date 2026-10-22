@@ -24,6 +24,7 @@ namespace SpaceDealerModels.Repositories
 			NewPlanetNames();
 			LoadFeatures();
 			NewPilotNames();
+
         }
 
 		public static void LoadFeatures()
@@ -32,12 +33,14 @@ namespace SpaceDealerModels.Repositories
 				Features = new DbFeatures();
 			if (Features.Count < 5)
 			{
-				Features.Add(new DbFeature("ShieldBonus+1", "Verbesserte Schile (+1)", 0, 1, 0, 0));
+				Features.Add(new DbFeature("ShieldBonus+1", "Verbesserte Schilde (+1)", 0, 1, 0, 0));
 				Features.Add(new DbFeature("Phasers+1", "Phaser-Bänke", 1, 0, 0, 0));
 				Features.Add(new DbFeature("Torpedos+2", "Torpedos", 2, 1, 0, 0));
 				Features.Add(new DbFeature("AdvancedWarp+1", "Verbesserte Geschwindigkeit", 0, 0, 0, 1));
-				Features.Add(new DbFeature("SignalRange+1", "Verbesserter Signalempfang", 0, 0, 1, 0));
-			}
+				Features.Add(new DbFeature("SignalRange+1", "Verbesserter Signalempfang L", 0, 0, 1, 0));
+                Features.Add(new DbFeature("SignalRange+2", "Verbesserter Signalempfang XL", 0, 0, 2, 0));
+                Features.Add(new DbFeature("ExtendedCargo*2", "Erweiterter Laderaum L", 0, 0, 0, 0));
+            }
 		}
 
 		public static void NewPilotNames()
@@ -248,7 +251,6 @@ namespace SpaceDealerModels.Repositories
 		{
 			var planetName = GetRandomPlanetName();
 			var p = new DbPlanet(planetName);
-			p.Market = new DbMarket("Marktplatz von " + planetName, p);
 			p.Industry = GetRandomIndustry();
 			p.Sector = sector;
 			return p;

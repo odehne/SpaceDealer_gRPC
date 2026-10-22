@@ -1,89 +1,79 @@
-﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using SpaceDealer.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Xml.Serialization;
 
 namespace SpaceDealerModels.Units
 {
 
+
     public class DbShip : BaseUnit
 	{
-		public event ArrivedAtDestination Arrived;
-		public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
-		public event JourneyInterrupted Interrupted;
-		public delegate void JourneyInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
+		//public event ArrivedAtDestination Arrived;
+		//public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
+		//public event CruiseInterrupted Interrupted;
+		//public delegate void CruiseInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
+		//public event AreaScanned Scanned;
+  //      public delegate void AreaScanned(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Planets scannedPlanets, Ships scannedShips);
 
-		[JsonProperty("cruise")]
+        [XmlIgnore]
+        [JsonIgnore]
+        public Ships Parent { get; set; }
+
+        [XmlIgnore]
 		public DbJourney Cruise { get; set; }
-		[JsonProperty("cargoSize")]
-		public double CargoSize { get; set; } // in tons
-		[JsonProperty("currentLoad")]
-		public DbProductsInStock CurrentLoad { get; set; } // in tons
-        [JsonProperty("features")]
+
+		//[JsonPropertyName("cargoSize")]
+		//public double CargoSize { get; set; } // in tons
+		[JsonPropertyName("cargo")]
+		public CargoBay CargoBay { get; set; } // in tons
+
+        [JsonPropertyName("features")]
 		public DbFeatures Features {get; set;}
-		[JsonIgnore]
-		public Ships Parent { get; set; }
-		[JsonProperty("state")]
+
+		[JsonPropertyName("state")]
 		public ShipState State { get; set; }
-		[JsonProperty("shields")]
+		
+		[JsonPropertyName("shields")]
 		public int Shields { get; set; }
-		[JsonProperty("hull")]
+
+		[JsonPropertyName("hull")]
 		public int Hull { get; set; }
-		[JsonProperty("rangeBonus")]
+		
+		[JsonPropertyName("rangeBonus")]
 		public int RangeBonus { get; set; }
-		[JsonProperty("attackBonus")]
+		[JsonPropertyName("attackBonus")]
+		
 		public int AttackBonus { get; set; }
-		[JsonProperty("defenceBonus")]
+		[JsonPropertyName("defenceBonus")]
 		public int DefenceBonus { get; set; }
-		[JsonProperty("currentPlanet")]
+		
+		[JsonPropertyName("currentPlanet")]
 		public DbPlanet CurrentPlanet { get; set; }
 
-		public DbShip()
-		{
-			Features = new DbFeatures();
-            CurrentLoad = new DbProductsInStock();
-        }
-
-		public DbShip(string name, DbPlanet homeplanet, DbFeatures featureSet, Ships parent) : base(name)
+		public DbShip(string name, DbPlayer player, DbFeatures featureSet, Ships parent) : base(name)
 		{
 			State = ShipState.Idle;
 			Shields = 2;
-			Hull = 3;
+			CargoSize = 30;
+            Hull = 3;
 			Features = featureSet;
             Parent = parent;
-            CurrentLoad = new DbProductsInStock();
-			CurrentPlanet = Parent.Parent.Galaxy.GetPlanetById(homeplanet.Id);
+            CargoBay = new CargoBay();
+			CurrentPlanet = player.HomePlanet;
+            PlayerId = player.Id;
 
-            //Cruise = new Journey(homeplanet, homeplanet, homeplanet.Sector, this);
-        }
+            Cruise = new DbJourney(player.HomePlanet, player.HomePlanet, player.HomePlanet.Sector, this);
+		}
 
 		public void StartCruise(DbPlanet source, DbPlanet destination)
 		{
 			Cruise = new DbJourney(source, destination, source.Sector, this);
-			Cruise.Arrived += Cruise_Arrived;
-			Cruise.Interrupted += Cruise_Interrupted;
-		}
+	    }
 
-		public void StartCruiseToLocation(DbCoordinates currentPosition, DbCoordinates newPosition)
-		{
-			Cruise = new DbJourney(currentPosition, newPosition, this);
-			Cruise.Arrived += Cruise_Arrived;
-			Cruise.Interrupted += Cruise_Interrupted;
-		}
-
-		private void Cruise_Interrupted(InterruptionType interruptionType, string message, DbCoordinates newPosition)
-		{
-			Interrupted?.Invoke(interruptionType, message, this, newPosition); ;
-		}
-
-		private void Cruise_Arrived(string message, DbCoordinates newPosition)
-		{
-			CurrentPlanet = Parent.Parent.Galaxy.GetPlanetById(Cruise.Destination.Id); 
-            Arrived?.Invoke(message, newPosition, this);
-		}
-
-		public override int GetHashCode()
+        public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
@@ -94,12 +84,17 @@ namespace SpaceDealerModels.Units
 			{
 				return new Result(ResultState.Failed, "Das Schiff kann momentan nicht beladen werden.");
 			}
-			if(productsToLoad.GetTotalWeight() > CargoSize - CurrentLoad.GetTotalWeight())
+			if (productsToLoad.GetTotalWeight() > CargoSize - CargoBay.TotalQuantity)
 			{
 				return new Result(ResultState.Failed, $"Das Schiff kann nur maximal {CargoSize} tons aufnehmen.");
 			}
-			CurrentLoad.AddRange(productsToLoad);
-			return new Result(ResultState.OK, $"Das Schiff wurde beladen. Verfügbarer Speicher {CargoSize - CurrentLoad.GetTotalWeight()} tons.");
+
+            foreach (var product in productsToLoad)
+            {
+                CargoBay.AddCargo(this, product, (int)product.GetTotalWeight());
+            }
+
+			return new Result(ResultState.OK, $"Das Schiff wurde beladen. Verfügbarer Speicher {CargoSize - CargoBay.TotalQuantity} tons.");
 		}
 
 		public override string ToString()
@@ -118,9 +113,9 @@ namespace SpaceDealerModels.Units
 		{
 			base.Update();
 
-			if (CurrentLoad != null)
+			if (CargoBay != null)
 			{
-				foreach (var load in CurrentLoad)
+				foreach (var load in CargoBay)
 				{
 					load.Update();
 				}

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-    public class Planets : List<DbPlanet>
+    public class Planets : ConcurrentDictionary<string, DbPlanet>
 	{
 
 		public Planets GetFirstFivePlanets()
@@ -13,29 +13,43 @@ namespace SpaceDealerModels.Units
 			var ret = new Planets();
 			for (int i = 0; i < 4; i++)
 			{
-				ret.AddPlanet(this[i]);
+				ret.AddPlanet(this.Values.ElementAt(i));
 			}
 			return ret;
 		}
 
 		public DbPlanet GetPlanetByName(string planetName)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(planetName, System.StringComparison.InvariantCultureIgnoreCase));
+			return this.Values.FirstOrDefault(x => x.Name.Equals(planetName, StringComparison.InvariantCultureIgnoreCase));
 		}
 		public DbPlanet GetPlanetInSector(DbCoordinates coordinates)
 		{
-			return this.FirstOrDefault(x => x.Sector.X == coordinates.X & x.Sector.Y == coordinates.Y & x.Sector.Z == coordinates.Z);
+			return this.Values.FirstOrDefault(x => x.Sector.X == coordinates.X & x.Sector.Y == coordinates.Y & x.Sector.Z == coordinates.Z);
 		}
+
+        public Planets GetPlanetsInSector(DbCoordinates coordinates)
+        {
+            var planets = new Planets();
+
+            foreach (var planet in Values.Where(x => x.Sector.X == coordinates.X && x.Sector.Y == coordinates.Y && x.Sector.Z == coordinates.Z))
+				planets.TryAdd(planet.Id, planet);
+
+            return planets;
+        }
+
         public DbPlanet GetPlanetById(string id)
         {
-            return this.FirstOrDefault(x => x.Id == id);
+            return this.Values.FirstOrDefault(x => x.Id == id);
         }
 
         public Planets GetAllPlanets(DbPlanet excludeThisPlanet)
 		{
 			var planets = new Planets();
-			planets.AddRange(this.Where(x => !x.Name.Equals(excludeThisPlanet.Name, System.StringComparison.InvariantCultureIgnoreCase)));
-			return planets;
+
+            foreach (var planet in Values.Where(x => !x.Name.Equals(excludeThisPlanet.Name, StringComparison.InvariantCultureIgnoreCase)))
+                planets.TryAdd(planet.Id, planet);
+
+            return planets;
 		}
 
 		public DbPlanet AddPlanet(DbPlanet newPlanet)
@@ -43,7 +57,7 @@ namespace SpaceDealerModels.Units
 			var p = GetPlanetByName(newPlanet.Name);
 			if (p != null)
 				return p;
-			Add(newPlanet);
+			this.TryAdd(newPlanet.Id, newPlanet);
 			return newPlanet;
 		}
 
@@ -60,9 +74,18 @@ namespace SpaceDealerModels.Units
         public Planets GetRandomPlanets(int howMany)
         {
             var randomPlanets = new Planets();
-            for (int i = 0; i < howMany; i++)
-                randomPlanets.Add(GetRandomPlanet());
-
+			for (int i = 0; i < howMany; i++)
+			{
+				var rp = GetRandomPlanet();
+				if (!randomPlanets.ContainsKey(rp.Id))
+				{
+					randomPlanets.TryAdd(rp.Id, rp);
+				}
+				else
+				{
+					i--;
+				}
+			}
 			return randomPlanets;
         }
 
@@ -70,7 +93,7 @@ namespace SpaceDealerModels.Units
 		{
 			Random random = new Random();
 			var i = random.Next(0, this.Count-1);
-			return this[i];
+			return this.Values.ElementAt(i);
 		}
 	}
 }

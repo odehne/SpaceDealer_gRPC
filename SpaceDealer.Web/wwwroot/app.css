@@ -133,6 +133,10 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .cargo-summary .eyebrow { margin-right: 5px; }
 .cargo-chip { padding: 5px 7px; border-radius: 4px; color: #aab7c8; background: #1a2635; font-size: 9px; }
 .cargo-chip b { margin-left: 6px; color: #e3eaf3; font: 9px var(--mono); }
+.buyers-panel { padding: 17px 18px; }
+.buyer-group { margin-top: 14px; }
+.buyer-title { display: flex; align-items: center; margin-bottom: 6px; color: #e3eaf3; }
+.buyer-empty { color: #78899e; font-size: 11px; }
 .cargo-capacity { margin-left: auto; color: #78899e; font: 9px var(--mono); }
 
 .ship-panel { padding: 17px 18px; }
@@ -242,3 +246,34 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
     .market-table { font-size: 9px; }
     .market-table th, .market-table td { padding-right: 4px; padding-left: 4px; }
 }
+
+/* --- live frontend additions --- */
+.pulse.is-offline { background: #e0645c; box-shadow: 0 0 10px #e0645c77; }
+.loading-note { margin: 80px 0; text-align: center; color: var(--muted); font: 11px var(--mono); letter-spacing: .12em; }
+.login-wrap { display: grid; place-items: center; padding: 8vh 16px; }
+.login-card { width: min(440px, 100%); padding: 28px; }
+.login-card h1 { margin: 6px 0 10px; color: #eef3fa; font: 600 22px var(--display); }
+.login-hint { margin: 0 0 18px; color: #8290a2; font-size: 12px; line-height: 1.6; }
+.login-card form { display: flex; gap: 10px; }
+.login-button { padding: 0 16px; font-size: 10px; }
+.form-error { margin: 12px 0 0; color: #f08a84; font-size: 12px; }
+.text-input { min-width: 0; padding: 9px 10px; border: 1px solid #2b3a4b; border-radius: 5px; color: var(--text); background: #0d1520; font: 12px var(--mono); }
+.text-input:focus { outline: none; border-color: var(--cyan); }
+.login-card .text-input { flex: 1; }
+.travel-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 2px 2px; }
+.travel-controls .text-input { flex: 1 1 180px; }
+.travel-controls .trade-button { padding: 10px 12px; }
+.quantity-field { display: grid; gap: 4px; }
+.qty-input { width: 84px; }
+.new-ship-form { display: flex; gap: 8px; margin-top: 10px; }
+.new-ship-form .text-input { flex: 1; }
+.new-ship-form .trade-button { white-space: nowrap; }
+.combat-active .trade-actions { margin-top: 10px; }
+.trade-button:disabled, .combat-action:disabled { color: #566477; border-color: #303a49; background: #151d28; cursor: not-allowed; }
+.buyer-title .trade-button { margin-left: 10px; }
+.buyer-result { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 4px; background: #1a2635; font-size: 11px; color: #aab7c8; }
+.planet { cursor: pointer; }
+.planet-hit { fill: transparent; }
+.planet-inspected .planet-core { stroke: #7fd4ff; stroke-width: 2; }
+.planet-panel { padding: 17px 18px; }
+.planet-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }

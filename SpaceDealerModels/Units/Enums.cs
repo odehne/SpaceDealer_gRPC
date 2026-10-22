@@ -36,11 +36,13 @@
 
 	public enum InterruptionType
 	{
-		AttackedByPirates = 0,
-		OtherShipWantsToTrade = 1,
-		DistressSignal = 2,
-		DiscoveredNewPlanet = 3
-	}
+        ArrivedAtDestination = 0,
+        AttackedByPirates = 1,
+		OtherShipWantsToTrade = 2,
+		DistressSignal = 3,
+		DiscoveredNewPlanet = 4,
+        AreaScanned = 5
+    }
 
 	public enum CargoBaySize
 	{

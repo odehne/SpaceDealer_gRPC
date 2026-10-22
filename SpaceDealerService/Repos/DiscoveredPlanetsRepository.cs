@@ -21,7 +21,7 @@ namespace SpaceDealerService.Repos
 		{
 			var lst = new Planets();
 
-			//Parent.Logger.Log($"Loading discovered planets.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Loading discovered planets.");
 			var query = "SELECT PlanetId FROM DiscoveredPlanets WHERE PlayerId= @playerId;";
 			try
 			{
@@ -38,14 +38,14 @@ namespace SpaceDealerService.Repos
 						if(planet!=null)
 							lst.AddPlanet(planet);
 						else
-                            Parent.Logger.Log($"Discovered planet {planetId} not found.", TraceEventType.Error);
+                            Parent.Logger.Error($"Discovered planet {planetId} not found.");
                     }
 				}
 				reader.Close();
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
-				Parent.Logger.Log($"Failed to get planets for player Id [{playerId}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to get planets for player Id [{playerId}] {e.Message}"	);
 			}
 
 			return lst;
@@ -53,7 +53,7 @@ namespace SpaceDealerService.Repos
 
 		public void SaveDiscoveredPlanet(string playerId, string planetId)
 		{
-			//Parent.Logger.Log($"Saving discovered planets.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving discovered planets.");
 		
 			if(!PlayerHasDiscoveredPlanet(playerId, planetId))
 			{
@@ -66,16 +66,16 @@ namespace SpaceDealerService.Repos
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Discovered planet {planetId} saved.", TraceEventType.Information);
+						Parent.Logger.Verbose($"Discovered planet {planetId} saved.");
 					}
-					catch (System.Exception e)
+                    catch (Exception e)
 					{
-						Parent.Logger.Log($"Failed to save generated product {e.Message}", TraceEventType.Error);
+						Parent.Logger.Error($"Failed to save generated product {e.Message}"	);
 					}
 				}
-				catch (System.Exception e)
+                catch (Exception e)
 				{
-					Parent.Logger.Log($"Failed to save discovered planet for planet Id [{planetId},{playerId}] {e.Message}", TraceEventType.Error);
+					Parent.Logger.Error($"Failed to save discovered planet for planet Id [{planetId},{playerId}] {e.Message}"	);
 				}
 			}
 			
@@ -83,7 +83,7 @@ namespace SpaceDealerService.Repos
 
 		private bool PlayerHasDiscoveredPlanet(string playerId, string planetId)
 		{
-			Parent.Logger.Log($"Checking if player has discovered this planet already.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Checking if player has discovered this planet already.");
 			var query = "SELECT PlanetId FROM DiscoveredPlanets WHERE PlayerID = @playerId AND planetId = @planetId;";
 			try
 			{
@@ -98,9 +98,9 @@ namespace SpaceDealerService.Repos
 					return true;
 				}
 			}
-			catch (System.Exception e)
+			catch (Exception e)
 			{
-				Parent.Logger.Log($"Failed to determine if player has discovered planet {e.Message}.", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to determine if player has discovered planet {e.Message}."	);
 			}
 			return false;
 		}

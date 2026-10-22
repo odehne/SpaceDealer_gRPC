@@ -1,10 +1,19 @@
 using SpaceDealer.Web.Components;
+using SpaceDealer.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddHttpClient<SpaceDealerApiClient>(client =>
+{
+    var baseUrl = builder.Configuration["SpaceDealerApi:BaseUrl"]
+        ?? throw new InvalidOperationException("Missing configuration value 'SpaceDealerApi:BaseUrl'.");
+    client.BaseAddress = new Uri(baseUrl);
+    client.Timeout = TimeSpan.FromSeconds(15);
+});
 
 var app = builder.Build();
 

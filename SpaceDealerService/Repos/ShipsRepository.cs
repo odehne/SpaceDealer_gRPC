@@ -1,10 +1,12 @@
-﻿using System;
+﻿using SpaceDealer;
+using SpaceDealerModels;
+using SpaceDealerModels.Units;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
-using SpaceDealer;
-using SpaceDealerModels;
-using SpaceDealerModels.Units;
+using System.Xml.Linq;
 
 namespace SpaceDealerService.Repos
 {
@@ -18,7 +20,7 @@ namespace SpaceDealerService.Repos
 
 		public override void Save(DbShip ship)
 		{
-			Parent.Logger.Log($"Saving ship with id {ship.Id}.", TraceEventType.Information);
+			Parent.Logger.Verbose($"Saving ship with id {ship.Id}.");
 
 			if (ship.Cruise == null)
 			{
@@ -56,11 +58,11 @@ namespace SpaceDealerService.Repos
 					try
 					{
 						command.ExecuteNonQuery();
-						Parent.Logger.Log($"Ship {ship.Id} saved.", TraceEventType.Information);
+						Parent.Logger.Verbose($"Ship {ship.Id} saved.");
 					}
 					catch (Exception e)
 					{
-						Parent.Logger.Log($"Failed to save ship {e.Message}", TraceEventType.Error);
+						Parent.Logger.Error($"Failed to save ship {e.Message}");
 					}
 				
 				}
@@ -75,158 +77,206 @@ namespace SpaceDealerService.Repos
                             featureId = ft.Id;
                         }
 
-                        Parent.Logger.Log($"Saving ship feature {ft.Name}.", TraceEventType.Information);
+                        
                         Parent.FeaturesRepo.SaveShipFeature(ship.Id, featureId);
-					}
+                        Parent.Logger.Verbose($"Ship features {ft.Name}.");
+                    }
 				}
-				Parent.Logger.Log($"Ship {ship.Name} saved.", TraceEventType.Information);
+				Parent.Logger.Verbose($"Ship {ship.Name} saved.");
 				
 			}
 			catch (System.Exception e)
 			{
-				Parent.Logger.Log($"Failed to save ship with Id [{ship.Id}] {e.Message}", TraceEventType.Error);
+				Parent.Logger.Error($"Failed to save ship with Id [{ship.Id}] {e.Message}");
 
 			}
 		}
 
-		public override List<DbShip> GetAll()
+		public override ConcurrentDictionary<string, DbShip> GetAll()
 		{
-			Parent.Logger.Log($"Loading all ships.", TraceEventType.Information);
-
-			var ids = new List<string>();
-			var lst = new Ships();
-
-			var query = "SELECT Id FROM Ships;";
-			try
-			{
-				using var command = new SQLiteCommand(Parent.Connection);
-				command.CommandText = query;
-				using var reader = command.ExecuteReader();
-				if (reader.HasRows)
-				{
-					while (reader.Read())
-					{
-						ids.Add(reader.GetString(0));
-					}
-				}
-				reader.Close();
-			}
-			catch (System.Exception e)
-			{
-				Parent.Logger.Log($"Failed to get all ships  {e.Message}", TraceEventType.Error);
-			}
-
-			foreach (var shipId in ids)
-			{
-				lst.Add(GetItem(null, shipId));
-			}
-
-			return lst;
-		}
+			throw new NotImplementedException();
+        }
 
 		public override DbShip GetItem(string name, string id)
 		{
-			var parameter = new SQLiteParameter();
-			//Parent.Logger.Log($"Loading ship with {name}, {id}.", TraceEventType.Information);
+			throw new NotImplementedException();
+            //var parameter = new SQLiteParameter();
+            ////Parent.Logger.Log($"Loading ship with {name}, {id}.");
 
-			var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState," +
-						" Journey_Source, Journey_Destination, Current_SectorX," +
-						" Current_SectorY, Current_SectorZ FROM Ships WHERE ";
-			if (!string.IsNullOrEmpty(name))
-			{
-				query += "Name = @name;";
-				parameter.ParameterName = "@name";
-				parameter.Value = name;
-			}
-			else
-			{
-				query += "Id = @id;";
-				parameter.ParameterName = "@id";
-				parameter.Value = id;
-			}
-			try
-			{
-				using var command = new SQLiteCommand(Parent.Connection);
-				command.CommandText = query;
-				command.Parameters.Add(parameter);
-				using var reader = command.ExecuteReader();
-				if (reader.HasRows)
-				{
-					while (reader.Read())
-					{
-						var ship = new DbShip();
-						ship.Id = reader.GetString(0);
-						ship.PlayerId = reader.GetString(1);
-						ship.Name = reader.GetString(2);
-						ship.PicturePath = reader.GetString(3);
-						ship.CargoSize = reader.GetDouble(4);
-						ship.Hull = reader.GetInt32(5);
-						ship.Shields = reader.GetInt32(6);
-						ship.State = (SpaceDealer.Enums.ShipState)reader.GetInt32(7);
-						ship.Features.AddRange(Program.Persistor.FeaturesRepo.GetAll(ship.Id));
+            //var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState," +
+            //			" Journey_Source, Journey_Destination, Current_SectorX," +
+            //			" Current_SectorY, Current_SectorZ FROM Ships WHERE ";
+            //if (!string.IsNullOrEmpty(name))
+            //{
+            //	query += "Name = @name;";
+            //	parameter.ParameterName = "@name";
+            //	parameter.Value = name;
+            //}
+            //else
+            //{
+            //	query += "Id = @id;";
+            //	parameter.ParameterName = "@id";
+            //	parameter.Value = id;
+            //}
+            //try
+            //{
+            //	using var command = new SQLiteCommand(Parent.Connection);
+            //	command.CommandText = query;
+            //	command.Parameters.Add(parameter);
+            //	using var reader = command.ExecuteReader();
+            //	if (reader.HasRows)
+            //	{
+            //		while (reader.Read())
+            //		{
+            //                     var shipId = reader.GetString(0);
+            //			var playerId = reader.GetString(1);
+            //			var shipName = reader.GetString(2);
+            //			var picturePath = reader.GetString(3);
+            //			var hull = reader.GetInt32(5);
+            //			var shields = reader.GetInt32(6);
+            //			var state = (SpaceDealer.Enums.ShipState)reader.GetInt32(7);
+            //			var features = Program.Persistor.FeaturesRepo.GetAll(shipId);
+            //			var player = Program.TheGame.FleetCommanders.GetPlayerById(playerId);
 
-						var source = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(8));
-						var destination = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(9));
-						var currentSector = new DbCoordinates(reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12));
-						
-						ship.CurrentPlanet = source;
+            //			var source = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(8));
+            //			var destination = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(9));
+            //			var currentSector = new DbCoordinates(reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12));
 
-						ship.Cruise = new DbJourney() { Departure = source, Destination = destination, CurrentSector = currentSector, Parent = ship };
+            //                    var feats = new DbFeatures();
 
-						reader.Close();
-				
-						return ship;
-					}
-				}
+            //                     foreach (var ft in features.Values)
+            //                         feats.Add(ft);
 
-			}
-			catch (System.Exception e)
-			{
-				Parent.Logger.Log($"Failed to get ship with Id [{id}] {e.Message}", TraceEventType.Error);
-			}
-			return null;
-		}
+            //                     var ship = new DbShip(shipName, player, feats, player.Fleet);
 
-		public override string GetItemId(string name)
+            //                     ship.CurrentPlanet = source;
+            //			ship.Cruise = new DbJourney(source, destination, currentSector, ship);
+
+            //                     reader.Close();
+
+            //			return ship;
+            //		}
+            //	}
+
+            //}
+            //catch (System.Exception e)
+            //{
+            //	Parent.Logger.Error($"Failed to get ship with Id [{id}] {e.Message}");
+            //}
+            //return null;
+        }
+
+		public DbShip GetShipByPlayer(DbPlayer player, string shipId)
+        {
+            var parameter = new SQLiteParameter();
+            //Parent.Logger.Log($"Loading ship with {name}, {id}.");
+
+            var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState," +
+                        " Journey_Source, Journey_Destination, Current_SectorX," +
+                        " Current_SectorY, Current_SectorZ FROM Ships WHERE Id = @id;";
+          
+            try
+            {
+                using var command = new SQLiteCommand(Parent.Connection);
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@id", shipId);
+                using var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        shipId = reader.GetString(0);
+                        var playerId = reader.GetString(1);
+                        var shipName = reader.GetString(2);
+                        var picturePath = reader.GetString(3);
+                        var hull = reader.GetInt32(5);
+                        var shields = reader.GetInt32(6);
+                        var state = (SpaceDealer.Enums.ShipState)reader.GetInt32(7);
+                        var features = Program.TheGame.GetAllFeaturesByShipId(shipId);
+
+                        var source = Program.TheGame.GetPlanetById(reader.GetString(8));
+                        var destination = Program.TheGame.GetPlanetById(reader.GetString(9));
+                        var currentSector = new DbCoordinates(reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12));
+
+
+                        if(destination == null)
+                        {
+                            destination = Program.TheGame.Galaxy.GetRandomPlanet();
+                        }
+
+                        var feats = new DbFeatures();
+
+                        foreach (var ft in features.Values)
+                            feats.Add(ft);
+
+                        var ship = new DbShip(shipName, player, feats, player.Fleet)
+                        {
+                            Parent = player.Fleet,
+                            CurrentPlanet = source
+                        };
+                        ship.Cruise = new DbJourney(source, destination, currentSector, ship);
+
+                        reader.Close();
+
+                        return ship;
+                    }
+                }
+
+            }
+            catch (System.Exception e)
+            {
+                Parent.Logger.Error($"Failed to get ship with Id [{shipId}] {e.Message}");
+            }
+            return null;
+        }
+
+
+        public override string GetItemId(string name)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override List<DbShip> GetAll(string id)
+        public Ships GetAllShipsByPlayer(DbPlayer player)
+        {
+            //Parent.Logger.Log($"Loading all ships of player {playerId}.");
+            var ids = new List<string>();
+            var lst = new Ships();
+
+            var query = "SELECT Id FROM Ships WHERE PlayerId = @playerId;";
+            try
+            {
+                using var command = new SQLiteCommand(Parent.Connection);
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@playerId", player.Id);
+                using var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ids.Add(reader.GetString(0));
+                    }
+                }
+                reader.Close();
+                //Parent.CloseConnection(connection);
+
+            }
+            catch (System.Exception e)
+            {
+                Parent.Logger.Error($"Failed to get ships for player Id [{player.Id}] {e.Message}");
+            }
+
+            foreach (var shipId in ids)
+            {
+                lst.TryAdd(shipId, GetShipByPlayer(player, shipId));
+            }
+
+            return lst;
+        }
+
+        public override ConcurrentDictionary<string, DbShip> GetAll(string playerId)
 		{
-			//Parent.Logger.Log($"Loading all ships of player {id}.", TraceEventType.Information);
-			var ids = new List<string>();
-			var lst = new Ships();
+			throw new NotImplementedException();
 
-			var query = "SELECT Id FROM Ships WHERE PlayerId = @playerId;";
-			try
-			{
-				using var command = new SQLiteCommand(Parent.Connection);
-				command.CommandText = query;
-				command.Parameters.AddWithValue("@playerId", id);
-				using var reader = command.ExecuteReader();
-				if (reader.HasRows)
-				{
-					while (reader.Read())
-					{
-						ids.Add(reader.GetString(0));
-					}
-				}
-				reader.Close();
-				//Parent.CloseConnection(connection);
-
-			}
-			catch (System.Exception e)
-			{
-				Parent.Logger.Log($"Failed to get ships for player Id [{id}] {e.Message}", TraceEventType.Error);
-			}
-
-			foreach (var shipId in ids)
-			{
-				lst.Add(GetItem(null, shipId));
-			}
-
-			return lst;
-		}
+        }
 	}
 }
