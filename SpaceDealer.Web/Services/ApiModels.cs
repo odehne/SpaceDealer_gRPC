@@ -38,6 +38,11 @@ public sealed class PlanetDto
     public CoordinatesDto Sector { get; set; } = new();
     [JsonPropertyName("industries")]
     public IndustryDto? Industry { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Name} [{Sector.X}, {Sector.Y}, {Sector.Z}]";
+    }
 }
 
 public sealed class CargoDto
@@ -70,13 +75,25 @@ public sealed class JourneyDto
 
 public sealed class FeatureDto
 {
+    public string Id { get; set; } = "";
+    public double Costs { get; set; }
     public string Name { get; set; } = "";
     public string Description { get; set; } = "";
 }
 
+public sealed class ProbeDto
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    // InActive (ready in the bay), Travelling, SignalLost
+    public string State { get; set; } = "";
+    public CoordinatesDto? CurrentSector { get; set; }
+}
+
 public sealed class ShipDto
 {
-    public List<FeatureDto> Features { get; set; } = [];
+    // The service serializes features as a dictionary keyed by feature id.
+    public Dictionary<string, FeatureDto> Features { get; set; } = [];
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public double CargoSize { get; set; }
@@ -86,12 +103,23 @@ public sealed class ShipDto
     public int RangeBonus { get; set; }
     public JourneyDto? Cruise { get; set; }
     public List<CargoDto> Cargo { get; set; } = [];
+    public Dictionary<string, ProbeDto>? Probes { get; set; }
     public PlanetDto? CurrentPlanet { get; set; }
 
+    public int ProbesReady => Probes?.Values.Count(p => p.State == "InActive") ?? 0;
+    public int ProbesFlying => Probes?.Values.Count(p => p.State == "Travelling") ?? 0;
     public double CargoUsed => Cargo.Sum(c => c.Quantity);
     public bool IsTravelling => Cruise is { CurrentDistanceToDestination: > 0 };
     /// <summary>The planet the ship is docked at, or null while in transit.</summary>
     public PlanetDto? DockedPlanet => IsTravelling ? null : Cruise?.Destination ?? CurrentPlanet;
+}
+
+public sealed class NearbyShipDto
+{
+    public string ShipId { get; set; } = "";
+    public string ShipName { get; set; } = "";
+    public string PilotName { get; set; } = "";
+    public CoordinatesDto Sector { get; set; } = new();
 }
 
 public sealed class PlayerDto

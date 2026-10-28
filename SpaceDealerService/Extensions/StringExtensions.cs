@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace SpaceDealerService.Extensions
 {
-        public static class StringExtensions
+    public static class StringExtensions
     {
         /// <summary>
         /// Get substring of specified number of characters from right, like VB.Right()
@@ -239,6 +239,5 @@ namespace SpaceDealerService.Extensions
             var rg = new Regex(pattern);
             return rg.IsMatch(v);
         }
-
     }
 }

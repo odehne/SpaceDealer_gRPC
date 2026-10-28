@@ -15,6 +15,9 @@ namespace SpaceDealerService.API
     {
         private readonly ILogger _logger;
 
+        /// <summary>Share of the cargo's market price paid when the planet has no demand for it.</summary>
+        public const double DUMP_PRICE_FACTOR = 0.6;
+
         /// <summary>
         /// Returns the needed products for a specific planet.
         /// </summary>
@@ -52,14 +55,14 @@ namespace SpaceDealerService.API
         [HttpGet]
         [Route("trading/{playerUID}/{shipUID}/{planetUID}/{productUID}/sell")]
         [ProducesResponseType(typeof(double), StatusCodes.Status200OK)]
-        public async Task<ActionResult<double>> SellProducts([FromRoute] string playerUID, [FromRoute] string shipUID, [FromRoute] string planetUID, [FromRoute] string productUID, [FromQuery] int quantity)
+        public async Task<ActionResult<double>> SellProducts([FromRoute] string playerUID, [FromRoute] string shipUID, [FromRoute] string planetUID, [FromRoute] string productUID, [FromQuery] double quantity)
         {
             var player = Program.TheGame.FleetCommanders.GetPlayerById(playerUID);
             var ship = player?.Fleet.GetShipById(shipUID);
             var planet = Program.TheGame.Galaxy.GetPlanetById(planetUID);
             var product = planet?.Industry?.ProductsNeeded?.FirstOrDefault(p => p.Id == productUID);
 
-            if (player == null || ship == null || planet == null || product == null)
+            if (player == null || ship == null || planet == null)
                 return NotFound("One or more requested resources not found.");
 
             if(quantity <= 0)
@@ -69,9 +72,14 @@ namespace SpaceDealerService.API
             if (load == null || load.Quantity < quantity)
                 return BadRequest("Not enough product in ship's cargo bay.");
 
+            // Nobody here needs the product: the cargo can still be dumped, but only at a discount.
+            var pricePerTon = product != null
+                ? product.PricePerTon
+                : load.Product.PricePerTon * DUMP_PRICE_FACTOR;
+
             ship.CargoBay?.RemoveCargo(productUID, quantity);
 
-            var totalPrice = product.PricePerTon * quantity;
+            var totalPrice = pricePerTon * quantity;
             
             player.Credits += totalPrice;
 
@@ -91,7 +99,7 @@ namespace SpaceDealerService.API
         [HttpGet]
         [Route("trading/{playerUID}/{shipUID}/{planetUID}/{productUID}/buy")]
         [ProducesResponseType(typeof(double), StatusCodes.Status200OK)]
-        public async Task<ActionResult<double>> BuyProducts([FromRoute] string playerUID, [FromRoute] string shipUID, [FromRoute] string planetUID, [FromRoute] string productUID, [FromQuery] int quantity)
+        public async Task<ActionResult<double>> BuyProducts([FromRoute] string playerUID, [FromRoute] string shipUID, [FromRoute] string planetUID, [FromRoute] string productUID, [FromQuery] double quantity)
         {
             var player = Program.TheGame.FleetCommanders.GetPlayerById(playerUID);
             var ship = player?.Fleet.GetShipById(shipUID);

@@ -31,6 +31,9 @@ namespace SpaceDealer
 
             Repository.Init();
 
+            foreach (var problem in Repository.ValidateIndustryLibrary())
+                Logger.Warning($"Industry library: {problem}");
+
        }
 
         public void AddPlanets(int amount = 1000)
@@ -42,11 +45,20 @@ namespace SpaceDealer
                 randomPlanet.PicturePath = ".\\Planets\\image_part_" + Repository.GetRandomNumber(1, 36) + ".jpg";
                 Game.Galaxy.AddPlanet(randomPlanet);
             }
+
+            // Erst jetzt, da alle Planeten feststehen, die Bedarfe auf die Umgebung abstimmen.
+            var adjusted = 0;
+            foreach (var planet in Game.Galaxy.Values)
+                adjusted += Repository.AlignNeedsWithNeighbourhood(planet, Game.Galaxy.Values);
+            Logger.Information($"Needs aligned with neighbourhood: {adjusted} adjusted.");
         }
 
         public void Init()
         {
+            _persistor.FeaturesRepo.SaveDefaultFeatures();
+
             Game.KnownUniverse = _persistor.SectorRepo.GetAll();
+            Game.Features = _persistor.FeaturesRepo.GetAll();
 
             foreach (var planet in _persistor.PlanetsRepo.GetAll().Values)
             {
@@ -77,12 +89,17 @@ namespace SpaceDealer
         {
             Game = new Game();
             Init();
+            
+            //Just in case we have not saved the features yet
+            _persistor.FeaturesRepo.SaveAll(Game.Features);
+
             return Game.GameId;
         }
 
         public void ResetDatabase()
         {
             _persistor.ResetDatabase();
+            _persistor.FeaturesRepo.SaveDefaultFeatures();
             AddPlanets();
             AddFleetCommanders();
             Init();
@@ -116,6 +133,7 @@ namespace SpaceDealer
                 _persistor.SavePlayers(Game.FleetCommanders);
                 _persistor.SaveGalaxy(Game.Galaxy);
                 _persistor.SaveSectors(Game.KnownUniverse);
+                _persistor.SaveFeatures(Game.Features);
                 return true;
             }
             catch (Exception ex)
@@ -137,7 +155,7 @@ namespace SpaceDealer
             return stats;
         }
 
-        public void AddFleetCommanders(int amount = 100)
+        public void AddFleetCommanders(int amount = 250)
         {
             if (Game.FleetCommanders == null)
                 Game.FleetCommanders = new Players();
@@ -149,7 +167,7 @@ namespace SpaceDealer
                 var fcn = Repository.GetRandomFleetCommanderName();
                 var player = new DbPlayer(fcn, planet, discoveredPlanets, Game);
                 var shipName = Repository.GetRandomShipName();
-                var ship = new DbShip(shipName, player, Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet)
+                var ship = new DbShip(shipName, player, Game.Features.GetFeatureSet([FeatureNames.SignalRange_1]), player.Fleet)
                 {
                     CargoSize = 30,
                     Parent = player.Fleet,
@@ -165,17 +183,17 @@ namespace SpaceDealer
 
         public DbPlayer GetPlayerByName(string name)
         {
-            return _persistor.PlayersRepo.GetItem(name, null);
+            return _persistor.PlayersRepo.GetItemByName(name);
         }
 
         public DbPlayer GetPlayerById(string id)
         {
-            return _persistor.PlayersRepo.GetItem(null, id);
+            return _persistor.PlayersRepo.GetItemById(id);
         }
 
         public DbPlanet GetPlanetById(string id)
         {
-            return _persistor.PlanetsRepo.GetItem(null, id);
+            return _persistor.PlanetsRepo.GetItemById(id);
         }
 
         public Planets GetDiscoveredPlanetsByPlayerId(string playerId)
@@ -195,7 +213,7 @@ namespace SpaceDealer
 
         public DbPlanet GetPlanetByName(string name)
         {
-            return _persistor.PlanetsRepo.GetItem(name, null);
+            return _persistor.PlanetsRepo.GetItemByName(name);
         }
 
         public void SavePlanet(DbPlanet planet)

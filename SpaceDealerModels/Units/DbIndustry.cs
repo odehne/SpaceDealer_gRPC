@@ -53,7 +53,7 @@ namespace SpaceDealerModels.Units
             return true;
         }
 
-        public void DeductItem(string productId, int quantity)
+        public void DeductItem(string productId, double quantity)
         {
             var product = GeneratedProducts.GetById(productId);
             if (product != null)

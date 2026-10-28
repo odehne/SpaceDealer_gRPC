@@ -148,6 +148,20 @@
                                     <path d="M0 -9 L7 7 L0 4 L-7 7 Z" />
                                 </g>
                             }
+                            @foreach (var other in NearbyShips)
+                            {
+                                <g class="pilot-marker" transform="translate(@Svg(MapX(other.Sector)) @Svg(MapY(other.Sector)))">
+                                    <title>@other.PilotName · @other.ShipName</title>
+                                    <circle r="4" />
+                                </g>
+                            }
+                            @foreach (var probe in FlyingProbes)
+                            {
+                                <g class="probe-marker" transform="translate(@Svg(MapX(probe.CurrentSector!)) @Svg(MapY(probe.CurrentSector!)))">
+                                    <title>Sonde @probe.Name</title>
+                                    <circle r="3" />
+                                </g>
+                            }
                             <g class="map-coordinates">
                                 <text x="18" y="25">BEKANNTE PLANETEN · @Player.DiscoveredPlanets.Count</text>
                                 @if (cruise is not null)
@@ -161,6 +175,8 @@
                         <div class="map-legend">
                             <span><i class="legend-ship"></i> Dein Schiff</span>
                             <span><i class="legend-route"></i> Flugroute</span>
+                            <span><i class="legend-probe"></i> Sonde</span>
+                            <span><i class="legend-pilot"></i> Anderer Pilot</span>
                         </div>
                     </div>
 
@@ -279,7 +295,7 @@
                             </div>
                             <label class="quantity-field">
                                 <span class="eyebrow">MENGE (T)</span>
-                                <input class="text-input qty-input" type="number" min="1" step="1" @bind="Quantity" />
+                                <input class="text-input qty-input" type="number" min="0.1" step="0.1" @bind="Quantity" />
                             </label>
                         </div>
                         <div class="market-table-wrap">
@@ -293,11 +309,11 @@
                                             <td>@(good.Stock is { } stock ? $"{FormatAmount(stock)} t" : "—")</td>
                                             <td class="price">@(good.Stock is null ? "—" : $"{FormatCredits(good.BuyPrice)} CR")</td>
                                             <td>@(good.Demand is { } demand ? $"{FormatAmount(demand)} t" : "—")</td>
-                                            <td class="price">@(good.Demand is null ? "—" : $"{FormatCredits(good.SellPrice)} CR")</td>
+                                            <td class="price" title="@(good.IsDump ? "Notverkauf: kein Bedarf hier, nur mit Abschlag" : "")">@(good.Demand is null && !good.IsDump ? "—" : $"{FormatCredits(good.SellPrice)} CR")@(good.IsDump ? " ↓" : "")</td>
                                             <td>
                                                 <div class="trade-actions">
                                                     <button class="trade-button" title="@good.Name kaufen" disabled="@(good.Stock is null)" @onclick="() => BuyAsync(good)">KAUFEN</button>
-                                                    <button class="sell-button" title="@good.Name verkaufen" disabled="@(good.Demand is null || CargoOf(good.ProductId) <= 0)" @onclick="() => SellAsync(good)">VERKAUFEN</button>
+                                                    <button class="sell-button" title="@good.Name verkaufen" disabled="@((good.Demand is null && !good.IsDump) || CargoOf(good.ProductId) <= 0)" @onclick="() => SellAsync(good)">VERKAUFEN</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -376,10 +392,18 @@
                             <div><span>Rumpf</span><strong class="condition"><i></i> @ship.Hull</strong></div>
                             <div><span>Schilde</span><strong>@ship.Shields</strong></div>
                         </div>
+                        <div class="probe-row">
+                            <span class="eyebrow">SONDEN</span>
+                            <div class="detail-list">
+                                <div><span>Bereit</span><strong>@ship.ProbesReady</strong></div>
+                                <div><span>Unterwegs</span><strong>@ship.ProbesFlying</strong></div>
+                            </div>
+                            <button class="trade-button" disabled="@(ship.ProbesReady == 0)" @onclick="SendProbeAsync">SONDE AUSSENDEN</button>
+                        </div>
                         <div class="features">
                             <span class="eyebrow">AUSSTATTUNG</span>
                             <div class="feature-list">
-                                @foreach (var feature in ship.Features)
+                                @foreach (var feature in ship.Features.Values)
                                 {
                                     <span title="@feature.Description">◈ @feature.Name</span>
                                 }
@@ -413,11 +437,37 @@
                 <article class="panel quick-actions">
                     <span class="eyebrow">SCHNELLZUGRIFF</span>
                     <button @onclick="() => ShowLog = !ShowLog"><span>▤</span> Logbuch <b>@LogEntries.Count</b></button>
-                    <div class="new-ship-form">
-                        <input class="text-input" placeholder="Name des neuen Schiffs" maxlength="40" @bind="NewShipName" @bind:event="oninput" />
-                        <button class="trade-button" @onclick="NewShipAsync">NEUES SCHIFF</button>
-                    </div>
+                    <button @onclick="ToggleShipyardAsync"><span>⚙</span> Werft <b>@(ShowShipyard ? "SCHLIESSEN" : "ÖFFNEN")</b></button>
                 </article>
+
+                @if (ShowShipyard)
+                {
+                    <article class="panel shipyard-panel">
+                        <div class="panel-heading compact-heading">
+                            <div><span class="eyebrow">WERFT</span><h2>@(ship is null ? "Kein Schiff" : $"Ausbau: {ship.Name}")</h2></div>
+                        </div>
+                        @if (ship is not null)
+                        {
+                            @foreach (var feature in ShipyardFeatures)
+                            {
+                                var installed = HasFeature(feature);
+                                <div class="shipyard-item">
+                                    <div><strong>@feature.Description</strong><small>@feature.Name</small></div>
+                                    <button class="trade-button" disabled="@(installed || Player.Credits < feature.Costs)" @onclick="() => BuyFeatureAsync(feature)">
+                                        @(installed ? "EINGEBAUT" : $"{FormatCredits(feature.Costs)} CR")
+                                    </button>
+                                </div>
+                            }
+                        }
+                        <div class="shipyard-new-ship">
+                            <span class="eyebrow">NEUES SCHIFF · @FormatCredits(NewShipCosts) CR</span>
+                            <div class="new-ship-form">
+                                <input class="text-input" placeholder="Name des neuen Schiffs" maxlength="40" @bind="NewShipName" @bind:event="oninput" />
+                                <button class="trade-button" disabled="@(Player.Credits < NewShipCosts)" @onclick="NewShipAsync">KAUFEN</button>
+                            </div>
+                        </div>
+                    </article>
+                }
             </aside>
         </main>
 

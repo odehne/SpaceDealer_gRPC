@@ -29,9 +29,12 @@ namespace SpaceDealerModels.Units
 			return (target.X == X & target.Y == Y & target.Z == Z);
 		}
 
+		/// <summary>Sector coordinates run 0..UniverseSize on each axis.</summary>
+		public const int UniverseSize = 30;
+
 		public static DbCoordinates GenerateRandomCoordniates()
 		{
-			return new DbCoordinates(GetRandomNumber(0, 100), GetRandomNumber(0, 100), GetRandomNumber(0, 100));
+			return new DbCoordinates(GetRandomNumber(0, UniverseSize), GetRandomNumber(0, UniverseSize), GetRandomNumber(0, UniverseSize));
 		}
 
 

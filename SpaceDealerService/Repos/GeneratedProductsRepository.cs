@@ -24,7 +24,7 @@ namespace SpaceDealerService.Repos
 			var lst = new DbProductsInStock();
 			Parent.Logger.Verbose($"Loading generated products for planet {planetId}.");
 
-			var query = "SELECT ProductId, Interest FROM GeneratedProducts WHERE PlanetId = @planetId;";
+			var query = "SELECT ProductId, Interest, Amount FROM GeneratedProducts WHERE PlanetId = @planetId;";
 			try
 			{
 				using var command = new SQLiteCommand(Parent.Connection);
@@ -37,10 +37,11 @@ namespace SpaceDealerService.Repos
 					{
 						var productId = reader.GetString(0);
 						var interest = reader.GetDouble(1);
-						var product = Parent.ProductRepo.GetItem(null, productId);
+						var product = Parent.ProductRepo.GetItemById(productId);
 						if (product != null)
 						{
-							product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
+							product.Amount = reader.GetDouble(2);
+							product.ApplyInterest(interest);
 							lst.AddProduct(product);
 						}
 						else
@@ -76,8 +77,8 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var interest = reader.GetDouble(0);
-						var product = Parent.ProductRepo.GetItem(null, productId);
-						product.PricePerTon = Tools.AddPercent(product.PricePerTon, interest);
+						var product = Parent.ProductRepo.GetItemById(productId);
+						product.ApplyInterest(interest);
 						reader.Close();
 						//Parent.CloseConnection(connection);
 						return product;
@@ -94,19 +95,35 @@ namespace SpaceDealerService.Repos
 			return null;
 		}
 
-		public void SaveGeneratedProduct(string planetId, string productId)
+		public void SaveGeneratedProduct(string planetId, string productId, double amount, double interest)
 		{
 			Parent.Logger.Verbose($"Saving generated product for planet {planetId}.");
-			var p = GetProductInStock(planetId, productId);
-			if (p != null)
+
+			try
+			{
+				using (var update = new SQLiteCommand(Parent.Connection))
+				{
+					update.CommandText = "UPDATE GeneratedProducts SET Amount = @amount, Interest = @interest WHERE PlanetId = @planetId AND ProductId = @productId;";
+					update.Parameters.AddWithValue("@amount", amount);
+					update.Parameters.AddWithValue("@interest", interest);
+					update.Parameters.AddWithValue("@planetId", planetId);
+					update.Parameters.AddWithValue("@productId", productId);
+					if (update.ExecuteNonQuery() > 0)
+						return;
+				}
+			}
+			catch (System.Exception e)
+			{
+				Parent.Logger.Error($"Failed to update GeneratedProducts for planet Id [{planetId},{productId}] {e.Message}");
 				return;
+			}
 
 			try
 			{
 				using (var command = new SQLiteCommand(Parent.Connection))
 				{
-					var interest = GetRandomInterest();
-                    command.CommandText = $"INSERT OR REPLACE INTO GeneratedProducts (PlanetId, ProductId, Interest) VALUES (@planetId, @productId, @interest);";
+                    command.CommandText = $"INSERT OR REPLACE INTO GeneratedProducts (PlanetId, ProductId, Interest, Amount) VALUES (@planetId, @productId, @interest, @amount);";
+					command.Parameters.AddWithValue("@amount", amount);
 					command.Parameters.AddWithValue("@planetId", planetId);
 					command.Parameters.AddWithValue("@productId", productId);
 					command.Parameters.AddWithValue("@interest", interest);
@@ -128,10 +145,5 @@ namespace SpaceDealerService.Repos
 			}
 		}
 
-		public static double GetRandomInterest()
-        {
-			var interest = _random.Next(-10, 10);
-            return interest;
-        }
     }
 }

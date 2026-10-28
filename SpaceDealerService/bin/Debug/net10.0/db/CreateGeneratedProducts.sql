@@ -1,1 +1,1 @@
-﻿CREATE TABLE "GeneratedProducts" ("PlanetId" TEXT NOT NULL, "ProductId" TEXT NOT NULL, "Interest" REAL NOT NULL DEFAULT -10.0)
+﻿CREATE TABLE "GeneratedProducts" ("PlanetId" TEXT NOT NULL, "ProductId" TEXT NOT NULL, "Interest" REAL NOT NULL DEFAULT -10.0, "Amount" REAL NOT NULL DEFAULT 0.0)

@@ -106,7 +106,7 @@ namespace SpaceDealerService
             var productRepo = new ProductsRepository(persistor);
             foreach (var product in Repository.ProductLibrary)
             {
-                var p = productRepo.GetItem(product.Name, null);
+                var p = productRepo.GetItemByName(product.Name);
                 if (p == null)
                 {
                     Log.Logger.Information($"Adding product {product.Name} to database.");
@@ -123,12 +123,13 @@ namespace SpaceDealerService
                 if (planet.Industry.ProductsNeeded.Count <= 0)
                 {
                     var p = Repository.ProductLibrary.GetRandomProduct();
-                    planet.Industry.AddNeededProduct(p);
+                    planet.Industry.AddNeededProduct(Repository.CloneProduct(p, Repository.GetRandomNeededInterest()));
+                    Repository.AlignNeedsWithNeighbourhood(planet, TheGame.Galaxy.Values);
                 }
                 if (planet.Industry.GeneratedProducts.Count <= 0)
                 {
                     var p = Repository.ProductLibrary.GetRandomProduct();
-                    planet.Industry.AddGeneratedProduct(p);
+                    planet.Industry.AddGeneratedProduct(Repository.CloneProduct(p, Repository.GetRandomGeneratedInterest()));
                 }
             }
 

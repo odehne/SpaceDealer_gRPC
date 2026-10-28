@@ -12,22 +12,44 @@ namespace SpaceDealerModels.Events
         event Action<AreaScannedEvent> Scanned;
         event Action<JourneyArrivedEvent> Arrived;
         event Action<JourneyInterruptedEvent> Interrupted;
+        void Publish(ProbeSignalLostEvent e);
         void Publish(AreaScannedEvent e);
         void Publish(JourneyArrivedEvent e);
         void Publish(JourneyInterruptedEvent e);
     }
+
+    public class ProbeSignalLostEvent
+    {
+        public InterruptionType Type { get; }
+        public string Message { get; }
+        public DbShip Ship { get; }
+        public Probe Probe { get; }
+        public DbPlayer Player { get; }
+        
+        public ProbeSignalLostEvent(InterruptionType type, string message, Probe probe, DbShip ship, DbPlayer player)
+        {
+            Probe = probe;
+            Type = type;
+            Message = message;
+            Ship = ship;
+            Player = player;
+        }
+    }
+
 
     public class AreaScannedEvent
     {
         public InterruptionType Type { get; }
         public string Message { get; }
         public DbShip Ship { get; }
+        public Probe Probe { get; }
         public DbPlayer Player { get; }
         public Planets Planets { get; }
         public Ships Ships { get; }
 
-        public AreaScannedEvent(InterruptionType type, string message, DbShip ship, DbPlayer player, Planets planets, Ships ships)
+        public AreaScannedEvent(InterruptionType type, string message, Probe probe, DbShip ship, DbPlayer player, Planets planets, Ships ships)
         {
+            Probe = probe;
             Type = type;
             Message = message;
             Ship = ship;
@@ -35,8 +57,6 @@ namespace SpaceDealerModels.Events
             Planets = planets;
             Ships = ships;
         }
-
-     
     }
 
     public class JourneyArrivedEvent

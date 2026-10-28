@@ -8,17 +8,9 @@ using System.Xml.Serialization;
 namespace SpaceDealerModels.Units
 {
 
-
     public class DbShip : BaseUnit
 	{
-		//public event ArrivedAtDestination Arrived;
-		//public delegate void ArrivedAtDestination(string message, DbCoordinates newPosition, DbShip ship);
-		//public event CruiseInterrupted Interrupted;
-		//public delegate void CruiseInterrupted(InterruptionType interruptionType, string message, DbShip ship, DbCoordinates newPosition);
-		//public event AreaScanned Scanned;
-  //      public delegate void AreaScanned(InterruptionType interruptionType, string message, DbShip ship, DbPlayer player, Planets scannedPlanets, Ships scannedShips);
-
-        [XmlIgnore]
+		[XmlIgnore]
         [JsonIgnore]
         public Ships Parent { get; set; }
 
@@ -53,20 +45,68 @@ namespace SpaceDealerModels.Units
 		[JsonPropertyName("currentPlanet")]
 		public DbPlanet CurrentPlanet { get; set; }
 
-		public DbShip(string name, DbPlayer player, DbFeatures featureSet, Ships parent) : base(name)
+		public Probes Probes { get; set; }
+
+		public const int DEFAULT_MAX_HULL_MID_SIZE_FREIGHTER = 3;
+        public const int DEFAULT_MAX_SHIELDS_MID_SIZE_FREIGHTER = 2;
+        public const int DEFAULT_CARGO_MID_SIZE_FREIGHTER = 30;
+        public const double NEW_SHIP_COSTS = 150000.0;
+
+        /// <summary>Installs a bought feature on this ship and applies its bonus.</summary>
+        public void InstallFeature(DbFeature feature)
+        {
+            if (!Enum.TryParse<FeatureNames>(feature.Name, true, out var name))
+                throw new ArgumentException($"Unknown feature [{feature.Name}].");
+
+            // AdditionalProbe may be bought repeatedly, so it gets its own entry in the feature list.
+            if (name != FeatureNames.AdditionalProbe)
+                Features.Add(feature);
+
+            switch (name)
+            {
+                case FeatureNames.ExtraShield:
+                    Shields += feature.BonusValue;
+                    DefenceBonus += feature.BonusValue;
+                    break;
+                case FeatureNames.ExtraPhasers:
+                case FeatureNames.ExtraTorpedos:
+                    AttackBonus += feature.BonusValue;
+                    break;
+                case FeatureNames.SignalRange_1:
+                case FeatureNames.SignalRange_2:
+                    RangeBonus += feature.BonusValue;
+                    break;
+                case FeatureNames.AdditionalCargoSpace_30:
+                case FeatureNames.AdditionalCargoSpace_80:
+                    CargoSize += feature.BonusValue;
+                    break;
+                case FeatureNames.AdditionalProbe:
+                    var probe = new Probe(Probes);
+                    Probes.TryAdd(probe.Id, probe);
+                    break;
+                // AdvancedWarp_1: no speed model yet, the feature is only recorded.
+            }
+        }
+
+        public DbShip(string name, DbPlayer player, DbFeatures featureSet, Ships parent) : base(name)
 		{
 			State = ShipState.Idle;
-			Shields = 2;
-			CargoSize = 30;
-            Hull = 3;
+			Shields = DEFAULT_MAX_SHIELDS_MID_SIZE_FREIGHTER;
+			CargoSize = DEFAULT_CARGO_MID_SIZE_FREIGHTER;
+            Hull = DEFAULT_MAX_HULL_MID_SIZE_FREIGHTER;
 			Features = featureSet;
             Parent = parent;
             CargoBay = new CargoBay();
 			CurrentPlanet = player.HomePlanet;
             PlayerId = player.Id;
+            
+			Cruise = new DbJourney(player.HomePlanet, player.HomePlanet, player.HomePlanet.Sector, this);
+            
+			Probes = new Probes(this);
+			var probe = new Probe(Probes);
+            Probes.TryAdd(probe.Id, probe);
 
-            Cruise = new DbJourney(player.HomePlanet, player.HomePlanet, player.HomePlanet.Sector, this);
-		}
+  	}
 
 		public void StartCruise(DbPlanet source, DbPlanet destination)
 		{
@@ -123,14 +163,21 @@ namespace SpaceDealerModels.Units
 			//Evaluate current position
 			if (Cruise!=null)
 				Cruise.Update();
+
+			if(Probes!=null)
+			{
+				foreach (var probe in Probes.Values)
+				{
+					probe.Update();
+				}
+			}
 		}
 
 		public ScanResult ScanSpace()
 		{
 			var result = new ScanResult();
 
-			var feat = Features.GetFeatureByName("");
-
+			var feat = Features.GetFeatureById("");
 
 			return result;
 		}

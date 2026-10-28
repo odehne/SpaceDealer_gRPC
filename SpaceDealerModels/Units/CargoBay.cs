@@ -6,11 +6,11 @@ namespace SpaceDealerModels.Units
     public class CargoBay : List<DbCargo>
     {
 
-        public int TotalQuantity
+        public double TotalQuantity
         {
             get
             {
-                return this.Sum(x => (int)x.Quantity);
+                return this.Sum(x => x.Quantity);
             }
         }
 
@@ -19,7 +19,7 @@ namespace SpaceDealerModels.Units
             return this.FirstOrDefault(x => x.ProductId.Equals(productId));
         }
 
-        public void AddCargo(DbShip ship, DbProductInStock product, int quantity)
+        public void AddCargo(DbShip ship, DbProductInStock product, double quantity)
         {
             var load = GetCargoByProductId(product.Id);
             if (load != null)

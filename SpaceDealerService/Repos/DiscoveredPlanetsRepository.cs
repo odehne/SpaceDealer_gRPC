@@ -34,7 +34,7 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var planetId = reader.GetString(0);
-						var planet = Parent.PlanetsRepo.GetItem("", planetId);
+						var planet = Parent.PlanetsRepo.GetItemById(planetId);
 						if(planet!=null)
 							lst.AddPlanet(planet);
 						else

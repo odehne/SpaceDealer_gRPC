@@ -5,7 +5,15 @@ using System.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class DbProductsInStock : List<DbProductInStock>
+
+	public class ProductCategory
+	{
+		public string Name { get; set; }
+		public List<DbProductsInStock> Needed { get; set; }
+		
+    }
+
+    public class DbProductsInStock : List<DbProductInStock>
 	{
 		public DbProductInStock GetByName(string name)
 		{

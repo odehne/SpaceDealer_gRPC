@@ -29,8 +29,20 @@ public sealed class SpaceDealerApiClient(HttpClient http)
     public Task<ApiResult<ShipDto>> NewShipAsync(string playerId, string shipName, CancellationToken ct = default)
         => SendAsync<ShipDto>(HttpMethod.Post, $"players/{Q(playerId)}/ships/new?shipName={Q(shipName)}", ct);
 
+    public Task<ApiResult<List<NearbyShipDto>>> GetNearbyShipsAsync(string playerId, string shipId, CancellationToken ct = default)
+        => SendAsync<List<NearbyShipDto>>(HttpMethod.Get, $"players/{Q(playerId)}/ships/{Q(shipId)}/nearby", ct);
+
     public Task<ApiResult<bool>> StartTravelAsync(string playerId, string shipId, string destinationPlanetId, CancellationToken ct = default)
         => SendAsync<bool>(HttpMethod.Post, $"players/{Q(playerId)}/ships/{Q(shipId)}/travel/to?destinationPlanetUID={Q(destinationPlanetId)}", ct);
+
+    public Task<ApiResult<ShipDto>> SendProbeAsync(string playerId, string shipId, CancellationToken ct = default)
+        => SendAsync<ShipDto>(HttpMethod.Put, $"players/{Q(playerId)}/ships/{Q(shipId)}", ct);
+
+    public Task<ApiResult<List<FeatureDto>>> GetShipyardFeaturesAsync(CancellationToken ct = default)
+        => SendAsync<List<FeatureDto>>(HttpMethod.Get, "shipyard/features", ct);
+
+    public Task<ApiResult<ShipDto>> BuyFeatureAsync(string playerId, string shipId, string featureId, CancellationToken ct = default)
+        => SendAsync<ShipDto>(HttpMethod.Post, $"players/{Q(playerId)}/ships/{Q(shipId)}/features/{Q(featureId)}/buy", ct);
 
     public Task<ApiResult<BattleResultDto>> AttackAsync(string playerId, string shipId, CancellationToken ct = default)
         => SendAsync<BattleResultDto>(HttpMethod.Post, $"players/{Q(playerId)}/ships/{Q(shipId)}/attack", ct);
@@ -40,11 +52,11 @@ public sealed class SpaceDealerApiClient(HttpClient http)
 
     // TradingController combines [Route("trading")] on the class with "trading/..." on each action,
     // so the effective path really is /trading/trading/...
-    public Task<ApiResult<double>> BuyAsync(string playerId, string shipId, string planetId, string productId, int quantity, CancellationToken ct = default)
-        => SendAsync<double>(HttpMethod.Get, $"trading/trading/{Q(playerId)}/{Q(shipId)}/{Q(planetId)}/{Q(productId)}/buy?quantity={quantity}", ct);
+    public Task<ApiResult<double>> BuyAsync(string playerId, string shipId, string planetId, string productId, double quantity, CancellationToken ct = default)
+        => SendAsync<double>(HttpMethod.Get, $"trading/trading/{Q(playerId)}/{Q(shipId)}/{Q(planetId)}/{Q(productId)}/buy?quantity={quantity.ToString(System.Globalization.CultureInfo.InvariantCulture)}", ct);
 
-    public Task<ApiResult<double>> SellAsync(string playerId, string shipId, string planetId, string productId, int quantity, CancellationToken ct = default)
-        => SendAsync<double>(HttpMethod.Get, $"trading/trading/{Q(playerId)}/{Q(shipId)}/{Q(planetId)}/{Q(productId)}/sell?quantity={quantity}", ct);
+    public Task<ApiResult<double>> SellAsync(string playerId, string shipId, string planetId, string productId, double quantity, CancellationToken ct = default)
+        => SendAsync<double>(HttpMethod.Get, $"trading/trading/{Q(playerId)}/{Q(shipId)}/{Q(planetId)}/{Q(productId)}/sell?quantity={quantity.ToString(System.Globalization.CultureInfo.InvariantCulture)}", ct);
 
     // tradeType "Buy" = the best planet that NEEDS the product (highest price for the player selling there).
     public Task<ApiResult<PlanetDto>> BrowseBestBuyerAsync(string playerId, string shipId, string productId, CancellationToken ct = default)

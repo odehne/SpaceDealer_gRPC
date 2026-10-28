@@ -91,7 +91,7 @@ namespace SpaceDealerModels.Units
 
         public DbPlanet GetRandomPlanet()
 		{
-			Random random = new Random();
+			Random random = new();
 			var i = random.Next(0, this.Count-1);
 			return this.Values.ElementAt(i);
 		}

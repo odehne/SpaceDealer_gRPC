@@ -59,6 +59,29 @@ namespace SpaceDealerService.API
             return NotFound($"Player with id [{playerUID}] not found.");
         }
 
+        /// <summary>
+        /// Returns the player with the corresponding player UID.
+        /// </summary>
+        /// <param name="playerUID">Player UID</param>
+        /// <returns>DbPlayer</returns>
+        /// <response code="200">Player found.</response>
+        /// <response code="404">Player not found.</response>
+        [HttpGet]
+        [Route("players/search")]
+        [ProducesResponseType(typeof(DbPlayer), StatusCodes.Status200OK)]
+        public async Task<ActionResult<DbPlayer>> GetPlayerByName([FromQuery] string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return BadRequest("Player search value is required.");
+
+            var player = Program.TheGame.FleetCommanders.GetPlayerByName(name);
+
+            if (player != null)
+                return Ok(player);
+
+            return NotFound($"Player with name [{name}] not found.");
+        }
+
 
         /// <summary>
         /// Returns any updates for the player with the corresponding player UID.
@@ -133,6 +156,132 @@ namespace SpaceDealerService.API
         }
 
         /// <summary>
+        /// Returns the ships of other pilots that are inside the scan range of the given ship.
+        /// </summary>
+        /// <param name="playerUID">Player UID</param>
+        /// <param name="shipUID">Ship UID</param>
+        /// <response code="200">Ships of other pilots in range.</response>
+        /// <response code="404">Ship or Player not found.</response>
+        [HttpGet]
+        [Route("players/{playerUID}/ships/{shipUID}/nearby")]
+        public async Task<ActionResult> GetNearbyShips([FromRoute] string playerUID, [FromRoute] string shipUID)
+        {
+            var p = Program.TheGame.FleetCommanders.GetPlayerById(playerUID);
+
+            if (p == null)
+                return NotFound($"Player [{playerUID}] not found.");
+
+            var ship = p.Fleet.GetShipById(shipUID);
+
+            if (ship?.Cruise?.CurrentSector == null)
+                return NotFound($"Ship [{shipUID}] not found.");
+
+            // Same cube as DbJourney.ScanPlanetsInNearbySectors: 1 + RangeBonus sectors in every direction.
+            var layer = 1 + ship.RangeBonus;
+            var origin = ship.Cruise.CurrentSector;
+
+            var nearby = Program.TheGame.FleetCommanders.Values
+                .Where(other => other.Id != p.Id)
+                .SelectMany(other => other.Fleet.Values.Select(s => new { Pilot = other, Ship = s }))
+                .Where(x => x.Ship.Cruise?.CurrentSector != null
+                    && Math.Abs(x.Ship.Cruise.CurrentSector.X - origin.X) <= layer
+                    && Math.Abs(x.Ship.Cruise.CurrentSector.Y - origin.Y) <= layer
+                    && Math.Abs(x.Ship.Cruise.CurrentSector.Z - origin.Z) <= layer)
+                .Select(x => new
+                {
+                    shipId = x.Ship.Id,
+                    shipName = x.Ship.Name,
+                    pilotName = x.Pilot.Name,
+                    sector = x.Ship.Cruise.CurrentSector
+                })
+                .ToList();
+
+            return Ok(nearby);
+        }
+
+        /// <summary>
+        /// Repairs the ship for the player with the corresponding player UID and ship UID.
+        /// If the hull needs a repair, 1 repair action costs 5.000 Credits. 
+        /// If the hull is at max, the shields can be repaired. 1 shield repair, 5.000 Credits.
+        /// </summary>
+        /// <param name="playerUID">Player UID</param>
+        /// <param name="shipUID">Ship UID</param>
+        /// <returns>Ships</returns>
+        /// <response code="200">A ship.</response>
+        /// <response code="404">Ship or Player not found.</response>
+        /// <response code="400">Repair not possible.</response>
+        [HttpPut]
+        [Route("players/{playerUID}/ships/{shipUID}/repair")]
+        [ProducesResponseType(typeof(DbShip), StatusCodes.Status200OK)]
+        public async Task<ActionResult<DbShip>> Repair([FromRoute] string playerUID, [FromRoute] string shipUID)
+        {
+            var p = Program.TheGame.FleetCommanders.GetPlayerById(playerUID);
+
+            if (p == null)
+                return NotFound($"Player [{playerUID}] not found.");
+
+            var ship = p.Fleet.GetShipById(shipUID);
+
+            if (ship == null)
+                return NotFound($"Ship [{shipUID}] not found.");
+
+            if(ship.Hull < DbShip.DEFAULT_MAX_HULL_MID_SIZE_FREIGHTER)
+            {
+                if (p.Credits - 5000 > 0)
+                {
+                    p.Credits -= 5000;
+                    ship.Hull += 1;
+                }
+            }
+            else
+            {
+                if (ship.Shields < DbShip.DEFAULT_MAX_SHIELDS_MID_SIZE_FREIGHTER)
+                {
+                    if (p.Credits - 5000 > 0)
+                    {
+                        p.Credits -= 5000;
+                        ship.Shields += 1;
+                    }
+                }
+            }
+            
+            return Ok(ship);
+        }
+
+        /// <summary>
+        /// Returns the ship for the player with the corresponding player UID and ship UID.
+        /// </summary>
+        /// <param name="playerUID">Player UID</param>
+        /// <param name="shipUID">Ship UID</param>
+        /// <returns>Ships</returns>
+        /// <response code="200">A ship.</response>
+        /// <response code="404">Ship or Player not found.</response>
+        [HttpPut]
+        [Route("players/{playerUID}/ships/{shipUID}")]
+        [ProducesResponseType(typeof(DbShip), StatusCodes.Status200OK)]
+        public async Task<ActionResult<DbShip>> SendProbe([FromRoute] string playerUID, [FromRoute] string shipUID)
+        {
+            var p = Program.TheGame.FleetCommanders.GetPlayerById(playerUID);
+
+            if (p == null)
+                return NotFound($"Player [{playerUID}] not found.");
+
+            var ship = p.Fleet.GetShipById(shipUID);
+
+            if (ship == null)
+                return NotFound($"Ship [{shipUID}] not found.");
+
+            var probe = ship.Probes.Values.FirstOrDefault(c => c.State == ProbeStates.InActive);
+
+            if (probe == null)
+                return BadRequest("No probe available to send into space.");
+
+            probe.Eject();
+
+            return Ok(ship);
+        }
+
+        /// <summary>
         /// Creates a new player by name.
         /// </summary>
         /// <param name="playerName">Name of the new player.</param>
@@ -156,7 +305,7 @@ namespace SpaceDealerService.API
                 //player.PicturePath = request.PicturePath;
             }
             else
-            {
+            { 
                 player.Galaxy = Program.TheGame.Game.Galaxy;
                 player.ActiveSectors = Program.TheGame.Game.KnownUniverse;
             }
@@ -203,9 +352,12 @@ namespace SpaceDealerService.API
             if (s != null)
                 return BadRequest($"The player has already a ship with the name [{shipName}].");
 
+            if (player.Credits < DbShip.NEW_SHIP_COSTS)
+                return BadRequest($"Ein neues Schiff kostet {DbShip.NEW_SHIP_COSTS:N0} Credits.");
+
             s = new DbShip(shipName,
                                player,
-                               Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet)
+                               player.Parent.Features.GetFeatureSet([FeatureNames.SignalRange_1]), player.Fleet)
             {
                 PicturePath = ".\\Spaceships\\MediumFrighter.jpg"
             };
@@ -213,6 +365,7 @@ namespace SpaceDealerService.API
             try
             {
                 player.Fleet.AddShip(s);
+                player.Credits -= DbShip.NEW_SHIP_COSTS;
                 Program.TheGame.SavePlayers();
             }
             catch (Exception e)

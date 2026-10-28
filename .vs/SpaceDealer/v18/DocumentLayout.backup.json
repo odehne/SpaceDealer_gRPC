@@ -3,6 +3,178 @@
   "WorkspaceRootPath": "C:\\Git\\priv\\SpaceDealer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\spacedealergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\spacedealergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\gamepersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\gamepersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\planets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\planets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\planetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\planetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createcargo.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createcargo.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createprobes.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createprobes.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createfeatures.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createfeatures.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\neededproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\neededproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\generatedproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\generatedproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbindustry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbindustry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbplanet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbplanet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbproductsinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbproductsinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbproductinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbproductinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbcargo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbcargo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BF0BC2B-3514-41AC-831C-8DCE7A176A01}|SpaceDealer.Web\\SpaceDealer.Web.csproj|c:\\git\\priv\\spacedealer\\spacedealer.web\\services\\apimodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BF0BC2B-3514-41AC-831C-8DCE7A176A01}|SpaceDealer.Web\\SpaceDealer.Web.csproj|solutionrelative:spacedealer.web\\services\\apimodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\cargorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\cargorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\probe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\probe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\ships.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\ships.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\proberepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\proberepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\shipsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\shipsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\api\\shipyardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\api\\shipyardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\pirateship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\pirateship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\featuresrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\featuresrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\events\\areascannedevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\events\\areascannedevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\players.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\players.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\api\\playerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\api\\playerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbshipfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbshipfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\sqlpersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\sqlpersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\sectors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\sectors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\sectorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\sectorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\probes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\probes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\gameevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\gameevents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbjourney.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbjourney.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\scanresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\scanresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\extensions\\stringextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\extensions\\stringextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\productsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\productsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\discoveredplanetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\discoveredplanetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\spacedealerservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\spacedealerservice.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -11,52 +183,8 @@
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\api\\tradingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\api\\playerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\api\\playerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbjourney.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbjourney.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\productsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\productsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbcargo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbcargo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbproductsinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbproductsinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\baseunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\baseunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\spacedealergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\spacedealergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\neededproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\neededproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\sqlpersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\sqlpersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -72,56 +200,12 @@
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\shipsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\shipsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\ships.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\ships.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\playersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\playersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\api\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\api\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\sectorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\sectorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\gamepersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\gamepersistor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createfeatures.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createfeatures.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\discoveredplanetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\discoveredplanetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\players.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\players.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbindustry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbindustry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\cargobay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\cargobay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\gameengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -132,48 +216,16 @@
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\api\\planetscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbplanet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbplanet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\events\\areascannedevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\events\\areascannedevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\spacedealermodels.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\spacedealermodels.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\sectors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\sectors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\planets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\planets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\sector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\sector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\featuresrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\featuresrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\journey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\journey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\generatedproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\generatedproductsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\market.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -184,28 +236,12 @@
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\industries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbshipfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbshipfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\planetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\planetsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\repos\\marketrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\repos\\marketrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\dbproductinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\dbproductinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\productsinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\productsinstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|c:\\git\\priv\\spacedealer\\spacedealermodels\\units\\scanresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8EC8C70-64E7-4A83-A740-6CA497D79F33}|SpaceDealerModels\\SpaceDealerModels.csproj|solutionrelative:spacedealermodels\\units\\scanresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\api\\abstractions\\ispacedealergame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -226,10 +262,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\extensions\\dynamicloglevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\extensions\\dynamicloglevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\extensions\\stringextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\extensions\\stringextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -281,6 +313,14 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SpaceDealerUI\\GameProxy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createprobes.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createprobes.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createcargo.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
+      "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createcargo.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|c:\\git\\priv\\spacedealer\\spacedealerservice\\db\\createfeatures.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
       "RelativeMoniker": "D:0:0:{5E2EC0B6-97F0-495C-8587-E5F0A6F5C24A}|SpaceDealerService\\SpaceDealerService.csproj|solutionrelative:spacedealerservice\\db\\createfeatures.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
     }
@@ -292,351 +332,126 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 7,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{87654321-4321-4321-4321-987654321cba}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "SafeFileHandle.cs",
-              "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs",
-              "ToolTip": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs [Read Only]",
-              "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs [Read Only]",
-              "ViewState": "AgIAAPoAAAAAAAAAAAAQwCABAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-22T10:22:50.82Z",
-              "EditorCaption": " [Read Only]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DbJourney.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbJourney.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbJourney.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbJourney.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\DbJourney.cs",
-              "ViewState": "AgIAAFAAAAAAAAAAAAASwHQAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.587Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TradingController.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\TradingController.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\API\\TradingController.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\TradingController.cs",
-              "RelativeToolTip": "SpaceDealerService\\API\\TradingController.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAIwIEAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-18T12:54:13.556Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DbProductsInStock.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductsInStock.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbProductsInStock.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductsInStock.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\DbProductsInStock.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.574Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DbPlayer.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbPlayer.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbPlayer.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbPlayer.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\DbPlayer.cs",
-              "ViewState": "AgIAALEAAAAAAAAAAAAQwMQAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.616Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "ShipsRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ShipsRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\ShipsRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ShipsRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\ShipsRepository.cs",
-              "ViewState": "AgIAAKIAAAAAAAAAAAAhwL8AAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.604Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Game.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Game.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Game.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Game.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Game.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBAAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T09:55:26.106Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SpaceDealerService.csproj",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerService.csproj",
-              "RelativeDocumentMoniker": "SpaceDealerService\\SpaceDealerService.csproj",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerService.csproj",
-              "RelativeToolTip": "SpaceDealerService\\SpaceDealerService.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-10-08T12:39:16.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
               "Title": "NeededProductsRepository.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\NeededProductsRepository.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\NeededProductsRepository.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\NeededProductsRepository.cs",
               "RelativeToolTip": "SpaceDealerService\\Repos\\NeededProductsRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAowCoAAABNAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBUAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-05T07:54:27.576Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PlayersController.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlayersController.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\API\\PlayersController.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlayersController.cs",
-              "RelativeToolTip": "SpaceDealerService\\API\\PlayersController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgBAAAJAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "PlanetsRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\PlanetsRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\PlanetsRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\PlanetsRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\PlanetsRepository.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAQwCsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-16T14:30:23.638Z",
+              "WhenOpened": "2026-10-07T07:36:32.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Program.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Program.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Program.cs",
-              "RelativeToolTip": "SpaceDealerService\\Program.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAApwIgAAAAMAAAAAAAAAA==",
+              "Title": "DbProductsInStock.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductsInStock.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbProductsInStock.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductsInStock.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\DbProductsInStock.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.615Z",
+              "WhenOpened": "2026-10-05T07:54:27.574Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "File.cs",
-              "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs",
-              "ToolTip": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs [Read Only]",
-              "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs [Read Only]",
-              "ViewState": "AgIAAEsBAAAAAAAAAAAQwHEBAAACAAAAAQAAAA==",
+              "DocumentIndex": 13,
+              "Title": "DbProductInStock.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductInStock.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbProductInStock.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductInStock.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\DbProductInStock.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-22T10:22:55.594Z",
-              "EditorCaption": " [Read Only]"
+              "WhenOpened": "2026-10-19T12:53:19.427Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BaseUnit.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\BaseUnit.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\BaseUnit.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\BaseUnit.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\BaseUnit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAADAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Planets.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Planets.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Planets.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Planets.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Planets.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAhwGMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-08T14:10:15.659Z",
+              "WhenOpened": "2026-10-05T07:54:27.61Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CreateFeatures.sql ",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateFeatures.sql",
+              "RelativeDocumentMoniker": "SpaceDealerService\\db\\CreateFeatures.sql",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateFeatures.sql",
+              "RelativeToolTip": "SpaceDealerService\\db\\CreateFeatures.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-10-22T09:43:13.563Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "DbCargo.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbCargo.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbCargo.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbCargo.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\DbCargo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T13:30:02.458Z",
+              "Title": "CreateProbes.sql ",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateProbes.sql",
+              "RelativeDocumentMoniker": "SpaceDealerService\\db\\CreateProbes.sql",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateProbes.sql",
+              "RelativeToolTip": "SpaceDealerService\\db\\CreateProbes.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-10-23T12:20:02.001Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProductsRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ProductsRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\ProductsRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ProductsRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\ProductsRepository.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAApwGgAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-15T11:33:16.499Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 0,
               "Title": "SpaceDealerGame.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerGame.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\SpaceDealerGame.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerGame.cs",
               "RelativeToolTip": "SpaceDealerService\\SpaceDealerGame.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAqwFkAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAApwJ0AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-05T07:54:27.618Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SqlPersistor.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SqlPersistor.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\SqlPersistor.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SqlPersistor.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\SqlPersistor.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAAAJ8AAAAMAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Game.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Game.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Game.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Game.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Game.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA9wA0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-15T11:24:34.253Z",
+              "WhenOpened": "2026-10-19T09:55:26.106Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "SQLiteConnection.cs",
-              "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs",
-              "ToolTip": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs [Read Only]",
-              "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs [Read Only]",
-              "ViewState": "AgIAABgHAAAAAAAAAAAQwEAHAAAAAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-22T10:22:59.542Z",
-              "EditorCaption": " [Read Only]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "PlayersRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\PlayersRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\PlayersRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\PlayersRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\PlayersRepository.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAQwIUAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.606Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Ships.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Ships.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Ships.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Ships.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Ships.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-16T08:16:35.563Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Properties\\launchSettings.json",
-              "RelativeToolTip": "SpaceDealerService\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-10-14T07:20:08.814Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "GameController.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\GameController.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\API\\GameController.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\GameController.cs",
-              "RelativeToolTip": "SpaceDealerService\\API\\GameController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-14T14:41:55.531Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "SectorRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SectorRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\SectorRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SectorRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\SectorRepository.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAEwEEAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-15T06:34:55.492Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Repositories\\Repository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Repositories\\Repository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Repositories\\Repository.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Repositories\\Repository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-07T07:36:37.422Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 1,
               "Title": "GamePersistor.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\GamePersistor.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\GamePersistor.cs",
@@ -649,113 +464,228 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "CreateFeatures.sql ",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateFeatures.sql",
-              "RelativeDocumentMoniker": "SpaceDealerService\\db\\CreateFeatures.sql",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateFeatures.sql",
-              "RelativeToolTip": "SpaceDealerService\\db\\CreateFeatures.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-10-22T09:43:13.563Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "DiscoveredPlanetsRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAowC0AAAAKAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "GeneratedProductsRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBUAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.584Z",
+              "WhenOpened": "2026-10-15T08:53:59.499Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 5,
+              "Title": "CreateCargo.sql ",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateCargo.sql",
+              "RelativeDocumentMoniker": "SpaceDealerService\\db\\CreateCargo.sql",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\db\\CreateCargo.sql",
+              "RelativeToolTip": "SpaceDealerService\\db\\CreateCargo.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-10-25T08:19:15.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ApiModels.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealer.Web\\Services\\ApiModels.cs",
+              "RelativeDocumentMoniker": "SpaceDealer.Web\\Services\\ApiModels.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealer.Web\\Services\\ApiModels.cs",
+              "RelativeToolTip": "SpaceDealer.Web\\Services\\ApiModels.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAIA0wDMAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:09:21.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DbCargo.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbCargo.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbCargo.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbCargo.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\DbCargo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwB4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-19T13:30:02.458Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "DbIndustry.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbIndustry.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbIndustry.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbIndustry.cs",
               "RelativeToolTip": "SpaceDealerModels\\Units\\DbIndustry.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-18T13:03:27.715Z"
+              "WhenOpened": "2026-10-18T13:03:27.715Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "CargoBay.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\CargoBay.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\CargoBay.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\CargoBay.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\CargoBay.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T13:53:24.676Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "PlanetsController.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlanetsController.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\API\\PlanetsController.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlanetsController.cs",
-              "RelativeToolTip": "SpaceDealerService\\API\\PlanetsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-18T11:47:14.913Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 11,
               "Title": "DbPlanet.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbPlanet.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbPlanet.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbPlanet.cs",
               "RelativeToolTip": "SpaceDealerModels\\Units\\DbPlanet.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.595Z"
+              "WhenOpened": "2026-10-05T07:54:27.595Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "AreaScannedEvent.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Events\\AreaScannedEvent.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Events\\AreaScannedEvent.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Events\\AreaScannedEvent.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Events\\AreaScannedEvent.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAuwEEAAAAuAAAAAAAAAA==",
+              "DocumentIndex": 16,
+              "Title": "CargoRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\CargoRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\CargoRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\CargoRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\CargoRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-21T12:08:41.912Z"
+              "WhenOpened": "2026-10-23T10:33:57.691Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 18,
+              "Title": "Probe.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Probe.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Probe.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Probe.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Probe.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAD4v1wAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T10:55:29.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Ships.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Ships.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Ships.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Ships.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Ships.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T08:16:35.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "DbShip.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbShip.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbShip.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbShip.cs",
               "RelativeToolTip": "SpaceDealerModels\\Units\\DbShip.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAgwDsAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAIwFYAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.596Z",
+              "WhenOpened": "2026-10-05T07:54:27.596Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ProbeRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ProbeRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\ProbeRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ProbeRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\ProbeRepository.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAMwIwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T11:05:41.135Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "GameEngine.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\GameEngine.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\GameEngine.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\GameEngine.cs",
-              "RelativeToolTip": "SpaceDealerModels\\GameEngine.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 23,
+              "Title": "ShipyardController.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\ShipyardController.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\API\\ShipyardController.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\ShipyardController.cs",
+              "RelativeToolTip": "SpaceDealerService\\API\\ShipyardController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAlwEAAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T10:10:14.627Z"
+              "WhenOpened": "2026-10-24T11:27:05.471Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Repositories\\Repository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Repositories\\Repository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Repositories\\Repository.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Repositories\\Repository.cs",
+              "ViewState": "AgIAANgBAAAAAAAAAAAkwOIBAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-07T07:36:37.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "FeaturesRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\FeaturesRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\FeaturesRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\FeaturesRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\FeaturesRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwDgAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.585Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "PlayersController.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlayersController.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\API\\PlayersController.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlayersController.cs",
+              "RelativeToolTip": "SpaceDealerService\\API\\PlayersController.cs",
+              "ViewState": "AgIAAAsBAAAAAAAAAAAgwDkBAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T14:30:23.638Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ShipsRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ShipsRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\ShipsRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ShipsRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\ShipsRepository.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAFoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.604Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "AreaScannedEvent.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Events\\AreaScannedEvent.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Events\\AreaScannedEvent.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Events\\AreaScannedEvent.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Events\\AreaScannedEvent.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAYwBgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-21T12:08:41.912Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "DbShipFeature.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbShipFeature.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbShipFeature.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\DbShipFeature.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwCoAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T14:06:55.708Z"
             },
             {
               "$type": "Document",
@@ -765,206 +695,121 @@
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Players.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Players.cs",
               "RelativeToolTip": "SpaceDealerModels\\Units\\Players.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-05T07:54:27.613Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 31,
               "Title": "Sectors.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Sectors.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Sectors.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Sectors.cs",
               "RelativeToolTip": "SpaceDealerModels\\Units\\Sectors.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwCMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-21T10:55:39.784Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "Planets.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Planets.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Planets.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Planets.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Planets.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA0AAAAAAAAAA==",
+              "DocumentIndex": 32,
+              "Title": "SectorRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SectorRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\SectorRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SectorRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\SectorRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.61Z"
+              "WhenOpened": "2026-10-15T06:34:55.492Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "SpaceDealerModels.csproj",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\SpaceDealerModels.csproj",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\SpaceDealerModels.csproj",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\SpaceDealerModels.csproj",
-              "RelativeToolTip": "SpaceDealerModels\\SpaceDealerModels.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-10-19T10:10:39.703Z"
+              "DocumentIndex": 30,
+              "Title": "SqlPersistor.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SqlPersistor.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\SqlPersistor.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\SqlPersistor.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\SqlPersistor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T11:24:34.253Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 24,
+              "Title": "PirateShip.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\PirateShip.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\PirateShip.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\PirateShip.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\PirateShip.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAUwAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-24T09:56:41.142Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Program.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Program.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Program.cs",
+              "RelativeToolTip": "SpaceDealerService\\Program.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAtwGkAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.615Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Probes.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Probes.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Probes.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Probes.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Probes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T11:29:05.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
               "Title": "Enums.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Enums.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Enums.cs",
               "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Enums.cs",
               "RelativeToolTip": "SpaceDealerModels\\Units\\Enums.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAIwCwAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-05T07:54:27.588Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "DbJourney.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbJourney.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbJourney.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbJourney.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\DbJourney.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAApwGYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.587Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 39,
-              "Title": "Sector.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Sector.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Sector.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Sector.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Sector.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAARAAAAAAAAAA==",
+              "Title": "DbPlayer.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbPlayer.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbPlayer.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbPlayer.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\DbPlayer.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAApwBEBAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-18T13:38:13.937Z"
+              "WhenOpened": "2026-10-05T07:54:27.616Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
-              "Title": "FeaturesRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\FeaturesRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\FeaturesRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\FeaturesRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\FeaturesRepository.cs",
-              "ViewState": "AgIAAHcBAAAAAAAAAAAtwJMBAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.585Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 41,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\Repository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\Repository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\Repository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\Repository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T15:18:48.653Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "Market.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Market.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Market.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Market.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Market.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T12:56:07.905Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "GeneratedProductsRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\GeneratedProductsRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-15T08:53:59.499Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
-              "Title": "Journey.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Journey.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Journey.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Journey.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Journey.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAcwG4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.594Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "Industries.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Industries.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Industries.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Industries.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\Industries.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-20T10:27:31.737Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
-              "Title": "DbShipFeature.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbShipFeature.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbShipFeature.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbShipFeature.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\DbShipFeature.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-08T14:06:55.708Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 47,
-              "Title": "PlanetsRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\PlanetsRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\PlanetsRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\PlanetsRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\PlanetsRepository.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAowB4AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-07T07:36:32.31Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 49,
-              "Title": "DbProductInStock.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductInStock.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbProductInStock.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbProductInStock.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\DbProductInStock.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAADwvx4AAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-19T12:53:19.427Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 50,
-              "Title": "ProductsInStock.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\ProductsInStock.cs",
-              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\ProductsInStock.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\ProductsInStock.cs",
-              "RelativeToolTip": "SpaceDealerModels\\Units\\ProductsInStock.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-05T07:54:27.59Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
-              "Title": "MarketRepository.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\MarketRepository.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\MarketRepository.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\MarketRepository.cs",
-              "RelativeToolTip": "SpaceDealerService\\Repos\\MarketRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAADcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-18T12:14:35.307Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 38,
               "Title": "ScanResult.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\ScanResult.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\ScanResult.cs",
@@ -976,7 +821,276 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "GameEvents.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\GameEvents.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\GameEvents.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\GameEvents.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\GameEvents.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T12:59:41.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "StringExtensions.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Extensions\\StringExtensions.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Extensions\\StringExtensions.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Extensions\\StringExtensions.cs",
+              "RelativeToolTip": "SpaceDealerService\\Extensions\\StringExtensions.cs",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAcwPAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T13:47:13.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "ProductsRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ProductsRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\ProductsRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\ProductsRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\ProductsRepository.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAlwGYAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T11:33:16.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "DiscoveredPlanetsRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\DiscoveredPlanetsRepository.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAYwCQAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "SpaceDealerService.csproj",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerService.csproj",
+              "RelativeDocumentMoniker": "SpaceDealerService\\SpaceDealerService.csproj",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerService.csproj",
+              "RelativeToolTip": "SpaceDealerService\\SpaceDealerService.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-08T12:39:16.417Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "SafeFileHandle.cs",
+              "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs",
+              "ToolTip": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\89db2845bdf917a0c7fdee6fd569a7ff33ecae17fe3b06b6dcea476a9bf2c20f\\SafeFileHandle.cs [Read Only]",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAQwCABAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-22T10:22:50.82Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "TradingController.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\TradingController.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\API\\TradingController.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\TradingController.cs",
+              "RelativeToolTip": "SpaceDealerService\\API\\TradingController.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAIwIEAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-18T12:54:13.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "File.cs",
+              "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs",
+              "ToolTip": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\ab341efcedfe88426affbcd092e9025c8c321fbb8f764fc9549cac8810eb775c\\File.cs [Read Only]",
+              "ViewState": "AgIAAEsBAAAAAAAAAAAQwHEBAAACAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-22T10:22:55.594Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "BaseUnit.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\BaseUnit.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\BaseUnit.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\BaseUnit.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\BaseUnit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T14:10:15.659Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "SQLiteConnection.cs",
+              "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs",
+              "ToolTip": "C:\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\Temp\\.vsdbgsrc\\01a83926581600d6d08a569ae1884e60c1eb478e59d03f6c6a32ebb1e69c6405\\SQLiteConnection.cs [Read Only]",
+              "ViewState": "AgIAABgHAAAAAAAAAAAQwEAHAAAAAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-22T10:22:59.542Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Properties\\launchSettings.json",
+              "RelativeToolTip": "SpaceDealerService\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-14T07:20:08.814Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\GameController.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\API\\GameController.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\GameController.cs",
+              "RelativeToolTip": "SpaceDealerService\\API\\GameController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-14T14:41:55.531Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "CargoBay.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\CargoBay.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\CargoBay.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\CargoBay.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\CargoBay.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-19T13:53:24.676Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 53,
+              "Title": "PlanetsController.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlanetsController.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\API\\PlanetsController.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\PlanetsController.cs",
+              "RelativeToolTip": "SpaceDealerService\\API\\PlanetsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-18T11:47:14.913Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "GameEngine.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\GameEngine.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\GameEngine.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\GameEngine.cs",
+              "RelativeToolTip": "SpaceDealerModels\\GameEngine.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-19T10:10:14.627Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "SpaceDealerModels.csproj",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\SpaceDealerModels.csproj",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\SpaceDealerModels.csproj",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\SpaceDealerModels.csproj",
+              "RelativeToolTip": "SpaceDealerModels\\SpaceDealerModels.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-19T10:10:39.703Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "Sector.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Sector.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Sector.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Sector.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Sector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-18T13:38:13.937Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "Market.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Market.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Market.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Market.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Market.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-19T12:56:07.905Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "Journey.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Journey.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Journey.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Journey.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Journey.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAcwG4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.594Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "Industries.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Industries.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\Industries.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\Industries.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\Industries.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-20T10:27:31.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "ProductsInStock.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\ProductsInStock.cs",
+              "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\ProductsInStock.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\ProductsInStock.cs",
+              "RelativeToolTip": "SpaceDealerModels\\Units\\ProductsInStock.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-05T07:54:27.59Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "MarketRepository.cs",
+              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\MarketRepository.cs",
+              "RelativeDocumentMoniker": "SpaceDealerService\\Repos\\MarketRepository.cs",
+              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Repos\\MarketRepository.cs",
+              "RelativeToolTip": "SpaceDealerService\\Repos\\MarketRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAADcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-18T12:14:35.307Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
               "Title": "BattleResult.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\BattleResult.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\BattleResult.cs",
@@ -988,7 +1102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 61,
               "Title": "ISpaceDealerGame.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\Abstractions\\ISpaceDealerGame.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\API\\Abstractions\\ISpaceDealerGame.cs",
@@ -1000,7 +1114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 63,
               "Title": "DbMarket.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\DbMarket.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\DbMarket.cs",
@@ -1012,7 +1126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 69,
               "Title": "ProtoBufConverter.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\ProtoBufConverter.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\ProtoBufConverter.cs",
@@ -1024,7 +1138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 64,
               "Title": "SpaceDealerService",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\SpaceDealerService.csproj",
               "RelativeDocumentMoniker": "SpaceDealerService\\SpaceDealerService.csproj",
@@ -1035,19 +1149,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
-              "Title": "StringExtensions.cs",
-              "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Extensions\\StringExtensions.cs",
-              "RelativeDocumentMoniker": "SpaceDealerService\\Extensions\\StringExtensions.cs",
-              "ToolTip": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Extensions\\StringExtensions.cs",
-              "RelativeToolTip": "SpaceDealerService\\Extensions\\StringExtensions.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACEAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-16T13:47:13.314Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 66,
               "Title": "AppSettings.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\AppSettings.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\AppSettings.cs",
@@ -1059,7 +1161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 67,
               "Title": "IAppSettings.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\API\\Abstractions\\IAppSettings.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\API\\Abstractions\\IAppSettings.cs",
@@ -1071,7 +1173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 65,
               "Title": "DynamicLogLevel.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\Extensions\\DynamicLogLevel.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\Extensions\\DynamicLogLevel.cs",
@@ -1083,7 +1185,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 68,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\appsettings.json",
               "RelativeDocumentMoniker": "SpaceDealerService\\appsettings.json",
@@ -1095,7 +1197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 78,
               "Title": "GameProxy.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerUI\\GameProxy.cs",
               "RelativeDocumentMoniker": "SpaceDealerUI\\GameProxy.cs",
@@ -1107,7 +1209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 70,
               "Title": "Task.cs",
               "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\SourceServer\\d903bd95be40055f7c18e5bbb2a6ed230be3e9c3ff938d9da065eda84065cb0b\\src\\libraries\\System.Private.CoreLib\\src\\System\\Threading\\Tasks\\Task.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\SourceServer\\d903bd95be40055f7c18e5bbb2a6ed230be3e9c3ff938d9da065eda84065cb0b\\src\\libraries\\System.Private.CoreLib\\src\\System\\Threading\\Tasks\\Task.cs",
@@ -1119,7 +1221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 77,
               "Title": "Menu.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerUI\\Menu.cs",
               "RelativeDocumentMoniker": "SpaceDealerUI\\Menu.cs",
@@ -1131,7 +1233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 72,
               "Title": "DbField.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Attributes\\DbField.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Attributes\\DbField.cs",
@@ -1143,7 +1245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 76,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerUI\\Program.cs",
               "RelativeDocumentMoniker": "SpaceDealerUI\\Program.cs",
@@ -1155,7 +1257,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 71,
               "Title": "BaseDbField.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerModels\\Units\\BaseDbField.cs",
               "RelativeDocumentMoniker": "SpaceDealerModels\\Units\\BaseDbField.cs",
@@ -1167,7 +1269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 73,
               "Title": "MethodBaseInvoker.cs",
               "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\SourceServer\\1b9e23acfc42d161e2b4ac64eae34368391f9c364fba8e35fd916ceefeddb907\\src\\libraries\\System.Private.CoreLib\\src\\System\\Reflection\\MethodBaseInvoker.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\SourceServer\\1b9e23acfc42d161e2b4ac64eae34368391f9c364fba8e35fd916ceefeddb907\\src\\libraries\\System.Private.CoreLib\\src\\System\\Reflection\\MethodBaseInvoker.cs",
@@ -1175,12 +1277,11 @@
               "RelativeToolTip": "..\\..\\..\\Users\\olive\\AppData\\Local\\SourceServer\\1b9e23acfc42d161e2b4ac64eae34368391f9c364fba8e35fd916ceefeddb907\\src\\libraries\\System.Private.CoreLib\\src\\System\\Reflection\\MethodBaseInvoker.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAvwGIAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-08T12:45:27.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-08T12:45:27.143Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 75,
               "Title": "GameGrpc.cs",
               "DocumentMoniker": "C:\\Git\\priv\\SpaceDealer\\SpaceDealerService\\obj\\Debug\\net8.0\\Protos\\GameGrpc.cs",
               "RelativeDocumentMoniker": "SpaceDealerService\\obj\\Debug\\net8.0\\Protos\\GameGrpc.cs",
@@ -1192,7 +1293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 74,
               "Title": "List.cs",
               "DocumentMoniker": "C:\\Users\\olive\\AppData\\Local\\SourceServer\\ef41ac442e0d88dd9c13101f32be978dd6d9c467c9c29f800069aca56773ed4d\\src\\libraries\\System.Private.CoreLib\\src\\System\\Collections\\Generic\\List.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\olive\\AppData\\Local\\SourceServer\\ef41ac442e0d88dd9c13101f32be978dd6d9c467c9c29f800069aca56773ed4d\\src\\libraries\\System.Private.CoreLib\\src\\System\\Collections\\Generic\\List.cs",
@@ -1201,16 +1302,6 @@
               "ViewState": "AgIAAG0EAAAAAAAAAAASwJcEAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-05T07:54:27.581Z"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 2308,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{ca8cc5c7-0231-406a-95cd-aa5ed6ac0190}"
             }
           ]
         }

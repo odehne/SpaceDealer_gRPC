@@ -24,7 +24,7 @@ namespace SpaceDealerService.Repos
             Planet = planet;
         }
 
-        public void BuyItem(string productId, int quantity)
+        public void BuyItem(string productId, double quantity)
         {
             var product = Planet.Industry.GeneratedProducts.GetById(productId);
             if (product == null)

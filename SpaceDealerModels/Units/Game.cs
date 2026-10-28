@@ -11,6 +11,7 @@ namespace SpaceDealerModels.Units
         public Players FleetCommanders { get; set; }
         public Planets Galaxy { get; set; }
         public Sectors KnownUniverse { get; set; }
+        public DbFeatures Features { get; set; }
 
         public IGameEvents Events { get; } = new GameEvents();
 
@@ -20,6 +21,7 @@ namespace SpaceDealerModels.Units
             FleetCommanders = new Players();
             Galaxy = new Planets();
             KnownUniverse = new Sectors();
+            Features = new DbFeatures();
 
             Events.Arrived += FleetCommanders_Arrived;
             Events.Interrupted += FleetCommanders_Interrupted;

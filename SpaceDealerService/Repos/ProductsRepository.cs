@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace SpaceDealerService.Repos
 {
@@ -59,25 +60,9 @@ namespace SpaceDealerService.Repos
 			throw new System.NotImplementedException();
 		}
 
-		public override DbProductInStock GetItem(string name, string id)
+		public override DbProductInStock GetItemById( string id)
 		{
-			var parameter = new SQLiteParameter();
-			//Parent.Logger.Log($"Loading product with {name} or {id}.");
-
-			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE ";
-			if (!string.IsNullOrEmpty(name))
-			{
-				query += "Name = @name;";
-				parameter.ParameterName = "@name";
-				parameter.Value = name;
-			}
-			else
-			{
-				query += "Id = @id;";
-				parameter.ParameterName = "@id";
-				parameter.Value = id;
-			}
-
+			var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE Id = @id;";
 			var p = new DbProductInStock();
 
 			try
@@ -86,7 +71,7 @@ namespace SpaceDealerService.Repos
 				
 				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
-				command.Parameters.Add(parameter);
+				command.Parameters.AddWithValue("@id", id);
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -102,7 +87,7 @@ namespace SpaceDealerService.Repos
 				}
 				else
 				{
-                    Parent.Logger.Warning($"Product with name {name} or id {id} not found.");
+                    Parent.Logger.Warning($"Product with id {id} not found.");
                     p = null;
                 }
                 reader.Close();
@@ -115,7 +100,47 @@ namespace SpaceDealerService.Repos
             return p;
 		}
 
-		public override string GetItemId(string name)
+        public override DbProductInStock GetItemByName(string name)
+        {
+           var query = "SELECT Id, Name, Weight, PricePerTon, AmountGeneratedPerRound, PicturePath FROM Products WHERE Name = @name;";
+            var p = new DbProductInStock();
+
+            try
+            {
+                using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+
+                using var command = new SQLiteCommand(Parent.Connection);
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@name", name);
+                using var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        p.Id = reader.GetString(0);
+                        p.Name = reader.GetString(1);
+                        p.Weight = reader.GetDouble(2);
+                        p.PricePerTon = reader.GetDouble(3);
+                        p.AmountGeneratedPerRound = reader.GetDouble(4);
+                        if (!reader.IsDBNull(5)) p.PicturePath = reader.GetString(5);
+                    }
+                }
+                else
+                {
+                    Parent.Logger.Warning($"Product with name {name} not found.");
+                    p = null;
+                }
+                reader.Close();
+            }
+            catch (System.Exception e)
+            {
+                Parent.Logger.Error($"Failed to get product with name [{name}] {e.Message}");
+            }
+
+            return p;
+        }
+
+        public override string GetItemId(string name)
 		{
 			var p = new DbFeature();
 			//Parent.Logger.Log($"Loading product with name {name}.");
@@ -154,7 +179,7 @@ namespace SpaceDealerService.Repos
 					command.Parameters.AddWithValue("@id", item.Id);
 					command.Parameters.AddWithValue("@name", item.Name);
 					command.Parameters.AddWithValue("@weight", item.Weight);
-					command.Parameters.AddWithValue("@pricePerTon", item.PricePerTon);
+					command.Parameters.AddWithValue("@pricePerTon", item.BasePricePerTon);
 					command.Parameters.AddWithValue("@amountGeneratedPerRound", item.AmountGeneratedPerRound);
 					//command.Parameters.AddWithValue("@picturePath", item.PicturePath);
 					try

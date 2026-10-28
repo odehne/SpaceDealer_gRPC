@@ -93,3 +93,5 @@ C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-4
 C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-436b-b41d-c5385bdba9fc\scratchpad\out2\SpaceDealerService.runtimeconfig.json
 C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-436b-b41d-c5385bdba9fc\scratchpad\out2\SpaceDealerService.dll
 C:\Users\olive\AppData\Local\Temp\claude\C--Git-priv-SpaceDealer\cea475ee-acbb-436b-b41d-c5385bdba9fc\scratchpad\out2\SpaceDealerService.pdb
+C:\Git\priv\SpaceDealer\SpaceDealerService\bin\Debug\net10.0\db\CreateProbes.sql
+C:\Git\priv\SpaceDealer\SpaceDealerService\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

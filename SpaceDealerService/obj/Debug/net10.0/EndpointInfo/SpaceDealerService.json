@@ -288,6 +288,34 @@
         }
       }
     },
+    "/players/search": {
+      "get": {
+        "tags": [
+          "Players"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbPlayer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/players/{playerUID}/updates": {
       "get": {
         "tags": [
@@ -351,6 +379,111 @@
     },
     "/players/{playerUID}/ships/{shipUID}": {
       "get": {
+        "tags": [
+          "Players"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbShip"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Players"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbShip"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{playerUID}/ships/{shipUID}/nearby": {
+      "get": {
+        "tags": [
+          "Players"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          }
+        }
+      }
+    },
+    "/players/{playerUID}/ships/{shipUID}/repair": {
+      "put": {
         "tags": [
           "Players"
         ],
@@ -707,6 +840,73 @@
         }
       }
     },
+    "/shipyard/features": {
+      "get": {
+        "tags": [
+          "Shipyard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DbFeature"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{playerUID}/ships/{shipUID}/features/{featureUID}/buy": {
+      "post": {
+        "tags": [
+          "Shipyard"
+        ],
+        "parameters": [
+          {
+            "name": "playerUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "featureUID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DbShip"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/trading/trading/{playerUID}/{shipUID}/{planetUID}/needs": {
       "get": {
         "tags": [
@@ -794,12 +994,12 @@
             "name": "quantity",
             "in": "query",
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
               "type": [
-                "integer",
+                "number",
                 "string"
               ],
-              "format": "int32"
+              "format": "double"
             }
           }
         ],
@@ -864,12 +1064,12 @@
             "name": "quantity",
             "in": "query",
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
               "type": [
-                "integer",
+                "number",
                 "string"
               ],
-              "format": "int32"
+              "format": "double"
             }
           }
         ],
@@ -1146,7 +1346,10 @@
               "string"
             ]
           },
-          "attackBonus": {
+          "bonusType": {
+            "$ref": "#/components/schemas/FeatureBonusTypes"
+          },
+          "bonusValue": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "integer",
@@ -1154,29 +1357,13 @@
             ],
             "format": "int32"
           },
-          "defenceBonus": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
+          "costs": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
             "type": [
-              "integer",
+              "number",
               "string"
             ],
-            "format": "int32"
-          },
-          "rangeBonus": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "speedBonus": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
+            "format": "double"
           }
         }
       },
@@ -1449,6 +1636,14 @@
             ],
             "format": "double"
           },
+          "interest": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
           "id": {
             "type": [
               "null",
@@ -1513,9 +1708,9 @@
           "features": {
             "type": [
               "null",
-              "array"
+              "object"
             ],
-            "items": {
+            "additionalProperties": {
               "$ref": "#/components/schemas/DbFeature"
             }
           },
@@ -1565,6 +1760,15 @@
           "currentPlanet": {
             "$ref": "#/components/schemas/DbPlanet"
           },
+          "probes": {
+            "type": [
+              "null",
+              "object"
+            ],
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Probe"
+            }
+          },
           "id": {
             "type": [
               "null",
@@ -1607,6 +1811,9 @@
             }
           }
         }
+      },
+      "FeatureBonusTypes": {
+        "type": "integer"
       },
       "GameStatistics": {
         "type": "object",
@@ -1718,9 +1925,9 @@
           "features": {
             "type": [
               "null",
-              "array"
+              "object"
             ],
-            "items": {
+            "additionalProperties": {
               "$ref": "#/components/schemas/DbFeature"
             }
           },
@@ -1768,6 +1975,73 @@
       "PlayerTypes": {
         "type": "integer"
       },
+      "Probe": {
+        "type": "object",
+        "properties": {
+          "released": {
+            "type": "boolean"
+          },
+          "shipId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "state": {
+            "$ref": "#/components/schemas/ProbeStates"
+          },
+          "currentSector": {
+            "$ref": "#/components/schemas/DbCoordinates"
+          },
+          "destroyed": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cargoSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "picturePath": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "playerId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "properties": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/KeyValuePairOfstringAndstring"
+            }
+          }
+        }
+      },
+      "ProbeStates": {
+        "type": "integer"
+      },
       "ShipState": {
         "type": "integer"
       },
@@ -1799,6 +2073,9 @@
     },
     {
       "name": "Players"
+    },
+    {
+      "name": "Shipyard"
     },
     {
       "name": "Trading"

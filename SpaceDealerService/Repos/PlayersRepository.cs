@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
+using System.Xml.Linq;
 
 namespace SpaceDealerService.Repos
 {
@@ -48,17 +49,15 @@ namespace SpaceDealerService.Repos
 					while (reader.Read())
 					{
 						var id = reader.GetString(0);
-						lst.TryAdd(id, GetItem("", id));
+						lst.TryAdd(id, GetItemById(id));
 					}
 					reader.Close();
-					//Parent.CloseConnection(connection);
 				}
 				else
 				{
 					Parent.Logger.Warning($"No players loaded.");
 				}
 				reader.Close();
-				//Parent.CloseConnection(connection);
 			}
 			catch (System.Exception e)
 			{
@@ -73,32 +72,18 @@ namespace SpaceDealerService.Repos
 			throw new NotImplementedException();
 		}
 
-		public override DbPlayer GetItem(string name, string id)
+		public override DbPlayer GetItemById(string id)
 		{
-			//Parent.Logger.Log($"Loading player {name}, {id}.");
-			var parameter = new SQLiteParameter();
 			DbPlayer player = null;
 
-			var query = "SELECT id, Name, Credits, PlayerType, PicturePath, HomePlanetId FROM Players WHERE ";
-			if (!string.IsNullOrEmpty(name))
-			{
-				query += "Name = @name;";
-				parameter.ParameterName = "@name";
-				parameter.Value = name;
-			}
-			else
-			{
-				query += "Id = @id;";
-				parameter.ParameterName = "@id";
-				parameter.Value = id;
-			}
+			var query = "SELECT id, Name, Credits, PlayerType, PicturePath, HomePlanetId FROM Players WHERE Id = @id;";
 			try
 			{
 				using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
 				
 				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
-				command.Parameters.Add(parameter);
+				command.Parameters.AddWithValue("@id", id);
 				var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -150,7 +135,70 @@ namespace SpaceDealerService.Repos
 			return player;
 		}
 
-		public override string GetItemId(string name)
+        public override DbPlayer GetItemByName(string name)
+        {
+            DbPlayer player = null;
+
+            var query = "SELECT id, Name, Credits, PlayerType, PicturePath, HomePlanetId FROM Players WHERE Name = @name;";
+            try
+            {
+                using var connection = new SQLiteConnection("Data Source=" + Parent.DbPath);
+
+                using var command = new SQLiteCommand(Parent.Connection);
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@name", name);
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var pId = reader.GetString(0);
+                        var pName = reader.GetString(1);
+                        var pCredits = reader.GetDouble(2);
+                        var pPlayerType = (SpaceDealer.Enums.PlayerTypes)reader.GetInt32(3);
+                        var pPicturePath = reader.GetString(4);
+                        var pHomePlanet = Program.TheGame.GetPlanetById(reader.GetString(5));
+
+                        //TODO: Add discovered planets 
+                        var discoveredPlanets = Program.TheGame.GetDiscoveredPlanetsByPlayerId(pId);
+
+                        player = new DbPlayer(pName, pHomePlanet, discoveredPlanets, Program.TheGame.Game)
+                        {
+                            Id = pId,
+                            Credits = pCredits,
+                            PlayerType = pPlayerType,
+                            PicturePath = pPicturePath
+                        };
+
+                        foreach (var dp in discoveredPlanets.Values)
+                        {
+                            player.DiscoveredPlanets.AddPlanet(dp);
+                        }
+
+                        var playersShips = Program.TheGame.GetAllShipsByPlayer(player);
+                        foreach (var item in playersShips.Values)
+                        {
+                            player.Fleet.AddShip(item);
+                        }
+                    }
+                    reader.Close();
+                    //Parent.CloseConnection(connection);
+                }
+                else
+                {
+                    Parent.Logger.Warning($"Player with name not found [{name}].");
+                }
+                reader.Close();
+                //Parent.CloseConnection(connection);
+            }
+            catch (System.Exception e)
+            {
+                Parent.Logger.Error($"Failed to read player {e.Message}");
+            }
+            return player;
+        }
+
+        public override string GetItemId(string name)
 		{
 			//Parent.Logger.Log($"Loading player with name {name}.");
 			var query = "SELECT Id FROM Players WHERE Name = @name;";

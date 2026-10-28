@@ -66,7 +66,7 @@ namespace SpaceDealerService.Repos
 					}
 				
 				}
-				foreach (var ft in ship.Features)
+				foreach (var ft in ship.Features.Values)
 				{
 					if (ft != null)
 					{
@@ -82,6 +82,15 @@ namespace SpaceDealerService.Repos
                         Parent.Logger.Verbose($"Ship features {ft.Name}.");
                     }
 				}
+
+                if (ship.Probes == null)
+                    ship.Probes = new Probes(ship);
+
+                foreach(var probe in ship.Probes.Values)
+                {
+                    Parent.ProbeRepo.Save(probe);
+                }
+
 				Parent.Logger.Verbose($"Ship {ship.Name} saved.");
 				
 			}
@@ -97,74 +106,7 @@ namespace SpaceDealerService.Repos
 			throw new NotImplementedException();
         }
 
-		public override DbShip GetItem(string name, string id)
-		{
-			throw new NotImplementedException();
-            //var parameter = new SQLiteParameter();
-            ////Parent.Logger.Log($"Loading ship with {name}, {id}.");
-
-            //var query = "SELECT Id, PlayerId, Name, PicturePath, CargoSize, Hull, Shield, ShipState," +
-            //			" Journey_Source, Journey_Destination, Current_SectorX," +
-            //			" Current_SectorY, Current_SectorZ FROM Ships WHERE ";
-            //if (!string.IsNullOrEmpty(name))
-            //{
-            //	query += "Name = @name;";
-            //	parameter.ParameterName = "@name";
-            //	parameter.Value = name;
-            //}
-            //else
-            //{
-            //	query += "Id = @id;";
-            //	parameter.ParameterName = "@id";
-            //	parameter.Value = id;
-            //}
-            //try
-            //{
-            //	using var command = new SQLiteCommand(Parent.Connection);
-            //	command.CommandText = query;
-            //	command.Parameters.Add(parameter);
-            //	using var reader = command.ExecuteReader();
-            //	if (reader.HasRows)
-            //	{
-            //		while (reader.Read())
-            //		{
-            //                     var shipId = reader.GetString(0);
-            //			var playerId = reader.GetString(1);
-            //			var shipName = reader.GetString(2);
-            //			var picturePath = reader.GetString(3);
-            //			var hull = reader.GetInt32(5);
-            //			var shields = reader.GetInt32(6);
-            //			var state = (SpaceDealer.Enums.ShipState)reader.GetInt32(7);
-            //			var features = Program.Persistor.FeaturesRepo.GetAll(shipId);
-            //			var player = Program.TheGame.FleetCommanders.GetPlayerById(playerId);
-
-            //			var source = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(8));
-            //			var destination = Program.Persistor.PlanetsRepo.GetItem("", reader.GetString(9));
-            //			var currentSector = new DbCoordinates(reader.GetInt32(10), reader.GetInt32(11), reader.GetInt32(12));
-
-            //                    var feats = new DbFeatures();
-
-            //                     foreach (var ft in features.Values)
-            //                         feats.Add(ft);
-
-            //                     var ship = new DbShip(shipName, player, feats, player.Fleet);
-
-            //                     ship.CurrentPlanet = source;
-            //			ship.Cruise = new DbJourney(source, destination, currentSector, ship);
-
-            //                     reader.Close();
-
-            //			return ship;
-            //		}
-            //	}
-
-            //}
-            //catch (System.Exception e)
-            //{
-            //	Parent.Logger.Error($"Failed to get ship with Id [{id}] {e.Message}");
-            //}
-            //return null;
-        }
+		
 
 		public DbShip GetShipByPlayer(DbPlayer player, string shipId)
         {
@@ -218,6 +160,21 @@ namespace SpaceDealerService.Repos
 
                         reader.Close();
 
+                        ship.Probes = new Probes(ship);
+
+                        if (Parent.ProbeRepo.GetAll(ship.Id)?.Values.Count > 0)
+                        {
+                            foreach (var p in Parent.ProbeRepo.GetAll(ship.Id)?.Values)
+                            {
+                                ship.Probes.TryAdd(p.Id, new Probe(ship.Probes));
+                            }
+                        }
+                        else
+                        {
+                            var p = new Probe(ship.Probes);
+                            ship.Probes.TryAdd(p.Id, new Probe(ship.Probes));
+                        }
+                        
                         return ship;
                     }
                 }
@@ -230,6 +187,10 @@ namespace SpaceDealerService.Repos
             return null;
         }
 
+        public override DbShip GetItemById(string id)
+        {
+            throw new NotImplementedException();
+        }
 
         public override string GetItemId(string name)
 		{
@@ -278,5 +239,10 @@ namespace SpaceDealerService.Repos
 			throw new NotImplementedException();
 
         }
-	}
+
+        public override DbShip GetItemByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

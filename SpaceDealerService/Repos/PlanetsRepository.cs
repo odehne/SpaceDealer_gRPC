@@ -61,30 +61,14 @@ namespace SpaceDealerService.Repos
 			throw new System.NotImplementedException();
 		}
 
-		public override DbPlanet GetItem(string name, string id)
+		public override DbPlanet GetItemById(string id)
 		{
-			var parameter = new SQLiteParameter();
-			//Parent.Logger.Log($"Loading planet {name}, {id}.");
-
-			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE ";
-			if (!string.IsNullOrEmpty(name))
-			{
-				query += "Name = @name;";
-				parameter.ParameterName = "@name";
-				parameter.Value = name;
-			}
-			else
-			{
-				query += "Id = @id;";
-				parameter.ParameterName = "@id";
-				parameter.Value = id;
-			}
-
+			var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE Id = @id;";
 			try
 			{
 				using var command = new SQLiteCommand(Parent.Connection);
 				command.CommandText = query;
-				command.Parameters.Add(parameter);
+				command.Parameters.AddWithValue("@id", id);
 				using var reader = command.ExecuteReader();
 				if (reader.HasRows)
 				{
@@ -102,8 +86,7 @@ namespace SpaceDealerService.Repos
                             GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id),
                             ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id)
                         };
-                       //planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
-						return planet;
+                  	return planet;
 					}
 				}
 				reader.Close();
@@ -116,7 +99,46 @@ namespace SpaceDealerService.Repos
 			return null;
 		}
 
-		public override string GetItemId(string name)
+        public override DbPlanet GetItemByName(string name)
+        {
+            var query = "SELECT Id, Name, PicturePath, X, Y, Z, IndustryName FROM Planets WHERE Name = @name;";
+            try
+            {
+                using var command = new SQLiteCommand(Parent.Connection);
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@name", name);
+                using var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var planet = new DbPlanet
+                        {
+                            Id = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            PicturePath = reader.GetString(2),
+                            Sector = new DbCoordinates(reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5))
+                        };
+                        planet.Industry = new DbIndustry($"{planet.Id}.industry")
+                        {
+                            GeneratedProducts = Parent.GeneratedProductsRepo.GetGeneratedProducts(planet.Id),
+                            ProductsNeeded = Parent.NeededProductsRepo.GetNeededProducts(planet.Id)
+                        };
+                        //planet.Market = Parent.MarketRepo.GetMarket(planet.Id);
+                        return planet;
+                    }
+                }
+                reader.Close();
+            }
+            catch (System.Exception e)
+            {
+                Parent.Logger.Error($"Failed to read planet {e.Message}");
+            }
+
+            return null;
+        }
+
+        public override string GetItemId(string name)
 		{
 			Parent.Logger.Verbose($"Loading planet with name {name}.");
 			var query = "SELECT Id FROM Planets WHERE Name = @name;";

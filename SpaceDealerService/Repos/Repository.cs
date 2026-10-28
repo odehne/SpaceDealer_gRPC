@@ -16,9 +16,11 @@ namespace SpaceDealerService.Repos
 
 		public abstract ConcurrentDictionary<string, T> GetAll(string id);
 
-		public abstract T GetItem(string name, string id);
+		public abstract T GetItemById(string id);
 
-		public abstract string GetItemId(string name);
+        public abstract T GetItemByName(string name);
+
+        public abstract string GetItemId(string name);
 
 		public abstract void Save(T item);
 	}

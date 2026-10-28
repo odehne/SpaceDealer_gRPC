@@ -1,5 +1,7 @@
-﻿using SpaceDealerModels.Attributes;
+﻿using Serilog;
+using SpaceDealerModels.Attributes;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -8,13 +10,63 @@ using System.Xml.Linq;
 
 namespace SpaceDealerModels.Units
 {
-	public class DbFeatures : List<DbFeature>
+	public class DbFeatures : ConcurrentDictionary<string, DbFeature>
 	{
-		public DbFeature GetFeatureByName(string name)
+		public DbFeature GetFeatureByName(FeatureNames name)
 		{
-			return this.FirstOrDefault(x => x.Name.Equals(name));
+			return Values.FirstOrDefault(x => x.Name.Equals(name.ToString()));
 		}
-	}
+
+        public DbFeature GetFeatureById(string id)
+        {
+            return Values.FirstOrDefault(x => x.Id.Equals(id));
+        }
+
+        public void Add(DbFeature feature)
+        {
+            if (!TryAdd(feature.Id, feature))
+                Log.Error($"Failed to add feature [{feature.Name}]");
+        }
+
+        public DbFeatures GetFeatureSet(FeatureNames[] featureNames)
+        {
+            var featureSet = new DbFeatures();
+            foreach (var featureName in featureNames)
+            {
+                featureSet.Add(GetFeature(featureName));
+            }
+            return featureSet;
+        }
+
+        public DbFeature GetFeature(FeatureNames featureName)
+        {
+            return Values.FirstOrDefault(x => x.Name.Equals(featureName.ToString(), StringComparison.InvariantCultureIgnoreCase));
+        }
+
+    }
+
+    public enum FeatureNames
+    {
+        ExtraShield,			
+        ExtraPhasers,				
+        ExtraTorpedos,			
+        AdvancedWarp_1,		
+        SignalRange_1,			
+        SignalRange_2,			
+        AdditionalCargoSpace_30,
+        AdditionalCargoSpace_80,
+        AdditionalProbe		
+    }
+
+    public enum FeatureBonusTypes
+    {
+        AttackBonus,
+        DefenceBonus,
+        TravelSpeedBonus,
+        RangeBonus,
+        FreightBonus,
+        AddtionalProbe
+    }
 
     public class DbFeature : BaseDbField
 	{
@@ -22,26 +74,24 @@ namespace SpaceDealerModels.Units
 		public string Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public int AttackBonus { get; set; }
-		public int DefenceBonus{ get; set; }
-		public int RangeBonus { get; set; }
-		public int SpeedBonus { get; set; }
 
-		public DbFeature()
+        public FeatureBonusTypes BonusType { get; set; }
+        public int BonusValue { get; set; } = 0;
+        public double Costs { get; set; } = 1500.0;
+
+        public DbFeature()
 		{
 		}
 
-		public DbFeature(string name, string description, int attackBonus, int defenceBonus, int rangeBonus, int speedBonus)
+		public DbFeature(string id, string name, string description, FeatureBonusTypes bonusType, int bonusValue, double costs)
 		{
-			Id = Guid.NewGuid().ToString();
+			Id = id;
 			Name = name;
 			Description = description;
-			AttackBonus= attackBonus;
-			RangeBonus = rangeBonus;
-			DefenceBonus = defenceBonus;
-			SpeedBonus = speedBonus;
-		}
-
+            BonusType = bonusType;
+            BonusValue = bonusValue;
+            Costs = costs;
+        }
 
 
 		public override string ToString()

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpaceDealerService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad3504420216c88114edf71de6beeb31e073aa9b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7eff30e009c425a987e49ee5e0c4689d9aad908d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpaceDealerService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpaceDealerService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

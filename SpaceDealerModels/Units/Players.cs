@@ -15,7 +15,7 @@ namespace SpaceDealerModels.Units
 			if (p != null)
 				return p;
 
-			var firstShip = new DbShip(player.Name + "'s Ship", player, Repository.GetFeatureSet(new string[] { "SignalRange+1" }), player.Fleet);
+			var firstShip = new DbShip(player.Name + "'s Ship", player, player.Parent.Features.GetFeatureSet(new FeatureNames[] { FeatureNames.SignalRange_1 }), player.Fleet);
 			player.Fleet.AddShip(firstShip);
 
             if (TryAdd(player.Id, player))

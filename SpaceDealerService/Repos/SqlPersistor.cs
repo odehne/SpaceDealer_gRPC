@@ -23,6 +23,7 @@ namespace SpaceDealerService.Repos
         public FeaturesRepository FeaturesRepo { get; set; }
         public SQLiteConnection Connection { get; set; }
         public SectorRepository SectorRepo { get; set; }
+        public ProbeRepository ProbeRepo { get; set; }
         public SqlPersistor(ILogger logger, string dbPath)
         {
             Logger = logger;
@@ -37,15 +38,51 @@ namespace SpaceDealerService.Repos
             DiscoveredPlanetsRepo = new DiscoveredPlanetsRepository(this);
             FeaturesRepo = new FeaturesRepository(this);
             SectorRepo = new SectorRepository(this);
+            ProbeRepo = new ProbeRepository(this);
 
             if (!File.Exists(DbPath))
                 CreateDatabase();
 
             Connection = new SQLiteConnection("Data Source=" + DbPath);
             OpenConnection();
+            MigrateDatabase();
         }
 
-        private void OpenConnection() 
+        private void MigrateDatabase()
+        {
+            foreach (var table in new[] { "GeneratedProducts", "NeededProducts" })
+                EnsureColumn(table, "Amount", "REAL NOT NULL DEFAULT 0.0");
+        }
+
+        private void EnsureColumn(string table, string column, string definition)
+        {
+            try
+            {
+                var exists = false;
+                using (var info = new SQLiteCommand($"PRAGMA table_info({table});", Connection))
+                using (var reader = info.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (string.Equals(reader.GetString(1), column, StringComparison.OrdinalIgnoreCase))
+                            exists = true;
+                    }
+                }
+
+                if (exists)
+                    return;
+
+                using var alter = new SQLiteCommand($"ALTER TABLE {table} ADD COLUMN {column} {definition};", Connection);
+                alter.ExecuteNonQuery();
+                Logger.Information($"Migrated table {table}: added column {column}.");
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Failed to migrate table {table}: {e.Message}");
+            }
+        }
+
+        private void OpenConnection()
         {
             Connection.Open();
             CurrentlyOpenConnections += 1;
@@ -80,22 +117,22 @@ namespace SpaceDealerService.Repos
 
                 foreach (var np in planet.Industry.ProductsNeeded)
                 {
-                    var prod = ProductRepo.GetItem(np.Name, null);
+                    var prod = ProductRepo.GetItemByName(np.Name);
                     var npId = np.Id;
                     if (prod != null)
                         npId = prod.Id;
                     ProductRepo.Save(np);
-                    NeededProductsRepo.SaveNeededProduct(planet.Id, npId);
+                    NeededProductsRepo.SaveNeededProduct(planet.Id, npId, np.Amount, np.Interest);
                 }
                 
                 foreach (var np in planet.Industry.GeneratedProducts)
                 {
-                    var prod = ProductRepo.GetItem(np.Name, null);
+                    var prod = ProductRepo.GetItemByName(np.Name);
                     var npId = np.Id;
                     if (prod != null)
                         npId = prod.Id;
                     ProductRepo.Save(np);
-                    GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, npId);
+                    GeneratedProductsRepo.SaveGeneratedProduct(planet.Id, npId, np.Amount, np.Interest);
                 }
 
                 //MarketRepo.SaveMarket(planet.Id, planet.Market);
@@ -113,6 +150,12 @@ namespace SpaceDealerService.Repos
             return true;
         }
 
+        public bool SaveFeatures(DbFeatures feats)
+        {
+            FeaturesRepo.SaveAll(feats);
+            Logger.Information($"Features persisted: {feats.Count} features.");
+            return true;
+        }
 
         public bool SavePlayers(Players players)
         {
@@ -147,7 +190,7 @@ namespace SpaceDealerService.Repos
                 {
                     // ensure that the discovered planet is also in the planets table,
                     // otherwise we will have a foreign key violation
-                    var p = PlanetsRepo.GetItem(planet.Name, null);
+                    var p = PlanetsRepo.GetItemByName(planet.Name);
                     if(p == null)
                         PlanetsRepo.Save(planet);
                     DiscoveredPlanetsRepo.SaveDiscoveredPlanet(player.Id, planet.Id);

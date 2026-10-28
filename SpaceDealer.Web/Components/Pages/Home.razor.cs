@@ -45,7 +45,11 @@ public partial class Home : IDisposable
         }
     }
     private bool ShowLog;
-    private int Quantity = 1;
+    private bool ShowShipyard;
+    private List<FeatureDto> ShipyardFeatures = [];
+    public const double NewShipCosts = 150_000;
+    private const double DumpPriceFactor = 0.6;
+    private double Quantity = 1;
     private string? SelectedDestinationId;
     private string NewShipName = "";
     private readonly List<LogEntry> LogEntries = [];
@@ -63,6 +67,12 @@ public partial class Home : IDisposable
     private void InspectPlanet(string? planetId) => InspectedPlanetId = planetId == InspectedPlanetId ? null : planetId;
     private PlanetDto? DockedPlanet => SelectedShip?.DockedPlanet;
     private bool IsTravelling => SelectedShip?.IsTravelling ?? false;
+    private IEnumerable<ProbeDto> FlyingProbes
+        => Player?.Fleet.Values
+            .SelectMany(s => s.Probes?.Values ?? (IEnumerable<ProbeDto>)[])
+            .Where(p => p.State == "Travelling" && p.CurrentSector is not null) ?? [];
+    // Ships of other pilots inside the scan range of the selected ship.
+    private List<NearbyShipDto> NearbyShips = [];
     private EnemyShipDto? Enemy => SelectedShip?.Cruise?.EnemyBattleShip;
     private IEnumerable<PlanetDto> Destinations
         => (Player?.DiscoveredPlanets.Values ?? Enumerable.Empty<PlanetDto>())
@@ -199,6 +209,20 @@ public partial class Home : IDisposable
             ApplyPlayer(result.Value, detectChanges: true);
         else if (Connected)
             ToastMessage = "Der Spieler wurde im Dienst nicht mehr gefunden. Bitte neu anmelden.";
+
+        await RefreshNearbyShipsAsync();
+    }
+
+    private async Task RefreshNearbyShipsAsync()
+    {
+        if (Player is null || SelectedShip is null)
+        {
+            NearbyShips = [];
+            return;
+        }
+
+        var nearby = await Api.GetNearbyShipsAsync(Player.Id, SelectedShip.Id, _cts.Token);
+        NearbyShips = nearby.Ok && nearby.Value is not null ? nearby.Value : [];
     }
 
     private async Task RefreshUniverseAsync()
@@ -226,7 +250,14 @@ public partial class Home : IDisposable
             foreach (var ship in fresh.Fleet.Values)
                 DetectShipChanges(ship);
             if (fresh.DiscoveredPlanets.Count > previousDiscovered)
-                AddLog($"{fresh.DiscoveredPlanets.Count - previousDiscovered} neue(r) Planet(en) entdeckt.", toast: true);
+            {
+                var known = Player?.DiscoveredPlanets;
+                var newPlanets = fresh.DiscoveredPlanets
+                    .Where(p => known is null || !known.ContainsKey(p.Key))
+                    .Select(p => p.Value)
+                    .ToList();
+                AddLog($"{newPlanets.Count} neue(r) Planet(en) entdeckt: {string.Join(", ", newPlanets)}", toast: true);
+            }
         }
         else
         {
@@ -292,7 +323,7 @@ public partial class Home : IDisposable
     private async Task BuyAsync(GoodRow good)
     {
         if (SelectedShip is null || Player is null || DockedPlanet is null) return;
-        var quantity = Math.Max(1, Quantity);
+        var quantity = Math.Max(0.1, Quantity);
 
         if (good.Stock is null) return;
         if (quantity > good.Stock)
@@ -313,7 +344,7 @@ public partial class Home : IDisposable
 
         var result = await Api.BuyAsync(Player.Id, SelectedShip.Id, DockedPlanet.Id, good.ProductId, quantity, _cts.Token);
         if (result.Ok)
-            AddLog($"{quantity} t {good.Name} für {FormatCredits(result.Value)} CR gekauft.", toast: true);
+            AddLog($"{FormatAmount(quantity)} t {good.Name} für {FormatCredits(result.Value)} CR gekauft.", toast: true);
         else
             ToastMessage = result.Error;
 
@@ -323,7 +354,7 @@ public partial class Home : IDisposable
     private async Task SellAsync(GoodRow good)
     {
         if (SelectedShip is null || Player is null || DockedPlanet is null) return;
-        var quantity = Math.Max(1, Quantity);
+        var quantity = Math.Max(0.1, Quantity);
 
         var held = CargoOf(good.ProductId);
         if (held < quantity)
@@ -336,7 +367,7 @@ public partial class Home : IDisposable
 
         var result = await Api.SellAsync(Player.Id, SelectedShip.Id, DockedPlanet.Id, good.ProductId, quantity, _cts.Token);
         if (result.Ok)
-            AddLog($"{quantity} t {good.Name} für {FormatCredits(result.Value)} CR verkauft.", toast: true);
+            AddLog($"{FormatAmount(quantity)} t {good.Name} für {FormatCredits(result.Value)} CR verkauft.", toast: true);
         else
             ToastMessage = result.Error;
 
@@ -366,6 +397,47 @@ public partial class Home : IDisposable
         {
             ToastMessage = result.Error;
         }
+    }
+
+    private async Task ToggleShipyardAsync()
+    {
+        ShowShipyard = !ShowShipyard;
+        if (!ShowShipyard) return;
+
+        var result = await Api.GetShipyardFeaturesAsync(_cts.Token);
+        if (result.Ok && result.Value is not null)
+            ShipyardFeatures = result.Value;
+        else
+            ToastMessage = result.Error;
+    }
+
+    private bool HasFeature(FeatureDto feature)
+        => feature.Name != "AdditionalProbe" && SelectedShip?.Features.ContainsKey(feature.Id) == true;
+
+    private async Task BuyFeatureAsync(FeatureDto feature)
+    {
+        if (SelectedShip is null || Player is null) return;
+
+        var result = await Api.BuyFeatureAsync(Player.Id, SelectedShip.Id, feature.Id, _cts.Token);
+        if (result.Ok)
+            AddLog($"{feature.Description} für {SelectedShip.Name} gekauft ({FormatCredits(feature.Costs)} CR).", toast: true);
+        else
+            ToastMessage = result.Error;
+
+        await RefreshPlayerAsync();
+    }
+
+    private async Task SendProbeAsync()
+    {
+        if (SelectedShip is null || Player is null) return;
+
+        var result = await Api.SendProbeAsync(Player.Id, SelectedShip.Id, _cts.Token);
+        if (result.Ok)
+            AddLog($"{SelectedShip.Name} hat eine Sonde ausgesandt.", toast: true);
+        else
+            ToastMessage = result.Error;
+
+        await RefreshPlayerAsync();
     }
 
     private async Task BattleAsync(bool attack)
@@ -418,6 +490,18 @@ public partial class Home : IDisposable
             row.Demand = p.Amount;
             row.SellPrice = p.PricePerTon;
         }
+
+        // Cargo nobody here needs can still be dumped at a discount (mirrors TradingController.DUMP_PRICE_FACTOR).
+        foreach (var cargo in SelectedShip?.Cargo.Where(c => c.Quantity > 0) ?? [])
+        {
+            if (!rows.TryGetValue(cargo.ProductId, out var row))
+                rows[cargo.ProductId] = row = new GoodRow(cargo.ProductId, cargo.Product?.Name ?? cargo.Name);
+            if (row.Demand is null)
+            {
+                row.IsDump = true;
+                row.SellPrice = (cargo.Product?.PricePerTon ?? 0) * DumpPriceFactor;
+            }
+        }
         return rows.Values.OrderBy(r => r.Name);
     }
 
@@ -432,9 +516,10 @@ public partial class Home : IDisposable
         return total <= 0 ? 1 : Math.Clamp(1 - cruise.CurrentDistanceToDestination / total, 0, 1);
     }
 
-    // Sector coordinates run 0..100 on each axis; the map ignores Z.
-    private static double MapX(CoordinatesDto c) => 50 + c.X / 100 * 660;
-    private static double MapY(CoordinatesDto c) => 45 + c.Y / 100 * 300;
+    // Sector coordinates run 0..UniverseSize on each axis (see DbCoordinates.UniverseSize); the map ignores Z.
+    private const double UniverseSize = 30;
+    private static double MapX(CoordinatesDto c) => 50 + c.X / UniverseSize * 660;
+    private static double MapY(CoordinatesDto c) => 45 + c.Y / UniverseSize * 300;
     private static string Svg(double value) => value.ToString("0.#", CultureInfo.InvariantCulture);
 
     private static string FormatCredits(double value)
@@ -451,6 +536,7 @@ public partial class Home : IDisposable
         public double BuyPrice { get; set; }
         public double? Demand { get; set; }
         public double SellPrice { get; set; }
+        public bool IsDump { get; set; }
     }
 
     private sealed record BestBuyer(PlanetDto Planet, double PricePerTon, double Demand, double? Distance);

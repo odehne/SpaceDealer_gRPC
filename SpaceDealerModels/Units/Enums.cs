@@ -41,7 +41,8 @@
 		OtherShipWantsToTrade = 2,
 		DistressSignal = 3,
 		DiscoveredNewPlanet = 4,
-        AreaScanned = 5
+        AreaScanned = 5,
+        ProbeScanned = 6
     }
 
 	public enum CargoBaySize

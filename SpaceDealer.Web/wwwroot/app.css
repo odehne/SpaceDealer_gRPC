@@ -89,6 +89,10 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .map-legend span { display: flex; align-items: center; gap: 6px; }
 .map-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
 .legend-ship { background: var(--cyan); }
+.probe-marker circle { fill: #ff4d4d; filter: drop-shadow(0 0 4px #ff4d4d); }
+.legend-probe { background: #ff4d4d; }
+.pilot-marker circle { fill: #ffd84a; filter: drop-shadow(0 0 4px #ffd84a); }
+.legend-pilot { background: #ffd84a; }
 .legend-route { border: 1px dashed var(--cyan); }
 .legend-scan { border: 1px dashed #57d8d077; }
 .journey-strip { display: grid; grid-template-columns: 105px minmax(120px, 1fr) 80px; gap: 14px; align-items: center; padding: 13px 2px 5px; }
@@ -265,6 +269,12 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px soli
 .travel-controls .trade-button { padding: 10px 12px; }
 .quantity-field { display: grid; gap: 4px; }
 .qty-input { width: 84px; }
+.shipyard-panel { padding: 15px 18px; }
+.shipyard-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid #202c3a; }
+.shipyard-item strong { display: block; font-size: 11px; }
+.shipyard-item small { color: #71849a; font: 9px var(--mono); }
+.shipyard-item .trade-button { white-space: nowrap; }
+.shipyard-new-ship { margin-top: 12px; }
 .new-ship-form { display: flex; gap: 8px; margin-top: 10px; }
 .new-ship-form .text-input { flex: 1; }
 .new-ship-form .trade-button { white-space: nowrap; }

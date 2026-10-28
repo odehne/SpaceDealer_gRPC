@@ -97,8 +97,8 @@ namespace SpaceDealerModels.Units
                     {
                         var events = Parent.Parent.Parent.Parent.Events;   // same chain as KnownUniverse
                         events.Publish(new AreaScannedEvent(InterruptionType.AreaScanned,
-                            $"Scanned area at {CurrentSector}. Found {scannedPlanets.Count} planets and {scannedShips.Count} ships.",
-                            Parent, Parent.Parent.Parent, scannedPlanets, scannedShips));
+                            $"Scanned area at {CurrentSector}. Found {scannedPlanets.Count} planets and {scannedShips.Count} ships.", null,
+                            Parent,  Parent.Parent.Parent, scannedPlanets, scannedShips));
                     }
 					else
 					{
@@ -118,6 +118,7 @@ namespace SpaceDealerModels.Units
 		{
 			if(State!=JourneyState.Travelling)
 			{
+				EnemyBattleShip = null;
 				if(CurrentSector!=Destination.Sector)
 				{
 					State = JourneyState.Travelling;
@@ -190,6 +191,18 @@ namespace SpaceDealerModels.Units
             };
         }
 
+        private const double MinPirateJourneyDistance = 10;
+        private const double MinPirateTravelledDistance = 3;
+
+        /// <summary>Pirates only show up on long trips and not right after departure.</summary>
+        private bool IsLongJourney()
+        {
+            if (Departure == null) return false;
+            var total = DbCoordinates.GetDistanceLength(Departure.Sector, Destination.Sector);
+            var travelled = DbCoordinates.GetDistanceLength(Departure.Sector, CurrentSector);
+            return total >= MinPirateJourneyDistance && travelled >= MinPirateTravelledDistance;
+        }
+
         private Interruption CheckInterruptions()
 		{
 			var roll = SimpleDiceRoller.Roll(DiceType.d20);
@@ -198,8 +211,8 @@ namespace SpaceDealerModels.Units
 			{
                 roll = SimpleDiceRoller.Roll(DiceType.d100);
 
-                // 20% of the d100 rolls (was 1%), i.e. ~4% per tick instead of 0.2%
-                if (roll >= 20 && roll <= 39)
+                // 5% of the d100 rolls, i.e. ~1% per tick, and only on longer journeys
+                if (roll >= 20 && roll <= 24 && IsLongJourney())
                 {
                     State = JourneyState.InBattle;
                     EnemyBattleShip = new SimplePirateShip(Repository.GetRandomShipName(), CurrentSector, null);
@@ -212,6 +225,7 @@ namespace SpaceDealerModels.Units
                     case 9:
                         State = JourneyState.NewPlanetInRange;
                         DiscoveredPlanet = Repository.GenerateRandomPlanet(CurrentSector);
+                        Repository.AlignNeedsWithNeighbourhood(DiscoveredPlanet, Parent.Parent.Parent.Galaxy.Values);
                         Parent.Parent.Parent.DiscoveredPlanets.TryAdd(DiscoveredPlanet.Id, DiscoveredPlanet);
                         Parent.Parent.Parent.Galaxy.TryAdd(DiscoveredPlanet.Id, DiscoveredPlanet);
                         Parent.Parent.Parent.ActiveSectors.AddPlanet(CurrentSector, DiscoveredPlanet.Id);

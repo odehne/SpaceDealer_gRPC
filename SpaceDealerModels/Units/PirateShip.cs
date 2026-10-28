@@ -118,16 +118,7 @@ namespace SpaceDealerModels.Units
 		public HeavyCruiserPirateShip(string name, DbCoordinates sector, DbFeatures featureSet)
 		{
 			Id = Guid.NewGuid().ToString();
-			if (featureSet == null)
-			{
-				Features = new DbFeatures();
-				Features.Add(Repository.GetFeature("ShieldBonus+1"));
-				Features.Add(Repository.GetFeature("Phasers+1"));
-			}
-			else
-			{
-				Features = featureSet;
-			}
+			Features = featureSet;
 			Shields = 3;
 			Hull = 5;
 			Name = name;
