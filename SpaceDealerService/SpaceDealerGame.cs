@@ -1,4 +1,4 @@
-﻿using Serilog;
+using Serilog;
 using SpaceDealerModels.Repositories;
 using SpaceDealerModels.Units;
 using SpaceDealerService;

@@ -1,0 +1,215 @@
+syntax = "proto3";
+
+option csharp_namespace = "SpaceDealerService";
+
+package game;
+
+service Game {
+  // Sends a greeting
+  rpc SaveGame (PlayerRequest) returns (SaveGameReply);
+  rpc BattleDefend (ShipRequest) returns (BattleReply);
+  rpc BattleAttack (ShipRequest) returns (BattleReply);
+  rpc AddPlayer (AddPlayerRequest) returns (PlayerReply);
+  rpc GetPlayer (PlayerRequest) returns (PlayerReply);
+  rpc GetPlayerByName (PlayerByNameRequest) returns (PlayerReply);
+  rpc GetPlayers (EmptyRequest) returns (PlayersReply);
+  rpc GetShips (ShipsRequest) returns (ShipsReply);
+  rpc AddShip (AddShipRequest) returns (ShipReply);
+  rpc GetShip (ShipRequest) returns (ShipReply);
+  rpc GetUpdates (PlayerRequest) returns (UpdateReply);
+  rpc StartCruise (CruiseRequest) returns (CruiseReply);
+  rpc CruiseToLocation (CruiseToCoordinatesRequest) returns (CruiseReply);
+  rpc ContinueCruise (CruiseRequest) returns (CruiseReply);
+  rpc GetPlanets (EmptyRequest) returns (PlanetsReply);
+}
+
+message SaveGameReply {
+    bool GameSaved = 1;
+}
+
+message BattleReply {
+    string Message = 1;
+    int32 Value = 2;
+    bool DefenderWasHit = 3;
+    bool CriticalHit = 4;
+    double Treasure = 5;
+    bool Defeaded = 6;
+}
+
+message Coordinates {
+   double X = 1;
+   double Y = 2;
+   double Z = 3;
+}
+
+message Player {
+    string Name = 1;
+    repeated Ship ships = 2;
+    double Credits = 3;
+    string HomePlanet = 4;
+    string PicturePath = 5;
+    string playerId = 6;
+}
+
+message PlayersReply {
+    repeated Player players = 1;
+}
+
+message UpdateReply {
+    repeated UpdateInfo updateInfos = 1;
+}
+
+message UpdateInfo {
+    UpdateStates updateState = 2;
+    Ship ship = 3;
+}
+
+enum UpdateStates {
+    ArrivedOnTarget = 0;
+    UnderAttack = 1;
+    OnRescueMission = 2;
+    ShipIsGettingRepaired = 3;
+    NewPlanetDiscovered = 4;
+}
+
+enum ShipState {
+    Idle = 0;
+    ShipIsTravelling = 1;
+    UnderConstruction = 2;
+}
+
+enum JourneyState {
+    Travelling = 0;
+    Arrived = 1;
+    InBattle = 2;
+    NewPlanetInRange = 3;
+    OtherShipInRange = 4;
+}
+
+message AddPlayerRequest {
+    string playerName = 1;
+    string PicturePath = 2;
+}
+
+message PlayerRequest {
+    string playerId = 1;
+}
+
+message PlayerByNameRequest {
+    string playerName = 1;
+}
+
+message PlayerReply {
+    Player player = 1;
+}
+
+message Journey {
+    double currentDistance = 1;
+    Coordinates currentSector = 2;
+    Planet departure = 3;
+    Planet destination = 4;
+    JourneyState State = 5;
+    Planet NewPlanetDiscovered = 6;
+    PirateShip EnemyBattleShip = 7;
+}
+
+message ShipRequest {
+   string playerId = 1;
+   string shipId = 2;
+}
+
+message AddShipRequest {
+   string playerId = 1;
+   string shipName  = 2; 
+}
+
+message ShipReply {
+   Ship ship = 1;
+}
+
+message CruiseRequest {
+    string playerId = 1;
+    string shipId = 2;
+    string destinationPlanetName = 3;
+}
+
+message CruiseToCoordinatesRequest {
+    string playerId = 1;
+    string shipId = 2;
+    Coordinates position = 3;
+}
+
+message CruiseReply {
+    bool onItsWay = 1;
+}
+
+message Planet {
+   string PlanetName = 1;
+   Coordinates Sector = 2;
+   repeated Industry Industries = 3;
+   string PicturePath = 4;
+}
+
+message Load {
+   repeated ProductInStock LoadedProducts = 1;
+}
+
+message Market {
+   string MarketName = 1;
+   repeated ProductInStock ProductsInStock = 2;
+}
+
+message Industry {
+   string IndustryName = 1;
+   repeated ProductInStock GeneratedProducts = 2;
+   repeated ProductInStock ProductsNeeded = 3;
+}
+
+message Industries {
+   repeated Industry Industries = 1;
+}
+
+message ProductInStock {
+    string ProductName = 1;    
+    double Amount = 2;
+    double Weight = 3;
+    double AmountGeneratedPerRound = 4;
+    double PricePerTon = 5;
+    double TotalWeight = 6;
+    double TotalPrice = 7;
+}
+
+message Ship {
+   string ShipName = 1;
+   Journey Cruise = 2;
+   double CargoSize = 3;
+   Load CargoLoad = 4;
+   ShipState State = 5;
+   int32 Shields = 6;
+   int32 Hull = 7;
+   Planet CurrentPlanet = 8;
+   string PicturePath = 9;
+   string shipId = 10;
+}
+
+message PirateShip {
+   string ShipName = 1;
+   int32 Shields = 2;
+   int32 Hull = 3;
+   string PicturePath = 4;
+}
+
+message EmptyRequest {
+    
+}
+
+message PlanetsReply {
+   repeated Planet Planets = 1; 
+}
+
+message ShipsRequest {
+   string PlayerId = 1;
+}
+message ShipsReply {
+    repeated Ship Ships = 1;
+}

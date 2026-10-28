@@ -1,4 +1,4 @@
-﻿using SpaceDealer.Enums;
+using SpaceDealer.Enums;
 using SpaceDealerModels.Repositories;
 using System;
 using System.Collections.Concurrent;
@@ -11,7 +11,7 @@ namespace SpaceDealerModels.Units
 	{
 	    public DbPlayer AddPlayer(DbPlayer player)
 		{
-			var p = GetPlayerByName(player.Name);
+			var p = GetPlayerById(player.Id);
 			if (p != null)
 				return p;
 
